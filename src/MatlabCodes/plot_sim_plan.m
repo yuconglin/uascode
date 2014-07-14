@@ -3,7 +3,7 @@ clear all;
 clc;
 
 %load planned path
-f_traj =fopen('../../bin/fs_state.txt','r');
+f_traj =fopen('../../bin/fs_state2.txt','r');
 
 if f_traj == -1
     error('File fs_state.txt could not be opened, check name or path.')
@@ -44,10 +44,10 @@ while ischar(traj_line)
 end
 
 %load actual sitl path
-s_traj =fopen('../../bin/sitl_state1.txt','r');
+s_traj =fopen('../../bin/sitl_state2.txt','r');
 
 if s_traj == -1
-    error('File sitl_state1.txt could not be opened, check name or path.')
+    error('File sitl_state.txt could not be opened, check name or path.')
 end
 sim_line= fgetl(s_traj);
 sim_traj = [];

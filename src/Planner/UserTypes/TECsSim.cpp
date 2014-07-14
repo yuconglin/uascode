@@ -122,7 +122,8 @@ namespace UasCode{
     } else {
 	    _integ3_state = _integ3_state + integ3_input * DT;
     }
-    _vel_dot = 0.0f;
+    //_vel_dot = 0.0f;
+    _vel_dot = _TAS_rate_dem;
     //std::cout<<"_integ3_state:"<< _integ3_state<< std::endl;
   }
 
@@ -179,12 +180,10 @@ namespace UasCode{
  
   void TECsSim::_update_speed_demand(void)
   {
-    //std::cout<<"_update_speed_demand"<< std::endl;
     if ((_badDescent) || (_underspeed)) {
       _TAS_dem     = _TASmin;
     }
 
-    
     double velRateMax = 0.5*_STEdot_max / _integ5_state;
     double velRateMin = 0.5*_STEdot_min / _integ5_state;
 
@@ -213,14 +212,13 @@ namespace UasCode{
     //xxx: using a p loop for now
     // Constrain speed demand again to protect against bad values on initialisation.
     _TAS_dem_adj = Utils::math::constrain(_TAS_dem_adj, _TASmin, _TASmax);
+    //std::cout<<"_TAS_dem_adj: "<< _TAS_dem_adj << std::endl;
     _TAS_dem_last = _TAS_dem;
   }
 
   void TECsSim::_update_height_demand(float demand,float state)
   {
     _hgt_dem_adj = demand;//0.025f * demand + 0.975f * _hgt_dem_adj_last;
-    _hgt_dem_adj_last = _hgt_dem_adj;
-
     _hgt_rate_dem = (_hgt_dem_adj-state)*_heightrate_p;
     // Limit height rate of change
     if (_hgt_rate_dem > _maxClimbRate) {
@@ -228,7 +226,30 @@ namespace UasCode{
 
     } else if (_hgt_rate_dem < -_maxSinkRate) {
 	    _hgt_rate_dem = -_maxSinkRate;
-    }
+    } 
+    std::cout << "_hgt_dem_adj: "<< _hgt_dem_adj 
+	    <<" state: " << state << std::endl;
+    /*
+    _hgt_dem = demand;
+    _hgt_dem = 0.5f * (_hgt_dem + _hgt_dem_in_old);
+    _hgt_dem_in_old = _hgt_dem;
+
+// Limit height rate of change
+    if ((_hgt_dem - _hgt_dem_prev) > (_maxClimbRate * _DT))
+{
+    _hgt_dem = _hgt_dem_prev + _maxClimbRate * _DT;
+}
+else if ((_hgt_dem - _hgt_dem_prev) < (-_maxSinkRate * _DT))
+{
+    _hgt_dem = _hgt_dem_prev - _maxSinkRate * _DT;
+}
+_hgt_dem_prev = _hgt_dem;
+
+    // Apply first order lag to height demand
+    _hgt_dem_adj = 0.05f * _hgt_dem + 0.95f * _hgt_dem_adj_last;
+    _hgt_rate_dem = (_hgt_dem_adj - _hgt_dem_adj_last) / _DT;
+    _hgt_dem_adj_last = _hgt_dem_adj;
+   */
   }
 
   void TECsSim::_detect_underspeed(void)
@@ -270,7 +291,7 @@ namespace UasCode{
 
   }
   
-  void TECsSim::_update_throttle(float throttle_cruise)
+  void TECsSim::_update_throttle(float throttle_cruise,float yaw)
   {
     // Calculate total energy values
     _STE_error = _SPE_dem - _SPE_est + _SKE_dem - _SKE_est;
@@ -296,7 +317,7 @@ namespace UasCode{
       // additional component which scales with (1/cos(bank angle) - 1) to compensate for induced
       // drag increase during turns.
       //float cosPhi = sqrtf((rotMat(0, 1) * rotMat(0, 1)) + (rotMat(1, 1) * rotMat(1, 1)));
-      //STEdot_dem = STEdot_dem + _rollComp * (1.0f / constrain(cosPhi , 0.1f, 1.0f) - 1.0f);
+      STEdot_dem = STEdot_dem + _rollComp * (1.0f / Utils::math::constrain(fabs( cos(yaw) ) , 0.1f, 1.0f) - 1.0f);
       /*
       if (STEdot_dem >= 0) {
 	      ff_throttle = nomThr + STEdot_dem / _STEdot_max * (1.0f - nomThr);
@@ -342,7 +363,7 @@ namespace UasCode{
       // Only use feed-forward component if airspeed is not being used
       if (airspeed_sensor_enabled()) {
 	      _throttle_dem = _throttle_dem + _integ6_state;
-
+              std::cout<<"airspeed_sensor_enabled"<< std::endl;
       } else {
 	      _throttle_dem = ff_throttle;
       }
@@ -473,7 +494,7 @@ namespace UasCode{
  //void TECsSim::update_pitch_throttle(float pitch, float baro_altitude, float hgt_dem, float EAS_dem, float indicated_airspeed, float EAS2TAS, bool climbOutDem, float ptchMinCO,
 				// float throttle_min, float throttle_max, float throttle_cruise,
 				// float pitch_limit_min, float pitch_limit_max)
-void TECsSim::update_pitch_throttle(float pitch, float baro_altitude, float hgt_dem, float EAS_dem, float indicated_airspeed, float EAS2TAS, bool climbOutDem)
+void TECsSim::update_pitch_throttle(float pitch, float yaw,float baro_altitude, float hgt_dem, float EAS_dem, float indicated_airspeed, float EAS2TAS, bool climbOutDem)
  {
    // calculate time in sec since last update
    double now= Utils::GetTimeNow();
@@ -481,7 +502,7 @@ void TECsSim::update_pitch_throttle(float pitch, float baro_altitude, float hgt_
    //std::cout<<"now: "<< now<<" "
    //    <<"last_sec: "<< _update_pitch_throttle_last_sec<< std::endl;
    _DT= std::max((now-_update_pitch_throttle_last_sec),0.)+ t_inc;
-   std::cout<<"_DT: "<< _DT<< std::endl;
+   //std::cout<<"_DT: "<< _DT<< std::endl;
    _update_pitch_throttle_last_sec = now;
 
    // Update the speed estimate using a 2nd order complementary filter
@@ -513,7 +534,7 @@ void TECsSim::update_pitch_throttle(float pitch, float baro_altitude, float hgt_
    _update_energies();
 
    // Calculate throttle demand
-   _update_throttle(throttle_cruise);
+   _update_throttle(throttle_cruise,yaw);
 
    // Detect bad descent due to demanded airspeed being too high
    _detect_bad_descent();

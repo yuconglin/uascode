@@ -85,7 +85,7 @@ int main(int argc,char** argv)
   float speed= 25;
   //float pitch= 0.;
   bool climbOutDem= false;
-  tecs.update_pitch_throttle(pitch, hgt, hgt+100, speed_trim, speed, eas2tas, false);
+  tecs.update_pitch_throttle(pitch, yaw,hgt, hgt+100, speed_trim, speed, eas2tas, false);
     //get
   double dem_pitch= tecs.get_pitch_demand();
   double dem_thr= tecs.get_throttle_demand();

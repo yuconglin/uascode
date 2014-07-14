@@ -61,6 +61,7 @@ class NavigatorSim{
 
    void CopyStatesRec(std::vector<UserStructs::PlaneStateSim>& copy_rec);
    void CopyStatePart(std::vector<UserStructs::StateNode>& copy_rec); 
+   void EnableAirspd();
 
   private:
 

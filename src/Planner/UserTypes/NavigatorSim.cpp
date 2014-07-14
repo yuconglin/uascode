@@ -41,6 +41,10 @@ void NavigatorSim::SetDt(double _dt){
   tecs.SetTinc(_dt);
 }
 
+void NavigatorSim::EnableAirspd(){
+  tecs.enable_airspeed(true);
+}
+
 void NavigatorSim::ClearRec(){ states_rec.clear(); }
 
 void NavigatorSim::PropagateStep(UserStructs::PlaneStateSim& st_start,UserStructs::PlaneStateSim& st_end,arma::vec::fixed<2> pt_A,UserStructs::MissionSimPt& pt_target)
@@ -76,7 +80,7 @@ void NavigatorSim::PropagateStep(UserStructs::PlaneStateSim& st_start,UserStruct
   tecs.update_50hz(st_start.z,accel);
   //tecs.update_1hz(st_start.z,accel(2) );
   //update_pitch_throttle
-  tecs.update_pitch_throttle(st_start.pitch,st_start.z,pt_target.alt,speed_trim,st_start.speed,1.,false);
+  tecs.update_pitch_throttle(st_start.pitch,st_start.yaw,st_start.z,pt_target.alt,speed_trim,st_start.speed,1.,false);
   double dem_pitch= tecs.get_pitch_demand();
   double dem_thr= tecs.get_throttle_demand();
   //std::cout<<"d_pitch: "<< dem_pitch*180/M_PI
