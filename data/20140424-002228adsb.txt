@@ -1,0 +1,72 @@
+time:0 time ref:26549
+
+status: 
+seq: 45 GPSFIX: 1 GPSMode: 0 GPSOK: 0 UTCOK: 0 SatUsed: 0 SBASSatUsed: 0 SatInView: 3 GPSHDOP: -1.08213e+09 count978: 241 count1090: 185 track978: 0 track1090: 6 AutoShutdown: 0 TempTooHigh: 0 Expower: 0 ChargeStatus: 0 BatteryPercent: 75 GSCount: 4 GGA: 0 GLL: 0 GSA: 0 GSV: 1 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+time:0 time ref:26550
+
+status: 
+seq: 46 GPSFIX: 1 GPSMode: 0 GPSOK: 0 UTCOK: 0 SatUsed: 0 SBASSatUsed: 0 SatInView: 3 GPSHDOP: -1.08213e+09 count978: 247 count1090: 187 track978: 0 track1090: 6 AutoShutdown: 0 TempTooHigh: 0 Expower: 0 ChargeStatus: 0 BatteryPercent: 75 GSCount: 4 GGA: 0 GLL: 0 GSA: 0 GSV: 1 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+time:0 time ref:26551
+
+status: 
+seq: 47 GPSFIX: 1 GPSMode: 0 GPSOK: 0 UTCOK: 0 SatUsed: 0 SBASSatUsed: 0 SatInView: 3 GPSHDOP: -1.08213e+09 count978: 253 count1090: 191 track978: 0 track1090: 6 AutoShutdown: 0 TempTooHigh: 0 Expower: 0 ChargeStatus: 0 BatteryPercent: 75 GSCount: 4 GGA: 0 GLL: 0 GSA: 0 GSV: 1 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+time:0 time ref:26552
+
+status: 
+seq: 48 GPSFIX: 1 GPSMode: 0 GPSOK: 0 UTCOK: 0 SatUsed: 0 SBASSatUsed: 0 SatInView: 3 GPSHDOP: -1.08213e+09 count978: 259 count1090: 193 track978: 0 track1090: 6 AutoShutdown: 0 TempTooHigh: 0 Expower: 0 ChargeStatus: 0 BatteryPercent: 75 GSCount: 4 GGA: 0 GLL: 0 GSA: 0 GSV: 1 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+status: 
+seq: 49 GPSFIX: 1 GPSMode: 0 GPSOK: 0 UTCOK: 0 SatUsed: 0 SBASSatUsed: 0 SatInView: 3 GPSHDOP: -1.08213e+09 count978: 265 count1090: 198 track978: 0 track1090: 6 AutoShutdown: 0 TempTooHigh: 0 Expower: 0 ChargeStatus: 0 BatteryPercent: 75 GSCount: 4 GGA: 0 GLL: 0 GSA: 0 GSV: 1 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+time:0 time ref:26554
+
+status: 
+seq: 50 GPSFIX: 1 GPSMode: 0 GPSOK: 0 UTCOK: 0 SatUsed: 0 SBASSatUsed: 0 SatInView: 3 GPSHDOP: -1.08213e+09 count978: 271 count1090: 203 track978: 0 track1090: 6 AutoShutdown: 0 TempTooHigh: 0 Expower: 0 ChargeStatus: 0 BatteryPercent: 75 GSCount: 4 GGA: 0 GLL: 0 GSA: 0 GSV: 1 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+time:0 time ref:26556
+
+time:0 time ref:26557
+
+status: 
+seq: 53 GPSFIX: 1 GPSMode: 0 GPSOK: 0 UTCOK: 0 SatUsed: 0 SBASSatUsed: 0 SatInView: 3 GPSHDOP: -1.08213e+09 count978: 288 count1090: 213 track978: 0 track1090: 6 AutoShutdown: 0 TempTooHigh: 0 Expower: 0 ChargeStatus: 0 BatteryPercent: 75 GSCount: 4 GGA: 0 GLL: 0 GSA: 0 GSV: 1 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+time:0 time ref:26558
+
+status: 
+seq: 54 GPSFIX: 1 GPSMode: 0 GPSOK: 0 UTCOK: 0 SatUsed: 0 SBASSatUsed: 0 SatInView: 3 GPSHDOP: -1.08213e+09 count978: 294 count1090: 217 track978: 0 track1090: 6 AutoShutdown: 0 TempTooHigh: 0 Expower: 0 ChargeStatus: 0 BatteryPercent: 75 GSCount: 4 GGA: 0 GLL: 0 GSA: 0 GSV: 1 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+time:0 time ref:26559
+
+status: 
+seq: 55 GPSFIX: 1 GPSMode: 0 GPSOK: 0 UTCOK: 0 SatUsed: 0 SBASSatUsed: 0 SatInView: 3 GPSHDOP: -1.08213e+09 count978: 300 count1090: 223 track978: 0 track1090: 6 AutoShutdown: 0 TempTooHigh: 0 Expower: 0 ChargeStatus: 0 BatteryPercent: 75 GSCount: 4 GGA: 0 GLL: 0 GSA: 0 GSV: 1 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+time:0 time ref:26560
+
+status: 
+seq: 56 GPSFIX: 1 GPSMode: 0 GPSOK: 0 UTCOK: 0 SatUsed: 0 SBASSatUsed: 0 SatInView: 3 GPSHDOP: -1.08213e+09 count978: 307 count1090: 227 track978: 0 track1090: 6 AutoShutdown: 0 TempTooHigh: 0 Expower: 0 ChargeStatus: 0 BatteryPercent: 75 GSCount: 4 GGA: 0 GLL: 0 GSA: 0 GSV: 1 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+time:0 time ref:26561
+
+status: 
+seq: 57 GPSFIX: 1 GPSMode: 0 GPSOK: 0 UTCOK: 0 SatUsed: 0 SBASSatUsed: 0 SatInView: 3 GPSHDOP: -1.08213e+09 count978: 314 count1090: 234 track978: 0 track1090: 6 AutoShutdown: 0 TempTooHigh: 0 Expower: 0 ChargeStatus: 0 BatteryPercent: 75 GSCount: 4 GGA: 0 GLL: 0 GSA: 0 GSV: 1 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+time:0 time ref:26562
+
+status: 
+seq: 58 GPSFIX: 1 GPSMode: 0 GPSOK: 0 UTCOK: 0 SatUsed: 0 SBASSatUsed: 0 SatInView: 3 GPSHDOP: -1.08213e+09 count978: 321 count1090: 243 track978: 0 track1090: 6 AutoShutdown: 0 TempTooHigh: 0 Expower: 0 ChargeStatus: 0 BatteryPercent: 75 GSCount: 4 GGA: 0 GLL: 0 GSA: 0 GSV: 1 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+time:0 time ref:26563
+
+status: 
+seq: 59 GPSFIX: 1 GPSMode: 0 GPSOK: 0 UTCOK: 0 SatUsed: 0 SBASSatUsed: 0 SatInView: 3 GPSHDOP: -1.08213e+09 count978: 327 count1090: 252 track978: 0 track1090: 6 AutoShutdown: 0 TempTooHigh: 0 Expower: 0 ChargeStatus: 0 BatteryPercent: 75 GSCount: 4 GGA: 0 GLL: 0 GSA: 0 GSV: 1 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+time:0 time ref:26564
+
+status: 
+seq: 60 GPSFIX: 1 GPSMode: 0 GPSOK: 0 UTCOK: 0 SatUsed: 0 SBASSatUsed: 0 SatInView: 3 GPSHDOP: -1.08213e+09 count978: 334 count1090: 260 track978: 0 track1090: 6 AutoShutdown: 0 TempTooHigh: 0 Expower: 0 ChargeStatus: 0 BatteryPercent: 75 GSCount: 4 GGA: 0 GLL: 0 GSA: 0 GSV: 1 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+time:0 time ref:26565
+
+status: 
+seq: 61 GPSFIX: 1 GPSMode: 0 GPSOK: 0 UTCOK: 0 SatUsed: 0 SBASSatUsed: 0 SatInView: 3 GPSHDOP: -1.08213e+09 count978: 339 count1090: 264 track978: 0 track1090: 6 AutoShutdown: 0 TempTooHigh: 0 Expower: 0 ChargeStatus: 0 BatteryPercent: 75 GSCount: 4 GGA: 0 GLL: 0 GSA: 0 GSV: 1 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+time:0 time ref:26566
+
+status: 
+seq: 62 GPSFIX: 1 GPSMode: 0 GPSOK: 0 UTCOK: 0 SatUsed: 0 SBASSatUsed: 0 SatInView: 3 GPSHDOP: -1.08213e+09 count978: 342 count1090: 270 track978: 0 track1090: 6 AutoShutdown: 0 TempTooHigh: 0 Expower: 0 ChargeStatus: 0 BatteryPercent: 75 GSCount: 4 GGA: 0 GLL: 0 GSA: 0 GSV: 1 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+time:0 time ref:26567
+
+status: 
+seq: 63 GPSFIX: 1 GPSMode: 0 GPSOK: 0 UTCOK: 0 SatUsed: 0 SBASSatUsed: 0 SatInView: 3 GPSHDOP: -1.08213e+09 count978: 342 count1090: 275 track978: 0 track1090: 6 AutoShutdown: 0 TempTooHigh: 0 Expower: 0 ChargeStatus: 0 BatteryPercent: 75 GSCount: 4 GGA: 0 GLL: 0 GSA: 0 GSV: 1 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+time:0 time ref:26568
+
+status: 
+seq: 64 GPSFIX: 1 GPSMode: 0 GPSOK: 0 UTCOK: 0 SatUsed: 0 SBASSatUsed: 0 SatInView: 3 GPSHDOP: -1.08213e+09 count978: 343 count1090: 279 track978: 0 track1090: 6 AutoShutdown: 0 TempTooHigh: 0 Expower: 0 ChargeStatus: 0 BatteryPercent: 75 GSCount: 4 GGA: 0 GLL: 0 GSA: 0 GSV: 1 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0

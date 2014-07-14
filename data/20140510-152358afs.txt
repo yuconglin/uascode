@@ -1,0 +1,42 @@
+owner alert:0 address_type:0 address:11259136 33.431 -112.012 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+alert:0 address_type:0 address:11259137 33.4382 -112.013 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+alert:0 address_type:0 address:11259138 33.4442 -111.999 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+owner alert:0 address_type:0 address:11259136 33.431 -112.011 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+alert:0 address_type:0 address:11259137 33.4393 -112.015 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+alert:0 address_type:0 address:11259138 33.4459 -111.997 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+owner alert:0 address_type:0 address:11259136 33.431 -112.01 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+alert:0 address_type:0 address:11259137 33.4404 -112.017 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+alert:0 address_type:0 address:11259138 33.4475 -111.995 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+owner alert:0 address_type:0 address:11259136 33.431 -112.009 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+alert:0 address_type:0 address:11259137 33.4415 -112.02 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+alert:0 address_type:0 address:11259138 33.4491 -111.993 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+owner alert:0 address_type:0 address:11259136 33.431 -112.009 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+alert:0 address_type:0 address:11259137 33.4426 -112.022 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+alert:0 address_type:0 address:11259138 33.4507 -111.991 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+owner alert:0 address_type:0 address:11259136 33.431 -112.008 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+alert:0 address_type:0 address:11259137 33.4437 -112.024 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+alert:0 address_type:0 address:11259138 33.4523 -111.989 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+owner alert:0 address_type:0 address:11259136 33.431 -112.007 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+alert:0 address_type:0 address:11259137 33.4448 -112.027 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+alert:0 address_type:0 address:11259138 33.4539 -111.987 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+owner alert:0 address_type:0 address:11259136 33.431 -112.007 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+alert:0 address_type:0 address:11259137 33.4459 -112.029 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+alert:0 address_type:0 address:11259138 33.4555 -111.985 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+owner alert:0 address_type:0 address:11259136 33.431 -112.006 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+alert:0 address_type:0 address:11259137 33.447 -112.031 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+alert:0 address_type:0 address:11259138 33.4571 -111.983 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+owner alert:0 address_type:0 address:11259136 33.431 -112.005 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+alert:0 address_type:0 address:11259137 33.4481 -112.034 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+alert:0 address_type:0 address:11259138 33.4587 -111.981 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+owner alert:0 address_type:0 address:11259136 33.431 -112.005 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+alert:0 address_type:0 address:11259137 33.4492 -112.036 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+alert:0 address_type:0 address:11259138 33.4603 -111.979 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+owner alert:0 address_type:0 address:11259136 33.431 -112.003 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+alert:0 address_type:0 address:11259137 33.4524 -112.043 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+alert:0 address_type:0 address:11259138 33.4652 -111.974 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+owner alert:0 address_type:0 address:11259136 33.431 -112.002 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+alert:0 address_type:0 address:11259137 33.4535 -112.045 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+alert:0 address_type:0 address:11259138 33.4668 -111.972 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+owner alert:0 address_type:0 address:11259136 33.431 -112.001 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+alert:0 address_type:0 address:11259137 33.4546 -112.048 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+alert:0 address_type:0 address:11259138 33.4684 -111.97 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3

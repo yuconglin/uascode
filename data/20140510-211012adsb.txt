@@ -1,0 +1,1030 @@
+time:15032 time ref:15015
+
+status: 
+seq: 184 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.887 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.6374 -112.438 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.7371 -111.644 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15033 time ref:15016
+
+status: 
+seq: 185 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.886 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.6385 -112.44 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.7388 -111.642 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15034 time ref:15017
+
+status: 
+seq: 186 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.885 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.6396 -112.442 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.7404 -111.64 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15035 time ref:15019
+
+status: 
+seq: 187 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.884 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.6407 -112.445 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.742 -111.638 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15036 time ref:15020
+
+status: 
+seq: 188 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.884 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.6418 -112.447 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.7436 -111.636 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15037 time ref:15021
+
+status: 
+seq: 189 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.883 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.6429 -112.449 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.7452 -111.634 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15038 time ref:15022
+
+status: 
+seq: 190 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.882 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.644 -112.452 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.7468 -111.632 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15039 time ref:15023
+
+status: 
+seq: 191 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.882 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.6451 -112.454 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.7484 -111.63 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15040 time ref:15024
+
+status: 
+seq: 192 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.881 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.6461 -112.456 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.75 -111.628 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15041 time ref:15025
+
+status: 
+seq: 193 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.88 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.6472 -112.459 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.7516 -111.626 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15042 time ref:15026
+
+status: 
+seq: 194 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.88 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259138 33.7532 -111.624 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15043 time ref:15027
+
+status: 
+seq: 195 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.879 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.6494 -112.463 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.7548 -111.622 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15046 time ref:15030
+
+status: 
+seq: 198 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.877 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.6527 -112.47 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.7597 -111.616 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15047 time ref:15031
+
+status: 
+seq: 199 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.876 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259138 33.7613 -111.614 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15048 time ref:15032
+
+status: 
+seq: 200 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.876 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.6549 -112.475 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.7629 -111.612 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15049 time ref:15033
+
+status: 
+seq: 201 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.875 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.656 -112.477 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.7645 -111.61 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15050 time ref:15034
+
+status: 
+seq: 202 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.874 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.6571 -112.48 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.7661 -111.608 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15051 time ref:15035
+
+status: 
+seq: 203 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.873 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.6582 -112.482 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.7677 -111.607 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15052 time ref:15036
+
+status: 
+seq: 204 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.873 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.6593 -112.484 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.7693 -111.605 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15053 time ref:15037
+
+status: 
+seq: 205 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.872 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.6604 -112.487 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.7709 -111.603 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15054 time ref:15038
+
+status: 
+seq: 206 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.871 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.6615 -112.489 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.7726 -111.601 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15055 time ref:15039
+
+status: 
+seq: 207 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.871 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.6626 -112.491 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.7742 -111.599 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15056 time ref:15040
+
+status: 
+seq: 208 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.87 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.6637 -112.494 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.7758 -111.597 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15057 time ref:15041
+
+status: 
+seq: 209 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.869 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.6647 -112.496 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.7774 -111.595 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15058 time ref:15042
+
+status: 
+seq: 210 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.869 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.6658 -112.498 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.779 -111.593 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15059 time ref:15043
+
+status: 
+seq: 211 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.868 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.6669 -112.501 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.7806 -111.591 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15060 time ref:15044
+
+status: 
+seq: 212 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.867 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.668 -112.503 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.7822 -111.589 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15061 time ref:15045
+
+status: 
+seq: 213 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.867 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.6691 -112.505 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.7838 -111.587 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15062 time ref:15046
+
+status: 
+seq: 214 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.866 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.6702 -112.508 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.7854 -111.585 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15063 time ref:15047
+
+status: 
+seq: 215 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.865 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.6713 -112.51 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.787 -111.583 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15064 time ref:15048
+
+status: 
+seq: 216 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.865 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.6724 -112.512 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.7886 -111.581 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15065 time ref:15049
+
+status: 
+seq: 217 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.864 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.6735 -112.515 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.7903 -111.579 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15066 time ref:15050
+
+status: 
+seq: 218 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.863 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.6746 -112.517 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.7919 -111.577 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15067 time ref:15051
+
+status: 
+seq: 219 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.863 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.6757 -112.519 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.7935 -111.575 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15068 time ref:15052
+
+status: 
+seq: 220 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.862 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.6768 -112.522 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.7951 -111.573 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15069 time ref:15053
+
+status: 
+seq: 221 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.861 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.6779 -112.524 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.7967 -111.571 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15071 time ref:15054
+
+status: 
+seq: 222 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.86 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.679 -112.526 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.7983 -111.569 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15072 time ref:15055
+
+status: 
+seq: 223 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.86 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.6801 -112.529 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.7999 -111.567 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15073 time ref:15056
+
+status: 
+seq: 224 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.859 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.6812 -112.531 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8015 -111.565 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15074 time ref:15057
+
+status: 
+seq: 225 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.858 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.6823 -112.533 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8031 -111.564 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15075 time ref:15058
+
+status: 
+seq: 226 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.858 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.6834 -112.536 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8047 -111.562 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15076 time ref:15059
+
+status: 
+seq: 227 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.857 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.6844 -112.538 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8063 -111.56 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15077 time ref:15060
+
+status: 
+seq: 228 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.856 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.6855 -112.54 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.808 -111.558 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15078 time ref:15061
+
+status: 
+seq: 229 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.856 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.6866 -112.543 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8096 -111.556 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15079 time ref:15062
+
+status: 
+seq: 230 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.855 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.6877 -112.545 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8112 -111.554 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15080 time ref:15063
+
+status: 
+seq: 231 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.854 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.6888 -112.547 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8128 -111.552 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15081 time ref:15064
+
+status: 
+seq: 232 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.854 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.6899 -112.55 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8144 -111.55 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15082 time ref:15065
+
+status: 
+seq: 233 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.853 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.691 -112.552 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.816 -111.548 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15083 time ref:15066
+
+status: 
+seq: 234 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.852 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.6921 -112.554 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8176 -111.546 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15084 time ref:15067
+
+status: 
+seq: 235 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.852 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.6932 -112.557 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8192 -111.544 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15085 time ref:15068
+
+owner alert:0 address_type:0 address:11259136 33.431 -111.851 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.6943 -112.559 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8208 -111.542 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15086 time ref:15069
+
+status: 
+seq: 237 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.85 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.6954 -112.561 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8224 -111.54 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15087 time ref:15070
+
+status: 
+seq: 238 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.849 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.6965 -112.564 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8241 -111.538 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15088 time ref:15071
+
+status: 
+seq: 239 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.849 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.6976 -112.566 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8257 -111.536 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15089 time ref:15072
+
+status: 
+seq: 240 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.848 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.6987 -112.568 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8273 -111.534 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15090 time ref:15073
+
+status: 
+seq: 241 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.847 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.6998 -112.571 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8289 -111.532 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15091 time ref:15074
+
+status: 
+seq: 242 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.847 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.7009 -112.573 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8305 -111.53 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15092 time ref:15075
+
+status: 
+seq: 243 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.846 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.702 -112.575 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8321 -111.528 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15093 time ref:15076
+
+status: 
+seq: 244 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.845 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.703 -112.578 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8337 -111.526 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15094 time ref:15077
+
+status: 
+seq: 245 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.845 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.7041 -112.58 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8353 -111.524 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15095 time ref:15078
+
+status: 
+seq: 246 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.844 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.7052 -112.582 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8369 -111.522 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15096 time ref:15079
+
+status: 
+seq: 247 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.843 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.7063 -112.585 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8385 -111.521 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15097 time ref:15080
+
+status: 
+seq: 248 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.843 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.7074 -112.587 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8401 -111.519 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15098 time ref:15081
+
+status: 
+seq: 249 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.842 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.7085 -112.589 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8418 -111.517 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15099 time ref:15082
+
+status: 
+seq: 250 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.841 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.7096 -112.592 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8434 -111.515 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15100 time ref:15083
+
+status: 
+seq: 251 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.841 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.7107 -112.594 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.845 -111.513 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+status: 
+seq: 252 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.84 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.7118 -112.596 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8466 -111.511 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15102 time ref:15085
+
+status: 
+seq: 253 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.839 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.7129 -112.599 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8482 -111.509 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15103 time ref:15086
+
+status: 
+seq: 254 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.838 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.714 -112.601 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8498 -111.507 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15104 time ref:15087
+
+status: 
+seq: 255 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.838 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.7151 -112.603 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8514 -111.505 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15105 time ref:15088
+
+status: 
+seq: 0 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.837 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.7162 -112.606 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.853 -111.503 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15106 time ref:15089
+
+status: 
+seq: 1 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.836 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.7173 -112.608 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8546 -111.501 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15107 time ref:15091
+
+status: 
+seq: 2 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.836 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.7184 -112.61 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8562 -111.499 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15108 time ref:15092
+
+owner alert:0 address_type:0 address:11259136 33.431 -111.835 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259138 33.8578 -111.497 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15109 time ref:15093
+
+status: 
+seq: 4 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.834 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.7206 -112.615 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8595 -111.495 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15110 time ref:15094
+
+status: 
+seq: 5 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.834 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.7217 -112.617 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8611 -111.493 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15111 time ref:15095
+
+status: 
+seq: 6 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.833 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.7227 -112.62 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8627 -111.491 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15112 time ref:15096
+
+status: 
+seq: 7 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.832 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.7238 -112.622 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8643 -111.489 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15113 time ref:15097
+
+status: 
+seq: 8 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.832 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.7249 -112.624 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8659 -111.487 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15114 time ref:15098
+
+status: 
+seq: 9 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.831 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.726 -112.627 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8675 -111.485 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15115 time ref:15099
+
+status: 
+seq: 10 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.83 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.7271 -112.629 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8691 -111.483 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15116 time ref:15100
+
+status: 
+seq: 11 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.83 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.7282 -112.632 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8707 -111.481 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15117 time ref:15101
+
+status: 
+seq: 12 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.829 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.7293 -112.634 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8723 -111.479 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15118 time ref:15102
+
+status: 
+seq: 13 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.828 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.7304 -112.636 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8739 -111.477 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15119 time ref:15103
+
+status: 
+seq: 14 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.827 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.7315 -112.639 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8755 -111.475 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15120 time ref:15104
+
+status: 
+seq: 15 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.827 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.7326 -112.641 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8772 -111.473 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15121 time ref:15105
+
+status: 
+seq: 16 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.826 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.7337 -112.643 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8788 -111.471 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15122 time ref:15106
+
+status: 
+seq: 17 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.825 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.7348 -112.646 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8804 -111.47 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15123 time ref:15107
+
+status: 
+seq: 18 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.825 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.7359 -112.648 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+time:15124 time ref:15108
+
+status: 
+seq: 19 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.824 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.737 -112.65 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8836 -111.466 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15125 time ref:15109
+
+status: 
+seq: 20 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.823 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.7381 -112.653 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8852 -111.464 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15126 time ref:15110
+
+status: 
+seq: 21 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.823 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.7392 -112.655 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8868 -111.462 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15127 time ref:15111
+
+status: 
+seq: 22 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.822 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.7403 -112.657 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8884 -111.46 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15128 time ref:15112
+
+status: 
+seq: 23 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.821 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.7414 -112.66 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+time:15129 time ref:15113
+
+status: 
+seq: 24 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.821 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.7424 -112.662 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8916 -111.456 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+status: 
+seq: 25 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.82 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.7435 -112.664 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8932 -111.454 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15131 time ref:15115
+
+status: 
+seq: 26 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.819 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.7446 -112.667 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8949 -111.452 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15132 time ref:15116
+
+status: 
+seq: 27 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.819 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.7457 -112.669 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8965 -111.45 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15133 time ref:15117
+
+status: 
+seq: 28 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.818 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.7468 -112.671 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8981 -111.448 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15134 time ref:15118
+
+status: 
+seq: 29 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.817 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.7479 -112.674 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.8997 -111.446 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15135 time ref:15119
+
+status: 
+seq: 30 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.817 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.749 -112.676 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.9013 -111.444 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15136 time ref:15120
+
+status: 
+seq: 31 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.816 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.7501 -112.678 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.9029 -111.442 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15137 time ref:15121
+
+status: 
+seq: 32 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.815 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.7512 -112.681 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.9045 -111.44 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15138 time ref:15122
+
+status: 
+seq: 33 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+owner alert:0 address_type:0 address:11259136 33.431 -111.814 101375 Mi:11 NIC:1 NACp:0 v:120 vv:0 hd:90 5 UA787   0 1
+
+alert:0 address_type:0 address:11259137 33.7523 -112.683 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.9061 -111.438 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+
+time:15139 time ref:15123
+
+status: 
+seq: 34 GPSFIX: 3 GPSMode: 1 GPSOK: 1 UTCOK: 1 SatUsed: 6 SBASSatUsed: 1 SatInView: 11 GPSHDOP: 1.07005e+09 count978: 11 count1090: 34 track978: 9 track1090: 13 AutoShutdown: 0 TempTooHigh: 0 Expower: 1 ChargeStatus: 1 BatteryPercent: 98 GSCount: 8 GGA: 0 GLL: 0 GSA: 0 GSV: 0 RMC: 0 VTC: 0 MaxSupport: 100 MaxReport: 100 LEDLevel: 255 DataBurst: 0 PitchOffset: 0
+alert:0 address_type:0 address:11259137 33.7534 -112.685 34000 Mi:11 NIC:1 NACp:0 v:485 vv:0 hd:299.531 5 SW757   0 3
+
+alert:0 address_type:0 address:11259138 33.9077 -111.436 36000 Mi:11 NIC:1 NACp:0 v:495 vv:0 hd:45 5 KLM319  0 3
+

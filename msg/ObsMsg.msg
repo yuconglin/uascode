@@ -1,0 +1,11 @@
+Header header
+int32 address
+float32 x1
+float32 x2
+float32 x3
+float32 head_xy
+float32 speed
+float32 v_vert
+float32 t
+float32 r
+float32 hr
