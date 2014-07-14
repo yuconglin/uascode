@@ -184,8 +184,8 @@ namespace UasCode{
       _TAS_dem     = _TASmin;
     }
 
-    double velRateMax = 0.5*_STEdot_max / _integ5_state;
-    double velRateMin = 0.5*_STEdot_min / _integ5_state;
+    double velRateMax = 0.5*_STEdot_max / _integ5_state * 1.0;
+    double velRateMin = 0.5*_STEdot_min / _integ5_state * 1.0;
 
     // Apply rate limit
     if ((_TAS_dem - _TAS_dem_adj) > (velRateMax * _DT))
@@ -213,6 +213,8 @@ namespace UasCode{
     // Constrain speed demand again to protect against bad values on initialisation.
     _TAS_dem_adj = Utils::math::constrain(_TAS_dem_adj, _TASmin, _TASmax);
     //std::cout<<"_TAS_dem_adj: "<< _TAS_dem_adj << std::endl;
+    std::cout<<"velRateMax: "<< velRateMax 
+	    <<" velRateMin: "<< velRateMin << std::endl;
     _TAS_dem_last = _TAS_dem;
   }
 
@@ -227,8 +229,8 @@ namespace UasCode{
     } else if (_hgt_rate_dem < -_maxSinkRate) {
 	    _hgt_rate_dem = -_maxSinkRate;
     } 
-    std::cout << "_hgt_dem_adj: "<< _hgt_dem_adj 
-	    <<" state: " << state << std::endl;
+    //std::cout << "_hgt_dem_adj: "<< _hgt_dem_adj 
+    //	    <<" state: " << state << std::endl;
     /*
     _hgt_dem = demand;
     _hgt_dem = 0.5f * (_hgt_dem + _hgt_dem_in_old);

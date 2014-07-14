@@ -10,7 +10,7 @@ using namespace UasCode;
 
 int main(int argc,char** argv)
 {
-  NavigatorSim navigator("fs_action2.txt","fs_state2.txt");
+  NavigatorSim navigator("fs_action.txt","fs_state.txt");
   //parameters
   double _Tmax= 12.49*CONSTANT_G;
   //double _Tmax= 5*CONSTANT_G;
@@ -36,7 +36,7 @@ int main(int argc,char** argv)
   navigator.SetSpeedTrim(_speed_trim);
   //navigator.EnableAirspd();
   /****read start state****/
-  std::ifstream start_file("/home/yucong/ros_workspace/uascode/bin/sitl_state2.txt");
+  std::ifstream start_file("/home/yucong/ros_workspace/uascode/bin/sitl_state1.txt");
   double t_now,lon_f,lat_f,hgt_f,speed_f,x_f,y_f,hd_f,roll_f,pitch_f,yaw_f,ax_f,ay_f,az_f,dvz_f;
   for(int i=0;i!=1;++i){
     start_file >> t_now
@@ -53,9 +53,9 @@ int main(int argc,char** argv)
   arma::vec::fixed<2> pt_A, pt_B;
 //1405185947.83948 -111.92720 33.42759 734.04000 26.47640 413803.76236 3699075.94730 13.00000 -0.73547 0.23162 0.22899 -100.00000 547.00000 -707.00000 -16.66667
   double lon= lon_f, lat= lat_f;
-  //double lat1= 33.421964, lon1= -111.940082;//wp 1
-  double lat1= 33.414728, lon1= -111.939738;//wp 2
-  pt_A << 33.421964 << -111.940082;
+  double lat1= 33.421964, lon1= -111.940082;//wp 1
+  //double lat1= 33.414728, lon1= -111.939738;//wp 2
+  pt_A << lat_f << lon_f; //here needs to be changed
   pt_B << lat1 << lon1;
 
   double hgt= hgt_f;
