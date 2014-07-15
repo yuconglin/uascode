@@ -1,6 +1,6 @@
 #include "MavlinkTCP.hpp"
 //#include "yc_common/mavlink.h"
-#include "ros/ros.h"
+//#include "ros/ros.h"
 //for socket
 #include <netdb.h>
 #include <sys/socket.h>

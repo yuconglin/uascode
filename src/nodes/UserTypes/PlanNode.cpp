@@ -1,4 +1,7 @@
 #include "PlanNode.hpp"
+#include "common/UserStructs/constants.h"
+#include "Planner/UserTypes/Sampler/SamplerPole.hpp"
+#include "common/Utils/GetTimeUTC.h"
 //std
 #include <iostream>
 #include <iomanip>
@@ -37,7 +40,7 @@ namespace UasCode{
   //set
   path_gen.NavUpdaterParams(_Tmax,mpitch_rate,myaw_rate,_Muav,_max_speed,_min_speed,_max_pitch,_min_pitch);
 
-  path_gen.NavTecsReadParams("parameters.txt");
+  path_gen.NavTecsReadParams("/home/yucong/ros_workspace/uascode/bin/parameters.txt");
   path_gen.NavL1SetRollLim(10./180*M_PI);
   path_gen.NavSetDt(dt);
   path_gen.NavSetSpeedTrim(_speed_trim);
@@ -63,7 +66,8 @@ namespace UasCode{
     { //callback once
       ros::spinOnce();
       //print to examine subscribers
-
+      
+      /*
       //only need to react when obstacles present
       if(!obss.empty())
       {
@@ -120,7 +124,7 @@ namespace UasCode{
 	}//switch ends
       }//if obss not empty() ends
       
-      goal_pre= goal_posi; 
+      goal_pre= goal_posi; */
       r.sleep();
     }//while ends
 
@@ -142,6 +146,7 @@ namespace UasCode{
 	    msg->MultiObs[i].t,
 	    msg->MultiObs[i].r,0,
 	    msg->MultiObs[i].hr,0);
+      std::cout << obs3d.x1 << std::endl;
       obss.push_back(obs3d);
     }//for ends
 
@@ -156,14 +161,14 @@ namespace UasCode{
       global_posi.speed= msg->speed;
   }
   
-  void PlanNode::attCb(const uascode::PlaneAttitude& msg)
+  void PlanNode::attCb(const uascode::PlaneAttitude::ConstPtr& msg)
   {
      plane_att.roll= msg->roll; 
      plane_att.pitch= msg->pitch;
      plane_att.yaw= msg->yaw;
   }
   
-  void PlanNode::goalCb(const uascode::PosSetPoint& msg)
+  void PlanNode::goalCb(const uascode::PosSetPoint::ConstPtr& msg)
   {
      goal_posi.lat= msg->lat;
      goal_posi.lon= msg->lon;
@@ -172,7 +177,7 @@ namespace UasCode{
 
   void PlanNode::GetCurrentSt()
   {
-     st_current.t=GetTimeUTC();
+     st_current.t= Utils::GetTimeUTC();
      st_current.lat= global_posi.lat;
      st_current.lon= global_posi.lon;
      //get x,y
@@ -194,12 +199,12 @@ namespace UasCode{
 
   }
 
-  void PlanNode::GetGoalWP()
+  void PlanNode::GetGoalWp()
   {
     goal_wp= UserStructs::MissionSimPt(goal_posi.lat,goal_posi.lon,goal_posi.alt,0.,wp_r,0,0,200,250,20); 
     goal_wp.GetUTM();
   }
-
+  /*
   bool PlanNode::CheckGoalChange()
   {
     if(fabs(goal_wp.lat-goal_pre.lat)> 0.0001 ||
@@ -208,6 +213,6 @@ namespace UasCode{
      return true;
     return false;
 
-  }
+  } */
 
 };//namespace ends

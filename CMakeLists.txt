@@ -66,6 +66,7 @@ rosbuild_add_library(other_utils
           src/common/UserTypes/MavlinkReceiver.cpp
 	  src/common/UserTypes/MavlinkTCP.cpp
 	  src/common/UserTypes/MavlinkSender.cpp
+          src/common/UserTypes/ObsFromFile.cpp
   )
 
 #########library for the path planner
@@ -85,6 +86,11 @@ rosbuild_add_library(planner
  src/Planner/Utils/DubinsLength2.cpp
  src/Planner/Utils/DubinsLength3D.cpp
  )
+
+##########library for nodes
+rosbuild_add_library(nodes1
+src/nodes/UserTypes/PlanNode.cpp
+)
 
  #########other libs
 rosbuild_add_library(otherlibs
@@ -128,6 +134,14 @@ target_link_libraries(mavlinktcp_log other_utils ${GeographicLib_LIBRARIES})
 #test in poly
 #rosbuild_add_executable(polyin_test src/Planner/Utils/test_pointinpoly.cpp)
 #target_link_libraries(polyin_test planner)
+
+#test obs from file
+rosbuild_add_executable(test_obsfile src/common/UserTypes/test_obsfromfile.cpp)
+target_link_libraries(test_obsfile other_utils ${GeographicLib_LIBRARIES})
+
+#test plan_node
+rosbuild_add_executable(test_PlanNode src/nodes/UserTypes/test_PlanNode.cpp)
+target_link_libraries(test_PlanNode nodes1 planner other_utils otherlibs ${ARMADILLO_LIBRARIES} ${GeographicLib_LIBRARIES})
 
 #other test
 rosbuild_add_executable(other_test src/common/Test/main_test.cpp)

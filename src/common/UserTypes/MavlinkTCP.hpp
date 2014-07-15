@@ -1,5 +1,5 @@
 #pragma once
-#include "ros/ros.h"
+//#include "ros/ros.h"
 #include "yc_common/mavlink.h"
 //#include "ardupilotmega/mavlink.h"
 //for socket

@@ -1,6 +1,8 @@
 #include "MavlinkTCP.hpp"
+#include <iostream>
 
 using namespace UasCode;
+
 int main(int argc,char** argv)
 {
  MavlinkTCP mavlink_tcp;

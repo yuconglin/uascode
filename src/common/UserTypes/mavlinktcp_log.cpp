@@ -3,6 +3,9 @@
 #include "common/Utils/GetTimeUTC.h"
 #include "common/Utils/UTMtransform.h"
 #include <fstream>
+#include <cmath>
+#include <iostream>
+#include <iomanip>
 
 using namespace std;
 using namespace UasCode;

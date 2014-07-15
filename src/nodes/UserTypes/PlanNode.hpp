@@ -1,13 +1,13 @@
 #pragma once
 //user_types
-#include "PathGenerator.hpp"
+#include "Planner/UserTypes/PathGenerator.hpp"
 //user structs
 #include "Planner/UserStructs/PlaneStateSim.h"
 #include "Planner/UserStructs/obstacle3D.h"
 #include "Planner/UserStructs/MissionSimPt.h"
-#include "UserStructs/GlobalPosi.h"
-#include "UserStructs/PlaneAtt.h"
-#include "UserStructs/GoalSetPt.h"
+#include "nodes/UserStructs/GlobalPosi.h"
+#include "nodes/UserStructs/PlaneAtt.h"
+#include "nodes/UserStructs/GoalSetPt.h"
 //ros msg header
 #include "uascode/PosSetPoint.h"
 #include "uascode/GlobalPos.h" //next to create the ros msgs
@@ -28,7 +28,7 @@ class PlanNode{
    void SetTimeLimit(const double _t_limit);
    inline void SetWpR(const double _r){this->wp_r= _r;}
    //working part
-   int working();
+   void working();
 
  private:
    enum possible_cases{NORMAL,PATH_READY,PATH_GEN,PATH_CHECK,PATH_RECHECK,WAIT_STATE,ARRIVED};
