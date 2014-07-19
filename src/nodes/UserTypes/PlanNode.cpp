@@ -16,7 +16,9 @@ namespace UasCode{
     sub_obss= nh.subscribe("multi_obstacles",100,&PlanNode::obssCb,this);
     sub_pos= nh.subscribe("global_position",100,&PlanNode::posCb,this);
     sub_att= nh.subscribe("plane_att",100,&PlanNode::attCb,this);
-    sub_goal= nh.subscribe("position_setpoint",100,&PlanNode::goalCb,this);
+    //sub_goal= nh.subscribe("position_setpoint",100,&PlanNode::goalCb,this);
+    sub_IfRec= nh.subscribe("interwp_receive",100,&PlanNode::ifRecCb,this);
+    sub_accel= nh.subscribe("accel_raw_imu",100,&PlanNode::AccelCb,this);
     //parameters for controllers
     path_gen.SetTimeLimit(1.0);
     path_gen.SetNinter(5);
@@ -24,29 +26,29 @@ namespace UasCode{
     path_gen.SetInRos(true);
     //set wp_r
     wp_r =30;
-//parameters for the navigator
-  //parameters
-  double _Tmax= 6*UasCode::CONSTANT_G;
-  double _Muav= 3; //kg
-  double myaw_rate= 10./180*M_PI;
-  double mpitch_rate= 5./180*M_PI;
-  double _max_speed= 14; //m/s
-  double _min_speed= 7; //m/s
-  double _max_pitch= 20./180*M_PI;
-  double _min_pitch= -20./180*M_PI;
-  
-  double dt= 1.;
-  double _speed_trim= 9.;
-  //set
-  path_gen.NavUpdaterParams(_Tmax,mpitch_rate,myaw_rate,_Muav,_max_speed,_min_speed,_max_pitch,_min_pitch);
+    if_receive= false;
+    //parameters for the navigator
+    //parameters
+    double _Tmax= 12.49*UasCode::CONSTANT_G;
+    double _Muav= 29.2; //kg
+    double myaw_rate= 20./180*M_PI;
+    double mpitch_rate= 10./180*M_PI;
+    double _max_speed= 30; //m/s
+    double _min_speed= 10; //m/s
+    double _max_pitch= 25./180*M_PI;
+    double _min_pitch= -20./180*M_PI;
 
-  path_gen.NavTecsReadParams("/home/yucong/ros_workspace/uascode/bin/parameters.txt");
-  path_gen.NavL1SetRollLim(10./180*M_PI);
-  path_gen.NavSetDt(dt);
-  path_gen.NavSetSpeedTrim(_speed_trim);
-  //set sampler parameters
-  path_gen.SetSampler(new UserTypes::SamplerPole() );
+    double dt= 1.;
+    double _speed_trim= _max_speed;
+    //set
+    path_gen.NavUpdaterParams(_Tmax,mpitch_rate,myaw_rate,_Muav,_max_speed,_min_speed,_max_pitch,_min_pitch);
 
+    path_gen.NavTecsReadParams("/home/yucong/ros_workspace/uascode/bin/parameters_sitl.txt");
+    path_gen.NavL1SetRollLim(40./180*M_PI);
+    path_gen.NavSetDt(dt);
+    path_gen.NavSetSpeedTrim(_speed_trim);
+    //set sampler parameters
+    path_gen.SetSampler(new UserTypes::SamplerPole() );
 
   }//constructor ends
 
@@ -59,72 +61,80 @@ namespace UasCode{
   void PlanNode::working()
   {
     possible_cases situ= NORMAL;
+
     UserStructs::GoalSetPt goal_pre;
+    //UserStructs::MissionSimPt inter_wp;
 
     ros::Rate r(10);
     while(ros::ok() )
     { //callback once
       ros::spinOnce();
-      //print to examine subscribers
-      
-      /*
+
       //only need to react when obstacles present
-      if(!obss.empty())
+      //if(!obss.empty())//this needs to be changed to collision prediction
+      if(0)//for test ros msg receiving
       {
-	GetGoalWp();
-        if(CheckGoalChange() )
-	  situ= NORMAL;
-	//for diffrent cases
-	switch(situ){
-	 case NORMAL:
+        GetGoalWp();
+        //if(CheckGoalChange() )
+        situ= NORMAL;
+        //for diffrent cases
+        switch(situ){
+        case NORMAL:
           //get current state
-	  GetCurrentSt();
-          //GetGoalWp();	
+          GetCurrentSt();
+          //GetGoalWp();
           //set for path_gen
-	  //set start state and goal waypoint
+          //set start state and goal waypoint
           path_gen.SetInitState(st_current.SmallChange(t_limit));
           path_gen.SetGoalWp(goal_wp);
-	  path_gen.SetSampleParas();
-	  path_gen.SetObs(obss);
+          path_gen.SetSampleParas();
+          path_gen.SetObs(obss);
           //to generate feasible paths
           path_gen.AddPaths();
-	  situ= PATH_CHECK;
-	  break;
-
-	 case PATH_CHECK:
-	  GetCurrentSt();
-          UserStructs::MissionSimPt inter_wp;
-          if(path_gen.PathCheckRepeat(st_current))
-	  {
-           std::cout<<"check ok" << std::endl;
-           inter_wp= path_gen.GetInterWp();
-	   //uascode::PosSetPoint set_pt;
-	   set_pt.lat= inter_wp.lat;
-	   set_pt.lon= inter_wp.lon;
-	   set_pt.alt= inter_wp.alt;
-	   //this will be sent to pixhawk by MavlinkReceiver node
-	   pub_interwp.publish(set_pt);
-	   //situ= PATH_READY;
-	   situ= PATH_RECHECK;
-	  }
-	  else
-	   situ= NORMAL;
+          situ= PATH_CHECK;
           break;
 
-         case PATH_READY:
-          
-	  break;
-
-         case PATH_RECHECK:
+        case PATH_CHECK:
+        {
           GetCurrentSt();
-          if(path_gen.PathCheckSingle(st_current) )
-	    situ= NORMAL;
-	  break;
-         
-	}//switch ends
+          UserStructs::MissionSimPt inter_wp;
+          if(path_gen.PathCheckRepeat(st_current))
+          {
+           std::cout<<"check ok" << std::endl;
+           inter_wp= path_gen.GetInterWp();
+
+           set_pt.lat= inter_wp.lat;
+           set_pt.lon= inter_wp.lon;
+           set_pt.alt= inter_wp.alt;
+
+           //here we need to add a flag to test if the waypoint is received
+           situ= PATH_READY;
+           //situ= PATH_RECHECK;
+          }
+          else
+           situ= NORMAL;
+           break;
+        }
+        case PATH_READY:
+          if(!if_receive)
+           //this will be sent to pixhawk by MavlinkReceiver node
+           pub_interwp.publish(set_pt);
+          else
+           situ= PATH_RECHECK;
+           break;
+
+        case PATH_RECHECK:
+           GetCurrentSt();
+           if(path_gen.PathCheckSingle(st_current) )
+             situ= NORMAL;
+           break;
+
+        default:
+           break;
+        }//switch ends
       }//if obss not empty() ends
       
-      goal_pre= goal_posi; */
+      //goal_pre= goal_posi;
       r.sleep();
     }//while ends
 
@@ -137,7 +147,7 @@ namespace UasCode{
     for(int i=0;i!= msg->MultiObs.size();++i)
     {
       UserStructs::obstacle3D obs3d(
-            msg->MultiObs[i].x1,
+        msg->MultiObs[i].x1,
 	    msg->MultiObs[i].x2,
 	    msg->MultiObs[i].head_xy,
 	    msg->MultiObs[i].speed,
@@ -146,7 +156,7 @@ namespace UasCode{
 	    msg->MultiObs[i].t,
 	    msg->MultiObs[i].r,0,
 	    msg->MultiObs[i].hr,0);
-      std::cout << obs3d.x1 << std::endl;
+      std::cout << "obstacle: "<< obs3d.x1 << std::endl;
       obss.push_back(obs3d);
     }//for ends
 
@@ -159,6 +169,14 @@ namespace UasCode{
       global_posi.alt= msg->alt;
       global_posi.cog= msg->cog;
       global_posi.speed= msg->speed;
+
+      std::cout<< "global_posi:"
+               << global_posi.lat<< " "
+               << global_posi.lon<< " "
+               << global_posi.alt<< " "
+               << global_posi.cog<< " "
+               << global_posi.speed
+               << std::endl;
   }
   
   void PlanNode::attCb(const uascode::PlaneAttitude::ConstPtr& msg)
@@ -166,13 +184,39 @@ namespace UasCode{
      plane_att.roll= msg->roll; 
      plane_att.pitch= msg->pitch;
      plane_att.yaw= msg->yaw;
+
+     std::cout<< "plane_att:"
+              << plane_att.roll<< " "
+              << plane_att.pitch<< " "
+              << plane_att.yaw
+              << std::endl;
   }
   
+  /*
   void PlanNode::goalCb(const uascode::PosSetPoint::ConstPtr& msg)
   {
      goal_posi.lat= msg->lat;
      goal_posi.lon= msg->lon;
      goal_posi.alt= msg->alt;
+  } */
+
+  void PlanNode::ifRecCb(const uascode::IfRecMsg::ConstPtr &msg)
+  {
+     if_receive= msg->receive;
+
+     std::cout<< "if receive= "<< if_receive << std::endl;
+  }
+
+  void PlanNode::AccelCb(const uascode::AccelXYZ::ConstPtr &msg)
+  {
+     accel_xyz.ax= msg->ax;
+     accel_xyz.ay= msg->ay;
+     accel_xyz.az= msg->az;
+
+     std::cout<<"accel from raw imu: "
+              << accel_xyz.ax <<" "
+              << accel_xyz.ay <<" "
+              << accel_xyz.az << std::endl;
   }
 
   void PlanNode::GetCurrentSt()
@@ -215,4 +259,4 @@ namespace UasCode{
 
   } */
 
-};//namespace ends
+}//namespace ends

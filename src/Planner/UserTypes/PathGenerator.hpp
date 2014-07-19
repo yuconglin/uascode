@@ -31,7 +31,7 @@ class PathGenerator{
    inline void SetPlot(bool _if_plot){this->if_for_plot= _if_plot;}
    void SetObs(const std::vector<UserStructs::obstacle3D>& _obs3ds);
    //start state and goal wp
-   void SetInitState(UserStructs::PlaneStateSim& _st);
+   void SetInitState(UserStructs::PlaneStateSim _st);
    void SetGoalWp(UserStructs::MissionSimPt& _pt);
    void SetInterState(UserStructs::PlaneStateSim& _st);
    void SetSampleMethod(int _method);

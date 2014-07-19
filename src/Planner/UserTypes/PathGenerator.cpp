@@ -57,7 +57,7 @@ namespace UasCode{
     this->navigator.SetInserInterv(_N);
   }
   //set the start state
-  void PathGenerator::SetInitState(UserStructs::PlaneStateSim& _st)
+  void PathGenerator::SetInitState(UserStructs::PlaneStateSim _st)
   {
     this->st_start= _st; 
     if_start_set= true;

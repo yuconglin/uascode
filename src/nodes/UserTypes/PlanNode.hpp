@@ -8,11 +8,16 @@
 #include "nodes/UserStructs/GlobalPosi.h"
 #include "nodes/UserStructs/PlaneAtt.h"
 #include "nodes/UserStructs/GoalSetPt.h"
+#include "nodes/UserStructs/AccelXYZ.h"
 //ros msg header
 #include "uascode/PosSetPoint.h"
 #include "uascode/GlobalPos.h" //next to create the ros msgs
 #include "uascode/PlaneAttitude.h"
 #include "uascode/MultiObsMsg.h"
+#include "uascode/IfRecMsg.h"
+#include "uascode/AccelXYZ.h"
+
+#include "ros/ros.h"
 //std lib
 #include <vector>
 
@@ -42,6 +47,10 @@ class PlanNode{
    UserStructs::PlaneAtt plane_att;
    //goal set point
    UserStructs::GoalSetPt goal_posi;
+   //ACCEL
+   UserStructs::AccelXYZ accel_xyz;
+   //to see if the sent waypoint was received
+   bool if_receive;
    //wp ros msg to send
    uascode::PosSetPoint set_pt;
    //obstacles
@@ -60,12 +69,17 @@ class PlanNode{
    ros::Subscriber sub_obss;
    ros::Subscriber sub_pos;
    ros::Subscriber sub_att;
-   ros::Subscriber sub_goal;
+   ros::Subscriber sub_IfRec;
+   ros::Subscriber sub_accel;
+   //ros::Subscriber sub_goal;
    //callback functions
    void obssCb(const uascode::MultiObsMsg::ConstPtr& msg);
    void posCb(const uascode::GlobalPos::ConstPtr& msg);
    void attCb(const uascode::PlaneAttitude::ConstPtr& msg);
-   void goalCb(const uascode::PosSetPoint::ConstPtr& msg);
+   //void goalCb(const uascode::PosSetPoint::ConstPtr& msg);
+   void ifRecCb(const uascode::IfRecMsg::ConstPtr& msg);
+   void AccelCb(const uascode::AccelXYZ::ConstPtr& msg);
+   //void accelCb(const )
    //other functions
    void GetCurrentSt();
    void GetGoalWp();

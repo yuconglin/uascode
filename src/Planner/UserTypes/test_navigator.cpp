@@ -14,7 +14,8 @@ int main(int argc,char** argv)
   //parameters
   double _Tmax= 12.49*CONSTANT_G;
   //double _Tmax= 5*CONSTANT_G;
-  double _Muav= 29.2; //kg
+  //double _Muav= 29.2; //kg
+  double _Muav= 10;
   double myaw_rate= 20./180*M_PI;
   double mpitch_rate= 10./180*M_PI;
   double _max_speed= 30; //m/s

@@ -53,7 +53,6 @@ namespace UasCode{
         for(int i=0;i!= obs_num;++i){
           obss_msg.MultiObs.push_back(ObsToRosMsg(obss[i]));
         }
-
         //ros publish
         pub_obss.publish(obss_msg);
         std::cout<< "pub obss" << std::endl;

@@ -10,3 +10,5 @@ lib
 *.gitignore~
 *.swp
 *.txt~
+src/uascode/msg
+*.txt

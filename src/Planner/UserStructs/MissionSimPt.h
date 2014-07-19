@@ -33,9 +33,10 @@ struct MissionSimPt{
   double alt_rec;//alttitude. acutally, when arrived, the uav should be 0.1h_rec,0.1v_rec,0.5alt 
 
   //constructor
-  MissionSimPt():lat(0.),lon(0.),alt(0.),yaw(0.),r(0.),x(0.),y(0.),h_rec(0.),v_rec(0.),alt_rec(0.){};
+  MissionSimPt():lat(0.),lon(0.),alt(0.),yaw(0.),r(0.),x(0.),y(0.),h_rec(0.),v_rec(0.),alt_rec(0.){}
   
-  MissionSimPt(double _lat,double _lon,float _alt,float _yaw,float _r,double _x,double _y,double _h,double _v,double _alt_rec):lat(_lat),lon(_lon),alt(_alt),yaw(_yaw),r(_r),x(_x),y(_y),h_rec(_h),v_rec(_v),alt_rec(_alt_rec){ };
+  MissionSimPt(double _lat,double _lon,float _alt,float _yaw,float _r,double _x,double _y,double _h,double _v,double _alt_rec):
+      lat(_lat),lon(_lon),alt(_alt),yaw(_yaw),r(_r),x(_x),y(_y),h_rec(_h),v_rec(_v),alt_rec(_alt_rec){ }
 
   void GetUTM(){
    Utils::ToUTM(lon,lat,x,y);
