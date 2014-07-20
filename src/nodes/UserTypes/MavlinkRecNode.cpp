@@ -11,6 +11,7 @@ MavlinkRecNode::MavlinkRecNode()
   pub_att= nh.advertise<uascode::PlaneAttitude>("plane_att",100);
   pub_IfRec= nh.advertise<uascode::IfRecMsg>("interwp_receive",100);
   pub_accel= nh.advertise<uascode::AccelXYZ>("accel_raw_imu",100);
+  pub_wp_current= nh.advertise<uascode::WpCurrent>("waypoint_current",100);
 }
 
 MavlinkRecNode::~MavlinkRecNode(){}
@@ -74,6 +75,15 @@ void MavlinkRecNode::working()
          plane_att.yaw= att_t.yaw;
          pub_att.publish(plane_att);
        }
+       //IF CURRENT WAYPOINT RECEIVED
+       if(msg.msgid == MAVLINK_MSG_ID_MISSION_CURRENT)
+       {
+         mavlink_mission_current_t current_t;
+         mavlink_msg_mission_current_decode(&msg,&current_t);
+         wp_current.wp_current= current_t.seq;
+         pub_wp_current.publish(wp_current);
+       }
+
      }
 
      //r.sleep();

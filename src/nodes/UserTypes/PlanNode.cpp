@@ -5,6 +5,7 @@
 //std
 #include <iostream>
 #include <iomanip>
+#include <fstream>
 
 namespace UasCode{
 //constructor
@@ -19,6 +20,7 @@ namespace UasCode{
     //sub_goal= nh.subscribe("position_setpoint",100,&PlanNode::goalCb,this);
     sub_IfRec= nh.subscribe("interwp_receive",100,&PlanNode::ifRecCb,this);
     sub_accel= nh.subscribe("accel_raw_imu",100,&PlanNode::AccelCb,this);
+    sub_wp_current= nh.subscribe("waypoint_current",100,&PlanNode::WpCurrCb,this);
     //parameters for controllers
     path_gen.SetTimeLimit(1.0);
     path_gen.SetNinter(5);
@@ -51,6 +53,33 @@ namespace UasCode{
     path_gen.SetSampler(new UserTypes::SamplerPole() );
 
   }//constructor ends
+
+  void PlanNode::LoadFlightPlan(const char* filename)
+  {
+    std::ifstream plan_file(filename);
+    int line_count= 0;
+    //note altitude for each waypoint should be adjusted
+    //by adding the height of home waypoint
+    if(plan_file.is_open()){
+       while(plan_file)
+       {
+         if(line_count>0){
+//0	1	0	16	0.00000  	0.000000	0.000000	0.000000	33.422036	-111.926263	30	1
+           int all= 12;
+           double log[all];
+           for(int i=0;i!=all;++i)
+               plan_file >> log[i];
+           waypoints.push_back( UserStructs::GoalSetPt(log[8],log[9],log[10]+home_alt) );
+         }//if line_count > 0 ends
+         ++line_count;
+       }//while plan_file ends
+    }
+    else{
+      std::cout<<" flight plan file cannot be loaded"
+               << std::endl;
+      return;
+    }
+  }
 
   void PlanNode::SetTimeLimit(const double _t_limit)
   {
@@ -156,7 +185,7 @@ namespace UasCode{
 	    msg->MultiObs[i].t,
 	    msg->MultiObs[i].r,0,
 	    msg->MultiObs[i].hr,0);
-      std::cout << "obstacle: "<< obs3d.x1 << std::endl;
+      //std::cout << "obstacle: "<< obs3d.x1 << std::endl;
       obss.push_back(obs3d);
     }//for ends
 
@@ -169,7 +198,7 @@ namespace UasCode{
       global_posi.alt= msg->alt;
       global_posi.cog= msg->cog;
       global_posi.speed= msg->speed;
-
+      /*
       std::cout<< "global_posi:"
                << global_posi.lat<< " "
                << global_posi.lon<< " "
@@ -177,6 +206,7 @@ namespace UasCode{
                << global_posi.cog<< " "
                << global_posi.speed
                << std::endl;
+      */
   }
   
   void PlanNode::attCb(const uascode::PlaneAttitude::ConstPtr& msg)
@@ -184,12 +214,13 @@ namespace UasCode{
      plane_att.roll= msg->roll; 
      plane_att.pitch= msg->pitch;
      plane_att.yaw= msg->yaw;
-
+     /*
      std::cout<< "plane_att:"
               << plane_att.roll<< " "
               << plane_att.pitch<< " "
               << plane_att.yaw
               << std::endl;
+     */
   }
   
   /*
@@ -212,11 +243,21 @@ namespace UasCode{
      accel_xyz.ax= msg->ax;
      accel_xyz.ay= msg->ay;
      accel_xyz.az= msg->az;
-
+     /*
      std::cout<<"accel from raw imu: "
               << accel_xyz.ax <<" "
               << accel_xyz.ay <<" "
               << accel_xyz.az << std::endl;
+     */
+  }
+
+  void PlanNode::WpCurrCb(const uascode::WpCurrent::ConstPtr &msg)
+  {
+     seq_current= msg->wp_current;
+
+     std::cout<<"current waypoint #: "
+              << seq_current
+              << std::endl;
   }
 
   void PlanNode::GetCurrentSt()
@@ -231,6 +272,7 @@ namespace UasCode{
      st_current.yaw= plane_att.yaw;
      st_current.pitch= plane_att.pitch;
      //ax,ay,az will be calcuated in update
+     /*
      std::cout<<"st_current:" <<" "
        <<"t:"<<std::setprecision(3)<<st_current.t<<" "
        <<"lat:"<<std::setprecision(3)<<st_current.lat<<" "
@@ -240,7 +282,7 @@ namespace UasCode{
        <<"yaw:"<<std::setprecision(3)<<st_current.yaw*180/M_PI<<" "
        <<"pitch:"<<std::setprecision(3)<<st_current.pitch*180/M_PI
        << std::endl;
-
+     */
   }
 
   void PlanNode::GetGoalWp()

@@ -16,6 +16,7 @@
 #include "uascode/MultiObsMsg.h"
 #include "uascode/IfRecMsg.h"
 #include "uascode/AccelXYZ.h"
+#include "uascode/WpCurrent.h"
 
 #include "ros/ros.h"
 //std lib
@@ -32,6 +33,9 @@ class PlanNode{
    //inline void SetTimeLimit(const double _t_limit){t_limit= _t_limit;}
    void SetTimeLimit(const double _t_limit);
    inline void SetWpR(const double _r){this->wp_r= _r;}
+   inline void SetHomeAlt(const double _alt){home_alt= _alt; }
+   //load flight plan from txt
+   void LoadFlightPlan(const char* filename);
    //working part
    void working();
 
@@ -49,6 +53,8 @@ class PlanNode{
    UserStructs::GoalSetPt goal_posi;
    //ACCEL
    UserStructs::AccelXYZ accel_xyz;
+   //Current Waypoint
+   int seq_current;
    //to see if the sent waypoint was received
    bool if_receive;
    //wp ros msg to send
@@ -61,6 +67,8 @@ class PlanNode{
    double t_limit;
    //radius for wp
    double wp_r;
+   //alt for home waypoint
+   double home_alt;
    //ros related
    ros::NodeHandle nh;
    //publisher
@@ -71,6 +79,7 @@ class PlanNode{
    ros::Subscriber sub_att;
    ros::Subscriber sub_IfRec;
    ros::Subscriber sub_accel;
+   ros::Subscriber sub_wp_current;
    //ros::Subscriber sub_goal;
    //callback functions
    void obssCb(const uascode::MultiObsMsg::ConstPtr& msg);
@@ -79,6 +88,7 @@ class PlanNode{
    //void goalCb(const uascode::PosSetPoint::ConstPtr& msg);
    void ifRecCb(const uascode::IfRecMsg::ConstPtr& msg);
    void AccelCb(const uascode::AccelXYZ::ConstPtr& msg);
+   void WpCurrCb(const uascode::WpCurrent::ConstPtr& msg);
    //void accelCb(const )
    //other functions
    void GetCurrentSt();
