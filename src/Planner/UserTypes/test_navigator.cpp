@@ -54,9 +54,10 @@ int main(int argc,char** argv)
   arma::vec::fixed<2> pt_A, pt_B;
 //1405185947.83948 -111.92720 33.42759 734.04000 26.47640 413803.76236 3699075.94730 13.00000 -0.73547 0.23162 0.22899 -100.00000 547.00000 -707.00000 -16.66667
   double lon= lon_f, lat= lat_f;
+
   double lat1= 33.421964, lon1= -111.940082;//wp 1
   //double lat1= 33.414728, lon1= -111.939738;//wp 2
-  pt_A << lat_f << lon_f; //here needs to be changed
+  pt_A << 33.427559 << -111.926697; //here needs to be changed
   pt_B << lat1 << lon1;
 
   double hgt= hgt_f;
@@ -72,48 +73,14 @@ int main(int argc,char** argv)
   UserStructs::PlaneStateSim st(t,0,0,lat,lon,hgt,spd,yaw,pitch,ax,ay,az); 
   //target mission point
   UserStructs::MissionSimPt Pt(pt_B(0),pt_B(1),alt_B,yaw,100,0,0,400,300,30);
-  /*
-  UserStructs::PlaneStateSim st;
-  UserStructs::MissionSimPt Pt;
 
-  std::fstream myfile("out_two.txt"); 
-  if(myfile.is_open()){
-    std::string line;
-    std::getline(myfile,line);
-    std::istringstream iss(line);
-    //get the state
-    iss >> st.t
-        >> st.x
-	>> st.y
-	>> st.lat
-	>> st.lon
-	>> st.z
-	>> st.speed
-	>> st.yaw
-	>> st.pitch
-	>> st.ax >> st.ay >> st.az;
-    //get wp
-    std::getline(myfile,line);
-    iss.str(line);
-    iss >> Pt.lat
-        >> Pt.lon
-	>> Pt.alt
-	>> Pt.yaw
-	>> Pt.r
-	>> Pt.x
-	>> Pt.y
-	>> Pt.h_rec
-	>> Pt.v_rec
-	>> Pt.alt_rec;
-    
-  }
-  pt_A << st.lat << st.lon;
-  */
   //future state
   UserStructs::PlaneStateSim st_end;
   //go one step
   //navigator.PropagateStep(st,st_end,pt_A,Pt);
-  //go to the waypoint
+  //go to the waypoint: between two normal waypoints
   int result= navigator.PropagateWp(st,st_end,pt_A,Pt);
+  //go to the first waypoint
+  //int result= navigator.PropagateWpInit(st,st_end,Pt);
   std::cout<< "result: "<< result<< std::endl;
 }

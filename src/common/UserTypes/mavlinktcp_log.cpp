@@ -16,7 +16,7 @@ int main(int argc, char** argv)
  mavlink_tcp.SetUp();
  bool if_log= false, if_log_pre=false;
  std::fstream fs_state;
- fs_state.open("sitl_state2.txt",std::ofstream::out | std::ofstream::in | std::ofstream::trunc);
+ fs_state.open("sitl_state1.txt",std::ofstream::out | std::ofstream::in | std::ofstream::trunc);
 
  bool if_accel= false, if_posi= false, if_atti= false;
  double ax,ay,az;

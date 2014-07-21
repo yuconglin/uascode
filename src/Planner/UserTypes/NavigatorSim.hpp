@@ -9,6 +9,8 @@
 #include "UserStructs/obstacle3D.h"
 #include "UserStructs/SpaceLimit.h"
 
+#include "nodes/UserStructs/GoalSetPt.h"
+
 namespace UasCode{
 
 class NavigatorSim{
@@ -29,35 +31,53 @@ class NavigatorSim{
    //propagate a single step
    void PropagateStep(UserStructs::PlaneStateSim& st_start,
                       UserStructs::PlaneStateSim& st_end,
-		      arma::vec::fixed<2> pt_A,
-		      UserStructs::MissionSimPt& pt_target);
-   //propagate to a waypoint   
+                      arma::vec::fixed<2> pt_A,
+                      UserStructs::MissionSimPt& pt_target);
+
+   //propagate to a waypoint
    //0:reach position, 1:reach length
    int PropagateWp(UserStructs::PlaneStateSim& st_start,
-                    UserStructs::PlaneStateSim& st_end,
-		    arma::vec::fixed<2> pt_A,
-		    UserStructs::MissionSimPt& pt_target);
+                   UserStructs::PlaneStateSim& st_end,
+                   arma::vec::fixed<2> pt_A,
+                   UserStructs::MissionSimPt& pt_target);
 
    //propagate to a waypoint while checking obstacle collision
    //-1:cannot reach due to collision
    //0:reach position, 1:reach length, 
    int PropWpCheck(UserStructs::PlaneStateSim& st_start,
-                  UserStructs::PlaneStateSim& st_end,
-		  arma::vec::fixed<2> pt_A,
-		  UserStructs::MissionSimPt& pt_target,
-		  std::vector<UserStructs::obstacle3D> obstacles,
-		  double &length);
+                   UserStructs::PlaneStateSim& st_end,
+                   arma::vec::fixed<2> pt_A,
+                   UserStructs::MissionSimPt& pt_target,
+                   std::vector<UserStructs::obstacle3D> obstacles,
+                   double &length);
+
    //option:0:sphere,1:rectangle
    int PropWpCheck2(UserStructs::PlaneStateSim& st_start,
-                  UserStructs::PlaneStateSim& st_end,
-                  arma::vec::fixed<2> pt_A,
-                  UserStructs::MissionSimPt& pt_target,
-                  std::vector<UserStructs::obstacle3D> obstacles,
-		  UserStructs::SpaceLimit spacelimit,
-                  double &length,
-		  int option);
+                    UserStructs::PlaneStateSim& st_end,
+                    arma::vec::fixed<2> pt_A,
+                    UserStructs::MissionSimPt& pt_target,
+                    std::vector<UserStructs::obstacle3D> obstacles,
+                    UserStructs::SpaceLimit spacelimit,
+                    double &length,
+                    int option);
+
+   int PropWpCheckTime(UserStructs::PlaneStateSim& st_start,
+                       UserStructs::PlaneStateSim& st_end,
+                       arma::vec::fixed<2> pt_A,
+                       UserStructs::MissionSimPt& pt_target,
+                       std::vector<UserStructs::obstacle3D> obstacles,
+                       UserStructs::SpaceLimit spacelimit,
+                       double &length,double t_horizon,double& t_left,
+                       int option);
    
-   double GetMaxPitch(){return updater.GetMaxPitch();};
+   bool PredictColli(UserStructs::PlaneStateSim &st_current,
+                     std::vector<UserStructs::MissionSimPt> waypoints,
+                     UserStructs::GoalSetPt init_pt,
+                     std::vector<UserStructs::obstacle3D> obstacles,
+                     UserStructs::SpaceLimit spacelimit,
+                     int seq_current,double t_limit);
+
+   double GetMaxPitch(){return updater.GetMaxPitch();}
 
    void CopyStatesRec(std::vector<UserStructs::PlaneStateSim>& copy_rec);
    void CopyStatePart(std::vector<UserStructs::StateNode>& copy_rec); 

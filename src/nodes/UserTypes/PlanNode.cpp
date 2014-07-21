@@ -13,6 +13,7 @@ namespace UasCode{
   {
     //publisher
     pub_interwp= nh.advertise<uascode::PosSetPoint>("inter_wp",100);
+
     //subscriber
     sub_obss= nh.subscribe("multi_obstacles",100,&PlanNode::obssCb,this);
     sub_pos= nh.subscribe("global_position",100,&PlanNode::posCb,this);
@@ -21,16 +22,29 @@ namespace UasCode{
     sub_IfRec= nh.subscribe("interwp_receive",100,&PlanNode::ifRecCb,this);
     sub_accel= nh.subscribe("accel_raw_imu",100,&PlanNode::AccelCb,this);
     sub_wp_current= nh.subscribe("waypoint_current",100,&PlanNode::WpCurrCb,this);
+
     //parameters for controllers
     path_gen.SetTimeLimit(1.0);
     path_gen.SetNinter(5);
+
     //if in ros?
     path_gen.SetInRos(true);
+
+    //set geofence/spacelimit
+    UserStructs::SpaceLimit spacelimit(2000,500);
+    //geofence.txt location needs changing.
+    spacelimit.LoadGeoFence("/home/yucong/ros_workspace/uascode/bin/geofence.txt");
+    this->spLimit= spacelimit;
+    path_gen.SetSpaceLimit(spacelimit);
+
     //set wp_r
     wp_r =30;
+
     if_receive= false;
+    //I use seq_current== -1 to indicate the moment mission starts
+    seq_current= -1;
+
     //parameters for the navigator
-    //parameters
     double _Tmax= 12.49*UasCode::CONSTANT_G;
     double _Muav= 29.2; //kg
     double myaw_rate= 20./180*M_PI;
@@ -49,6 +63,7 @@ namespace UasCode{
     path_gen.NavL1SetRollLim(40./180*M_PI);
     path_gen.NavSetDt(dt);
     path_gen.NavSetSpeedTrim(_speed_trim);
+
     //set sampler parameters
     path_gen.SetSampler(new UserTypes::SamplerPole() );
 
@@ -60,7 +75,8 @@ namespace UasCode{
     int line_count= 0;
     //note altitude for each waypoint should be adjusted
     //by adding the height of home waypoint
-    if(plan_file.is_open()){
+    if(plan_file.is_open())
+    {
        while(plan_file)
        {
          if(line_count>0){
@@ -69,11 +85,19 @@ namespace UasCode{
            double log[all];
            for(int i=0;i!=all;++i)
                plan_file >> log[i];
-           waypoints.push_back( UserStructs::GoalSetPt(log[8],log[9],log[10]+home_alt) );
+               double lat= log[8];
+               double lon= log[9];
+               double alt= log[10]+home_alt;
+               double r= 60;
+               double x=0, y=0;
+               double h= 200,v=150,alt_rec= 50;
+               waypoints.push_back(UserStructs::MissionSimPt(lat,lon,alt,0,r,x,y,h,v,alt_rec) );
+               //waypoints.push_back( UserStructs::GoalSetPt(log[8],log[9],log[10]+home_alt) );
          }//if line_count > 0 ends
          ++line_count;
        }//while plan_file ends
     }
+
     else{
       std::cout<<" flight plan file cannot be loaded"
                << std::endl;
@@ -87,35 +111,60 @@ namespace UasCode{
     path_gen.SetTimeLimit(t_limit);
   }//SetTimeLimit ends
 
+  bool PlanNode::PredictColliNode(UserStructs::PlaneStateSim &st_current,int seq_current,double t_limit)
+  {
+    NavigatorSim* navigator_pt= path_gen.NavigatorPt();
+    bool tt= navigator_pt->PredictColli(st_current,waypoints,wp_init,obss,spLimit,seq_current,t_limit);
+
+    std::cout<<"PredictColliNode: "<< tt << std::endl;
+    return tt;
+  }
+
   void PlanNode::working()
   {
     possible_cases situ= NORMAL;
-
-    UserStructs::GoalSetPt goal_pre;
-    //UserStructs::MissionSimPt inter_wp;
-
+    int seq_current_pre= 0;
     ros::Rate r(10);
+
     while(ros::ok() )
     { //callback once
       ros::spinOnce();
+      //to see if starts
+      if(seq_current_pre < 1){
 
-      //only need to react when obstacles present
-      //if(!obss.empty())//this needs to be changed to collision prediction
-      if(0)//for test ros msg receiving
-      {
-        GetGoalWp();
-        //if(CheckGoalChange() )
-        situ= NORMAL;
+         if(seq_current== 1 )
+         {
+           wp_init.lat= global_posi.lat;
+           wp_init.lon= global_posi.lon;
+           wp_init.alt= global_posi.alt;
+
+           std::cout<< "wp_init:" <<" "
+                    << std::setprecision(6) << std::fixed
+                    << "lat:" << wp_init.lat<< " "
+                    << "lon:" << wp_init.lon<< " "
+                    << "alt:" << wp_init.alt<< std::endl;
+
+         }
+         seq_current_pre= seq_current;
+      }
+
+      //check collision in 30 seconds
+      GetCurrentSt();
+
+      situ= NORMAL;
+      if( PredictColliNode(st_current,seq_current,30) )
+          //situ= PATH_GEN;
+
         //for diffrent cases
         switch(situ){
-        case NORMAL:
+        case PATH_GEN:
           //get current state
           GetCurrentSt();
           //GetGoalWp();
           //set for path_gen
           //set start state and goal waypoint
           path_gen.SetInitState(st_current.SmallChange(t_limit));
-          path_gen.SetGoalWp(goal_wp);
+          path_gen.SetGoalWp(waypoints[seq_current]);
           path_gen.SetSampleParas();
           path_gen.SetObs(obss);
           //to generate feasible paths
@@ -138,6 +187,8 @@ namespace UasCode{
 
            //here we need to add a flag to test if the waypoint is received
            situ= PATH_READY;
+           //insert into waypoints
+           waypoints.insert(waypoints.begin()+seq_current,inter_wp);
            //situ= PATH_RECHECK;
           }
           else
@@ -161,9 +212,7 @@ namespace UasCode{
         default:
            break;
         }//switch ends
-      }//if obss not empty() ends
-      
-      //goal_pre= goal_posi;
+
       r.sleep();
     }//while ends
 
@@ -254,10 +303,11 @@ namespace UasCode{
   void PlanNode::WpCurrCb(const uascode::WpCurrent::ConstPtr &msg)
   {
      seq_current= msg->wp_current;
-
+     /*
      std::cout<<"current waypoint #: "
               << seq_current
               << std::endl;
+              */
   }
 
   void PlanNode::GetCurrentSt()

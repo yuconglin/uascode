@@ -213,8 +213,8 @@ namespace UasCode{
     // Constrain speed demand again to protect against bad values on initialisation.
     _TAS_dem_adj = Utils::math::constrain(_TAS_dem_adj, _TASmin, _TASmax);
     //std::cout<<"_TAS_dem_adj: "<< _TAS_dem_adj << std::endl;
-    std::cout<<"velRateMax: "<< velRateMax 
-	    <<" velRateMin: "<< velRateMin << std::endl;
+    //std::cout<<"velRateMax: "<< velRateMax
+    //    <<" velRateMin: "<< velRateMin << std::endl;
     _TAS_dem_last = _TAS_dem;
   }
 

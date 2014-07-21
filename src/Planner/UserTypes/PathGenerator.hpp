@@ -57,6 +57,8 @@ class PathGenerator{
    bool PathCheckSingle(UserStructs::PlaneStateSim _st);
    bool PathCheckRepeat(UserStructs::PlaneStateSim _st);
    void PrintPath(const char* filename);
+   //return pointer to the navigator
+   NavigatorSim* NavigatorPt(){return &(this->navigator);}
 
  private:
    //some technical parameter

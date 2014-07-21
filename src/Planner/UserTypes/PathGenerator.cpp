@@ -324,12 +324,7 @@ namespace UasCode{
 
   
   UserStructs::MissionSimPt PathGenerator::GetInterWp()
-  { //this function may not be used eventually
-    //AddPaths();
-    //sort according to total length
-    //std::sort(wp_lengths.begin(),wp_lengths.end(),WpCompFunc);
-    //select the one with the least length
-    //return wp_lengths[0].wp;
+  {
     return inter_wp;
   }//GetInterWp ends
 
@@ -409,7 +404,7 @@ namespace UasCode{
 		  obs3ds,
 		  spacelimit,
 		  length,
-		  0);
+          1);
       std::cout<<"current recheck re1: "<< result1<< std::endl;
       if(result1== -1){
         ++count;
@@ -429,13 +424,13 @@ namespace UasCode{
       pt_A<< wp.lat << wp.lon;
 
       result1= navigator.PropWpCheck2(st_end,
-	          st_end,
-                  pt_A,
-		  goal_wp,
-                  obs3ds,
-		  spacelimit,
-		  length,
-		  1);
+                                      st_end,
+                                      pt_A,
+                                      goal_wp,
+                                      obs3ds,
+                                      spacelimit,
+                                      length,
+                                      1);
       std::cout<<"current recheck re2: "<< result1<< std::endl;
 
       if(result1==-1){

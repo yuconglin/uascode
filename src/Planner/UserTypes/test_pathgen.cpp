@@ -40,7 +40,6 @@ int main(int argc, char** argv)
   UserStructs::PlaneStateSim st(t,0,0,lat,lon,hgt,spd,yaw,pitch,0,0,0);
   st.GetUTM();
 
-  
   std::cout<<"start_x: "<< st.x<<" "
            <<"start_y: "<< st.y<<" "
 	   <<"start_z: "<< st.z<<" "

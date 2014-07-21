@@ -29,7 +29,6 @@ class PlanNode{
    //constructor not defined yet
    PlanNode();
 
-   PathGenerator path_gen;
    //inline void SetTimeLimit(const double _t_limit){t_limit= _t_limit;}
    void SetTimeLimit(const double _t_limit);
    inline void SetWpR(const double _r){this->wp_r= _r;}
@@ -41,6 +40,10 @@ class PlanNode{
 
  private:
    enum possible_cases{NORMAL,PATH_READY,PATH_GEN,PATH_CHECK,PATH_RECHECK,WAIT_STATE,ARRIVED};
+
+   //path generator
+   PathGenerator path_gen;
+
    //plane state current
    UserStructs::PlaneStateSim st_current;
    //plane goal
@@ -53,22 +56,33 @@ class PlanNode{
    UserStructs::GoalSetPt goal_posi;
    //ACCEL
    UserStructs::AccelXYZ accel_xyz;
+
    //Current Waypoint
    int seq_current;
+
    //to see if the sent waypoint was received
    bool if_receive;
+
    //wp ros msg to send
    uascode::PosSetPoint set_pt;
+
    //obstacles
    std::vector<UserStructs::obstacle3D> obss; 
+   //geofence/spacelimit
+   UserStructs::SpaceLimit spLimit;
+
    //waypoint vector storage
-   std::vector<UserStructs::GoalSetPt> waypoints;
+   std::vector<UserStructs::MissionSimPt> waypoints;
+   //the first actual waypoint after take-off
+   UserStructs::GoalSetPt wp_init;
    //time limit for planning
    double t_limit;
+
    //radius for wp
    double wp_r;
    //alt for home waypoint
    double home_alt;
+
    //ros related
    ros::NodeHandle nh;
    //publisher
@@ -81,6 +95,7 @@ class PlanNode{
    ros::Subscriber sub_accel;
    ros::Subscriber sub_wp_current;
    //ros::Subscriber sub_goal;
+
    //callback functions
    void obssCb(const uascode::MultiObsMsg::ConstPtr& msg);
    void posCb(const uascode::GlobalPos::ConstPtr& msg);
@@ -90,10 +105,12 @@ class PlanNode{
    void AccelCb(const uascode::AccelXYZ::ConstPtr& msg);
    void WpCurrCb(const uascode::WpCurrent::ConstPtr& msg);
    //void accelCb(const )
+
    //other functions
    void GetCurrentSt();
    void GetGoalWp();
    bool CheckGoalChange();
+   bool PredictColliNode(UserStructs::PlaneStateSim &st_current,int seq_current,double t_limit);
 };
 
-};//namespace ends
+}//namespace ends
