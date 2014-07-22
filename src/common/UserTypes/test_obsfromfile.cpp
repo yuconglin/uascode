@@ -7,5 +7,8 @@ int main(int argc,char** argv)
 {
    ros::init(argc,argv,"obs_from_file");
    ObsFromFile obsfrom;
-   obsfrom.ReadSendObss("/home/yucong/ros_workspace/uascode/data/20140516-162158obs.txt",3);
+   //obsfrom.ReadSendObss("/home/yucong/ros_workspace/uascode/data/20140516-162158obs.txt",3);
+   obsfrom.ReadObss("/home/yucong/ros_workspace/uascode/data/20140516-162158obs.txt");
+   //send in ros
+   obsfrom.SendObss(3);
 }

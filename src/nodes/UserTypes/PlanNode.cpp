@@ -113,6 +113,9 @@ namespace UasCode{
 
   bool PlanNode::PredictColliNode(UserStructs::PlaneStateSim &st_current,int seq_current,double t_limit)
   {
+    //return true if collision predicted
+    if(seq_current < 1) return false;
+
     NavigatorSim* navigator_pt= path_gen.NavigatorPt();
     bool tt= navigator_pt->PredictColli(st_current,waypoints,wp_init,obss,spLimit,seq_current,t_limit);
 
@@ -151,18 +154,17 @@ namespace UasCode{
       //check collision in 30 seconds
       GetCurrentSt();
 
-      situ= NORMAL;
+      //situ= NORMAL;
       if( PredictColliNode(st_current,seq_current,30) )
-          //situ= PATH_GEN;
+        situ= PATH_GEN;
 
         //for diffrent cases
         switch(situ){
+
         case PATH_GEN:
-          //get current state
-          GetCurrentSt();
-          //GetGoalWp();
-          //set for path_gen
+        {
           //set start state and goal waypoint
+          std::cout << "planning" << std::endl;
           path_gen.SetInitState(st_current.SmallChange(t_limit));
           path_gen.SetGoalWp(waypoints[seq_current]);
           path_gen.SetSampleParas();
@@ -170,11 +172,12 @@ namespace UasCode{
           //to generate feasible paths
           path_gen.AddPaths();
           situ= PATH_CHECK;
+        }
           break;
 
         case PATH_CHECK:
         {
-          GetCurrentSt();
+          //GetCurrentSt();
           UserStructs::MissionSimPt inter_wp;
           if(path_gen.PathCheckRepeat(st_current))
           {
@@ -192,7 +195,7 @@ namespace UasCode{
            //situ= PATH_RECHECK;
           }
           else
-           situ= NORMAL;
+           situ= PATH_GEN;
            break;
         }
         case PATH_READY:
@@ -204,7 +207,7 @@ namespace UasCode{
            break;
 
         case PATH_RECHECK:
-           GetCurrentSt();
+           //GetCurrentSt();
            if(path_gen.PathCheckSingle(st_current) )
              situ= NORMAL;
            break;
@@ -234,7 +237,7 @@ namespace UasCode{
 	    msg->MultiObs[i].t,
 	    msg->MultiObs[i].r,0,
 	    msg->MultiObs[i].hr,0);
-      //std::cout << "obstacle: "<< obs3d.x1 << std::endl;
+      std::cout << "obstacle: "<< obs3d.t << std::endl;
       obss.push_back(obs3d);
     }//for ends
 
@@ -284,7 +287,7 @@ namespace UasCode{
   {
      if_receive= msg->receive;
 
-     std::cout<< "if receive= "<< if_receive << std::endl;
+     //std::cout<< "if receive= "<< if_receive << std::endl;
   }
 
   void PlanNode::AccelCb(const uascode::AccelXYZ::ConstPtr &msg)
@@ -307,7 +310,7 @@ namespace UasCode{
      std::cout<<"current waypoint #: "
               << seq_current
               << std::endl;
-              */
+     */
   }
 
   void PlanNode::GetCurrentSt()
@@ -340,15 +343,5 @@ namespace UasCode{
     goal_wp= UserStructs::MissionSimPt(goal_posi.lat,goal_posi.lon,goal_posi.alt,0.,wp_r,0,0,200,250,20); 
     goal_wp.GetUTM();
   }
-  /*
-  bool PlanNode::CheckGoalChange()
-  {
-    if(fabs(goal_wp.lat-goal_pre.lat)> 0.0001 ||
-       fabs(goal_wp.lon-goal_pre.lon)> 0.0001 ||
-       fabs(goal_wp.alt-goal_pre.alt)> 0.5)
-     return true;
-    return false;
-
-  } */
 
 }//namespace ends

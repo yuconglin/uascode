@@ -18,12 +18,12 @@ namespace UserStructs{
      std::vector<point2D> vertex;
      //vertex for polygon
      //constructor
-     SpaceLimit():h_upper(0.),h_lower(0.){};
+     SpaceLimit():h_upper(0.),h_lower(0.){}
 
-     ~SpaceLimit(){};
+     ~SpaceLimit(){}
      
      SpaceLimit(double _h_upper,double _h_lower,const std::vector<point2D> _vertex)
-     :h_upper(_h_upper),h_lower(_h_lower),vertex(_vertex){};//SpaceLimit ends
+     :h_upper(_h_upper),h_lower(_h_lower),vertex(_vertex){}//SpaceLimit ends
     
      SpaceLimit(double _h_upper,double _h_lower):
        h_upper(_h_upper),h_lower(_h_lower){}
@@ -31,6 +31,7 @@ namespace UserStructs{
      //to judge if a point is within the SpaceLimit
      bool TellIn(double x, double y,double z)
      { //in return true;
+       //std::cout<<"SpaceLimit:z: "<< z << std::endl;
        if( z<= h_lower ||z>= h_upper){ 
 	 std::cout<<"not in height"<< std::endl;
 	 return false;
@@ -49,18 +50,21 @@ namespace UserStructs{
        std::fstream myfile(filename);
        if(myfile.is_open() ){
          std::string line;
-	 while(std::getline(myfile,line) )
-	 {
-           std::istringstream iss(line);
-	   double lat,lon,x,y;
-	   iss >> lat >> lon;
-           Utils::ToUTM(lon,lat,x,y);
-	   vertex.push_back(UserStructs::point2D(x,y) );
-	   std::cout<<x<<" "<<y<< std::endl;
-	 } //while ends
+         while(std::getline(myfile,line) )
+         {
+             std::istringstream iss(line);
+             double lat,lon,x,y;
+             iss >> lat >> lon;
+             Utils::ToUTM(lon,lat,x,y);
+             vertex.push_back(UserStructs::point2D(x,y) );
+             std::cout<<x<<" "<<y<< std::endl;
+         } //while ends
+
+         std::cout<<"load geofence done"<< std::endl;
        }//open ends
+
        else
-	std::cerr << "error:geofence file not found\n";
+         std::cerr << "error:geofence file not found\n";
      }//LoadGeoFence ends
 
   };//SpaceLimit ends
