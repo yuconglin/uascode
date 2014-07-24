@@ -17,6 +17,7 @@
 #include "uascode/IfRecMsg.h"
 #include "uascode/AccelXYZ.h"
 #include "uascode/WpCurrent.h"
+#include "uascode/IfMavlinkGood.h"
 
 #include "ros/ros.h"
 //std lib
@@ -33,6 +34,8 @@ class PlanNode{
    void SetTimeLimit(const double _t_limit);
    inline void SetWpR(const double _r){this->wp_r= _r;}
    inline void SetHomeAlt(const double _alt){home_alt= _alt; }
+
+   void SetLogFileName(const char* filename);
    //load flight plan from txt
    void LoadFlightPlan(const char* filename);
    //working part
@@ -56,7 +59,8 @@ class PlanNode{
    UserStructs::GoalSetPt goal_posi;
    //ACCEL
    UserStructs::AccelXYZ accel_xyz;
-
+   //if mavlink communication exsits
+   bool if_mavlink;
    //Current Waypoint
    int seq_current;
 
@@ -83,6 +87,9 @@ class PlanNode{
    //alt for home waypoint
    double home_alt;
 
+   //log for trajectory
+   std::ofstream traj_log;
+
    //ros related
    ros::NodeHandle nh;
    //publisher
@@ -94,6 +101,7 @@ class PlanNode{
    ros::Subscriber sub_IfRec;
    ros::Subscriber sub_accel;
    ros::Subscriber sub_wp_current;
+   //ros::Subscriber sub_if_mavlink;
    //ros::Subscriber sub_goal;
 
    //callback functions
@@ -104,7 +112,7 @@ class PlanNode{
    void ifRecCb(const uascode::IfRecMsg::ConstPtr& msg);
    void AccelCb(const uascode::AccelXYZ::ConstPtr& msg);
    void WpCurrCb(const uascode::WpCurrent::ConstPtr& msg);
-   //void accelCb(const )
+   //void IfMavlinkCb(const uascode::IfMavlinkGood::ConstPtr& msg);
 
    //other functions
    void GetCurrentSt();

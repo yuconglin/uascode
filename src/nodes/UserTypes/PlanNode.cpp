@@ -2,6 +2,7 @@
 #include "common/UserStructs/constants.h"
 #include "Planner/UserTypes/Sampler/SamplerPole.hpp"
 #include "common/Utils/GetTimeUTC.h"
+#include "common/Utils/GetTimeNow.h"
 //std
 #include <iostream>
 #include <iomanip>
@@ -18,10 +19,10 @@ namespace UasCode{
     sub_obss= nh.subscribe("multi_obstacles",100,&PlanNode::obssCb,this);
     sub_pos= nh.subscribe("global_position",100,&PlanNode::posCb,this);
     sub_att= nh.subscribe("plane_att",100,&PlanNode::attCb,this);
-    //sub_goal= nh.subscribe("position_setpoint",100,&PlanNode::goalCb,this);
     sub_IfRec= nh.subscribe("interwp_receive",100,&PlanNode::ifRecCb,this);
     sub_accel= nh.subscribe("accel_raw_imu",100,&PlanNode::AccelCb,this);
     sub_wp_current= nh.subscribe("waypoint_current",100,&PlanNode::WpCurrCb,this);
+    //sub_if_mavlink= nh.subscribe("if_mavlink",100,&PlanNode::IfMavlinkCb,this);
 
     //parameters for controllers
     path_gen.SetTimeLimit(1.0);
@@ -68,6 +69,24 @@ namespace UasCode{
     path_gen.SetSampler(new UserTypes::SamplerPole() );
 
   }//constructor ends
+
+  void PlanNode::SetLogFileName(const char *filename)
+  {
+    try
+    {
+       traj_log.exceptions ( std::ofstream::failbit | std::ofstream::badbit );
+       traj_log.open(filename,std::ofstream::out
+                  | std::ofstream::in
+                  | std::ofstream::trunc);
+       //std::cout<< "file open: " << traj_log.is_open() << std::endl;
+    }
+    catch (std::ofstream::failure& e) {
+          std::cerr << "Exception opening/reading file"
+                    << e.what()
+                    << std::endl;
+        }
+
+  }
 
   void PlanNode::LoadFlightPlan(const char* filename)
   {
@@ -130,8 +149,10 @@ namespace UasCode{
     ros::Rate r(10);
 
     while(ros::ok() )
-    { //callback once
+    {
+      //callback once
       ros::spinOnce();
+
       //to see if starts
       if(seq_current_pre < 1){
 
@@ -155,8 +176,8 @@ namespace UasCode{
       GetCurrentSt();
 
       //situ= NORMAL;
-      if( PredictColliNode(st_current,seq_current,30) )
-        situ= PATH_GEN;
+      //if( PredictColliNode(st_current,seq_current,30) )
+        //situ= PATH_GEN;
 
         //for diffrent cases
         switch(situ){
@@ -172,12 +193,11 @@ namespace UasCode{
           //to generate feasible paths
           path_gen.AddPaths();
           situ= PATH_CHECK;
-        }
           break;
+        }
 
         case PATH_CHECK:
         {
-          //GetCurrentSt();
           UserStructs::MissionSimPt inter_wp;
           if(path_gen.PathCheckRepeat(st_current))
           {
@@ -196,22 +216,25 @@ namespace UasCode{
           }
           else
            situ= PATH_GEN;
-           break;
+          break;
         }
+
         case PATH_READY:
+        {
           if(!if_receive)
            //this will be sent to pixhawk by MavlinkReceiver node
            pub_interwp.publish(set_pt);
           else
            situ= PATH_RECHECK;
-           break;
+          break;
+        }
 
         case PATH_RECHECK:
-           //GetCurrentSt();
-           if(path_gen.PathCheckSingle(st_current) )
+        {
+          if(path_gen.PathCheckSingle(st_current) )
              situ= NORMAL;
            break;
-
+        }
         default:
            break;
         }//switch ends
@@ -274,14 +297,6 @@ namespace UasCode{
               << std::endl;
      */
   }
-  
-  /*
-  void PlanNode::goalCb(const uascode::PosSetPoint::ConstPtr& msg)
-  {
-     goal_posi.lat= msg->lat;
-     goal_posi.lon= msg->lon;
-     goal_posi.alt= msg->alt;
-  } */
 
   void PlanNode::ifRecCb(const uascode::IfRecMsg::ConstPtr &msg)
   {
@@ -315,17 +330,20 @@ namespace UasCode{
 
   void PlanNode::GetCurrentSt()
   {
-     st_current.t= Utils::GetTimeUTC();
-     st_current.lat= global_posi.lat;
-     st_current.lon= global_posi.lon;
-     //get x,y
-     st_current.GetUTM();
-     st_current.z= global_posi.alt;
-     st_current.speed= global_posi.speed; 
-     st_current.yaw= plane_att.yaw;
-     st_current.pitch= plane_att.pitch;
-     //ax,ay,az will be calcuated in update
-     /*
+    if(seq_current>0)
+    {
+        //st_current.t= Utils::GetTimeUTC();
+        st_current.t= Utils::GetTimeNow();
+        st_current.lat= global_posi.lat;
+        st_current.lon= global_posi.lon;
+        //get x,y
+        st_current.GetUTM();
+        st_current.z= global_posi.alt;
+        st_current.speed= global_posi.speed;
+        st_current.yaw= plane_att.yaw;
+        st_current.pitch= plane_att.pitch;
+        //ax,ay,az will be calcuated in update
+        /*
      std::cout<<"st_current:" <<" "
        <<"t:"<<std::setprecision(3)<<st_current.t<<" "
        <<"lat:"<<std::setprecision(3)<<st_current.lat<<" "
@@ -336,12 +354,22 @@ namespace UasCode{
        <<"pitch:"<<std::setprecision(3)<<st_current.pitch*180/M_PI
        << std::endl;
      */
-  }
+        if(traj_log.is_open() ){
+            std::cout << "opens ok" << "\n";
+            traj_log << std::setprecision(6) << std::fixed
+                     << st_current.t<< " "
+                     << st_current.lat<< " "
+                     << st_current.lon<< " "
+                     << st_current.x<< " "
+                     << st_current.y<< " "
+                     << st_current.z<< " "
+                     << st_current.speed<< " "
+                     << st_current.yaw<< " "
+                     << st_current.pitch
+                     << "\n";
+        }//
 
-  void PlanNode::GetGoalWp()
-  {
-    goal_wp= UserStructs::MissionSimPt(goal_posi.lat,goal_posi.lon,goal_posi.alt,0.,wp_r,0,0,200,250,20); 
-    goal_wp.GetUTM();
+    }
   }
 
 }//namespace ends

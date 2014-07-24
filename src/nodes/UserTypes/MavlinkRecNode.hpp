@@ -8,6 +8,7 @@
 #include "uascode/IfRecMsg.h"
 #include "uascode/AccelXYZ.h"
 #include "uascode/WpCurrent.h"
+#include "uascode/IfMavlinkGood.h"
 
 #include "ros/ros.h"
 
@@ -30,12 +31,14 @@ private:
    ros::Publisher pub_IfRec;
    ros::Publisher pub_accel;
    ros::Publisher pub_wp_current;
+   ros::Publisher pub_if_mavlink;
    //ros msg
    uascode::GlobalPos global_pos;
    uascode::PlaneAttitude plane_att;
    uascode::IfRecMsg if_rec;
    uascode::AccelXYZ accel_xyz;
    uascode::WpCurrent wp_current;
+   uascode::IfMavlinkGood if_mavlink;
 };
 
 }

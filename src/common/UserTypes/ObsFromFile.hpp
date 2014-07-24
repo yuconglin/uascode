@@ -5,6 +5,8 @@
 //ros messages
 #include "uascode/WpCurrent.h"
 
+#include <fstream>
+
 namespace UasCode{
 
 class ObsFromFile{
@@ -16,9 +18,8 @@ public:
    void ReadObss(const char* filename);
    //send obs
    void SendObss(int obs_num);
-   //read while send
-   void ReadSendObss(const char *filename,int obs_num);
-
+   //set obss_file name
+   void SetLogFileName(const char *filename);
 private:
    //ros related
    ros::NodeHandle nh;
@@ -29,7 +30,10 @@ private:
    int seq_current;
    //callback functions
    void WpCurrCb(const uascode::WpCurrent::ConstPtr& msg);
-
+   //file for obstacles
+   std::ifstream obss_file;
+   //file for logging sent obstacles
+   std::ofstream obss_log;
 };//class ObsFromFile ends
 
 }//namespace ends

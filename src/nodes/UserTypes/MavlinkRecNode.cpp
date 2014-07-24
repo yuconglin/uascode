@@ -12,6 +12,7 @@ MavlinkRecNode::MavlinkRecNode()
   pub_IfRec= nh.advertise<uascode::IfRecMsg>("interwp_receive",100);
   pub_accel= nh.advertise<uascode::AccelXYZ>("accel_raw_imu",100);
   pub_wp_current= nh.advertise<uascode::WpCurrent>("waypoint_current",100);
+  pub_if_mavlink= nh.advertise<uascode::IfMavlinkGood>("if_mavlink",100);
 }
 
 MavlinkRecNode::~MavlinkRecNode(){}
@@ -28,8 +29,15 @@ void MavlinkRecNode::working()
    {
      ros::spinOnce();
 
+     bool if_MavLink= false;
+
      if(mavlink_tcp.ReceiveMsg())
      {
+       /*we need to add a message
+        to indicate if mavlink still
+        available */
+       if_MavLink= true;
+
        mavlink_message_t msg= mavlink_tcp.GetMessage();
        //IF INTER WP RECEIVED
        if(msg.msgid == MAVLINK_MSG_ID_INTER_RECEIVE)
@@ -86,6 +94,8 @@ void MavlinkRecNode::working()
 
      }
 
+     if_mavlink.if_good= if_MavLink;
+     pub_if_mavlink.publish(if_mavlink);
      //r.sleep();
 
    }

@@ -12,3 +12,4 @@ lib
 *.txt~
 src/uascode/msg
 *.txt
+src/uascode/*
