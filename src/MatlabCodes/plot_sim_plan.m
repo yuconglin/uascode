@@ -1,7 +1,7 @@
 close all;
 clear all;
 clc;
-
+%to compare simulated and planned trajectory
 %load planned path
 f_traj =fopen('../../bin/fs_state.txt','r');
 
