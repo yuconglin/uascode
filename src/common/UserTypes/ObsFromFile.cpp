@@ -4,8 +4,13 @@
 #include "Planner/UserStructs/obstacle3D.h"
 #include "common/Utils/GetTimeUTC.h"
 #include "common/Utils/GetTimeNow.h"
+#include "common/Utils/YcLogger.h"
 //ros
 #include "uascode/MultiObsMsg.h"
+
+namespace {
+    Utils::LoggerPtr s_logger(Utils::getLogger("uascode.ObsFromFile.YcLogger"));
+}
 
 namespace UasCode{
 
@@ -41,16 +46,15 @@ namespace UasCode{
      std::vector<UserStructs::obstacle3D> obss;
      UserStructs::obstacle3D obs_single;
 
-     std::cout<<"ReadObss starts" << std::endl;
+     UASLOG(s_logger,LL_INFO,"ReadObss starts");
 
      try
      {
        obss_file.open(filename);
      }
      catch (std::ifstream::failure& e) {
-           std::cerr << "Exception opening/reading file "
-                     << e.what()
-                     << std::endl;
+           UASLOG(s_logger,LL_WARN,"Exception opening/reading file "
+                  << e.what());
      }
 
      while(obss_file.good() )
@@ -85,8 +89,8 @@ namespace UasCode{
          //push
          obss.push_back(obs_single);
      }//while ends
-     std::cout<<"ReadObss endss" << "\n";
-     std::cout<<"all_obss size: " << all_obss.size() << "\n";
+     UASLOG(s_logger,LL_INFO,"ReadObss endss");
+     UASLOG(s_logger,LL_DEBUG,"all_obss size: " << all_obss.size() );
 
  }
 
@@ -106,7 +110,7 @@ namespace UasCode{
 
         if(seq_current > 0 && i!= all_obss.size() )
         {//start to publish obstacles
-          std::cout<< "send obstacles." << std::endl;
+          UASLOG(s_logger,LL_DEBUG,"send obstacles.");
 
           std::vector<UserStructs::obstacle3D> obss
                   = all_obss[i];
@@ -120,10 +124,15 @@ namespace UasCode{
               //obss[i].t= Utils::GetTimeUTC();
               obss[i].t= Utils::GetTimeNow();
 
+              /*
+              UASLOG(s_logger,LL_DEBUG,
+                     "obstacle time: "<< std::setprecision(4) << std::fixed
+                     << obss[i].t);
+              */
+
               //log to file
               if(obss_log.is_open() )
               {
-                  std::cout<< "opens ok" << std::endl;
                   obss_log << obss[i].address << " "
                            << obss[i].x1 << " "
                            << obss[i].x2 << " "
@@ -172,6 +181,10 @@ namespace UasCode{
   obs_msg.speed= obs.speed;
   obs_msg.v_vert= obs.v_vert;
   obs_msg.t= obs.t;
+  UASLOG(s_logger,LL_DEBUG,"obs_msg.t: "
+         << std::setprecision(4)<< std::fixed
+         << obs_msg.t
+         << "obs.t: " << obs.t);
   obs_msg.r= obs.r;
   obs_msg.hr= obs.hr;
   return obs_msg;

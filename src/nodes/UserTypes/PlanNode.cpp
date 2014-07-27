@@ -3,10 +3,15 @@
 #include "Planner/UserTypes/Sampler/SamplerPole.hpp"
 #include "common/Utils/GetTimeUTC.h"
 #include "common/Utils/GetTimeNow.h"
+#include "common/Utils/YcLogger.h"
 //std
 #include <iostream>
 #include <iomanip>
 #include <fstream>
+
+namespace {
+    Utils::LoggerPtr s_logger(Utils::getLogger("uascode.PlanNode.YcLogger"));
+}
 
 namespace UasCode{
 //constructor
@@ -78,7 +83,6 @@ namespace UasCode{
        traj_log.open(filename,std::ofstream::out
                   | std::ofstream::in
                   | std::ofstream::trunc);
-       //std::cout<< "file open: " << traj_log.is_open() << std::endl;
     }
     catch (std::ofstream::failure& e) {
           std::cerr << "Exception opening/reading file"
@@ -118,8 +122,7 @@ namespace UasCode{
     }
 
     else{
-      std::cout<<" flight plan file cannot be loaded"
-               << std::endl;
+      UASLOG(s_logger,LL_WARN," flight plan file cannot be loaded");
       return;
     }
   }
@@ -138,7 +141,7 @@ namespace UasCode{
     NavigatorSim* navigator_pt= path_gen.NavigatorPt();
     bool tt= navigator_pt->PredictColli(st_current,waypoints,wp_init,obss,spLimit,seq_current,t_limit);
 
-    std::cout<<"PredictColliNode: "<< tt << std::endl;
+    UASLOG(s_logger,LL_DEBUG,"PredictColliNode: "<< tt);
     return tt;
   }
 
@@ -162,11 +165,11 @@ namespace UasCode{
            wp_init.lon= global_posi.lon;
            wp_init.alt= global_posi.alt;
 
-           std::cout<< "wp_init:" <<" "
+           UASLOG(s_logger,LL_DEBUG,"wp_init:" <<" "
                     << std::setprecision(6) << std::fixed
                     << "lat:" << wp_init.lat<< " "
                     << "lon:" << wp_init.lon<< " "
-                    << "alt:" << wp_init.alt<< std::endl;
+                    << "alt:" << wp_init.alt<< '\n');
 
          }
          seq_current_pre= seq_current;
@@ -185,7 +188,7 @@ namespace UasCode{
         case PATH_GEN:
         {
           //set start state and goal waypoint
-          std::cout << "planning" << std::endl;
+          UASLOG(s_logger,LL_DEBUG,"planning");
           path_gen.SetInitState(st_current.SmallChange(t_limit));
           path_gen.SetGoalWp(waypoints[seq_current]);
           path_gen.SetSampleParas();
@@ -201,7 +204,7 @@ namespace UasCode{
           UserStructs::MissionSimPt inter_wp;
           if(path_gen.PathCheckRepeat(st_current))
           {
-           std::cout<<"check ok" << std::endl;
+           UASLOG(s_logger,LL_DEBUG,"check ok");
            inter_wp= path_gen.GetInterWp();
 
            set_pt.lat= inter_wp.lat;
@@ -260,7 +263,15 @@ namespace UasCode{
 	    msg->MultiObs[i].t,
 	    msg->MultiObs[i].r,0,
 	    msg->MultiObs[i].hr,0);
-      std::cout << "obstacle: "<< obs3d.t << std::endl;
+
+      UASLOG(s_logger,LL_DEBUG,"obstacle: "
+             << std::setprecision(4) << std::fixed
+             << obs3d.t <<" "<< obs3d.x1);
+
+      /*
+      std::cout<< "obstacle: "<< std::setprecision(4) << std::fixed
+               << obs3d.t << "\n";
+      */
       obss.push_back(obs3d);
     }//for ends
 
@@ -355,7 +366,6 @@ namespace UasCode{
        << std::endl;
      */
         if(traj_log.is_open() ){
-            std::cout << "opens ok" << "\n";
             traj_log << std::setprecision(6) << std::fixed
                      << st_current.t<< " "
                      << st_current.lat<< " "

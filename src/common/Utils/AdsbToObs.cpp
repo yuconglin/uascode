@@ -24,4 +24,4 @@ void AdsbToObs(const UserStructs::AdsbMsg &adsb,
   obs.dhr= 0.;
 }//AdsbToObs ends
 
-};
+}

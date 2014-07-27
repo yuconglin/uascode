@@ -74,7 +74,6 @@ namespace UasCode{
    
    //get direction between the last (visited) and next waypoint
    _target_bearing= Utils::get_bearing_to_next_waypoint(curr_position(0),curr_position(1),pt_B(0),pt_B(1) );
-   //std::cout<<"_target_bearing: "<<_target_bearing/M_PI*180<< std::endl;
    /* enforce a minimum ground speed of 0.1 m/s to avoid singularities */
   float ground_speed = std::max(arma::norm(gnd_speed,2), 0.1);
 
@@ -115,7 +114,7 @@ namespace UasCode{
   
   /* extension from [2], fly directly to A */
   if (distance_A_to_airplane > _L1_distance && alongTrackDist / std::max(distance_A_to_airplane , 1.0f) < -0.7071f) {
-        //std::cout<<"case0"<< std::endl;
+
 	/* calculate eta to fly to waypoint A */
 
 	/* unit vector from waypoint A to current position */

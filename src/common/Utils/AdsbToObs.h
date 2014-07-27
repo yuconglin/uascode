@@ -7,4 +7,4 @@ namespace Utils{
   void AdsbToObs(const UserStructs::AdsbMsg &adsb,
                  UserStructs::obstacle3D &obs3D);
 
-};
+}

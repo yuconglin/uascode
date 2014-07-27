@@ -1,11 +1,15 @@
 #include "ObsFromFile.hpp"
 #include "ros/ros.h"
+#include "common/Utils/YcLogger.h"
 
 using namespace UasCode;
 
 int main(int argc,char** argv)
 {
    ros::init(argc,argv,"obs_from_file");
+
+   Utils::LogConfigurator myconfigurator("log4cxx.properties", "ObsFromFile");
+
    ObsFromFile obsfrom;
 
    if(argc <2)

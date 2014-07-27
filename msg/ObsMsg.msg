@@ -6,6 +6,6 @@ float32 x3
 float32 head_xy
 float32 speed
 float32 v_vert
-float32 t
+float64 t
 float32 r
 float32 hr

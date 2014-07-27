@@ -1,4 +1,5 @@
 #include "PlanNode.hpp"
+#include "common/Utils/YcLogger.h"
 #include "ros/ros.h"
 #include <iostream>
 
@@ -8,6 +9,9 @@ int main(int argc, char** argv)
 {
   ros::init(argc,argv,"plan_node");
   PlanNode plan_node;
+
+  Utils::LogConfigurator myconfigurator("log4cxx.properties", "log for PlanNode");
+
   plan_node.LoadFlightPlan(argv[1]);
 
   if (argc == 2)

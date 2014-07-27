@@ -216,25 +216,22 @@ int dubins_init_normalised( double alpha,
     {
         results[i][3] = 0;
         for(int j = 0; j < 3; j++) {
-            //assert( results[i][j] >= 0. );
-            //std::cout << results[i][j] << " ";
+
             results[i][3] += results[i][j];
         }
-        //std::cout << std::endl;
+
     }
 
     // Extract the best cost path
     int bestType = 0;
     double minCost = results[0][3];
     for(int i = 1; i < 6; i++) 
-    {
-        //std::cout << i << " " << results[i][3] << std::endl;
+    {     
         if( results[i][3] < minCost ) {
             minCost = results[i][3];
             bestType = i;
         } 
     }
-    //std::cout << "best = " << bestType << std::endl;
 
     // Copy the results into the output structure
     path->type = bestType;
@@ -251,7 +248,6 @@ double dubins_path_length( DubinsPath* path )
     length += path->param[0];
     length += path->param[1];
     length += path->param[2];
-    //std:cout<< "dubin_length: "<< length<< std::endl;
     length = length * path->rho;
     return length;
 }

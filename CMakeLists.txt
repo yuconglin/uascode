@@ -54,7 +54,7 @@ src/adsb/Utils/AdsbMsgToQGC.cpp
 )
 
 ####library for other utilities
-rosbuild_add_library(other_utils
+rosbuild_add_library(common_utils
           src/common/Utils/GetTimeUTC.cpp
 	  src/common/Utils/UTMtransform.cpp
 	  src/common/Utils/GetTimeNow.cpp
@@ -63,6 +63,7 @@ rosbuild_add_library(other_utils
 	  src/common/Utils/PortOperates.cpp
           src/common/Utils/GeoUtils.cpp
           src/common/Utils/MathUtils.cpp
+          src/common/Utils/YcLogger.cpp
           src/common/UserTypes/MavlinkReceiver.cpp
 	  src/common/UserTypes/MavlinkTCP.cpp
 	  src/common/UserTypes/MavlinkSender.cpp
@@ -79,7 +80,7 @@ rosbuild_add_library(planner
  src/Planner/UserTypes/Sampler/Sampler.cpp
  src/Planner/UserTypes/Sampler/SamplerPole.cpp
  src/Planner/UserTypes/Sampler/SamplerRect.cpp
-  src/Planner/Utils/CheckCollision.cpp
+ src/Planner/Utils/CheckCollision.cpp
  src/Planner/Utils/PointInPoly.cpp
  src/Planner/Utils/NotInRadius.cpp
  src/Planner/Utils/DubinsLength3D.cpp
@@ -101,52 +102,52 @@ rosbuild_add_library(otherlibs
  ###################executables#################
 #test adsb 
 rosbuild_add_executable(adsb_test src/adsb/UserTypes/adsb_test.cpp)
-target_link_libraries(adsb_test adsb other_utils ${GeographicLib_LIBRARIES}  )
+target_link_libraries(adsb_test adsb common_utils ${GeographicLib_LIBRARIES}  )
 #test dubin length
 rosbuild_add_executable(test_dubin_length src/Planner/Utils/test_dubin_length.cpp)
-target_link_libraries(test_dubin_length planner other_utils otherlibs ${ARMADILLO_LIBRARIES} ${GeographicLib_LIBRARIES} )  
+target_link_libraries(test_dubin_length planner common_utils otherlibs ${ARMADILLO_LIBRARIES} ${GeographicLib_LIBRARIES} )  
 #test l1_control
 rosbuild_add_executable(l1_test src/Planner/UserTypes/test_l1.cpp)
-target_link_libraries(l1_test planner other_utils otherlibs ${ARMADILLO_LIBRARIES} ${GeographicLib_LIBRARIES} ) 
+target_link_libraries(l1_test planner common_utils otherlibs ${ARMADILLO_LIBRARIES} ${GeographicLib_LIBRARIES} ) 
 #test TECS
 rosbuild_add_executable(tecs_test src/Planner/UserTypes/test_tecs.cpp)
-target_link_libraries(tecs_test planner other_utils otherlibs ${ARMADILLO_LIBRARIES} ${GeographicLib_LIBRARIES})
+target_link_libraries(tecs_test planner common_utils otherlibs ${ARMADILLO_LIBRARIES} ${GeographicLib_LIBRARIES})
 #test updater
 rosbuild_add_executable(update_test src/Planner/UserTypes/test_update.cpp)
-target_link_libraries(update_test planner other_utils otherlibs ${ARMADILLO_LIBRARIES} ${GeographicLib_LIBRARIES})
+target_link_libraries(update_test planner common_utils otherlibs ${ARMADILLO_LIBRARIES} ${GeographicLib_LIBRARIES})
 #test navigator
 rosbuild_add_executable(propagate_test src/Planner/UserTypes/test_navigator.cpp)
-target_link_libraries(propagate_test planner other_utils otherlibs ${ARMADILLO_LIBRARIES} ${GeographicLib_LIBRARIES})
+target_link_libraries(propagate_test planner common_utils otherlibs ${ARMADILLO_LIBRARIES} ${GeographicLib_LIBRARIES})
 #test path generator
 rosbuild_add_executable(path_test src/Planner/UserTypes/test_pathgen.cpp)
-target_link_libraries(path_test planner other_utils otherlibs ${ARMADILLO_LIBRARIES} ${GeographicLib_LIBRARIES})
+target_link_libraries(path_test planner common_utils otherlibs ${ARMADILLO_LIBRARIES} ${GeographicLib_LIBRARIES})
 #test mavlink receiver
 rosbuild_add_executable(receiver_test src/common/UserTypes/test_receiver.cpp)
-target_link_libraries(receiver_test other_utils ${GeographicLib_LIBRARIES})
+target_link_libraries(receiver_test common_utils ${GeographicLib_LIBRARIES})
 #test mavlink tcp
 rosbuild_add_executable(mavlinktcp_test src/common/UserTypes/test_tcpmavlink.cpp)
-target_link_libraries(mavlinktcp_test other_utils ${GeographicLib_LIBRARIES})  
+target_link_libraries(mavlinktcp_test common_utils ${GeographicLib_LIBRARIES})  
 #test mavlink sender tcp
 rosbuild_add_executable(mavlinksend_test src/common/UserTypes/mavlinksend_test.cpp)
-target_link_libraries(mavlinksend_test other_utils ${GeographicLib_LIBRARIES}) 
+target_link_libraries(mavlinksend_test common_utils ${GeographicLib_LIBRARIES}) 
 #test mavlinktcp_log
 rosbuild_add_executable(mavlinktcp_log src/common/UserTypes/mavlinktcp_log.cpp)
-target_link_libraries(mavlinktcp_log other_utils ${GeographicLib_LIBRARIES}) 
+target_link_libraries(mavlinktcp_log common_utils ${GeographicLib_LIBRARIES}) 
 #test in poly
 #rosbuild_add_executable(polyin_test src/Planner/Utils/test_pointinpoly.cpp)
 #target_link_libraries(polyin_test planner)
 
 #test obs from file
 rosbuild_add_executable(test_obsfile src/common/UserTypes/test_obsfromfile.cpp)
-target_link_libraries(test_obsfile other_utils ${GeographicLib_LIBRARIES})
+target_link_libraries(test_obsfile common_utils ${GeographicLib_LIBRARIES})
 
 #test plan_node
 rosbuild_add_executable(test_PlanNode src/nodes/UserTypes/test_PlanNode.cpp)
-target_link_libraries(test_PlanNode nodes planner other_utils otherlibs ${ARMADILLO_LIBRARIES} ${GeographicLib_LIBRARIES})
+target_link_libraries(test_PlanNode nodes planner common_utils otherlibs ${ARMADILLO_LIBRARIES} ${GeographicLib_LIBRARIES})
 
 #test MavlinkTCP_node
 rosbuild_add_executable(test_MavRecNode src/nodes/UserTypes/test_MavRecNode.cpp)
-target_link_libraries(test_MavRecNode nodes planner other_utils otherlibs ${ARMADILLO_LIBRARIES} ${GeographicLib_LIBRARIES}) 
+target_link_libraries(test_MavRecNode nodes planner common_utils otherlibs ${ARMADILLO_LIBRARIES} ${GeographicLib_LIBRARIES}) 
 
 #other test
 rosbuild_add_executable(other_test src/common/Test/main_test.cpp)
