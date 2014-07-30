@@ -17,7 +17,7 @@ LogConfigurator::LogConfigurator(const std::string& propfile, const std::string&
 
     if (!fs::exists(p))
     {
-        fs::path p2file("/home/yucong/ros_workspace/uascode/src/common/Utils/");
+        fs::path p2file("/home/yucong/ros_workspace/uascode/LogConfigure/");
         p = fs::system_complete(p2file / p);
         if (!fs::exists(p))
         {

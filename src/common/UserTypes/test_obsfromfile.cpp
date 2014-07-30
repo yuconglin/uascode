@@ -8,7 +8,7 @@ int main(int argc,char** argv)
 {
    ros::init(argc,argv,"obs_from_file");
 
-   Utils::LogConfigurator myconfigurator("log4cxx.properties", "ObsFromFile");
+   Utils::LogConfigurator myconfigurator("log4cxx_ObsFromFile.properties", "ObsFromFile");
 
    ObsFromFile obsfrom;
 
@@ -18,7 +18,8 @@ int main(int argc,char** argv)
      obsfrom.SetLogFileName(argv[1]);
    else {;}
 
-   //obsfrom.ReadSendObss("/home/yucong/ros_workspace/uascode/data/20140516-162158obs.txt",3);
+   obsfrom.LoadOffsets("/home/yucong/ros_workspace/uascode/records/offsets.txt");
+
    obsfrom.ReadObss("/home/yucong/ros_workspace/uascode/data/20140516-162158obs.txt");
    //send in ros
    obsfrom.SendObss(3);

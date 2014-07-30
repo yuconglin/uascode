@@ -47,23 +47,23 @@ namespace UserStructs
             
 	    obs3D Estimate(double t1) const
 	    {
-               if(t1<t)
-	       {
-		 std::cout<<"neg time "<<t1<<" "<< t<<std::endl;
-		 try {
-                   throw std::runtime_error ("negtive time");
-                 }
-                 catch (std::runtime_error &e){
-                   std::cout << "Caught a runtime_error exception: "
-                   << e.what () << '\n';
-                 }
+            if(t1<t)
+            {
+                std::cout<<"neg time "<<t1<<" "<< t<<std::endl;
+                try {
+                    throw std::runtime_error ("negtive time");
+                }
+                catch (std::runtime_error &e){
+                    std::cout << "Caught a runtime_error exception: "
+                              << e.what () << '\n';
+                }
 
-	       }
-	       double x=x1+speed*cos(head_xy)*(t1-t);
-               double y=x2+speed*sin(head_xy)*(t1-t);
-	       double z=x3+v_vert*(t1-t);
+            }
+            double x=x1+speed*cos(head_xy)*(t1-t);
+            double y=x2+speed*sin(head_xy)*(t1-t);
+            double z=x3+v_vert*(t1-t);
 
-	       return obs3D(x,y,z,r+dr,hr+dhr);
+            return obs3D(x,y,z,r+dr,hr+dhr);
 	    }
 
     };//struct ends

@@ -20,7 +20,17 @@ public:
    void SendObss(int obs_num);
    //set obss_file name
    void SetLogFileName(const char *filename);
+   //load offsets from file
+   void LoadOffsets(const char *filename);
+
 private:
+   struct OffSet{
+       double x_off;
+       double y_off;
+       double z_off;
+       double hd_off;
+   };
+   std::vector<OffSet> offsets;
    //ros related
    ros::NodeHandle nh;
    ros::Publisher pub_obss;

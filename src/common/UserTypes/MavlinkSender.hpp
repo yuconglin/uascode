@@ -10,13 +10,14 @@ namespace UasCode{
 
 class MavlinkSender{
  public:
-  //MavlinkSender();
-  //~MavlinkSender();
-  //
+  MavlinkSender();
+  ~MavlinkSender();
+
   int initialize();
   //sending
   void SendPosSP(double lat,double lon,double alt);//position setpoint
- private:
+  void SendIfColli(bool if_colli);
+private:
   struct addrinfo *p; 
   int sockfd;
   //struct sockaddr_in ip4addr;

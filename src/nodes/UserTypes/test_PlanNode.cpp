@@ -10,7 +10,7 @@ int main(int argc, char** argv)
   ros::init(argc,argv,"plan_node");
   PlanNode plan_node;
 
-  Utils::LogConfigurator myconfigurator("log4cxx.properties", "log for PlanNode");
+  Utils::LogConfigurator myconfigurator("log4cxx_PlanNode.properties", "log for PlanNode");
 
   plan_node.LoadFlightPlan(argv[1]);
 

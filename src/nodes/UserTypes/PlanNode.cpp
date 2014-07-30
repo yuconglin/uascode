@@ -19,6 +19,7 @@ namespace UasCode{
   {
     //publisher
     pub_interwp= nh.advertise<uascode::PosSetPoint>("inter_wp",100);
+    pub_if_colli= nh.advertise<uascode::IfCollision>("if_colli",100);
 
     //subscriber
     sub_obss= nh.subscribe("multi_obstacles",100,&PlanNode::obssCb,this);
@@ -100,25 +101,37 @@ namespace UasCode{
     //by adding the height of home waypoint
     if(plan_file.is_open())
     {
-       while(plan_file)
+       std::string line;
+       while(getline(plan_file,line))
        {
-         if(line_count>0){
+         if(line_count == 0){
+             std::string str1, str2, str3;
+             std::istringstream iss(line);
+             iss >> str1 >> str2 >> str3;
+         }
+         else{
+               std::istringstream iss(line);
 //0	1	0	16	0.00000  	0.000000	0.000000	0.000000	33.422036	-111.926263	30	1
-           int all= 12;
-           double log[all];
-           for(int i=0;i!=all;++i)
-               plan_file >> log[i];
-               double lat= log[8];
-               double lon= log[9];
-               double alt= log[10]+home_alt;
+               int seq,frame,command,current,autocontinue;
+               float param1,param2,param3,param4;
+               double lat,lon,alt;
+
+               iss >> seq >> current >> frame >> command
+                       >> param1 >> param2 >> param3 >> param4
+                       >> lat >> lon >> alt >> autocontinue;
+
+               alt= alt+home_alt;
                double r= 60;
                double x=0, y=0;
                double h= 200,v=150,alt_rec= 50;
+               UASLOG(s_logger,LL_DEBUG,"push lat: "<< std::setprecision(6) << std::fixed
+                      << lat);
                waypoints.push_back(UserStructs::MissionSimPt(lat,lon,alt,0,r,x,y,h,v,alt_rec) );
                //waypoints.push_back( UserStructs::GoalSetPt(log[8],log[9],log[10]+home_alt) );
          }//if line_count > 0 ends
          ++line_count;
        }//while plan_file ends
+       UASLOG(s_logger,LL_DEBUG,"loaded waypoints size: "<< waypoints.size() );
     }
 
     else{
@@ -136,9 +149,12 @@ namespace UasCode{
   bool PlanNode::PredictColliNode(UserStructs::PlaneStateSim &st_current,int seq_current,double t_limit)
   {
     //return true if collision predicted
+
     if(seq_current < 1) return false;
 
     NavigatorSim* navigator_pt= path_gen.NavigatorPt();
+
+    UASLOG(s_logger,LL_DEBUG,"waypoints size: " << waypoints.size() );
     bool tt= navigator_pt->PredictColli(st_current,waypoints,wp_init,obss,spLimit,seq_current,t_limit);
 
     UASLOG(s_logger,LL_DEBUG,"PredictColliNode: "<< tt);
@@ -179,9 +195,14 @@ namespace UasCode{
       GetCurrentSt();
 
       //situ= NORMAL;
-      //if( PredictColliNode(st_current,seq_current,30) )
-        //situ= PATH_GEN;
+      bool if_colli= PredictColliNode(st_current,seq_current,30);
+      IfColliMsg.if_collision = if_colli;
+      pub_if_colli.publish(IfColliMsg);
 
+      if( if_colli )
+      {
+          situ= PATH_GEN;
+      }
         //for diffrent cases
         switch(situ){
 

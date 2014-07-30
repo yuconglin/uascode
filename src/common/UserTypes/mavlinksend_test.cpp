@@ -17,8 +17,8 @@ int main(int argc,char** argv)
       //std::cout<<"msg received"<< std::endl;
       mavlink_message_t msg= mavlink_tcp.GetMessage();
       if(msg.msgid == MAVLINK_MSG_ID_INTER_RECEIVE){
-	//std::cout<<"inter receive" << std::endl;
-	mavlink_inter_receive_t inter_rec;
+          //std::cout<<"inter receive" << std::endl;
+          mavlink_inter_receive_t inter_rec;
         mavlink_msg_inter_receive_decode(&msg, &inter_rec);
 	if(inter_rec.receive==1) break;
       }

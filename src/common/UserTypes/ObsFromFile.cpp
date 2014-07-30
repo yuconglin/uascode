@@ -2,9 +2,10 @@
 #include "fstream"
 #include <vector>
 #include "Planner/UserStructs/obstacle3D.h"
-#include "common/Utils/GetTimeUTC.h"
 #include "common/Utils/GetTimeNow.h"
 #include "common/Utils/YcLogger.h"
+#include "common/UserStructs/constants.h"
+#include "common/Utils/GeoUtils.h"
 //ros
 #include "uascode/MultiObsMsg.h"
 
@@ -41,6 +42,35 @@ namespace UasCode{
      }
 }
 
+ void ObsFromFile::LoadOffsets(const char *filename)
+ {
+     std::ifstream file_offsets(filename);
+
+     if(file_offsets.is_open())
+     {
+       offsets.clear();
+
+       while(file_offsets.good() )
+       {
+          OffSet off_set;
+          file_offsets >> off_set.x_off
+                  >> off_set.y_off
+                  >> off_set.z_off
+                  >> off_set.hd_off;
+          offsets.push_back(off_set);
+       }
+
+     }
+     else{
+        try {
+             throw std::runtime_error ("unable to load offsets file");
+         }
+         catch (std::runtime_error &e) {
+             std::cout << "Caught a runtime_error exception: " << e.what () << '\n';
+         }
+     }
+ }
+
  void ObsFromFile::ReadObss(const char *filename)
  {
      std::vector<UserStructs::obstacle3D> obss;
@@ -72,7 +102,7 @@ namespace UasCode{
                  >> obs_single.r
                  >> obs_single.hr;
 
-         obs_single.head_xy= obs_single.head_xy/M_PI*180.;
+         obs_single.head_xy= Utils::_wrap_pi(M_PI/2- obs_single.head_xy * UasCode::DEG2RAD);
 
          for(int i=0;i!= obss.size();++i)
          {
@@ -82,6 +112,13 @@ namespace UasCode{
          }
 
          if(repeat){
+            for(int i=0;i!= obss.size();++i)
+            {
+               obss[i].x1 += offsets[i].x_off;
+               obss[i].x2 += offsets[i].y_off;
+               obss[i].x3 += offsets[i].z_off;
+               obss[i].head_xy += offsets[i].hd_off;
+            }
             all_obss.push_back(obss);
             obss.clear();
          }

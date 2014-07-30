@@ -18,6 +18,7 @@
 #include "uascode/AccelXYZ.h"
 #include "uascode/WpCurrent.h"
 #include "uascode/IfMavlinkGood.h"
+#include "uascode/IfCollision.h"
 
 #include "ros/ros.h"
 //std lib
@@ -69,6 +70,7 @@ class PlanNode{
 
    //wp ros msg to send
    uascode::PosSetPoint set_pt;
+   uascode::IfCollision IfColliMsg;
 
    //obstacles
    std::vector<UserStructs::obstacle3D> obss; 
@@ -94,6 +96,7 @@ class PlanNode{
    ros::NodeHandle nh;
    //publisher
    ros::Publisher pub_interwp;
+   ros::Publisher pub_if_colli;
    //subscribers
    ros::Subscriber sub_obss;
    ros::Subscriber sub_pos;

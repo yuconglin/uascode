@@ -27,18 +27,18 @@ namespace UserStructs{
 	 yaw(_yaw),pitch(_pitch),ax(_ax),ay(_ay),az(_az){ };
 
        PlaneStateSim SmallChange(double dt){
-         PlaneStateSim st;
-	 st.t= t+dt;
-         st.x= x+speed*cos(pitch)*sin(yaw);
-	 st.y= y+speed*cos(pitch)*cos(yaw);
-	 st.z= z+speed*sin(pitch);
-	 st.GetGCS();
-	 st.yaw= yaw;
-	 st.pitch= pitch;
-	 st.ax= ax;
-	 st.ay= ay;
-	 st.az= az;
-         return st;
+           PlaneStateSim st;
+           st.t= t+dt;
+           st.x= x+speed*cos(pitch)*sin(yaw);
+           st.y= y+speed*cos(pitch)*cos(yaw);
+           st.z= z+speed*sin(pitch);
+           st.GetGCS();
+           st.yaw= yaw;
+           st.pitch= pitch;
+           st.ax= ax;
+           st.ay= ay;
+           st.az= az;
+           return st;
        }
 
        void GetUTM(){

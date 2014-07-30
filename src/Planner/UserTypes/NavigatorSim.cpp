@@ -3,8 +3,13 @@
 #include "Planner/Utils/DubinsLength2.h"
 #include "Planner/Utils/CheckCollision.h"
 #include "common/Utils/UTMtransform.h"
+#include "common/Utils/YcLogger.h"
 //other
 #include <iomanip>
+
+namespace{
+Utils::LoggerPtr s_logger(Utils::getLogger("uascode.NavigatorSim.YcLogger"));
+}
 
 namespace UasCode{
 
@@ -339,6 +344,7 @@ int NavigatorSim::PropWpCheckTime(UserStructs::PlaneStateSim& st_start,
     if(pt_target.SeeArriveSphere(st_start.x,st_start.y,st_start.z) )
     {
       st_end= st_start;
+      UASLOG(s_logger,LL_DEBUG,"arrive end");
       return 0;
     }
 
@@ -380,18 +386,25 @@ int NavigatorSim::PropWpCheckTime(UserStructs::PlaneStateSim& st_start,
         if_arrive= pt_target.SeeArrive(st_next.x,st_next.y,st_next.z);
 
       if(if_arrive){
-    result= 0;
-    break;
+          UASLOG(s_logger,LL_DEBUG,"arrived");
+          result= 0;
+          break;
       }//if ends
 
       length+= sqrt( pow(st_now.x-st_next.x,2)
             + pow(st_now.y-st_next.y,2)
             + pow(st_now.z-st_next.z,2)
             );
+      /*
+      UASLOG(s_logger,LL_DEBUG,"length/check_step: " << (int)(length/check_step) << " "
+             << "Nec: " << Nec
+             ); */
 
       if( (int)(length/check_step) > Nec )
       {
           //check for obstacles
+          //UASLOG(s_logger,LL_DEBUG,"check for obstacles");
+
           for(int i=0;i!= obstacles.size();++i){
 
               if(Utils::CheckCollision(st_next,obstacles[i])==1){
@@ -457,6 +470,8 @@ bool NavigatorSim::PredictColli(UserStructs::PlaneStateSim &st_current,
           pt_start << waypoints[seq_current-1].lat << waypoints[seq_current-1].lon;
 
        pt_target= waypoints[seq_current];
+
+       //UASLOG(s_logger,LL_DEBUG,"in PredictColli");
 
        result= PropWpCheckTime(st_start,st_next,pt_start,pt_target,
                                    obstacles,spacelimit,

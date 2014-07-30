@@ -144,18 +144,18 @@ for j=1:length(t_traj)
    
 end
 
-% %plot
-% figure;
-% plot3(virtual_traj(:,2),virtual_traj(:,3),virtual_traj(:,4),'r+' );
-% 
-% figure;
-% subplot(3,1,1);
-% plot( t_traj, dis1,'b+-' );
-% 
-% subplot(3,1,2);
-% plot( t_traj, dis2,'b+-' );
-% 
-% subplot(3,1,3);
-% plot( t_traj, dis3,'b+-' );
+%plot
+figure;
+plot3(virtual_traj(:,2),virtual_traj(:,3),virtual_traj(:,4),'r+' );
+
+figure;
+subplot(3,1,1);
+plot( t_traj, dis1,'b+-' );
+
+subplot(3,1,2);
+plot( t_traj, dis2,'b+-' );
+
+subplot(3,1,3);
+plot( t_traj, dis3,'b+-' );
 
 

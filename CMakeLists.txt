@@ -92,6 +92,7 @@ rosbuild_add_library(planner
 rosbuild_add_library(nodes
 src/nodes/UserTypes/PlanNode.cpp
 src/nodes/UserTypes/MavlinkRecNode.cpp
+src/nodes/UserTypes/MavlinkSendNode.cpp
 )
 
  #########other libs
@@ -148,6 +149,10 @@ target_link_libraries(test_PlanNode nodes planner common_utils otherlibs ${ARMAD
 #test MavlinkTCP_node
 rosbuild_add_executable(test_MavRecNode src/nodes/UserTypes/test_MavRecNode.cpp)
 target_link_libraries(test_MavRecNode nodes planner common_utils otherlibs ${ARMADILLO_LIBRARIES} ${GeographicLib_LIBRARIES}) 
+
+#test MavlinkSendNode
+rosbuild_add_executable(test_MavSendNode src/nodes/UserTypes/test_MavSendNode.cpp)
+target_link_libraries(test_MavSendNode nodes planner common_utils otherlibs ${ARMADILLO_LIBRARIES} ${GeographicLib_LIBRARIES})
 
 #other test
 rosbuild_add_executable(other_test src/common/Test/main_test.cpp)
