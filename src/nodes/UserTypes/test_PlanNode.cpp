@@ -12,6 +12,7 @@ int main(int argc, char** argv)
 
   Utils::LogConfigurator myconfigurator("log4cxx_PlanNode.properties", "log for PlanNode");
 
+  plan_node.SetHomeAlt(585);
   plan_node.LoadFlightPlan(argv[1]);
 
   if (argc == 2)

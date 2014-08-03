@@ -35,7 +35,7 @@ namespace UserStructs
 	    
 	    //constructor
 	    //default
-	    obstacle3D():x1(0),x2(0),x3(0),head_xy(0),speed(0),v_vert(0),t(0),r(0),dr(0),hr(0),dhr(0){ };
+        obstacle3D():x1(0),x2(0),x3(0),head_xy(0),speed(0),v_vert(0),t(0),r(0),dr(0),hr(0),dhr(0){ }
 	    
 	    //short
 	    //obstacle3D(double _x1, double _x2, double _head_xy, double _speed, double _x3, double _v_vert, double _t):

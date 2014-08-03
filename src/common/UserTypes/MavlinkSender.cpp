@@ -59,7 +59,7 @@ int MavlinkSender::initialize()
 void MavlinkSender::SendPosSP(double lat,double lon,double alt)
 {
  //lat,lon,alt to mavlink msg
-   UASLOG(s_logger,LL_DEBUG,"lat: " << lat
+   UASLOG(s_logger,LL_DEBUG,"send lat: " << lat
           << " lon: "<< lon
           << " alt: "<< alt
           );
@@ -85,7 +85,7 @@ void MavlinkSender::SendPosSP(double lat,double lon,double alt)
 
 void MavlinkSender::SendIfColli(bool if_colli)
 {
-    UASLOG(s_logger,LL_DEBUG,"if_colli: "<< if_colli);
+    UASLOG(s_logger,LL_DEBUG,"send if_colli: "<< if_colli);
 
     mavlink_if_collision_t mav_ifcolli;
     mav_ifcolli.if_collision= (int)if_colli;

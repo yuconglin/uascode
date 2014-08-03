@@ -1,5 +1,10 @@
 #include "MavlinkSendNode.hpp"
 #include "ros/ros.h"
+#include "common/Utils/YcLogger.h"
+
+namespace {
+ Utils::LoggerPtr s_logger(Utils::getLogger("uascode.MavlinkSendNode.YcLogger") );
+}
 
 namespace UasCode{
 
@@ -26,12 +31,25 @@ void MavlinkSendNode::working()
   {
      SetDefault();
      ros::spinOnce();
+     /*
+     UASLOG(s_logger,LL_DEBUG,"lalala wp: "
+            << lat_s << " "
+            << lon_s << " "
+            << alt_s);
+     */
 
-     if(!if_receive && lat_s!=0 && lon_s!=0 && alt_s!=0)
-       sender.SendPosSP(lat_s,lon_s,alt_s);
+     if(!if_receive)
+     {
+        UASLOG(s_logger,LL_DEBUG,"received wp: "
+               << lat_s << " "
+               << lon_s << " "
+               << alt_s);
 
-     if(!if_colli== -1)
-       sender.SendIfColli(if_colli);
+        sender.SendPosSP(lat_s,lon_s,alt_s);
+     }
+
+     if(if_colli_rec)
+        sender.SendIfColli(if_colli);
   }
 }
 
@@ -50,6 +68,8 @@ void MavlinkSendNode::IfRecCb(const uascode::IfRecMsg::ConstPtr& msg)
 void MavlinkSendNode::IfColliCb(const uascode::IfCollision::ConstPtr& msg)
 {
   if_colli= msg->if_collision;
+  UASLOG(s_logger,LL_DEBUG,"if_colli: "<< if_colli);
+  if_colli_rec = true;
 }
 
 void MavlinkSendNode::SetDefault()
@@ -57,7 +77,8 @@ void MavlinkSendNode::SetDefault()
    lat_s= 0.;
    lon_s= 0.;
    alt_s= 0.;
-   if_colli = -1;
+   //if_colli = -1;
+   if_colli_rec= false;
 }
 
 }

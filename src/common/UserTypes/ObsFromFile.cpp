@@ -102,7 +102,10 @@ namespace UasCode{
                  >> obs_single.r
                  >> obs_single.hr;
 
-         obs_single.head_xy= Utils::_wrap_pi(M_PI/2- obs_single.head_xy * UasCode::DEG2RAD);
+         obs_single.r = 300;
+         //obs_single.head_xy= Utils::_wrap_pi(M_PI/2- obs_single.head_xy * UasCode::DEG2RAD);
+
+         UASLOG(s_logger,LL_DEBUG, "obs_single.head_xy: "<< obs_single.head_xy*M_PI/180.);
 
          for(int i=0;i!= obss.size();++i)
          {

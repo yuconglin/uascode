@@ -91,6 +91,7 @@ void NavigatorSim::PropagateStep(UserStructs::PlaneStateSim& st_start,UserStruct
 	<< dem_thr << std::endl;
 
   //update based on action
+
   st_end= updater.update(st_start,nav_roll,nav_yaw,dem_pitch,dem_thr,dt);
   //log states
   fs_state<< std::setprecision(5)<< std::fixed<< st_end.t<<" "
@@ -285,8 +286,8 @@ int NavigatorSim::PropWpCheck(UserStructs::PlaneStateSim& st_start,
         if_arrive= pt_target.SeeArrive(st_next.x,st_next.y,st_next.z);
 
       if(if_arrive){
-	result= 0;
-	break;
+          result= 0;
+          break;
       }//if ends
 
       length+= sqrt( pow(st_now.x-st_next.x,2)
@@ -294,7 +295,7 @@ int NavigatorSim::PropWpCheck(UserStructs::PlaneStateSim& st_start,
             + pow(st_now.z-st_next.z,2)
             );
 
-      if( (int)(length/check_step) > Nec )
+      //if( (int)(length/check_step) > Nec )
       {
           //check for obstacles
           for(int i=0;i!= obstacles.size();++i){
@@ -325,7 +326,7 @@ int NavigatorSim::PropWpCheck(UserStructs::PlaneStateSim& st_start,
           result= 1;
           break;
       }
-
+      st_now = st_next;
     }//while ends
     st_end= st_next;
     return result;
@@ -397,13 +398,13 @@ int NavigatorSim::PropWpCheckTime(UserStructs::PlaneStateSim& st_start,
             );
       /*
       UASLOG(s_logger,LL_DEBUG,"length/check_step: " << (int)(length/check_step) << " "
-             << "Nec: " << Nec
+             << "Nec: " << Nec << " "
+             << "length: " << length << " "
+             << "check_step: " << check_step
              ); */
 
-      if( (int)(length/check_step) > Nec )
+      //if( (int)(length/check_step) > Nec )
       {
-          //check for obstacles
-          //UASLOG(s_logger,LL_DEBUG,"check for obstacles");
 
           for(int i=0;i!= obstacles.size();++i){
 
@@ -439,10 +440,11 @@ int NavigatorSim::PropWpCheckTime(UserStructs::PlaneStateSim& st_start,
           result= 1;
           break;
       }
-
+      st_now = st_next;
     }//while ends
 
     st_end= st_next;
+
     t_left= t_horizon-(st_end.t-st_start.t);
 
     return result;
@@ -469,9 +471,7 @@ bool NavigatorSim::PredictColli(UserStructs::PlaneStateSim &st_current,
        else
           pt_start << waypoints[seq_current-1].lat << waypoints[seq_current-1].lon;
 
-       pt_target= waypoints[seq_current];
-
-       //UASLOG(s_logger,LL_DEBUG,"in PredictColli");
+       pt_target= waypoints[i];
 
        result= PropWpCheckTime(st_start,st_next,pt_start,pt_target,
                                    obstacles,spacelimit,
@@ -481,7 +481,11 @@ bool NavigatorSim::PredictColli(UserStructs::PlaneStateSim &st_current,
           return true;
        }
 
-       if(result == 2) return false;
+       if(result == 2) {
+
+          return false;
+
+       }
 
        t_limit= t_left;
        st_start= st_next;

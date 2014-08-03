@@ -22,5 +22,5 @@ int main(int argc,char** argv)
 
    obsfrom.ReadObss("/home/yucong/ros_workspace/uascode/data/20140516-162158obs.txt");
    //send in ros
-   obsfrom.SendObss(3);
+   obsfrom.SendObss(1);
 }

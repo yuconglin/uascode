@@ -35,6 +35,7 @@ private:
   double lat_s, lon_s, alt_s;
   bool if_receive;
   bool if_colli;
+  bool if_colli_rec;
   void SetDefault();
 };
 

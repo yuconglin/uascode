@@ -86,6 +86,7 @@ rosbuild_add_library(planner
  src/Planner/Utils/DubinsLength3D.cpp
  src/Planner/Utils/DubinsLength2.cpp
  src/Planner/Utils/DubinsLength3D.cpp
+ src/Planner/UserStructs/SpaceLimit.cpp
  )
 
 ##########library for nodes
@@ -153,6 +154,10 @@ target_link_libraries(test_MavRecNode nodes planner common_utils otherlibs ${ARM
 #test MavlinkSendNode
 rosbuild_add_executable(test_MavSendNode src/nodes/UserTypes/test_MavSendNode.cpp)
 target_link_libraries(test_MavSendNode nodes planner common_utils otherlibs ${ARMADILLO_LIBRARIES} ${GeographicLib_LIBRARIES})
+
+#test predict in time limit
+rosbuild_add_executable(test_LoopPredict src/nodes/UserTypes/test_LoopPredict.cpp)
+target_link_libraries(test_LoopPredict nodes planner common_utils otherlibs ${ARMADILLO_LIBRARIES} ${GeographicLib_LIBRARIES})
 
 #other test
 rosbuild_add_executable(other_test src/common/Test/main_test.cpp)

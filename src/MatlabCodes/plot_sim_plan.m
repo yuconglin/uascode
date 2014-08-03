@@ -3,7 +3,8 @@ clear all;
 clc;
 %to compare simulated and planned trajectory
 %load planned path
-f_traj =fopen('../../bin/fs_state.txt','r');
+%f_traj =fopen('../../bin/fs_state.txt','r');
+f_traj = fopen('../../fs_state2.txt','r');
 
 if f_traj == -1
     error('File fs_state.txt could not be opened, check name or path.')
@@ -96,47 +97,51 @@ for j=1:length(t_array)
 end
 
 figure;
-subplot(2,2,1);
 hold on;
-plot( sim_traj(:,1), sim_traj(:,2) );
-plot( virtual_traj(:,1), virtual_traj(:,2),'r+-');
+plot3( virtual_traj(:,2), virtual_traj(:,3), virtual_traj(:,4),'r+-');
 
-subplot(2,2,2);
-hold on;
-plot( sim_traj(:,1), sim_traj(:,3) );
-plot( virtual_traj(:,1), virtual_traj(:,3), 'r+-' );
-
-subplot(2,2,3);
-hold on;
-plot( sim_traj(:,1), sim_traj(:,4) );
-plot( virtual_traj(:,1), virtual_traj(:,4), 'r+-' );
-
-subplot(2,2,4);
-hold on;
-plot( sim_traj(:,1), sim_traj(:,5) );
-plot( virtual_traj(:,1), virtual_traj(:,5), 'r+-' );
-
-figure;
-subplot(2,2,1);
-hold on;
-plot( sim_traj(:,1), sim_traj(:,6) );
-plot( virtual_traj(:,1), virtual_traj(:,6), 'r+-' ); 
-
-subplot(2,2,2);
-hold on;
-plot( t_array(1:length(dis)), dis );
-
-subplot(2,2,3);
-hold on;
-plot( sim_traj(:,1), sim_traj(:,7)*180/pi );
-plot( virtual_traj(:,1), virtual_traj(:,7), 'r+-' );
-
-subplot(2,2,4);
-hold on;
-plot( sim_traj(:,1), sim_traj(:,8)*180/pi );
-plot( virtual_traj(:,1), virtual_traj(:,6), 'r+-' );
-
-figure;
-hold on;
-plot3(sim_traj(:,2),sim_traj(:,3),sim_traj(:,4) );
-plot3(virtual_traj(:,2),virtual_traj(:,3),virtual_traj(:,4),'r+' );
+% figure;
+% subplot(2,2,1);
+% hold on;
+% plot( sim_traj(:,1), sim_traj(:,2) );
+% plot( virtual_traj(:,1), virtual_traj(:,2),'r+-');
+% 
+% subplot(2,2,2);
+% hold on;
+% plot( sim_traj(:,1), sim_traj(:,3) );
+% plot( virtual_traj(:,1), virtual_traj(:,3), 'r+-' );
+% 
+% subplot(2,2,3);
+% hold on;
+% plot( sim_traj(:,1), sim_traj(:,4) );
+% plot( virtual_traj(:,1), virtual_traj(:,4), 'r+-' );
+% 
+% subplot(2,2,4);
+% hold on;
+% plot( sim_traj(:,1), sim_traj(:,5) );
+% plot( virtual_traj(:,1), virtual_traj(:,5), 'r+-' );
+% 
+% figure;
+% subplot(2,2,1);
+% hold on;
+% plot( sim_traj(:,1), sim_traj(:,6) );
+% plot( virtual_traj(:,1), virtual_traj(:,6), 'r+-' ); 
+% 
+% subplot(2,2,2);
+% hold on;
+% plot( t_array(1:length(dis)), dis );
+% 
+% subplot(2,2,3);
+% hold on;
+% plot( sim_traj(:,1), sim_traj(:,7)*180/pi );
+% plot( virtual_traj(:,1), virtual_traj(:,7), 'r+-' );
+% 
+% subplot(2,2,4);
+% hold on;
+% plot( sim_traj(:,1), sim_traj(:,8)*180/pi );
+% plot( virtual_traj(:,1), virtual_traj(:,6), 'r+-' );
+% 
+% figure;
+% hold on;
+% plot3(sim_traj(:,2),sim_traj(:,3),sim_traj(:,4) );
+% plot3(virtual_traj(:,2),virtual_traj(:,3),virtual_traj(:,4),'r+' );

@@ -41,6 +41,8 @@ class PlanNode{
    void LoadFlightPlan(const char* filename);
    //working part
    void working();
+   //to test predicting
+   void predicting();
 
  private:
    enum possible_cases{NORMAL,PATH_READY,PATH_GEN,PATH_CHECK,PATH_RECHECK,WAIT_STATE,ARRIVED};
@@ -64,6 +66,10 @@ class PlanNode{
    bool if_mavlink;
    //Current Waypoint
    int seq_current;
+
+   //flag to indicate if an inter wp was generated
+   bool if_inter_gen;
+   int seq_inter;
 
    //to see if the sent waypoint was received
    bool if_receive;
@@ -119,6 +125,7 @@ class PlanNode{
 
    //other functions
    void GetCurrentSt();
+   void GetObssDis();
    void GetGoalWp();
    bool CheckGoalChange();
    bool PredictColliNode(UserStructs::PlaneStateSim &st_current,int seq_current,double t_limit);

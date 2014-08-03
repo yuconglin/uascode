@@ -29,9 +29,9 @@ namespace UserStructs{
        PlaneStateSim SmallChange(double dt){
            PlaneStateSim st;
            st.t= t+dt;
-           st.x= x+speed*cos(pitch)*sin(yaw);
-           st.y= y+speed*cos(pitch)*cos(yaw);
-           st.z= z+speed*sin(pitch);
+           st.x= x+speed*cos(pitch)*sin(yaw)*dt;
+           st.y= y+speed*cos(pitch)*cos(yaw)*dt;
+           st.z= z+speed*sin(pitch)*dt;
            st.GetGCS();
            st.yaw= yaw;
            st.pitch= pitch;

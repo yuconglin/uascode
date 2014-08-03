@@ -1,14 +1,19 @@
 #include "SamplerPole.hpp"
 #include <boost/random.hpp>
+#include <common/Utils/YcLogger.h>
 #include <ctime>
+
+namespace{
+  Utils::LoggerPtr s_logger(Utils::getLogger("uascode.SamplerPole.Yclogger"));
+}
 
 namespace UserTypes{
 
-   SamplerPole::~SamplerPole(){};
+   SamplerPole::~SamplerPole(){}
 
-   void SamplerPole::SetParams(UserStructs::PlaneStateSim& st, 
-	             UserStructs::MissionSimPt& goal_wp,
-		     double _sig_ga)  
+   void SamplerPole::SetParams(UserStructs::PlaneStateSim& st,
+                               UserStructs::MissionSimPt& goal_wp,
+                               double _sig_ga)
    {
       double x_root= st.x;
       double y_root= st.y;
@@ -16,14 +21,17 @@ namespace UserTypes{
       double x_goal= goal_wp.x;
       double y_goal= goal_wp.y;
       double z_goal= goal_wp.alt;
+
       //check start and goal position
-      std::cout<<"root: "<<x_root<<" "
-	<<y_root<<" "
-	<<z_root<<" "<<std::endl;
+      UASLOG(s_logger,LL_DEBUG,"root: "
+             <<x_root<<" "
+             <<y_root<<" "
+             <<z_root);
       
-      std::cout<<"goal: "<<x_goal<<" "
-	<<y_goal<<" "
-	<<z_goal<<" "<<std::endl;
+      UASLOG(s_logger,LL_DEBUG,"goal: "
+             <<x_goal<<" "
+             <<y_goal<<" "
+             <<z_goal);
       //
       double Dx= x_goal-x_root;
       double Dy= y_goal-y_root;
@@ -31,6 +39,7 @@ namespace UserTypes{
       double theta0= atan2(Dy,Dx);
      
       double r0,gamma0 =0.;
+
       if(sample_method ==0)
       { //here r0 is different
         r0= sqrt(Dx*Dx+Dy*Dy+Dz*Dz);
@@ -48,6 +57,10 @@ namespace UserTypes{
       y0 = y_root;
       z0 = z_root;
       this->r0 = r0;
+
+      UASLOG(s_logger,LL_DEBUG,"x0: "<< x0
+             << " y0: "<< y0
+             << " z0: "<< z0);
     
       sigma_r= 0.5*r0;
       
@@ -78,6 +91,12 @@ namespace UserTypes{
           boost::normal_distribution<> ga_distribution(ga0, sigma_ga);
           boost::variate_generator<boost::mt19937&,boost::normal_distribution<> > ga_nor(generator, ga_distribution);
           double ga= ga_nor();
+
+          UASLOG(s_logger,LL_DEBUG,
+                 "r: "<< r
+                 << " theta: "<< theta*180./M_PI
+                 << " ga: "<< ga*180./M_PI
+                 );
 
           x_a= x0+ r*cos(theta)*cos(ga);
           y_a= y0+ r*sin(theta)*cos(ga);
