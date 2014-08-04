@@ -68,14 +68,14 @@ class NavigatorSim{
                        std::vector<UserStructs::obstacle3D> obstacles,
                        UserStructs::SpaceLimit spacelimit,
                        double &length,double t_horizon,double& t_left,
-                       int option);
+                       int option,double thres_ratio);
    
    bool PredictColli(UserStructs::PlaneStateSim &st_current,
                      std::vector<UserStructs::MissionSimPt> waypoints,
                      UserStructs::GoalSetPt init_pt,
                      std::vector<UserStructs::obstacle3D> obstacles,
                      UserStructs::SpaceLimit spacelimit,
-                     int seq_current,double t_limit);
+                     int seq_current,double t_limit,double thres_ratio);
 
    double GetMaxPitch(){return updater.GetMaxPitch();}
 

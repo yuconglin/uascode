@@ -94,6 +94,8 @@ class PlanNode{
    double wp_r;
    //alt for home waypoint
    double home_alt;
+   //threshold ratio for obstacle avoidance
+   double thres_ratio;
 
    //log for trajectory
    std::ofstream traj_log;
@@ -128,7 +130,7 @@ class PlanNode{
    void GetObssDis();
    void GetGoalWp();
    bool CheckGoalChange();
-   bool PredictColliNode(UserStructs::PlaneStateSim &st_current,int seq_current,double t_limit);
+   int PredictColliNode(UserStructs::PlaneStateSim &st_current,int seq_current,double t_limit,double thres_ratio);
 };
 
 }//namespace ends

@@ -1,2 +1,2 @@
 Header header
-bool if_collision
+int8 if_collision

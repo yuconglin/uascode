@@ -340,7 +340,7 @@ int NavigatorSim::PropWpCheckTime(UserStructs::PlaneStateSim& st_start,
                      std::vector<UserStructs::obstacle3D> obstacles,
                      UserStructs::SpaceLimit spacelimit,
                      double &length,double t_horizon,double& t_left,
-                     int option)
+                     int option,double thres_ratio)
  {
     if(pt_target.SeeArriveSphere(st_start.x,st_start.y,st_start.z) )
     {
@@ -408,7 +408,7 @@ int NavigatorSim::PropWpCheckTime(UserStructs::PlaneStateSim& st_start,
 
           for(int i=0;i!= obstacles.size();++i){
 
-              if(Utils::CheckCollision(st_next,obstacles[i])==1){
+              if(Utils::CheckCollision2(st_next,obstacles[i],thres_ratio)==1){
                   result = -1;
                   break;
               }
@@ -455,8 +455,10 @@ bool NavigatorSim::PredictColli(UserStructs::PlaneStateSim &st_current,
                                 UserStructs::GoalSetPt init_pt,
                                 std::vector<UserStructs::obstacle3D> obstacles,
                                 UserStructs::SpaceLimit spacelimit,
-                                int seq_current, double t_limit)
-{  //true:collision, false:no collision
+                                int seq_current, double t_limit,
+                                double thres_ratio)
+{
+    //true:collision, false:no collision
     UserStructs::PlaneStateSim st_start= st_current, st_next;
     arma::vec::fixed<2> pt_start;
     UserStructs::MissionSimPt pt_target;
@@ -471,11 +473,12 @@ bool NavigatorSim::PredictColli(UserStructs::PlaneStateSim &st_current,
        else
           pt_start << waypoints[seq_current-1].lat << waypoints[seq_current-1].lon;
 
+       UASLOG(s_logger,LL_DEBUG,"test wp: "<< i);
        pt_target= waypoints[i];
 
        result= PropWpCheckTime(st_start,st_next,pt_start,pt_target,
                                    obstacles,spacelimit,
-                                   length,t_limit,t_left,1);
+                                   length,t_limit,t_left,1,thres_ratio);
 
        if(result == -1){
           return true;

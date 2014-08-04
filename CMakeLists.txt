@@ -87,6 +87,7 @@ rosbuild_add_library(planner
  src/Planner/Utils/DubinsLength2.cpp
  src/Planner/Utils/DubinsLength3D.cpp
  src/Planner/UserStructs/SpaceLimit.cpp
+ src/Planner/UserStructs/PlaneStateSim.cpp
  )
 
 ##########library for nodes

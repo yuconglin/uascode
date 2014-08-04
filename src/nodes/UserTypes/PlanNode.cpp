@@ -50,6 +50,7 @@ namespace UasCode{
     //set wp_r
     wp_r =30;
 
+    thres_ratio=1.0;
     if_receive= false;
     //I use seq_current== -1 to indicate the moment mission starts
     seq_current= -1;
@@ -151,20 +152,28 @@ namespace UasCode{
     path_gen.SetTimeLimit(t_limit);
   }//SetTimeLimit ends
 
-  bool PlanNode::PredictColliNode(UserStructs::PlaneStateSim &st_current,int seq_current,double t_limit)
+  int PlanNode::PredictColliNode(UserStructs::PlaneStateSim &st_current,int seq_current,double t_limit,double thres_ratio)
   {
     //return true if collision predicted
 
-    if(seq_current < 1) return false;
+    if(seq_current < 1) return -1;
 
     NavigatorSim* navigator_pt= path_gen.NavigatorPt();
 
     UASLOG(s_logger,LL_DEBUG,"predict colli starts");
     UASLOG(s_logger,LL_DEBUG,"waypoints size: " << waypoints.size() );
-    bool tt= navigator_pt->PredictColli(st_current,waypoints,wp_init,obss,spLimit,seq_current,t_limit);
 
-    UASLOG(s_logger,LL_DEBUG,"PredictColliNode: "<< tt);
-    return tt;
+    std::ostringstream oss;
+    for(int i=0;i!= waypoints.size();++i)
+        oss << i<<":"<< waypoints[i].lat <<" "
+            << waypoints[i].lon<<" "
+            << waypoints[i].alt << '\n';
+
+    UASLOG(s_logger,LL_DEBUG,oss.str() );
+
+    bool tt= navigator_pt->PredictColli(st_current,waypoints,wp_init,obss,spLimit,seq_current,t_limit,thres_ratio);
+
+    return (tt ? 1:0);
   }
 
   void PlanNode::GetObssDis()
@@ -210,7 +219,7 @@ namespace UasCode{
 
        if(!if_did && seq_current > 0 && !obss.empty() )
        {
-         bool if_colli= PredictColliNode(st_current,seq_current,1000);
+         bool if_colli= PredictColliNode(st_current,seq_current,1000,1.2);
 
          UASLOG(s_logger,LL_DEBUG,"if_colli: "
                 << if_colli);
@@ -257,57 +266,79 @@ namespace UasCode{
       GetObssDis();
 
       //situ= NORMAL;
-      bool if_colli= PredictColliNode(st_current,seq_current,30);
+      int if_colli= PredictColliNode(st_current,seq_current,30,thres_ratio);
+      UASLOG(s_logger,LL_DEBUG,"PredictColliNode: "<< if_colli);
       IfColliMsg.if_collision = if_colli;
       pub_if_colli.publish(IfColliMsg);
 
-      UASLOG(s_logger,LL_DEBUG,"situ="<< situ);
-
-      if( if_colli && (situ== NORMAL||situ== PATH_RECHECK) )
+      if( if_colli == 1 && situ== NORMAL )
       {
           situ= PATH_GEN;
+          if_inter_gen= false;
       }
-        //for diffrent cases
-        switch(situ){
 
-        case PATH_GEN:
-        {
+      if(!if_inter_gen)
+          thres_ratio= 1.5;
+      else
+          thres_ratio=1.;
+
+      UASLOG(s_logger,LL_DEBUG,"situ="<< situ <<" "
+             << "if_receive="<<" "<< if_receive <<" "
+             << "seq_current="<<" "<< seq_current);
+
+      //for diffrent cases
+      switch(situ){
+
+      case PATH_GEN:
+      {
           //set start state and goal waypoint
           UASLOG(s_logger,LL_DEBUG,"planning");
-          path_gen.SetInitState(st_current.SmallChange(t_limit));
-          if(!if_inter_gen)
-            path_gen.SetGoalWp(waypoints[seq_current]);
-          else{
-            path_gen.SetGoalWp(waypoints[seq_inter+1]);
+          if(1)
+              path_gen.SetInitState(st_current.SmallChange(t_limit));
+          if(0){/*
+              if(!if_inter_gen)
+                  path_gen.SetGoalWp(waypoints[seq_current]);
+              else{
+                  UASLOG(s_logger,LL_DEBUG,"total: "<< waypoints.size()
+                         << " seq_inter: " << seq_inter);
+                  path_gen.SetGoalWp(waypoints[seq_inter+1]);
+              }*/
           }
+          path_gen.SetGoalWp(waypoints[seq_current]);
           path_gen.SetSampleParas();
           path_gen.SetObs(obss);
           //to generate feasible paths
-          path_gen.AddPaths();
-          situ= PATH_CHECK;
+          if (path_gen.AddPaths()> 0 )
+             situ= PATH_CHECK;
+          else{
+             if(thres_ratio > 1.)
+                 thres_ratio-= 0.1;
+          }
           break;
-        }
+      }
 
-        case PATH_CHECK:
-        {
+      case PATH_CHECK:
+      {
           UserStructs::MissionSimPt inter_wp;
           if(path_gen.PathCheckRepeat(st_current))
           {
-           UASLOG(s_logger,LL_DEBUG,"check ok, yes waypoint");
-           inter_wp= path_gen.GetInterWp();
+              UASLOG(s_logger,LL_DEBUG,"check ok, yes waypoint");
+              inter_wp= path_gen.GetInterWp();
 
-           set_pt.lat= inter_wp.lat;
-           set_pt.lon= inter_wp.lon;
-           //for mavproxy, home_alt must be subtracted
-           set_pt.alt= inter_wp.alt- home_alt;
+              set_pt.lat= inter_wp.lat;
+              set_pt.lon= inter_wp.lon;
+              //for mavproxy, home_alt must be subtracted
+              set_pt.alt= inter_wp.alt- home_alt;
 
-           UASLOG(s_logger,LL_DEBUG,"wp generated: "
-                  << set_pt.lat << " "
-                  << set_pt.lon << " "
-                  << set_pt.alt);
+              UASLOG(s_logger,LL_DEBUG,"wp generated: "
+                     << set_pt.lat << " "
+                     << set_pt.lon << " "
+                     << set_pt.alt);
 
-           //here we need to add a flag to test if the waypoint is received
-           situ= PATH_READY;
+              //here we need to add a flag to test if the waypoint is received
+              situ= PATH_READY;
+              waypoints.insert(waypoints.begin()+seq_current,inter_wp);
+              /*
            if(!if_inter_gen){
                //insert into waypoints
                waypoints.insert(waypoints.begin()+seq_current,inter_wp);
@@ -316,41 +347,44 @@ namespace UasCode{
            }
            else{
                //remove the previous gen waypoint
+               UASLOG(s_logger,LL_DEBUG,"seq_current: "<< seq_current
+                      << " seq_inter: " << seq_inter);
                waypoints.erase(waypoints.begin()+seq_inter);
                waypoints.insert(waypoints.begin()+seq_current,inter_wp);
                seq_inter= seq_current;
-           }
-           //situ= PATH_RECHECK;
+           }*/
+              //situ= PATH_RECHECK;
+              if_inter_gen= true;
           }
           else{
-           UASLOG(s_logger,LL_DEBUG,"No waypoint, retry");
-           situ= PATH_GEN;
+              UASLOG(s_logger,LL_DEBUG,"No waypoint, retry");
+              situ= PATH_GEN;
           }
           break;
-        }
+      }
 
-        case PATH_READY:
-        {
+      case PATH_READY:
+      {
           if(!if_receive){
-           //this will be sent to pixhawk by MavlinkReceiver node
-           UASLOG(s_logger,LL_DEBUG,"path ready for sending");
-           pub_interwp.publish(set_pt);
+              //this will be sent to pixhawk by MavlinkReceiver node
+              UASLOG(s_logger,LL_DEBUG,"path ready for sending");
+              pub_interwp.publish(set_pt);
           }
           else
-           //situ= PATH_RECHECK;
-           situ= NORMAL;
+              //situ= PATH_RECHECK;
+              situ= NORMAL;
           break;
-        }
+      }
 
-        case PATH_RECHECK:
-        {
+      case PATH_RECHECK:
+      {
           if(path_gen.PathCheckSingle(st_current) )
-             situ= NORMAL;
-           break;
-        }
-        default:
-           break;
-        }//switch ends
+              situ= NORMAL;
+          break;
+      }
+      default:
+          break;
+      }//switch ends
 
       r.sleep();
     }//while ends
@@ -478,7 +512,10 @@ namespace UasCode{
         UASLOG(s_logger,LL_DEBUG,"st_current: "
                << st_current.x << " "
                << st_current.y << " "
-               << st_current.z);
+               << st_current.z << " "
+               << st_current.speed << " "
+               << st_current.yaw*180./M_PI <<" "
+               << st_current.pitch*180./M_PI);
 
         if(traj_log.is_open() ){
             traj_log << std::setprecision(6) << std::fixed

@@ -29,7 +29,7 @@ void MavlinkSendNode::working()
 {
   while(ros::ok())
   {
-     SetDefault();
+     //SetDefault();
      ros::spinOnce();
      /*
      UASLOG(s_logger,LL_DEBUG,"lalala wp: "
@@ -48,7 +48,7 @@ void MavlinkSendNode::working()
         sender.SendPosSP(lat_s,lon_s,alt_s);
      }
 
-     if(if_colli_rec)
+     if(if_colli!= -1)
         sender.SendIfColli(if_colli);
   }
 }
@@ -69,7 +69,6 @@ void MavlinkSendNode::IfColliCb(const uascode::IfCollision::ConstPtr& msg)
 {
   if_colli= msg->if_collision;
   UASLOG(s_logger,LL_DEBUG,"if_colli: "<< if_colli);
-  if_colli_rec = true;
 }
 
 void MavlinkSendNode::SetDefault()
@@ -77,8 +76,6 @@ void MavlinkSendNode::SetDefault()
    lat_s= 0.;
    lon_s= 0.;
    alt_s= 0.;
-   //if_colli = -1;
-   if_colli_rec= false;
 }
 
 }

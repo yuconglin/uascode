@@ -1,6 +1,9 @@
 #include "CheckCollision.h"
 #include "common/Utils/YcLogger.h"
+
 #include "iostream"
+#include <iomanip>
+
 #include <cmath>
 
 namespace {
@@ -11,16 +14,25 @@ namespace Utils{
  
 int CheckCollision(const UserStructs::PlaneStateSim& plane, UserStructs::obstacle3D& obs)
 {
-  
   UserStructs::obs3D obs3d= obs.Estimate(plane.t);
-  /*
-  UASLOG(s_logger,LL_DEBUG,"distance: "
+
+  UASLOG(s_logger,LL_DEBUG,"obs3d: " << obs3d.x << " "
+         << obs3d.y << " "<< obs3d.z);
+
+  UASLOG(s_logger,LL_DEBUG,"plane: " << plane.x << " "
+         << plane.y << " "<< plane.z);
+
+  UASLOG(s_logger,LL_DEBUG,"check distance: "
          << sqrt(pow(obs3d.x-plane.x,2)+pow(obs3d.y-plane.y,2))<< " "
-         << fabs(obs3d.z-plane.z)
-         );*/
+         << fabs(obs3d.z-plane.z) << " "
+         << "plane time:" << std::setprecision(5) << std::fixed
+         << plane.t
+         );
+
+  double uncertain_ratio = 1.2;
 
   if( fabs(obs3d.z-plane.z)> obs3d.hr ||
-      sqrt(pow(obs3d.x-plane.x,2)+pow(obs3d.y-plane.y,2)) > obs3d.r
+      sqrt(pow(obs3d.x-plane.x,2)+pow(obs3d.y-plane.y,2)) > uncertain_ratio*obs3d.r
     )
     return 0;
       
@@ -28,4 +40,23 @@ int CheckCollision(const UserStructs::PlaneStateSim& plane, UserStructs::obstacl
 
 }//ends
 
-};
+int CheckCollision2(const UserStructs::PlaneStateSim &plane, UserStructs::obstacle3D &obs, double thres_ratio)
+{
+   UserStructs::obs3D obs3d= obs.Estimate(plane.t);
+
+   UASLOG(s_logger,LL_DEBUG,"check distance: "
+          << sqrt(pow(obs3d.x-plane.x,2)+pow(obs3d.y-plane.y,2))<< " "
+          << fabs(obs3d.z-plane.z) << " "
+          << "plane time:" << std::setprecision(5) << std::fixed
+          << plane.t
+          );
+
+   if( fabs(obs3d.z-plane.z)> obs3d.hr ||
+       sqrt(pow(obs3d.x-plane.x,2)+pow(obs3d.y-plane.y,2)) > thres_ratio*obs3d.r
+     )
+     return 0;
+
+   return 1;
+}
+
+}
