@@ -13,8 +13,10 @@ int main(int argc,char** argv)
   mavlink_tcp.SetUp();
   
   while(1) {
-   //sender.SendPosSP(-35.3694553,149.1483307,30);
-   sender.SendIfColli(true);
+   //   sender.SendPosSP(-35.3694553,149.1483307,30);
+//   sender.SendIfColli(true);
+   std::vector<UserStructs::obstacle3D> obss;
+   sender.SendMultiObs(obss);
    /*
    if(mavlink_tcp.ReceiveMsg() ){
       mavlink_message_t msg= mavlink_tcp.GetMessage();

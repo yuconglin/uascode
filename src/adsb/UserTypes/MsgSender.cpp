@@ -117,10 +117,10 @@ namespace UasCode{
        for(int i=0;i!=multi_adsb.number;++i)
        {
          multi_adsb.addrs[i]= qgc_adsbs[i].address; 
-	 multi_adsb.lats[i]= qgc_adsbs[i].latitude;
-	 multi_adsb.lons[i]= qgc_adsbs[i].longitude;
-	 multi_adsb.alts[i]= qgc_adsbs[i].altitude;
-	 multi_adsb.yaws[i]= qgc_adsbs[i].hd;
+         multi_adsb.lats[i]= qgc_adsbs[i].latitude;
+         multi_adsb.lons[i]= qgc_adsbs[i].longitude;
+         multi_adsb.alts[i]= qgc_adsbs[i].altitude;
+         multi_adsb.yaws[i]= qgc_adsbs[i].hd;
        }//for ends
        
        //sending
