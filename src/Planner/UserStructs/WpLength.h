@@ -9,7 +9,7 @@ namespace UserStructs{
        int result;
        //construct
        WpLength(UserStructs::MissionSimPt _wp, double _len, int _result):
-	 wp(_wp),length(_len),result(_result){ };
+     wp(_wp),length(_len),result(_result){ }
    };//struct WpLength ends
 
 };

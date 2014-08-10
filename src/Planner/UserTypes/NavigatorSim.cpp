@@ -379,7 +379,6 @@ int NavigatorSim::PropWpCheckTime(UserStructs::PlaneStateSim& st_start,
     while(1){
 
       PropagateStep(st_now,st_next,pt_A,pt_target);
-
       bool if_arrive= false;
       if(option==0)
         if_arrive= pt_target.SeeArriveSphere(st_next.x,st_next.y,st_next.z);
@@ -423,7 +422,9 @@ int NavigatorSim::PropWpCheckTime(UserStructs::PlaneStateSim& st_start,
           if(result!=-1 && Nec % N_inter==0) {
               states_part_rec.push_back(UserStructs::StateNode(st_next,length));
           }
-          if(result== -1) break;
+          if(result== -1){
+              break;
+          }
       }
 
       Nec= (int)(length/check_step);
@@ -481,6 +482,7 @@ bool NavigatorSim::PredictColli(UserStructs::PlaneStateSim &st_current,
                                    length,t_limit,t_left,1,thres_ratio);
 
        if(result == -1){
+          UASLOG(s_logger,LL_DEBUG,"predict colli time: "<< st_next.t-st_start.t);
           return true;
        }
 

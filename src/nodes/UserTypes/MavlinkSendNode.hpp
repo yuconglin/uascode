@@ -9,6 +9,7 @@
 #include "uascode/IfRecMsg.h"
 #include "uascode/IfCollision.h"
 #include "uascode/MultiObsMsg.h"
+#include "uascode/WpNumber.h"
 
 namespace UasCode {
 
@@ -29,18 +30,21 @@ private:
   ros::Subscriber sub_IfRec;
   ros::Subscriber sub_IfColli;
   ros::Subscriber sub_obss;
+  ros::Subscriber sub_WpNum;
 
   //callback functions
   void InterWpCb(const uascode::PosSetPoint::ConstPtr& msg);
   void IfRecCb(const uascode::IfRecMsg::ConstPtr& msg);
   void IfColliCb(const uascode::IfCollision::ConstPtr& msg);
   void obssCb(const uascode::MultiObsMsg::ConstPtr& msg);
+  void WpNumCb(const uascode::WpNumber::ConstPtr& msg);
 
   //contains
   double lat_s, lon_s, alt_s;
   bool if_receive;
   int if_colli;
   std::vector<UserStructs::obstacle3D> obss;
+  int wp_num;
 
   //private function
   void SetDefault();

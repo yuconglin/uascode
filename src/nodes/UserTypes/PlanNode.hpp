@@ -19,6 +19,7 @@
 #include "uascode/WpCurrent.h"
 #include "uascode/IfMavlinkGood.h"
 #include "uascode/IfCollision.h"
+#include "uascode/WpNumber.h"
 
 #include "ros/ros.h"
 //std lib
@@ -77,6 +78,7 @@ class PlanNode{
    //wp ros msg to send
    uascode::PosSetPoint set_pt;
    uascode::IfCollision IfColliMsg;
+   uascode::WpNumber WpNumMsg;
 
    //obstacles
    std::vector<UserStructs::obstacle3D> obss; 
@@ -105,6 +107,7 @@ class PlanNode{
    //publisher
    ros::Publisher pub_interwp;
    ros::Publisher pub_if_colli;
+   ros::Publisher pub_WpNum;
    //subscribers
    ros::Subscriber sub_obss;
    ros::Subscriber sub_pos;
@@ -112,8 +115,6 @@ class PlanNode{
    ros::Subscriber sub_IfRec;
    ros::Subscriber sub_accel;
    ros::Subscriber sub_wp_current;
-   //ros::Subscriber sub_if_mavlink;
-   //ros::Subscriber sub_goal;
 
    //callback functions
    void obssCb(const uascode::MultiObsMsg::ConstPtr& msg);
@@ -123,7 +124,7 @@ class PlanNode{
    void ifRecCb(const uascode::IfRecMsg::ConstPtr& msg);
    void AccelCb(const uascode::AccelXYZ::ConstPtr& msg);
    void WpCurrCb(const uascode::WpCurrent::ConstPtr& msg);
-   //void IfMavlinkCb(const uascode::IfMavlinkGood::ConstPtr& msg);
+
 
    //other functions
    void GetCurrentSt();

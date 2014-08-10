@@ -58,6 +58,7 @@ void MavlinkRecNode::working()
          pub_accel.publish(accel_xyz);
        }
        //IF GLOBAL POSITION RECEIVED
+       /*
        if(msg.msgid == MAVLINK_MSG_ID_GLOBAL_POSITION_INT)
        {
          mavlink_global_position_int_t pos_t;
@@ -72,7 +73,21 @@ void MavlinkRecNode::working()
          global_pos.speed= std::sqrt(vx*vx+vy*vy+vz*vz);
          global_pos.cog= pos_t.hdg/100;
          pub_posi.publish(global_pos);
+       }*/
+
+       //IF GPS2_RAW RECEIVED
+       if(msg.msgid == MAVLINK_MSG_ID_GPS2_RAW)
+       {
+         mavlink_gps2_raw_t gps2_t;
+         mavlink_msg_gps2_raw_decode(&msg,&gps2_t);
+         global_pos.lat= gps2_t.lat/1E7;
+         global_pos.lon= gps2_t.lon/1E7;
+         global_pos.alt= gps2_t.alt/1E3;
+         global_pos.speed= gps2_t.vel/1E2;
+         global_pos.cog= gps2_t.cog/1E2;
+         pub_posi.publish(global_pos);
        }
+
        //IF ATTITUDE RECEIVED
        if(msg.msgid == MAVLINK_MSG_ID_ATTITUDE)
        {

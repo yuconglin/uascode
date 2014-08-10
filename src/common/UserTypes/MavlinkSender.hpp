@@ -21,6 +21,7 @@ class MavlinkSender{
   void SendPosSP(double lat,double lon,double alt);//position setpoint
   void SendIfColli(bool if_colli);
   void SendMultiObs(std::vector<UserStructs::obstacle3D> obss);
+  void SendWpNum(int wp_num);
 private:
   struct addrinfo *p; 
   int sockfd;

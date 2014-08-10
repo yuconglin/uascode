@@ -57,11 +57,11 @@ namespace UserTypes{
       y0 = y_root;
       z0 = z_root;
       this->r0 = r0;
-
+      /*
       UASLOG(s_logger,LL_DEBUG,"x0: "<< x0
              << " y0: "<< y0
              << " z0: "<< z0);
-    
+    */
       sigma_r= 0.5*r0;
       
       this->theta0 = theta0;
@@ -91,12 +91,12 @@ namespace UserTypes{
           boost::normal_distribution<> ga_distribution(ga0, sigma_ga);
           boost::variate_generator<boost::mt19937&,boost::normal_distribution<> > ga_nor(generator, ga_distribution);
           double ga= ga_nor();
-
+          /*
           UASLOG(s_logger,LL_DEBUG,
                  "r: "<< r
                  << " theta: "<< theta*180./M_PI
                  << " ga: "<< ga*180./M_PI
-                 );
+                 ); */
 
           x_a= x0+ r*cos(theta)*cos(ga);
           y_a= y0+ r*sin(theta)*cos(ga);

@@ -163,4 +163,19 @@ void MavlinkSender::SendMultiObs(std::vector<UserStructs::obstacle3D> obss)
     numbytes = sendto(sockfd,buf,len,0,p->ai_addr, p->ai_addrlen);
 }//SendMultiObs
 
+void MavlinkSender::SendWpNum(int wp_num)
+{
+    UASLOG(s_logger,LL_DEBUG,"send wp_number: "<< wp_num);
+    mavlink_wp_number_t wpnum_t;
+    wpnum_t.number= wp_num;
+    //sending
+    mavlink_message_t message;
+    char buf[128];
+    mavlink_msg_wp_number_encode(255,0,&message,&wpnum_t);
+    unsigned len= mavlink_msg_to_send_buffer((uint8_t*)buf,&message);
+    //write to tcp port
+    int numbytes;
+    numbytes = sendto(sockfd,buf,len,0,p->ai_addr, p->ai_addrlen);
+}//SendWpNum ends
+
 }

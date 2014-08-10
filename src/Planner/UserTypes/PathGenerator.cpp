@@ -148,21 +148,22 @@ namespace UasCode{
     double y_root= st_start.y;
     double z_root= st_start.z;
     double yaw_root= M_PI/2- st_start.yaw;
+    /*
     UASLOG(s_logger,LL_DEBUG,"sample root "
            << x_root<< " "
            << y_root<< " "
            << z_root<< " "
            << yaw_root*180./M_PI);
+           */
 
     double x_a,y_a,z_a,the_a;
     double rho= max_speed/max_yaw_rate;
-    UASLOG(s_logger,LL_DEBUG,"rho: "<< rho);
+    //UASLOG(s_logger,LL_DEBUG,"rho: "<< rho);
 
     while(1)
     {
       sampler_pt->GetSample(x_a,y_a,z_a,st_start,goal_wp);
-      UASLOG(s_logger,LL_DEBUG,"sample check "
-         <<x_a<<" "<<y_a<<" "<<z_a);
+      //UASLOG(s_logger,LL_DEBUG,"sample check "<<x_a<<" "<<y_a<<" "<<z_a);
       //check
       //if in radius range
       bool if_radius= Utils::NotInRadius(x_root,y_root,yaw_root,x_a,y_a,rho);
@@ -195,7 +196,7 @@ namespace UasCode{
       }
       else break;
     }//while ends
-    UASLOG(s_logger,LL_DEBUG,"sample ok");
+    //UASLOG(s_logger,LL_DEBUG,"sample ok");
     //assign sample wp
     double yaw_wp= Utils::_wrap_pi(M_PI/2-the_a);
     float r_wp= std::max(100., max_speed*2*dt);
@@ -284,7 +285,7 @@ namespace UasCode{
 
           temp_part_rec.push_back(UserStructs::StateNode(st_end,length));
           //check some states in temp_rec, their reachability to the
-          UASLOG(s_logger,LL_DEBUG,"temp_part_rec size: "<< temp_part_rec.size() );
+          //UASLOG(s_logger,LL_DEBUG,"temp_part_rec size: "<< temp_part_rec.size() );
           //goal wp
           for(int i=0;i!=temp_part_rec.size();++i)
           {
@@ -301,7 +302,6 @@ namespace UasCode{
                                                   spacelimit,
                                                   length,
                                                   1);
-              UASLOG(s_logger,LL_DEBUG,"result2: "<< result2);
               if(result2!=-1){
                   float r_wp= std::max(100., max_speed*2*dt);
                   UserStructs::MissionSimPt new_wp

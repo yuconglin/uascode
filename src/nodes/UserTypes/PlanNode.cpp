@@ -23,7 +23,7 @@ namespace UasCode{
     //publisher
     pub_interwp= nh.advertise<uascode::PosSetPoint>("inter_wp",100);
     pub_if_colli= nh.advertise<uascode::IfCollision>("if_colli",100);
-
+    pub_WpNum= nh.advertise<uascode::WpNumber>("wp_num",100);
     //subscriber
     sub_obss= nh.subscribe("multi_obstacles",100,&PlanNode::obssCb,this);
     sub_pos= nh.subscribe("global_position",100,&PlanNode::posCb,this);
@@ -265,11 +265,13 @@ namespace UasCode{
       GetCurrentSt();
       GetObssDis();
 
-      //situ= NORMAL;
       int if_colli= PredictColliNode(st_current,seq_current,30,thres_ratio);
       UASLOG(s_logger,LL_DEBUG,"PredictColliNode: "<< if_colli);
       IfColliMsg.if_collision = if_colli;
       pub_if_colli.publish(IfColliMsg);
+
+      WpNumMsg.wp_num= waypoints.size();
+      pub_WpNum.publish(WpNumMsg);
 
       if( if_colli == 1 && situ== NORMAL )
       {
@@ -311,6 +313,7 @@ namespace UasCode{
           if (path_gen.AddPaths()> 0 )
              situ= PATH_CHECK;
           else{
+             UASLOG(s_logger,LL_DEBUG,"no path, try again");
              if(thres_ratio > 1.)
                  thres_ratio-= 0.1;
           }
@@ -320,6 +323,7 @@ namespace UasCode{
       case PATH_CHECK:
       {
           UserStructs::MissionSimPt inter_wp;
+          UASLOG(s_logger,LL_DEBUG,"path check");
           if(path_gen.PathCheckRepeat(st_current))
           {
               UASLOG(s_logger,LL_DEBUG,"check ok, yes waypoint");
@@ -336,25 +340,15 @@ namespace UasCode{
                      << set_pt.alt);
 
               //here we need to add a flag to test if the waypoint is received
-              situ= PATH_READY;
-              waypoints.insert(waypoints.begin()+seq_current,inter_wp);
-              /*
-           if(!if_inter_gen){
-               //insert into waypoints
-               waypoints.insert(waypoints.begin()+seq_current,inter_wp);
-               if_inter_gen= true;
-               seq_inter= seq_current;
-           }
-           else{
-               //remove the previous gen waypoint
-               UASLOG(s_logger,LL_DEBUG,"seq_current: "<< seq_current
-                      << " seq_inter: " << seq_inter);
-               waypoints.erase(waypoints.begin()+seq_inter);
-               waypoints.insert(waypoints.begin()+seq_current,inter_wp);
-               seq_inter= seq_current;
-           }*/
-              //situ= PATH_RECHECK;
-              if_inter_gen= true;
+
+              if(inter_wp.lat!= waypoints[seq_current].lat || inter_wp.lon!= waypoints[seq_current].lon){
+                 waypoints.insert(waypoints.begin()+seq_current,inter_wp);
+                 situ= PATH_READY;
+                 if_inter_gen= true;
+              }
+              else
+                 situ= PATH_GEN;
+
           }
           else{
               UASLOG(s_logger,LL_DEBUG,"No waypoint, retry");
@@ -370,9 +364,10 @@ namespace UasCode{
               UASLOG(s_logger,LL_DEBUG,"path ready for sending");
               pub_interwp.publish(set_pt);
           }
-          else
-              //situ= PATH_RECHECK;
+          else{
+              UASLOG(s_logger,LL_DEBUG,"path sent");
               situ= NORMAL;
+          }
           break;
       }
 
@@ -382,6 +377,7 @@ namespace UasCode{
               situ= NORMAL;
           break;
       }
+
       default:
           break;
       }//switch ends
@@ -495,26 +491,17 @@ namespace UasCode{
         st_current.GetUTM();
         st_current.z= global_posi.alt;
         st_current.speed= global_posi.speed;
-        st_current.yaw= plane_att.yaw;
+        //st_current.yaw= plane_att.yaw;
+        st_current.yaw= global_posi.cog*M_PI/180.;
         st_current.pitch= plane_att.pitch;
-        //ax,ay,az will be calcuated in update
-        /*
-     std::cout<<"st_current:" <<" "
-       <<"t:"<<std::setprecision(3)<<st_current.t<<" "
-       <<"lat:"<<std::setprecision(3)<<st_current.lat<<" "
-       <<"lon:"<<std::setprecision(3)<<st_current.lon<<" "
-       <<"alt:"<<std::setprecision(3)<<st_current.z<<" "
-       <<"spd:"<<std::setprecision(3)<<st_current.speed<<" "
-       <<"yaw:"<<std::setprecision(3)<<st_current.yaw*180/M_PI<<" "
-       <<"pitch:"<<std::setprecision(3)<<st_current.pitch*180/M_PI
-       << std::endl;
-     */
+
         UASLOG(s_logger,LL_DEBUG,"st_current: "
                << st_current.x << " "
                << st_current.y << " "
                << st_current.z << " "
                << st_current.speed << " "
                << st_current.yaw*180./M_PI <<" "
+               << global_posi.cog << " "
                << st_current.pitch*180./M_PI);
 
         if(traj_log.is_open() ){
