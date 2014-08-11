@@ -88,11 +88,13 @@ rosbuild_add_library(planner
  src/Planner/Utils/DubinsLength3D.cpp
  src/Planner/UserStructs/SpaceLimit.cpp
  src/Planner/UserStructs/PlaneStateSim.cpp
+ src/Planner/UserStructs/MissionSimFlagPt.cpp
  )
 
 ##########library for nodes
 rosbuild_add_library(nodes
 src/nodes/UserTypes/PlanNode.cpp
+src/nodes/UserTypes/PlanNode2.cpp
 src/nodes/UserTypes/MavlinkRecNode.cpp
 src/nodes/UserTypes/MavlinkSendNode.cpp
 )
@@ -147,6 +149,10 @@ target_link_libraries(test_obsfile common_utils ${GeographicLib_LIBRARIES})
 #test plan_node
 rosbuild_add_executable(test_PlanNode src/nodes/UserTypes/test_PlanNode.cpp)
 target_link_libraries(test_PlanNode nodes planner common_utils otherlibs ${ARMADILLO_LIBRARIES} ${GeographicLib_LIBRARIES})
+
+#test PlanNode2
+rosbuild_add_executable(test_PlanNode2 src/nodes/UserTypes/test_PlanNode2.cpp)
+target_link_libraries(test_PlanNode2 nodes planner common_utils otherlibs ${ARMADILLO_LIBRARIES} ${GeographicLib_LIBRARIES})
 
 #test MavlinkTCP_node
 rosbuild_add_executable(test_MavRecNode src/nodes/UserTypes/test_MavRecNode.cpp)

@@ -8,9 +8,10 @@ namespace {
 
 namespace UasCode{
 
-MavlinkSendNode::MavlinkSendNode():wp_num(0)
+MavlinkSendNode::MavlinkSendNode():wp_num(0),send_pos_method(0)
 {
   sub_interwp= nh.subscribe("inter_wp",100,&MavlinkSendNode::InterWpCb,this);
+  sub_interwp_flag= nh.subscribe("inter_wp_flag",100,&MavlinkSendNode::InterWpFlagCb,this);
   sub_IfRec= nh.subscribe("interwp_receive",100,&MavlinkSendNode::IfRecCb,this);
   sub_IfColli= nh.subscribe("if_colli",100,&MavlinkSendNode::IfColliCb,this);
   sub_obss= nh.subscribe("multi_obstacles",100,&MavlinkSendNode::obssCb,this);
@@ -46,14 +47,18 @@ void MavlinkSendNode::working()
                << lat_s << " "
                << lon_s << " "
                << alt_s);
+        if(send_pos_method==0)
+          sender.SendPosSP(lat_s,lon_s,alt_s);
 
-        sender.SendPosSP(lat_s,lon_s,alt_s);
+        if(send_pos_method==1)
+          sender.SendPosSPflag(lat_s,lon_s,alt_s,inter_exist);
      }
 
      if(if_colli!= -1)
         sender.SendIfColli(if_colli);
 
-     sender.SendMultiObs(obss);
+     //sender.SendMultiObs(obss);
+     sender.SendMultiObs3(obss);
 
      if(wp_num!=0)
        sender.SendWpNum(wp_num);
@@ -66,6 +71,14 @@ void MavlinkSendNode::InterWpCb(const uascode::PosSetPoint::ConstPtr& msg)
   lat_s = msg->lat;
   lon_s = msg->lon;
   alt_s = msg->alt;
+}
+
+void MavlinkSendNode::InterWpFlagCb(const uascode::PosSetPointFlag::ConstPtr &msg)
+{
+   lat_s = msg->lat;
+   lon_s = msg->lon;
+   alt_s = msg->alt;
+   inter_exist = msg->inter_exist;
 }
 
 void MavlinkSendNode::IfRecCb(const uascode::IfRecMsg::ConstPtr& msg)
