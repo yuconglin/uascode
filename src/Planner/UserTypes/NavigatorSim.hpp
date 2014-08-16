@@ -8,6 +8,8 @@
 #include "UserTypes/StateUpdateSim.hpp"
 #include "UserStructs/obstacle3D.h"
 #include "UserStructs/SpaceLimit.h"
+#include "UserStructs/PredictColliReturn.h"
+#include "Planner/UserStructs/MissionSimFlagPt.h"
 
 #include "nodes/UserStructs/GoalSetPt.h"
 
@@ -76,6 +78,14 @@ class NavigatorSim{
                      std::vector<UserStructs::obstacle3D> obstacles,
                      UserStructs::SpaceLimit spacelimit,
                      int seq_current,double t_limit,double thres_ratio);
+
+   bool PredictColli2(UserStructs::PlaneStateSim &st_current,
+                      std::vector<UserStructs::MissionSimFlagPt> waypoints,
+                      UserStructs::GoalSetPt init_pt,
+                      std::vector<UserStructs::obstacle3D> obstacles,
+                      UserStructs::SpaceLimit spacelimit,
+                      int seq_current, double t_limit,
+                      double thres_ratio, UserStructs::PredictColliReturn& colli_return);
 
    double GetMaxPitch(){return updater.GetMaxPitch();}
 

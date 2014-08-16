@@ -89,6 +89,7 @@ rosbuild_add_library(planner
  src/Planner/UserStructs/SpaceLimit.cpp
  src/Planner/UserStructs/PlaneStateSim.cpp
  src/Planner/UserStructs/MissionSimFlagPt.cpp
+ src/Planner/UserStructs/PredictColliReturn.cpp
  )
 
 ##########library for nodes

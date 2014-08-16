@@ -70,6 +70,15 @@ namespace UasCode{
 
     if_start_set= true;
   }
+
+  //set sampling start
+  void PathGenerator::SetSampleStart(double _x_start,double _y_start,double _z_start)
+  {
+      this->xs_start= _x_start;
+      this->ys_start= _y_start;
+      this->zs_start= _z_start;
+  }
+
   //set the intermediate state
   void PathGenerator::SetInterState(UserStructs::PlaneStateSim& _st)
   {
@@ -87,6 +96,12 @@ namespace UasCode{
 
     if_goal_set= true;
   }
+  //set in-between wps
+  void PathGenerator::SetBetweenWps(const std::vector<UserStructs::MissionSimPt> _wpoints)
+  {
+    this->WpInBetweens= _wpoints;
+  }
+
   //set sample method
   void PathGenerator::SetSampleMethod(int _method)
   {
@@ -137,24 +152,14 @@ namespace UasCode{
     CheckSamplerSet();
 
     sampler_pt->SetSampleMethod(0);
-    sampler_pt->SetParams(st_start,goal_wp,this->max_pitch*0.1);
+    //sampler_pt->SetParams(st_start,goal_wp,this->max_pitch*0.1);
+    sampler_pt->SetParams2(xs_start,ys_start,zs_start,goal_wp,this->max_pitch*0.1);
     if_sampler_para_set= true;
   }
 
   //sample a wp
   void PathGenerator::SamplePt()
   {//sample, check radius limit, check pitch limit
-    double x_root= st_start.x;
-    double y_root= st_start.y;
-    double z_root= st_start.z;
-    double yaw_root= M_PI/2- st_start.yaw;
-    /*
-    UASLOG(s_logger,LL_DEBUG,"sample root "
-           << x_root<< " "
-           << y_root<< " "
-           << z_root<< " "
-           << yaw_root*180./M_PI);
-           */
 
     double x_a,y_a,z_a,the_a;
     double rho= max_speed/max_yaw_rate;
@@ -162,24 +167,29 @@ namespace UasCode{
 
     while(1)
     {
-      sampler_pt->GetSample(x_a,y_a,z_a,st_start,goal_wp);
+      sampler_pt->GetSample2(x_a,y_a,z_a,xs_start,ys_start,zs_start,goal_wp);
       //UASLOG(s_logger,LL_DEBUG,"sample check "<<x_a<<" "<<y_a<<" "<<z_a);
       //check
       //if in radius range
-      bool if_radius= Utils::NotInRadius(x_root,y_root,yaw_root,x_a,y_a,rho);
+      bool if_radius= Utils::NotInRadius(xs_start,ys_start,yaw_root,x_a,y_a,rho);
       if(!if_radius) {
-        UASLOG(s_logger,LL_DEBUG,"in radius");
+        double dis_g= std::sqrt(pow(xs_start-x_a,2)+pow(ys_start-y_a,2));
+        double dis_s= std::sqrt(pow(xs_start-goal_wp.x,2)+pow(ys_start-goal_wp.y,2));
+
+        std::ostringstream oss;
+        oss << "in radius" << dis_g <<" "<< dis_s;
+        UASLOG(s_logger,LL_DEBUG,oss.str() );
         continue;
       }
       //if pitch ok
       DubinsPath path;
-      the_a= atan2(y_a-y_root,x_a-x_root);
-      double q0[]={x_root,y_root,yaw_root};
+      the_a= atan2(y_a-ys_start,x_a-xs_start);
+      double q0[]={xs_start,ys_start,this->yaw_root};
       double q1[]={x_a,y_a,the_a};
       dubins_init(q0,q1,rho,&path);
 
       double length= dubins_path_length(&path);
-      double h= fabs(z_a-z_root);
+      double h= fabs(z_a-zs_start);
       double gamma_d= atan2(h,length);
       bool if_ga= (gamma_d<= max_pitch );
 
@@ -233,22 +243,24 @@ namespace UasCode{
     std::ofstream fs_sample("sample.txt");
     //clear previous path
     wp_lengths.clear();
+
+    UserStructs::PlaneStateSim st_ps= st_start, st_second;
+    for(int i=0;i!= WpInBetweens.size();++i)
+    {
+       arma::vec::fixed<2> pt_temp;
+       pt_temp << st_ps.lat << st_ps.lon;
+       UASLOG(s_logger,LL_DEBUG,"wp in between:"<< WpInBetweens[i].lat << " "<< WpInBetweens[i].lon);
+       navigator.PropagateWp(st_ps,st_second,pt_temp,WpInBetweens[i]);
+       st_ps= st_second;
+    }
+    UASLOG(s_logger,LL_DEBUG,"st_ps: "<< st_ps.lat<<" "<< st_ps.lon);
+
     //the loop
     double length= 0;
     UserStructs::PlaneStateSim st_end;
     arma::vec::fixed<2> pt_A;
-    pt_A << st_start.lat << st_start.lon;
-
-    int result1= navigator.PropWpCheck2(st_start,
-                                        st_end,
-                                        pt_A,
-                                        goal_wp,
-                                        obs3ds,
-                                        spacelimit,
-                                        length,0);
-
-    if(result1!=-1)
-     wp_lengths.push_back(UserStructs::WpLength(goal_wp,length,result1)); 
+    pt_A << st_ps.lat << st_ps.lon;
+    this->SetYawRootSample(M_PI/2-st_ps.yaw);
 
     while(1)
     {
@@ -264,9 +276,11 @@ namespace UasCode{
       
       ++sample_raw;
     //check:
-    //first check from start to sample_wp;
+    //first check from start to each waypoints.
+
+    //then check from start to sample_wp;
       length = 0; 
-      int result1= navigator.PropWpCheck2(st_start,
+      int result1= navigator.PropWpCheck2(st_ps,
                                           st_end,
                                           pt_A,
                                           sample_wp,
@@ -274,7 +288,6 @@ namespace UasCode{
                                           spacelimit,
                                           length,
                                           0);
-
 
       if(result1!= -1)
       {//the first section is collision free
@@ -341,8 +354,7 @@ namespace UasCode{
          break;
       }
     }//while ends
-    //if(!wp_lengths.empty() ) return true;
-    //return false;
+
     return wp_lengths.size();
 
   }//AddPath function ends

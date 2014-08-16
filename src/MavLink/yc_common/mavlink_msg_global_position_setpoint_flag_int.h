@@ -8,27 +8,29 @@ typedef struct __mavlink_global_position_setpoint_flag_int_t
  int32_t longitude; ///< Longitude (WGS84), in degrees * 1E7
  int32_t altitude; ///< Altitude (WGS84), in meters * 1000 (positive for up)
  int16_t yaw; ///< Desired yaw angle in degrees * 100
+ int16_t index; ///< index that the intermediate waypoint should be inserted to 
  uint8_t coordinate_frame; ///< Coordinate frame - valid values are only MAV_FRAME_GLOBAL or MAV_FRAME_GLOBAL_RELATIVE_ALT
  uint8_t inter_exist; ///< IF An Intermediate waypoint has already been inserted
 } mavlink_global_position_setpoint_flag_int_t;
 
-#define MAVLINK_MSG_ID_GLOBAL_POSITION_SETPOINT_FLAG_INT_LEN 16
-#define MAVLINK_MSG_ID_212_LEN 16
+#define MAVLINK_MSG_ID_GLOBAL_POSITION_SETPOINT_FLAG_INT_LEN 18
+#define MAVLINK_MSG_ID_212_LEN 18
 
-#define MAVLINK_MSG_ID_GLOBAL_POSITION_SETPOINT_FLAG_INT_CRC 81
-#define MAVLINK_MSG_ID_212_CRC 81
+#define MAVLINK_MSG_ID_GLOBAL_POSITION_SETPOINT_FLAG_INT_CRC 223
+#define MAVLINK_MSG_ID_212_CRC 223
 
 
 
 #define MAVLINK_MESSAGE_INFO_GLOBAL_POSITION_SETPOINT_FLAG_INT { \
 	"GLOBAL_POSITION_SETPOINT_FLAG_INT", \
-	6, \
+	7, \
 	{  { "latitude", NULL, MAVLINK_TYPE_INT32_T, 0, 0, offsetof(mavlink_global_position_setpoint_flag_int_t, latitude) }, \
          { "longitude", NULL, MAVLINK_TYPE_INT32_T, 0, 4, offsetof(mavlink_global_position_setpoint_flag_int_t, longitude) }, \
          { "altitude", NULL, MAVLINK_TYPE_INT32_T, 0, 8, offsetof(mavlink_global_position_setpoint_flag_int_t, altitude) }, \
          { "yaw", NULL, MAVLINK_TYPE_INT16_T, 0, 12, offsetof(mavlink_global_position_setpoint_flag_int_t, yaw) }, \
-         { "coordinate_frame", NULL, MAVLINK_TYPE_UINT8_T, 0, 14, offsetof(mavlink_global_position_setpoint_flag_int_t, coordinate_frame) }, \
-         { "inter_exist", NULL, MAVLINK_TYPE_UINT8_T, 0, 15, offsetof(mavlink_global_position_setpoint_flag_int_t, inter_exist) }, \
+         { "index", NULL, MAVLINK_TYPE_INT16_T, 0, 14, offsetof(mavlink_global_position_setpoint_flag_int_t, index) }, \
+         { "coordinate_frame", NULL, MAVLINK_TYPE_UINT8_T, 0, 16, offsetof(mavlink_global_position_setpoint_flag_int_t, coordinate_frame) }, \
+         { "inter_exist", NULL, MAVLINK_TYPE_UINT8_T, 0, 17, offsetof(mavlink_global_position_setpoint_flag_int_t, inter_exist) }, \
          } \
 }
 
@@ -44,11 +46,12 @@ typedef struct __mavlink_global_position_setpoint_flag_int_t
  * @param longitude Longitude (WGS84), in degrees * 1E7
  * @param altitude Altitude (WGS84), in meters * 1000 (positive for up)
  * @param yaw Desired yaw angle in degrees * 100
+ * @param index index that the intermediate waypoint should be inserted to 
  * @param inter_exist IF An Intermediate waypoint has already been inserted
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_global_position_setpoint_flag_int_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg,
-						       uint8_t coordinate_frame, int32_t latitude, int32_t longitude, int32_t altitude, int16_t yaw, uint8_t inter_exist)
+						       uint8_t coordinate_frame, int32_t latitude, int32_t longitude, int32_t altitude, int16_t yaw, int16_t index, uint8_t inter_exist)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_GLOBAL_POSITION_SETPOINT_FLAG_INT_LEN];
@@ -56,8 +59,9 @@ static inline uint16_t mavlink_msg_global_position_setpoint_flag_int_pack(uint8_
 	_mav_put_int32_t(buf, 4, longitude);
 	_mav_put_int32_t(buf, 8, altitude);
 	_mav_put_int16_t(buf, 12, yaw);
-	_mav_put_uint8_t(buf, 14, coordinate_frame);
-	_mav_put_uint8_t(buf, 15, inter_exist);
+	_mav_put_int16_t(buf, 14, index);
+	_mav_put_uint8_t(buf, 16, coordinate_frame);
+	_mav_put_uint8_t(buf, 17, inter_exist);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_GLOBAL_POSITION_SETPOINT_FLAG_INT_LEN);
 #else
@@ -66,6 +70,7 @@ static inline uint16_t mavlink_msg_global_position_setpoint_flag_int_pack(uint8_
 	packet.longitude = longitude;
 	packet.altitude = altitude;
 	packet.yaw = yaw;
+	packet.index = index;
 	packet.coordinate_frame = coordinate_frame;
 	packet.inter_exist = inter_exist;
 
@@ -91,12 +96,13 @@ static inline uint16_t mavlink_msg_global_position_setpoint_flag_int_pack(uint8_
  * @param longitude Longitude (WGS84), in degrees * 1E7
  * @param altitude Altitude (WGS84), in meters * 1000 (positive for up)
  * @param yaw Desired yaw angle in degrees * 100
+ * @param index index that the intermediate waypoint should be inserted to 
  * @param inter_exist IF An Intermediate waypoint has already been inserted
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_global_position_setpoint_flag_int_pack_chan(uint8_t system_id, uint8_t component_id, uint8_t chan,
 							   mavlink_message_t* msg,
-						           uint8_t coordinate_frame,int32_t latitude,int32_t longitude,int32_t altitude,int16_t yaw,uint8_t inter_exist)
+						           uint8_t coordinate_frame,int32_t latitude,int32_t longitude,int32_t altitude,int16_t yaw,int16_t index,uint8_t inter_exist)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_GLOBAL_POSITION_SETPOINT_FLAG_INT_LEN];
@@ -104,8 +110,9 @@ static inline uint16_t mavlink_msg_global_position_setpoint_flag_int_pack_chan(u
 	_mav_put_int32_t(buf, 4, longitude);
 	_mav_put_int32_t(buf, 8, altitude);
 	_mav_put_int16_t(buf, 12, yaw);
-	_mav_put_uint8_t(buf, 14, coordinate_frame);
-	_mav_put_uint8_t(buf, 15, inter_exist);
+	_mav_put_int16_t(buf, 14, index);
+	_mav_put_uint8_t(buf, 16, coordinate_frame);
+	_mav_put_uint8_t(buf, 17, inter_exist);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_GLOBAL_POSITION_SETPOINT_FLAG_INT_LEN);
 #else
@@ -114,6 +121,7 @@ static inline uint16_t mavlink_msg_global_position_setpoint_flag_int_pack_chan(u
 	packet.longitude = longitude;
 	packet.altitude = altitude;
 	packet.yaw = yaw;
+	packet.index = index;
 	packet.coordinate_frame = coordinate_frame;
 	packet.inter_exist = inter_exist;
 
@@ -138,7 +146,7 @@ static inline uint16_t mavlink_msg_global_position_setpoint_flag_int_pack_chan(u
  */
 static inline uint16_t mavlink_msg_global_position_setpoint_flag_int_encode(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, const mavlink_global_position_setpoint_flag_int_t* global_position_setpoint_flag_int)
 {
-	return mavlink_msg_global_position_setpoint_flag_int_pack(system_id, component_id, msg, global_position_setpoint_flag_int->coordinate_frame, global_position_setpoint_flag_int->latitude, global_position_setpoint_flag_int->longitude, global_position_setpoint_flag_int->altitude, global_position_setpoint_flag_int->yaw, global_position_setpoint_flag_int->inter_exist);
+	return mavlink_msg_global_position_setpoint_flag_int_pack(system_id, component_id, msg, global_position_setpoint_flag_int->coordinate_frame, global_position_setpoint_flag_int->latitude, global_position_setpoint_flag_int->longitude, global_position_setpoint_flag_int->altitude, global_position_setpoint_flag_int->yaw, global_position_setpoint_flag_int->index, global_position_setpoint_flag_int->inter_exist);
 }
 
 /**
@@ -152,7 +160,7 @@ static inline uint16_t mavlink_msg_global_position_setpoint_flag_int_encode(uint
  */
 static inline uint16_t mavlink_msg_global_position_setpoint_flag_int_encode_chan(uint8_t system_id, uint8_t component_id, uint8_t chan, mavlink_message_t* msg, const mavlink_global_position_setpoint_flag_int_t* global_position_setpoint_flag_int)
 {
-	return mavlink_msg_global_position_setpoint_flag_int_pack_chan(system_id, component_id, chan, msg, global_position_setpoint_flag_int->coordinate_frame, global_position_setpoint_flag_int->latitude, global_position_setpoint_flag_int->longitude, global_position_setpoint_flag_int->altitude, global_position_setpoint_flag_int->yaw, global_position_setpoint_flag_int->inter_exist);
+	return mavlink_msg_global_position_setpoint_flag_int_pack_chan(system_id, component_id, chan, msg, global_position_setpoint_flag_int->coordinate_frame, global_position_setpoint_flag_int->latitude, global_position_setpoint_flag_int->longitude, global_position_setpoint_flag_int->altitude, global_position_setpoint_flag_int->yaw, global_position_setpoint_flag_int->index, global_position_setpoint_flag_int->inter_exist);
 }
 
 /**
@@ -164,11 +172,12 @@ static inline uint16_t mavlink_msg_global_position_setpoint_flag_int_encode_chan
  * @param longitude Longitude (WGS84), in degrees * 1E7
  * @param altitude Altitude (WGS84), in meters * 1000 (positive for up)
  * @param yaw Desired yaw angle in degrees * 100
+ * @param index index that the intermediate waypoint should be inserted to 
  * @param inter_exist IF An Intermediate waypoint has already been inserted
  */
 #ifdef MAVLINK_USE_CONVENIENCE_FUNCTIONS
 
-static inline void mavlink_msg_global_position_setpoint_flag_int_send(mavlink_channel_t chan, uint8_t coordinate_frame, int32_t latitude, int32_t longitude, int32_t altitude, int16_t yaw, uint8_t inter_exist)
+static inline void mavlink_msg_global_position_setpoint_flag_int_send(mavlink_channel_t chan, uint8_t coordinate_frame, int32_t latitude, int32_t longitude, int32_t altitude, int16_t yaw, int16_t index, uint8_t inter_exist)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char buf[MAVLINK_MSG_ID_GLOBAL_POSITION_SETPOINT_FLAG_INT_LEN];
@@ -176,8 +185,9 @@ static inline void mavlink_msg_global_position_setpoint_flag_int_send(mavlink_ch
 	_mav_put_int32_t(buf, 4, longitude);
 	_mav_put_int32_t(buf, 8, altitude);
 	_mav_put_int16_t(buf, 12, yaw);
-	_mav_put_uint8_t(buf, 14, coordinate_frame);
-	_mav_put_uint8_t(buf, 15, inter_exist);
+	_mav_put_int16_t(buf, 14, index);
+	_mav_put_uint8_t(buf, 16, coordinate_frame);
+	_mav_put_uint8_t(buf, 17, inter_exist);
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_GLOBAL_POSITION_SETPOINT_FLAG_INT, buf, MAVLINK_MSG_ID_GLOBAL_POSITION_SETPOINT_FLAG_INT_LEN, MAVLINK_MSG_ID_GLOBAL_POSITION_SETPOINT_FLAG_INT_CRC);
@@ -190,6 +200,7 @@ static inline void mavlink_msg_global_position_setpoint_flag_int_send(mavlink_ch
 	packet.longitude = longitude;
 	packet.altitude = altitude;
 	packet.yaw = yaw;
+	packet.index = index;
 	packet.coordinate_frame = coordinate_frame;
 	packet.inter_exist = inter_exist;
 
@@ -209,7 +220,7 @@ static inline void mavlink_msg_global_position_setpoint_flag_int_send(mavlink_ch
   is usually the receive buffer for the channel, and allows a reply to an
   incoming message with minimum stack space usage.
  */
-static inline void mavlink_msg_global_position_setpoint_flag_int_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint8_t coordinate_frame, int32_t latitude, int32_t longitude, int32_t altitude, int16_t yaw, uint8_t inter_exist)
+static inline void mavlink_msg_global_position_setpoint_flag_int_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint8_t coordinate_frame, int32_t latitude, int32_t longitude, int32_t altitude, int16_t yaw, int16_t index, uint8_t inter_exist)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
 	char *buf = (char *)msgbuf;
@@ -217,8 +228,9 @@ static inline void mavlink_msg_global_position_setpoint_flag_int_send_buf(mavlin
 	_mav_put_int32_t(buf, 4, longitude);
 	_mav_put_int32_t(buf, 8, altitude);
 	_mav_put_int16_t(buf, 12, yaw);
-	_mav_put_uint8_t(buf, 14, coordinate_frame);
-	_mav_put_uint8_t(buf, 15, inter_exist);
+	_mav_put_int16_t(buf, 14, index);
+	_mav_put_uint8_t(buf, 16, coordinate_frame);
+	_mav_put_uint8_t(buf, 17, inter_exist);
 
 #if MAVLINK_CRC_EXTRA
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_GLOBAL_POSITION_SETPOINT_FLAG_INT, buf, MAVLINK_MSG_ID_GLOBAL_POSITION_SETPOINT_FLAG_INT_LEN, MAVLINK_MSG_ID_GLOBAL_POSITION_SETPOINT_FLAG_INT_CRC);
@@ -231,6 +243,7 @@ static inline void mavlink_msg_global_position_setpoint_flag_int_send_buf(mavlin
 	packet->longitude = longitude;
 	packet->altitude = altitude;
 	packet->yaw = yaw;
+	packet->index = index;
 	packet->coordinate_frame = coordinate_frame;
 	packet->inter_exist = inter_exist;
 
@@ -255,7 +268,7 @@ static inline void mavlink_msg_global_position_setpoint_flag_int_send_buf(mavlin
  */
 static inline uint8_t mavlink_msg_global_position_setpoint_flag_int_get_coordinate_frame(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_uint8_t(msg,  14);
+	return _MAV_RETURN_uint8_t(msg,  16);
 }
 
 /**
@@ -299,13 +312,23 @@ static inline int16_t mavlink_msg_global_position_setpoint_flag_int_get_yaw(cons
 }
 
 /**
+ * @brief Get field index from global_position_setpoint_flag_int message
+ *
+ * @return index that the intermediate waypoint should be inserted to 
+ */
+static inline int16_t mavlink_msg_global_position_setpoint_flag_int_get_index(const mavlink_message_t* msg)
+{
+	return _MAV_RETURN_int16_t(msg,  14);
+}
+
+/**
  * @brief Get field inter_exist from global_position_setpoint_flag_int message
  *
  * @return IF An Intermediate waypoint has already been inserted
  */
 static inline uint8_t mavlink_msg_global_position_setpoint_flag_int_get_inter_exist(const mavlink_message_t* msg)
 {
-	return _MAV_RETURN_uint8_t(msg,  15);
+	return _MAV_RETURN_uint8_t(msg,  17);
 }
 
 /**
@@ -321,6 +344,7 @@ static inline void mavlink_msg_global_position_setpoint_flag_int_decode(const ma
 	global_position_setpoint_flag_int->longitude = mavlink_msg_global_position_setpoint_flag_int_get_longitude(msg);
 	global_position_setpoint_flag_int->altitude = mavlink_msg_global_position_setpoint_flag_int_get_altitude(msg);
 	global_position_setpoint_flag_int->yaw = mavlink_msg_global_position_setpoint_flag_int_get_yaw(msg);
+	global_position_setpoint_flag_int->index = mavlink_msg_global_position_setpoint_flag_int_get_index(msg);
 	global_position_setpoint_flag_int->coordinate_frame = mavlink_msg_global_position_setpoint_flag_int_get_coordinate_frame(msg);
 	global_position_setpoint_flag_int->inter_exist = mavlink_msg_global_position_setpoint_flag_int_get_inter_exist(msg);
 #else

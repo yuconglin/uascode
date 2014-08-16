@@ -10,12 +10,18 @@ namespace UserTypes{
     virtual ~Sampler(){};
 
     virtual void SetParams(UserStructs::PlaneStateSim& st,
-	                   UserStructs::MissionSimPt& goal_wp,
-			   double _sig_ga)=0;
+                           UserStructs::MissionSimPt& goal_wp,
+                           double _sig_ga)=0;
+
+    virtual void SetParams2(double x_start,double y_start,double z_start,UserStructs::MissionSimPt& goal_wp,
+                            double _sig_ga)=0;
 
     virtual void GetSample(double& x_a,double& y_a,double& z_a,
 	                  UserStructs::PlaneStateSim& root_state,
 			  UserStructs::MissionSimPt& goal_wp)=0;
+
+    virtual void GetSample2(double& x_a,double& y_a,double& z_a,double x_start,double y_start,double z_start,UserStructs::MissionSimPt& goal_wp)=0;
+
     //set sampling method
     void SetSampleMethod(int _method);
 

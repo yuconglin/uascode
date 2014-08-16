@@ -34,6 +34,8 @@ class PathGenerator{
    void SetInitState(UserStructs::PlaneStateSim _st);
    void SetGoalWp(UserStructs::MissionSimPt& _pt);
    void SetInterState(UserStructs::PlaneStateSim& _st);
+   void SetSampleStart(double _x_start,double _y_start,double _z_start);
+   void SetBetweenWps(const std::vector<UserStructs::MissionSimPt> _wpoints);
    void SetSampleMethod(int _method);
    void SetNinter(const int _N);
    //set navigator parameters
@@ -78,6 +80,8 @@ class PathGenerator{
    UserStructs::MissionSimPt inter_wp;
    //intermediate state when following the path
    UserStructs::PlaneStateSim st_inter;
+   //the in-between waypoints we have to go through
+   std::vector<UserStructs::MissionSimPt> WpInBetweens;
    //time limit for expanding paths in seconds
    double t_limit;
    ros::Time t_start;
@@ -97,6 +101,12 @@ class PathGenerator{
    std::vector<UserStructs::PlaneStateSim> temp_rec;
    std::vector<UserStructs::StateNode> temp_part_rec;
    std::vector<UserStructs::PlaneStateSim> total_rec;
+   //sample start
+   double xs_start;
+   double ys_start;
+   double zs_start;
+   //yaw_root
+   double yaw_root;
    //flags to indicate sth was set or not
    bool if_start_set;
    bool if_goal_set;
@@ -114,6 +124,8 @@ class PathGenerator{
    void CheckSamplerSet();
    void CheckSamplerParaSet();
    void CheckSpaceLimitSet();
+   //set yaw_root
+   inline void SetYawRootSample(double _yaw_root){this->yaw_root= _yaw_root;}
 };//class PathGenerator ends
 
 };//namespace UasCode ends

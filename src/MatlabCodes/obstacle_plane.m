@@ -87,7 +87,7 @@ i1= 1;
 i2= 1;
 i3= 1;
 
-k= 400;
+k= 600;
 
 for j=1:length(t_traj)
    

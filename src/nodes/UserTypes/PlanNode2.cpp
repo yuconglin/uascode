@@ -156,8 +156,6 @@ namespace UasCode{
 
   int PlanNode2::PredictColliNode(UserStructs::PlaneStateSim &st_current,int seq_current,double t_limit,double thres_ratio)
   {
-    //return true if collision predicted
-
     if(seq_current < 1) return -1;
 
     NavigatorSim* navigator_pt= path_gen.NavigatorPt();
@@ -174,13 +172,34 @@ namespace UasCode{
     UASLOG(s_logger,LL_DEBUG,oss.str() );
 
     std::vector<UserStructs::MissionSimPt> waypoints;
-
     for(int i=0;i!=FlagWayPoints.size();++i)
         waypoints.push_back(FlagWayPoints[i].pt);
 
     bool tt= navigator_pt->PredictColli(st_current,waypoints,wp_init,obss,spLimit,seq_current,t_limit,thres_ratio);
 
     return (tt ? 1:0);
+  }
+
+  int PlanNode2::PredictColliNode2(UserStructs::PlaneStateSim &st_current, int seq_current, double t_limit, double thres_ratio, UserStructs::PredictColliReturn &colli_return)
+  {
+      if(seq_current < 1) return -1;
+
+      NavigatorSim* navigator_pt= path_gen.NavigatorPt();
+
+      UASLOG(s_logger,LL_DEBUG,"predict colli starts");
+      UASLOG(s_logger,LL_DEBUG,"FlagWayPoints size: " << FlagWayPoints.size() );
+
+      std::ostringstream oss;
+      for(int i=0;i!= FlagWayPoints.size();++i)
+          oss << i<<":"<< FlagWayPoints[i].pt.lat <<" "
+              << FlagWayPoints[i].pt.lon<<" "
+              << FlagWayPoints[i].pt.alt << '\n';
+
+      UASLOG(s_logger,LL_DEBUG,oss.str());
+
+      bool tt= navigator_pt->PredictColli2(st_current,FlagWayPoints,wp_init,obss,spLimit,seq_current,t_limit,thres_ratio,colli_return);
+
+      return (tt ? 1:0);
   }
 
   void PlanNode2::GetObssDis()
@@ -192,9 +211,9 @@ namespace UasCode{
           for(int i=0;i!= obss.size();++i)
           {
               double dis= std::sqrt(pow(st_current.x-obss[i].x1,2)
-                                    +pow(st_current.y-obss[i].x2,2)
-                                    +pow(st_current.z-obss[i].x3,2));
-              oss << " " << dis;
+                                    +pow(st_current.y-obss[i].x2,2) );
+              double dis_h= fabs(obss[i].x3-st_current.z);
+              oss << " " << dis <<" "<< dis_h;
           }
           UASLOG(s_logger,LL_DEBUG,oss.str() );
       }
@@ -272,8 +291,16 @@ namespace UasCode{
           GetCurrentSt();
           GetObssDis();
 
-          int if_colli= PredictColliNode(st_current,seq_current,30,thres_ratio);
+          UserStructs::PredictColliReturn colli_return;
+          //int if_colli= PredictColliNode(st_current,seq_current,30,thres_ratio);
+          int if_colli= PredictColliNode2(st_current,seq_current,t_limit,thres_ratio,colli_return);
+
           UASLOG(s_logger,LL_DEBUG,"PredictColliNode: "<< if_colli);
+
+          if(if_colli==1)
+              UASLOG(s_logger,LL_DEBUG,"predict: "<< "seq:"<< colli_return.seq_colli
+                     << "time:"<< colli_return.time_colli);
+
           IfColliMsg.if_collision = if_colli;
           pub_if_colli.publish(IfColliMsg);
 
@@ -303,17 +330,47 @@ namespace UasCode{
               //set start state and goal waypoint
               UASLOG(s_logger,LL_DEBUG,"planning");
               path_gen.SetInitState(st_current.SmallChange(t_limit));
-
-              for(int i= seq_current;i!= FlagWayPoints.size();++i)
+              //get the start and goal for the sample
+              int idx_end,idx_start=seq_current;//end and start of must go-through waypoint between current position and the goal
+              for(int i= colli_return.seq_colli;i!= FlagWayPoints.size();++i)
               {
                   if(!FlagWayPoints[i].flag){
-                    path_gen.SetGoalWp(FlagWayPoints[i].pt);
-                    break;
+                      path_gen.SetGoalWp(FlagWayPoints[i].pt);
+                      idx_end= i-1;
+                      break;
+                  }
+              }
+
+              if(colli_return.seq_colli == seq_current)
+              {
+                  path_gen.SetSampleStart(st_current.x,st_current.y,st_current.z);
+                  idx_start= seq_current;
+              }
+
+              if(colli_return.seq_colli > seq_current)
+              {
+                  for(int i= seq_current;i!= FlagWayPoints.size();++i)
+                  {
+                      if(!FlagWayPoints[i].flag){
+                          path_gen.SetSampleStart(FlagWayPoints[i].pt.x,
+                                                  FlagWayPoints[i].pt.y,
+                                                  FlagWayPoints[i].pt.alt);
+                          break;
+                      }
                   }
               }
 
               path_gen.SetSampleParas();
               path_gen.SetObs(obss);
+
+              //get must go-through in-between waypoints
+              std::vector<UserStructs::MissionSimPt> wpoints;
+              for(int i= idx_start;i< idx_end;++i)
+              {
+                 wpoints.push_back(FlagWayPoints[i].pt);
+              }
+              path_gen.SetBetweenWps(wpoints);
+
               //to generate feasible paths
               if (path_gen.AddPaths()> 0 )
                   situ= PATH_CHECK;

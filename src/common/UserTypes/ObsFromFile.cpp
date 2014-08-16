@@ -82,7 +82,7 @@ namespace UasCode{
      {
        obss_file.open(filename);
      }
-     catch (std::ifstream::failure& e) {
+       catch (std::ifstream::failure& e) {
            UASLOG(s_logger,LL_WARN,"Exception opening/reading file "
                   << e.what());
      }
@@ -103,6 +103,7 @@ namespace UasCode{
                  >> obs_single.hr;
 
          obs_single.r = 300;
+         //obs_single.hr = 70.;
          //obs_single.head_xy= Utils::_wrap_pi(M_PI/2- obs_single.head_xy * UasCode::DEG2RAD);
 
          UASLOG(s_logger,LL_DEBUG, "obs_single.head_xy: "<< obs_single.head_xy*M_PI/180.);

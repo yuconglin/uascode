@@ -13,11 +13,16 @@ namespace UserTypes{
       void SetParams(UserStructs::PlaneStateSim& st, 
 	             UserStructs::MissionSimPt& goal_wp,
 		     double _sig_ga);
-     void GetSample(double& x_a,double& y_a,double& z_a,
+
+      void SetParams2(double x_start, double y_start, double z_start, UserStructs::MissionSimPt &goal_wp, double _sig_ga);
+
+      void GetSample(double& x_a,double& y_a,double& z_a,
 			UserStructs::PlaneStateSim& st,
 			UserStructs::MissionSimPt& goal_wp);
 
-    private:
+      void GetSample2(double& x_a, double& y_a, double& z_a, double x_start, double y_start, double z_start, UserStructs::MissionSimPt &goal_wp);
+
+   private:
       double r0;
       double sigma_r;
       double theta0;

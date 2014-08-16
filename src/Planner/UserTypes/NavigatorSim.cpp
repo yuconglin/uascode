@@ -478,8 +478,8 @@ bool NavigatorSim::PredictColli(UserStructs::PlaneStateSim &st_current,
        pt_target= waypoints[i];
 
        result= PropWpCheckTime(st_start,st_next,pt_start,pt_target,
-                                   obstacles,spacelimit,
-                                   length,t_limit,t_left,1,thres_ratio);
+                               obstacles,spacelimit,
+                               length,t_limit,t_left,1,thres_ratio);
 
        if(result == -1){
           UASLOG(s_logger,LL_DEBUG,"predict colli time: "<< st_next.t-st_start.t);
@@ -487,9 +487,57 @@ bool NavigatorSim::PredictColli(UserStructs::PlaneStateSim &st_current,
        }
 
        if(result == 2) {
-
           return false;
+       }
 
+       t_limit= t_left;
+       st_start= st_next;
+    }//for int i ends
+
+    return false;
+}
+
+bool NavigatorSim::PredictColli2(UserStructs::PlaneStateSim &st_current,
+                                 std::vector<UserStructs::MissionSimFlagPt> waypoints,
+                                 UserStructs::GoalSetPt init_pt,
+                                 std::vector<UserStructs::obstacle3D> obstacles,
+                                 UserStructs::SpaceLimit spacelimit,
+                                 int seq_current, double t_limit,
+                                 double thres_ratio, UserStructs::PredictColliReturn& colli_return)
+{
+    //true:collision, false:no collision
+    UserStructs::PlaneStateSim st_start= st_current, st_next;
+    arma::vec::fixed<2> pt_start;
+    UserStructs::MissionSimPt pt_target;
+    double length=0;
+    double t_left;
+    int result;
+
+    for(int i= seq_current;i!= waypoints.size();++i)
+    {
+       if(seq_current== 1)
+          pt_start << init_pt.lat << init_pt.lon;
+       else
+          pt_start << waypoints[seq_current-1].pt.lat << waypoints[seq_current-1].pt.lon;
+
+       UASLOG(s_logger,LL_DEBUG,"test wp: "<< i);
+       pt_target= waypoints[i].pt;
+
+       result= PropWpCheckTime(st_start,st_next,pt_start,pt_target,
+                               obstacles,spacelimit,
+                               length,t_limit,t_left,1,thres_ratio);
+
+       if(result == -1){
+          //UASLOG(s_logger,LL_DEBUG,"predict colli time: "<< st_next.t-st_start.t);
+          colli_return.seq_colli= i;
+          colli_return.time_colli = st_next.t-st_current.t;
+          colli_return.dis_colli_2d = std::sqrt(pow(st_next.x-st_current.x,2)+pow(st_next.y-st_current.y,2));
+          colli_return.dis_colli_hgt = fabs(st_next.z-st_current.z);
+          return true;
+       }
+
+       if(result == 2) {
+          return false;
        }
 
        t_limit= t_left;
