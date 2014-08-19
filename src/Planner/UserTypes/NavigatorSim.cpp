@@ -423,6 +423,7 @@ int NavigatorSim::PropWpCheckTime(UserStructs::PlaneStateSim& st_start,
               states_part_rec.push_back(UserStructs::StateNode(st_next,length));
           }
           if(result== -1){
+              UASLOG(s_logger,LL_DEBUG,"result -1, break");
               break;
           }
       }
@@ -431,6 +432,7 @@ int NavigatorSim::PropWpCheckTime(UserStructs::PlaneStateSim& st_start,
 
       //check for t_horizon
       if(st_next.t- st_start.t >= t_horizon){
+          UASLOG(s_logger,LL_DEBUG,"result 2, break");
           result= 2;
           break;
       }
@@ -469,29 +471,29 @@ bool NavigatorSim::PredictColli(UserStructs::PlaneStateSim &st_current,
 
     for(int i= seq_current;i!= waypoints.size();++i)
     {
-       if(seq_current== 1)
-          pt_start << init_pt.lat << init_pt.lon;
-       else
-          pt_start << waypoints[seq_current-1].lat << waypoints[seq_current-1].lon;
+        if(i == 1)
+            pt_start << init_pt.lat << init_pt.lon;
+        else
+            pt_start << waypoints[i-1].lat << waypoints[i-1].lon;
 
-       UASLOG(s_logger,LL_DEBUG,"test wp: "<< i);
-       pt_target= waypoints[i];
+        UASLOG(s_logger,LL_DEBUG,"test wp: "<< i);
+        pt_target= waypoints[i];
 
-       result= PropWpCheckTime(st_start,st_next,pt_start,pt_target,
-                               obstacles,spacelimit,
-                               length,t_limit,t_left,1,thres_ratio);
+        result= PropWpCheckTime(st_start,st_next,pt_start,pt_target,
+                                obstacles,spacelimit,
+                                length,t_limit,t_left,1,thres_ratio);
 
-       if(result == -1){
-          UASLOG(s_logger,LL_DEBUG,"predict colli time: "<< st_next.t-st_start.t);
-          return true;
-       }
+        if(result == -1){
+            UASLOG(s_logger,LL_DEBUG,"predict colli time: "<< st_next.t-st_start.t);
+            return true;
+        }
 
-       if(result == 2) {
-          return false;
-       }
+        if(result == 2) {
+            return false;
+        }
 
-       t_limit= t_left;
-       st_start= st_next;
+        t_limit= t_left;
+        st_start= st_next;
     }//for int i ends
 
     return false;
@@ -515,33 +517,33 @@ bool NavigatorSim::PredictColli2(UserStructs::PlaneStateSim &st_current,
 
     for(int i= seq_current;i!= waypoints.size();++i)
     {
-       if(seq_current== 1)
-          pt_start << init_pt.lat << init_pt.lon;
-       else
-          pt_start << waypoints[seq_current-1].pt.lat << waypoints[seq_current-1].pt.lon;
+        if(i == 1)
+            pt_start << init_pt.lat << init_pt.lon;
+        else
+            pt_start << waypoints[i-1].pt.lat << waypoints[i-1].pt.lon;
 
-       UASLOG(s_logger,LL_DEBUG,"test wp: "<< i);
-       pt_target= waypoints[i].pt;
+        UASLOG(s_logger,LL_DEBUG,"test wp: "<< i);
+        pt_target= waypoints[i].pt;
 
-       result= PropWpCheckTime(st_start,st_next,pt_start,pt_target,
-                               obstacles,spacelimit,
-                               length,t_limit,t_left,1,thres_ratio);
+        result= PropWpCheckTime(st_start,st_next,pt_start,pt_target,
+                                obstacles,spacelimit,
+                                length,t_limit,t_left,1,thres_ratio);
 
-       if(result == -1){
-          //UASLOG(s_logger,LL_DEBUG,"predict colli time: "<< st_next.t-st_start.t);
-          colli_return.seq_colli= i;
-          colli_return.time_colli = st_next.t-st_current.t;
-          colli_return.dis_colli_2d = std::sqrt(pow(st_next.x-st_current.x,2)+pow(st_next.y-st_current.y,2));
-          colli_return.dis_colli_hgt = fabs(st_next.z-st_current.z);
-          return true;
-       }
+        if(result == -1){
+            //UASLOG(s_logger,LL_DEBUG,"predict colli time: "<< st_next.t-st_start.t);
+            colli_return.seq_colli= i;
+            colli_return.time_colli = st_next.t-st_current.t;
+            colli_return.dis_colli_2d = std::sqrt(pow(st_next.x-st_current.x,2)+pow(st_next.y-st_current.y,2));
+            colli_return.dis_colli_hgt = fabs(st_next.z-st_current.z);
+            return true;
+        }
 
-       if(result == 2) {
-          return false;
-       }
+        if(result == 2) {
+            return false;
+        }
 
-       t_limit= t_left;
-       st_start= st_next;
+        t_limit= t_left;
+        st_start= st_next;
     }//for int i ends
 
     return false;

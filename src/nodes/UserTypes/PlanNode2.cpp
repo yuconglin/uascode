@@ -13,7 +13,7 @@
 #include <cmath>
 
 namespace {
-    Utils::LoggerPtr s_logger(Utils::getLogger("uascode.PlanNode.YcLogger"));
+    Utils::LoggerPtr s_logger(Utils::getLogger("uascode.PlanNode2.YcLogger"));
 }
 
 namespace UasCode{
@@ -293,13 +293,15 @@ namespace UasCode{
 
           UserStructs::PredictColliReturn colli_return;
           //int if_colli= PredictColliNode(st_current,seq_current,30,thres_ratio);
-          int if_colli= PredictColliNode2(st_current,seq_current,t_limit,thres_ratio,colli_return);
+          int if_colli= PredictColliNode2(st_current,seq_current,30,thres_ratio,colli_return);
 
           UASLOG(s_logger,LL_DEBUG,"PredictColliNode: "<< if_colli);
 
           if(if_colli==1)
               UASLOG(s_logger,LL_DEBUG,"predict: "<< "seq:"<< colli_return.seq_colli
-                     << "time:"<< colli_return.time_colli);
+                     << "time:"<< colli_return.time_colli<<" "
+                     << "2d dis:"<< colli_return.dis_colli_2d << " "
+                     << "z dis:"<< colli_return.dis_colli_hgt);
 
           IfColliMsg.if_collision = if_colli;
           pub_if_colli.publish(IfColliMsg);

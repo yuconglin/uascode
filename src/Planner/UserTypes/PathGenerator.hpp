@@ -128,4 +128,4 @@ class PathGenerator{
    inline void SetYawRootSample(double _yaw_root){this->yaw_root= _yaw_root;}
 };//class PathGenerator ends
 
-};//namespace UasCode ends
+}//namespace UasCode ends

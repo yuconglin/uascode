@@ -86,7 +86,8 @@ namespace UserTypes{
               <<x_goal<<" "
               <<y_goal<<" "
               <<z_goal);
-
+       double dis_them= sqrt(pow(x_start-x_goal,2)+pow(y_start-y_goal,2)+pow(z_start-z_goal,2));
+       UASLOG(s_logger,LL_DEBUG,"distance between them:"<< dis_them);
        //
        double Dx= x_goal-x_start;
        double Dy= y_goal-y_start;
@@ -173,6 +174,7 @@ namespace UserTypes{
 
    void SamplerPole::GetSample2(double& x_a, double& y_a, double& z_a, double x_start, double y_start, double z_start, UserStructs::MissionSimPt &goal_wp)
    {
+       UASLOG(s_logger,LL_DEBUG,"try to sample");
        boost::mt19937 generator;
        static unsigned int seed = 0;
        generator.seed(static_cast<unsigned int>(std::time(0))+(++seed));
@@ -190,12 +192,12 @@ namespace UserTypes{
            boost::normal_distribution<> ga_distribution(ga0, sigma_ga);
            boost::variate_generator<boost::mt19937&,boost::normal_distribution<> > ga_nor(generator, ga_distribution);
            double ga= ga_nor();
-           /*
+
            UASLOG(s_logger,LL_DEBUG,
                   "r: "<< r
                   << " theta: "<< theta*180./M_PI
                   << " ga: "<< ga*180./M_PI
-                  ); */
+                  );
 
            x_a= x0+ r*cos(theta)*cos(ga);
            y_a= y0+ r*sin(theta)*cos(ga);

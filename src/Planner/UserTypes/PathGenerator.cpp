@@ -17,7 +17,7 @@ Utils::LoggerPtr s_logger(Utils::getLogger("uascode.PathGenerator.YcLogger"));
 
 namespace UasCode{
   //constructor
-  PathGenerator::PathGenerator()
+  PathGenerator::PathGenerator():sample_method(0)
   {
     if_start_set= false;
     if_goal_set= false;
@@ -168,19 +168,18 @@ namespace UasCode{
     while(1)
     {
       sampler_pt->GetSample2(x_a,y_a,z_a,xs_start,ys_start,zs_start,goal_wp);
-      //UASLOG(s_logger,LL_DEBUG,"sample check "<<x_a<<" "<<y_a<<" "<<z_a);
+      UASLOG(s_logger,LL_DEBUG,"sample check "<<x_a<<" "<<y_a<<" "<<z_a);
       //check
       //if in radius range
+      /*
       bool if_radius= Utils::NotInRadius(xs_start,ys_start,yaw_root,x_a,y_a,rho);
       if(!if_radius) {
-        double dis_g= std::sqrt(pow(xs_start-x_a,2)+pow(ys_start-y_a,2));
-        double dis_s= std::sqrt(pow(xs_start-goal_wp.x,2)+pow(ys_start-goal_wp.y,2));
-
+        double dis_s= std::sqrt(pow(xs_start-x_a,2)+pow(ys_start-y_a,2));
         std::ostringstream oss;
-        oss << "in radius" << dis_g <<" "<< dis_s;
+        oss << "in radius: " << "dis_s: "<< dis_s;
         UASLOG(s_logger,LL_DEBUG,oss.str() );
         continue;
-      }
+      }*/
       //if pitch ok
       DubinsPath path;
       the_a= atan2(y_a-ys_start,x_a-xs_start);
@@ -291,6 +290,7 @@ namespace UasCode{
 
       if(result1!= -1)
       {//the first section is collision free
+          UASLOG(s_logger,LL_DEBUG,"first section collision free");
           ++sample_count;
           //copy the state_rec
           temp_part_rec.clear();
@@ -323,18 +323,22 @@ namespace UasCode{
                   wp_lengths.push_back(UserStructs::WpLength(new_wp,length+length1,result2));
               }//if result2!=-1 ends
 
-          //timer
-	  if(!if_limit_reach){
-	    sec_count=ros::Time::now().toSec()-t_start.toSec();
-        if(sec_count>= t_limit)
-	    {
-	      if_limit_reach= true;
-	      break;
-	    }
-	  }//
+              //timer
+              if(!if_limit_reach){
+                  sec_count=ros::Time::now().toSec()-t_start.toSec();
+                  if(sec_count>= t_limit)
+                  {
+                      if_limit_reach= true;
+                      break;
+                  }
+              }//
 
-	}//for int i ends
+          }//for int i ends
+          UASLOG(s_logger,LL_DEBUG,"wp_lengths size:"<< wp_lengths.size() );
       }//if result1!= -1 ends
+      else{
+          UASLOG(s_logger,LL_DEBUG,"first section collided");
+      }
     
       //timer
       if(!if_limit_reach){
