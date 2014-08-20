@@ -43,7 +43,7 @@ int CheckCollision(const UserStructs::PlaneStateSim& plane, UserStructs::obstacl
 int CheckCollision2(const UserStructs::PlaneStateSim &plane, UserStructs::obstacle3D &obs, double thres_ratio)
 {
    UserStructs::obs3D obs3d= obs.Estimate(plane.t);
-
+   /*
    UASLOG(s_logger,LL_DEBUG,"check distance: "
           << sqrt(pow(obs3d.x-plane.x,2)+pow(obs3d.y-plane.y,2))<< " "
           << fabs(obs3d.z-plane.z) << " "
@@ -51,7 +51,7 @@ int CheckCollision2(const UserStructs::PlaneStateSim &plane, UserStructs::obstac
           << plane.t
           << "obs r:" << obs3d.r << " "
           << "obs hr:"<< obs3d.hr
-          );
+          );*/
 
    int result;
    if( fabs(obs3d.z-plane.z)> obs3d.hr ||
@@ -59,12 +59,12 @@ int CheckCollision2(const UserStructs::PlaneStateSim &plane, UserStructs::obstac
      )
    {
      result=0;
-     UASLOG(s_logger,LL_DEBUG,"beyond");
+     //UASLOG(s_logger,LL_DEBUG,"beyond");
    }
    else
    {
      result=1;
-     UASLOG(s_logger,LL_DEBUG,"inside");
+     //UASLOG(s_logger,LL_DEBUG,"inside");
    /*
    UASLOG(s_logger,LL_DEBUG,"colli check distance: "
           << sqrt(pow(obs3d.x-plane.x,2)+pow(obs3d.y-plane.y,2))<< " "

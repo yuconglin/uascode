@@ -83,7 +83,7 @@ void MavlinkSender::SendPosSP(double lat,double lon,double alt)
    numbytes = sendto(sockfd, buf, len, 0,p->ai_addr, p->ai_addrlen);
 }//SetPosSP ends
 
-void MavlinkSender::SendPosSPflag(double lat, double lon, double alt, int inter_exist)
+void MavlinkSender::SendPosSPflag(double lat, double lon, double alt, int index, int inter_exist)
 {
     UASLOG(s_logger,LL_DEBUG,"send lat: " << lat
            << " lon: "<< lon
@@ -94,6 +94,7 @@ void MavlinkSender::SendPosSPflag(double lat, double lon, double alt, int inter_
     point_flag_t.latitude= lat*1E7;
     point_flag_t.longitude= lon*1E7;
     point_flag_t.altitude= alt*1E3;
+    point_flag_t.index = index;
     point_flag_t.inter_exist= inter_exist;
     point_flag_t.coordinate_frame= MAV_FRAME_GLOBAL;
     //sending

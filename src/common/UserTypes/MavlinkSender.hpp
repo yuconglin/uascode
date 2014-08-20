@@ -19,7 +19,7 @@ class MavlinkSender{
   int initialize();
   //sending
   void SendPosSP(double lat,double lon,double alt);//position setpoint
-  void SendPosSPflag(double lat,double lon,double alt,int inter_exist);
+  void SendPosSPflag(double lat,double lon,double alt,int index,int inter_exist);
   void SendIfColli(bool if_colli);
   void SendMultiObs(std::vector<UserStructs::obstacle3D> obss);
   void SendWpNum(int wp_num);

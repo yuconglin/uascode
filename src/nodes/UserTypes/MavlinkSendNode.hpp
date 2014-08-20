@@ -45,6 +45,7 @@ private:
 
   //contains
   double lat_s, lon_s, alt_s;
+  int seq_s;
   int inter_exist;
   bool if_receive;
   int if_colli;

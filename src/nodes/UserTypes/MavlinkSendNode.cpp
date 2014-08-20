@@ -8,7 +8,7 @@ namespace {
 
 namespace UasCode{
 
-MavlinkSendNode::MavlinkSendNode():wp_num(0),send_pos_method(0)
+MavlinkSendNode::MavlinkSendNode():wp_num(0),send_pos_method(0),lat_s(0.),lon_s(0.),alt_s(0.),seq_s(0)
 {
   sub_interwp= nh.subscribe("inter_wp",100,&MavlinkSendNode::InterWpCb,this);
   sub_interwp_flag= nh.subscribe("inter_wp_flag",100,&MavlinkSendNode::InterWpFlagCb,this);
@@ -51,7 +51,7 @@ void MavlinkSendNode::working()
           sender.SendPosSP(lat_s,lon_s,alt_s);
 
         if(send_pos_method==1)
-          sender.SendPosSPflag(lat_s,lon_s,alt_s,inter_exist);
+          sender.SendPosSPflag(lat_s,lon_s,alt_s,seq_s,inter_exist);
      }
 
      if(if_colli!= -1)
@@ -78,6 +78,7 @@ void MavlinkSendNode::InterWpFlagCb(const uascode::PosSetPointFlag::ConstPtr &ms
    lat_s = msg->lat;
    lon_s = msg->lon;
    alt_s = msg->alt;
+   seq_s = msg->seq;
    inter_exist = msg->inter_exist;
 }
 

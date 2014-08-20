@@ -298,7 +298,7 @@ namespace UasCode{
           UASLOG(s_logger,LL_DEBUG,"PredictColliNode: "<< if_colli);
 
           if(if_colli==1)
-              UASLOG(s_logger,LL_DEBUG,"predict: "<< "seq:"<< colli_return.seq_colli
+              UASLOG(s_logger,LL_DEBUG,"predict: "<< "seq:"<< colli_return.seq_colli<< " "
                      << "time:"<< colli_return.time_colli<<" "
                      << "2d dis:"<< colli_return.dis_colli_2d << " "
                      << "z dis:"<< colli_return.dis_colli_hgt);
@@ -346,9 +346,8 @@ namespace UasCode{
               if(colli_return.seq_colli == seq_current)
               {
                   path_gen.SetSampleStart(st_current.x,st_current.y,st_current.z);
-                  idx_start= seq_current;
               }
-
+              /*
               if(colli_return.seq_colli > seq_current)
               {
                   for(int i= seq_current;i!= FlagWayPoints.size();++i)
@@ -360,6 +359,24 @@ namespace UasCode{
                           break;
                       }
                   }
+              } */
+
+              if(colli_return.seq_colli == seq_current+1)
+              {
+                  if(FlagWayPoints[seq_current].flag){
+                      path_gen.SetSampleStart(st_current.x,st_current.y,st_current.z);
+
+                  }
+                  else{
+                      path_gen.SetSampleStart(FlagWayPoints[seq_current].pt.x,
+                                              FlagWayPoints[seq_current].pt.y,
+                                              FlagWayPoints[seq_current].pt.alt);
+                  }
+              }
+
+              if(colli_return.seq_colli > seq_current+1)
+              {
+
               }
 
               path_gen.SetSampleParas();
@@ -408,6 +425,8 @@ namespace UasCode{
                      if_inter_exist= true;
                      FlagWayPoints.erase(FlagWayPoints.begin()+seq_current);
                   }
+                  //this line is wrong
+                  set_pt.seq= seq_current;
                   set_pt.inter_exist= if_inter_exist ? 1:0;
                   FlagWayPoints.insert(FlagWayPoints.begin()+seq_current,UserStructs::MissionSimFlagPt(inter_wp,true) );
                   situ= PATH_READY;
