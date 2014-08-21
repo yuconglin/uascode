@@ -459,9 +459,13 @@ namespace UasCode{
                   //for mavproxy, home_alt must be subtracted
                   set_pt.alt= inter_wp.alt- home_alt;
 
+                  double x_wp,y_wp;
+                  Utils::ToUTM(set_pt.lon,set_pt.lat,x_wp,y_wp);
+
                   UASLOG(s_logger,LL_DEBUG,"wp generated: "
                          << set_pt.lat << " "
                          << set_pt.lon << " "
+                         << x_wp << " "<< y_wp << " "
                          << set_pt.alt);
 
                   if(FlagWayPoints[seq_inter].flag){

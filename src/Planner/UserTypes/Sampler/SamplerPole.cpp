@@ -179,7 +179,7 @@ namespace UserTypes{
 
    void SamplerPole::GetSample2(double& x_a, double& y_a, double& z_a, double x_start, double y_start, double z_start, UserStructs::MissionSimPt &goal_wp)
    {
-       UASLOG(s_logger,LL_DEBUG,"try to sample");
+       //UASLOG(s_logger,LL_DEBUG,"try to sample");
        boost::mt19937 generator;
        static unsigned int seed = 0;
        generator.seed(static_cast<unsigned int>(std::time(0))+(++seed));
@@ -189,7 +189,7 @@ namespace UserTypes{
        boost::variate_generator<boost::mt19937&,boost::normal_distribution<> > r_nor(generator, r_distribution);
        double r= r_nor();
 
-       UASLOG(s_logger,LL_DEBUG,"sample theta0:"<< theta0*180./M_PI);
+       //UASLOG(s_logger,LL_DEBUG,"sample theta0:"<< theta0*180./M_PI);
        boost::uniform_real<> the_uniform(theta0-M_PI/2.0, theta0+M_PI/2.0);
        boost::variate_generator<boost::mt19937&,boost::uniform_real<> > the_nor(generator, the_uniform);
        double theta= the_nor();
@@ -198,13 +198,13 @@ namespace UserTypes{
            boost::normal_distribution<> ga_distribution(ga0, sigma_ga);
            boost::variate_generator<boost::mt19937&,boost::normal_distribution<> > ga_nor(generator, ga_distribution);
            double ga= ga_nor();
-
+           /*
            UASLOG(s_logger,LL_DEBUG,
                   "r: "<< r
                   << " theta: "<< theta*180./M_PI
                   << " ga: "<< ga*180./M_PI
-                  );
-
+                  ); */
+           //UASLOG(s_logger,LL_DEBUG,"theta:"<< theta*180./M_PI);
            x_a= x0+ r*cos(theta)*cos(ga);
            y_a= y0+ r*sin(theta)*cos(ga);
            z_a= z0+ r*sin(ga);

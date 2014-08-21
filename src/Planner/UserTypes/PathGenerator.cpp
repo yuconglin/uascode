@@ -164,11 +164,12 @@ namespace UasCode{
     double x_a,y_a,z_a,the_a;
     double rho= max_speed/max_yaw_rate;
     //UASLOG(s_logger,LL_DEBUG,"rho: "<< rho);
+    double dis_total= sqrt(pow(xs_start-goal_wp.x,2)+pow(ys_start-goal_wp.y,2));
 
     while(1)
     {
       sampler_pt->GetSample2(x_a,y_a,z_a,xs_start,ys_start,zs_start,goal_wp);
-      UASLOG(s_logger,LL_DEBUG,"sample check "<<x_a<<" "<<y_a<<" "<<z_a);
+      //UASLOG(s_logger,LL_DEBUG,"sample check "<<x_a<<" "<<y_a<<" "<<z_a);
       //check
       //if in radius range
       /*
@@ -202,6 +203,12 @@ namespace UasCode{
 
       if(!if_in){
           UASLOG(s_logger,LL_DEBUG,"out fence");
+          continue;
+      }
+
+      double dis_sample= std::sqrt(pow(x_a-xs_start,2)+pow(y_a-ys_start,2));
+      if(dis_sample > dis_total){
+          //UASLOG(s_logger,LL_DEBUG,"too long sample");
       }
       else break;
     }//while ends
@@ -252,7 +259,12 @@ namespace UasCode{
        navigator.PropagateWp(st_ps,st_second,pt_temp,WpInBetweens[i]);
        st_ps= st_second;
     }
-    UASLOG(s_logger,LL_DEBUG,"st_ps: "<< st_ps.lat<<" "<< st_ps.lon);
+
+    double x_ps, y_ps;
+    Utils::ToUTM(st_ps.lon,st_ps.lat,x_ps,y_ps);
+    UASLOG(s_logger,LL_DEBUG,"st_ps: "<< st_ps.lat<<" "
+           << st_ps.lon<< " "
+           << x_ps<<" "<< y_ps);
 
     //the loop
     double length= 0;
@@ -290,7 +302,7 @@ namespace UasCode{
 
       if(result1!= -1)
       {//the first section is collision free
-          UASLOG(s_logger,LL_DEBUG,"first section collision free");
+          //UASLOG(s_logger,LL_DEBUG,"first section collision free");
           ++sample_count;
           //copy the state_rec
           temp_part_rec.clear();
@@ -334,10 +346,10 @@ namespace UasCode{
               }//
 
           }//for int i ends
-          UASLOG(s_logger,LL_DEBUG,"wp_lengths size:"<< wp_lengths.size() );
+          //UASLOG(s_logger,LL_DEBUG,"wp_lengths size:"<< wp_lengths.size() );
       }//if result1!= -1 ends
       else{
-          UASLOG(s_logger,LL_DEBUG,"first section collided");
+          //UASLOG(s_logger,LL_DEBUG,"first section collided");
       }
     
       //timer
@@ -417,6 +429,7 @@ namespace UasCode{
     //overhead
     UserStructs::PlaneStateSim st_end;
     double length= 0;
+    bool if_time_up = false;
 
     while(1)
     {
@@ -426,7 +439,7 @@ namespace UasCode{
       if(ros::Time::now()- t1 >= ros::Duration(0.1) )
       {
           UASLOG(s_logger,LL_DEBUG,"PathCheckRepeat time up");
-          //if_path= false;
+          if_time_up= true;
           break;
       }
       
@@ -436,6 +449,7 @@ namespace UasCode{
       }
 
       UserStructs::MissionSimPt wp= wp_lengths[count].wp;
+      UASLOG(s_logger,LL_DEBUG,"wp:"<< count <<" "<< wp.x <<" "<< wp.y);
       //check from current to intermediate waypoint
       arma::vec::fixed<2> pt_A;
       pt_A << st_current.lat << st_current.lon;
@@ -450,7 +464,7 @@ namespace UasCode{
                                           1);
 
       if(result1== -1){
-          UASLOG(s_logger,LL_DEBUG,"first section failed");
+          //UASLOG(s_logger,LL_DEBUG,"first section failed");
           ++count;
           continue;
       }
@@ -460,10 +474,11 @@ namespace UasCode{
       }
 
       SetInterState(st_end);
+      /*
       UASLOG(s_logger,LL_DEBUG,"inter state: "
              <<"st_end.x: "<< st_end.x<<" "
              <<"st_end.y: "<< st_end.y<<" "
-             <<"st_end.z: "<< st_end.z);
+             <<"st_end.z: "<< st_end.z); */
       //check from the intermediate waypoint to the goal waypoint
       pt_A<< wp.lat << wp.lon;
 
@@ -489,11 +504,15 @@ namespace UasCode{
           inter_wp= wp;
           UASLOG(s_logger,LL_DEBUG,"the_s: "<< atan2(inter_wp.y-ys_start,inter_wp.x-xs_start)*180./M_PI );
           UASLOG(s_logger,LL_DEBUG,"wp " << count<< "was selected");
-          UASLOG(s_logger,LL_DEBUG,"xs_start:"<< xs_start<<" "
-                 "ys_start:"<< ys_start<<" ");
+          UASLOG(s_logger,LL_DEBUG,"xs_start:"<< xs_start<<" "<< "ys_start:"<< ys_start);
+          UASLOG(s_logger,LL_DEBUG,"x_goal:"<< goal_wp.x<<" "<<"y_goal:"<< goal_wp.y);
           break;
       }
     }//while ends
+
+    if(if_time_up)
+        return false;
+
     if(count< wp_lengths.size() ){
         return true; 
     }
