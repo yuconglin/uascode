@@ -487,7 +487,10 @@ namespace UasCode{
           total_rec.insert(total_rec.end(),temp_rec.begin(),temp_rec.end());
           //final intermediate waypoint
           inter_wp= wp;
+          UASLOG(s_logger,LL_DEBUG,"the_s: "<< atan2(inter_wp.y-ys_start,inter_wp.x-xs_start)*180./M_PI );
           UASLOG(s_logger,LL_DEBUG,"wp " << count<< "was selected");
+          UASLOG(s_logger,LL_DEBUG,"xs_start:"<< xs_start<<" "
+                 "ys_start:"<< ys_start<<" ");
           break;
       }
     }//while ends

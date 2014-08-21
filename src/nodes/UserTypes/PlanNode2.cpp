@@ -55,6 +55,7 @@ namespace UasCode{
     if_receive= false;
     //I use seq_current== -1 to indicate the moment mission starts
     seq_current= -1;
+    seq_inter= 0;
     if_inter_gen= false;
     if_inter_exist= false;
 
@@ -98,6 +99,22 @@ namespace UasCode{
                     << std::endl;
     }
 
+  }
+
+  void PlanNode2::SetObsDisFile(const char *filename)
+  {
+      try
+      {
+          obdis_log.exceptions(std::ofstream::failbit | std::ofstream::badbit);
+          obdis_log.open(filename,std::ofstream::out
+                         | std::ofstream::in
+                         | std::ofstream::trunc);
+      }
+      catch(std::ofstream::failure& e) {
+          std::cerr << "Exception opening/reading file"
+                    << e.what()
+                    << std::endl;
+      }
   }
 
   void PlanNode2::LoadFlightPlan(const char* filename)
@@ -193,7 +210,9 @@ namespace UasCode{
       for(int i=0;i!= FlagWayPoints.size();++i)
           oss << i<<":"<< FlagWayPoints[i].pt.lat <<" "
               << FlagWayPoints[i].pt.lon<<" "
-              << FlagWayPoints[i].pt.alt << '\n';
+              << FlagWayPoints[i].pt.alt <<" "
+              << FlagWayPoints[i].pt.x<< " "
+              << FlagWayPoints[i].pt.y<< '\n';
 
       UASLOG(s_logger,LL_DEBUG,oss.str());
 
@@ -216,6 +235,19 @@ namespace UasCode{
               oss << " " << dis <<" "<< dis_h;
           }
           UASLOG(s_logger,LL_DEBUG,oss.str() );
+      }
+      if(!obss.empty() )
+      {
+          std::ostringstream oss;
+          oss<< "obss dis:";
+          for(int i=0;i!= obss.size();++i)
+          {
+              double dis= std::sqrt(pow(st_current.x-obss[i].x1,2)
+                                    +pow(st_current.y-obss[i].x2,2) );
+              double dis_h= fabs(obss[i].x3-st_current.z);
+              oss << (int)obss[i].address <<" " << dis <<" "<< dis_h <<'\n';
+          }
+          obdis_log << oss.str();
       }
   }
 
@@ -334,6 +366,8 @@ namespace UasCode{
               path_gen.SetInitState(st_current.SmallChange(t_limit));
               //get the start and goal for the sample
               int idx_end,idx_start=seq_current;//end and start of must go-through waypoint between current position and the goal
+              this->seq_inter= colli_return.seq_colli;
+
               for(int i= colli_return.seq_colli;i!= FlagWayPoints.size();++i)
               {
                   if(!FlagWayPoints[i].flag){
@@ -376,7 +410,16 @@ namespace UasCode{
 
               if(colli_return.seq_colli > seq_current+1)
               {
-
+                  if(FlagWayPoints[colli_return.seq_colli-1].flag){
+                      path_gen.SetSampleStart(FlagWayPoints[colli_return.seq_colli-2].pt.x,
+                                              FlagWayPoints[colli_return.seq_colli-2].pt.y,
+                                              FlagWayPoints[colli_return.seq_colli-2].pt.alt);
+                  }
+                  else{
+                      path_gen.SetSampleStart(FlagWayPoints[colli_return.seq_colli-1].pt.x,
+                                              FlagWayPoints[colli_return.seq_colli-1].pt.y,
+                                              FlagWayPoints[colli_return.seq_colli-1].pt.alt);
+                  }
               }
 
               path_gen.SetSampleParas();
@@ -421,14 +464,14 @@ namespace UasCode{
                          << set_pt.lon << " "
                          << set_pt.alt);
 
-                  if(FlagWayPoints[seq_current].flag){
+                  if(FlagWayPoints[seq_inter].flag){
                      if_inter_exist= true;
-                     FlagWayPoints.erase(FlagWayPoints.begin()+seq_current);
+                     FlagWayPoints.erase(FlagWayPoints.begin()+seq_inter);
                   }
                   //this line is wrong
-                  set_pt.seq= seq_current;
+                  set_pt.seq= seq_inter;
                   set_pt.inter_exist= if_inter_exist ? 1:0;
-                  FlagWayPoints.insert(FlagWayPoints.begin()+seq_current,UserStructs::MissionSimFlagPt(inter_wp,true) );
+                  FlagWayPoints.insert(FlagWayPoints.begin()+seq_inter,UserStructs::MissionSimFlagPt(inter_wp,true) );
                   situ= PATH_READY;
                   if_inter_gen= true;
               }

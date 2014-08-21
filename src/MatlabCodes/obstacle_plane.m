@@ -1,3 +1,4 @@
+
 close all;
 clear all;
 clc;
@@ -87,7 +88,7 @@ i1= 1;
 i2= 1;
 i3= 1;
 
-k= 600;
+k= 700;
 
 for j=1:length(t_traj)
    

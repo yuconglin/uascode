@@ -22,6 +22,7 @@ int main(int argc, char** argv)
   else
      std::cerr <<"number of arguments should be only 2 or 3." <<"/n";
 
+  plan_node.SetObsDisFile("/home/yucong/ros_workspace/uascode/records/obdis_log.txt");
   plan_node.working();
 }
 

@@ -109,6 +109,10 @@ namespace UserTypes{
        x0 = x_start;
        y0 = y_start;
        z0 = z_start;
+       UASLOG(s_logger,LL_DEBUG,"x0:"<< x0 <<" "
+              "y0:"<< y0 << " "
+              "z0:"<< z0);
+
        this->r0 = r0;
        sigma_r= 0.5*r0;
        this->theta0 = theta0;
@@ -129,6 +133,7 @@ namespace UserTypes{
       boost::variate_generator<boost::mt19937&,boost::normal_distribution<> > r_nor(generator, r_distribution);  
       double r= r_nor();
       
+      UASLOG(s_logger,LL_DEBUG,"sample theta0:"<< theta0*180./M_PI);
       boost::uniform_real<> the_uniform(theta0-M_PI/2.0, theta0+M_PI/2.0);
       boost::variate_generator<boost::mt19937&,boost::uniform_real<> > the_nor(generator, the_uniform);
       double theta= the_nor();
@@ -184,6 +189,7 @@ namespace UserTypes{
        boost::variate_generator<boost::mt19937&,boost::normal_distribution<> > r_nor(generator, r_distribution);
        double r= r_nor();
 
+       UASLOG(s_logger,LL_DEBUG,"sample theta0:"<< theta0*180./M_PI);
        boost::uniform_real<> the_uniform(theta0-M_PI/2.0, theta0+M_PI/2.0);
        boost::variate_generator<boost::mt19937&,boost::uniform_real<> > the_nor(generator, the_uniform);
        double theta= the_nor();

@@ -38,7 +38,10 @@ class PlanNode2{
    inline void SetWpR(const double _r){this->wp_r= _r;}
    inline void SetHomeAlt(const double _alt){home_alt= _alt; }
 
+   //load trajectory log file
    void SetLogFileName(const char* filename);
+   //load obs distance log
+   void SetObsDisFile(const char* filename);
    //load flight plan from txt
    void LoadFlightPlan(const char* filename);
    //working part
@@ -103,6 +106,7 @@ class PlanNode2{
 
    //log for trajectory
    std::ofstream traj_log;
+   std::ofstream obdis_log;
 
    //ros related
    ros::NodeHandle nh;

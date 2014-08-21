@@ -3,7 +3,6 @@ build
 CMakeLists_cp.txt
 CMakeLists.txt.user
 Makefile
-manifest.xml
 msg_gen
 lib
 *.~
