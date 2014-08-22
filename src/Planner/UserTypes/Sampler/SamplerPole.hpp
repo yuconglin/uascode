@@ -16,6 +16,8 @@ namespace UserTypes{
 
       void SetParams2(double x_start, double y_start, double z_start, UserStructs::MissionSimPt &goal_wp, double _sig_ga);
 
+      void SetParams3(double x_start, double y_start, double z_start, double x_end, double y_end, double z_end, double _sig_ga);
+
       void GetSample(double& x_a,double& y_a,double& z_a,
 			UserStructs::PlaneStateSim& st,
 			UserStructs::MissionSimPt& goal_wp);

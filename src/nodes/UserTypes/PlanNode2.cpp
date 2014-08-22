@@ -11,6 +11,7 @@
 #include <iomanip>
 #include <fstream>
 #include <cmath>
+#include <stdexcept>
 
 namespace {
     Utils::LoggerPtr s_logger(Utils::getLogger("uascode.PlanNode2.YcLogger"));
@@ -361,70 +362,10 @@ namespace UasCode{
               //set start state and goal waypoint
               UASLOG(s_logger,LL_DEBUG,"planning");
               path_gen.SetInitState(st_current.SmallChange(t_limit));
-              //get the start and goal for the sample
-              //int idx_end,idx_start=seq_current;//end and start of must go-through waypoint between current position and the goal
 
-              //get the previous fixed wp
-              /*
-              if(colli_return.seq_colli > 1){
+              this->seq_inter= colli_return.seq_colli;
 
-                  double dis_pre_wp;
-                  for(int i= colli_return.seq_colli-1;i!= 0;--i)
-                  {
-                      if(!FlagWayPoints[i].flag){
-                          dis_pre_wp= std::sqrt(pow(colli_return.x_colli-FlagWayPoints[i].pt.x,2)+pow(colli_return.y_colli-FlagWayPoints[i].pt.y,2) );
-                          break;
-                      }
-                  }
-
-                  //see where to insert a waypoint for avoiding
-                  if(dis_pre_wp < 300)
-                      seq_inter= colli_return.seq_colli-1;
-                  else
-                      seq_inter= colli_return.seq_colli;
-
-                  //set sample start
-                  if(seq_inter == seq_current){
-                      path_gen.SetSampleStart(st_current.x,st_current.y,st_current.z);
-                      path_gen.SetInBetweenNum(0);
-                  }
-                  else{//seq_inter == seq_current+1
-
-                      if(FlagWayPoints[seq_current].flag){
-                          path_gen.SetSampleStart(st_current.x,st_current.y,st_current.z);
-                      }
-                      else{
-                          path_gen.SetSampleStart(FlagWayPoints[seq_current].pt.x,
-                                                  FlagWayPoints[seq_current].pt.y,
-                                                  FlagWayPoints[seq_current].pt.alt);
-                      }
-                      path_gen.SetInBetweenNum(1);
-                  }
-
-                  //set sample end
-                  for(int i= seq_inter;i!=FlagWayPoints.size();++i)
-                  {
-                      if(!FlagWayPoints[i].flag){
-                          path_gen.SetSampleEnd(FlagWayPoints[i].pt.x, FlagWayPoints[i].pt.y, FlagWayPoints[i].pt.alt);
-                          break;
-                      }
-                  }
-
-                  //set goal
-                  for(int i= colli_return.seq_colli;i!= FlagWayPoints.size();++i)
-                  {
-                      if(!FlagWayPoints[i].flag){
-                          path_gen.SetGoalWp(FlagWayPoints[i].pt);
-                          idx_end= i-1;
-                          break;
-                      }
-                  }
-
-                  //set go-through waypoint
-              }*/
-
-              //this->seq_inter= colli_return.seq_colli;
-
+              //set goal
               for(int i= colli_return.seq_colli;i!= FlagWayPoints.size();++i)
               {
                   if(!FlagWayPoints[i].flag){
@@ -433,48 +374,86 @@ namespace UasCode{
                   }
               }
 
+              //set sample start
               if(colli_return.seq_colli == seq_current)
               {
                   path_gen.SetSampleStart(st_current.x,st_current.y,st_current.z);
+                  //get must go-through in-between waypoints
+                  std::vector<UserStructs::MissionSimPt> wpoints;
+                  path_gen.SetBetweenWps(wpoints);
               }
-
-              if(colli_return.seq_colli == seq_current+1)
+              else if(colli_return.seq_colli == seq_current+1)
               {   //start here, two different situations
-                  if(FlagWayPoints[seq_current].flag){
-                      path_gen.SetSampleStart(st_current.x,st_current.y,st_current.z);
+                  double dis_pre_wp;
+                  for(int i= colli_return.seq_colli-1;i!= 0;--i)
+                  {
+                      if(!FlagWayPoints[i].flag){
+                          dis_pre_wp= std::sqrt(pow(colli_return.x_colli-FlagWayPoints[i].pt.x,2)+pow(colli_return.y_colli-FlagWayPoints[i].pt.y,2) );
+                          break;
+                      }
+                  }
+                  //if the collision is too close to the previous wp to the predicted colli wp
+                  if(dis_pre_wp < 300)
+                      seq_inter= colli_return.seq_colli-1;
+                  else
+                      seq_inter= colli_return.seq_colli;
 
+                  if(seq_inter== colli_return.seq_colli-1)
+                  {
+                      path_gen.SetSampleStart(st_current.x,st_current.y,st_current.z);
+                      //get must go-through in-between waypoints
+                      std::vector<UserStructs::MissionSimPt> wpoints;
+                      wpoints.push_back(FlagWayPoints[seq_inter].pt);
+                      path_gen.SetBetweenWps(wpoints);
+                      path_gen.SetSection(1);
                   }
-                  else{
-                      path_gen.SetSampleStart(FlagWayPoints[seq_current].pt.x,
-                                              FlagWayPoints[seq_current].pt.y,
-                                              FlagWayPoints[seq_current].pt.alt);
+
+                  if(seq_inter== colli_return.seq_colli)
+                  {
+                      if(FlagWayPoints[seq_inter-1].flag){
+                          path_gen.SetSampleStart(FlagWayPoints[seq_inter-2].pt.x,
+                                                  FlagWayPoints[seq_inter-2].pt.y,
+                                                  FlagWayPoints[seq_inter-2].pt.alt);
+                          //set in-between waypoints
+                          std::vector<UserStructs::MissionSimPt> wpoints;
+                          wpoints.push_back(FlagWayPoints[seq_inter-2].pt);
+                          path_gen.SetBetweenWps(wpoints);
+
+                      }
+                      else{
+                          path_gen.SetSampleStart(FlagWayPoints[seq_inter-1].pt.x,
+                                                  FlagWayPoints[seq_inter-1].pt.y,
+                                                  FlagWayPoints[seq_inter-1].pt.alt);
+                          //set in-between waypoints
+                          std::vector<UserStructs::MissionSimPt> wpoints;
+                          wpoints.push_back(FlagWayPoints[seq_inter-1].pt);
+                          path_gen.SetBetweenWps(wpoints);
+                      }
+                      path_gen.SetSection(2);
                   }
+
+              }
+              else {//throw an execption
+                      try {
+                          throw std::runtime_error ("colli_return.seq_colli larger than seq_current+1");
+                      }
+                      catch (std::runtime_error &e) {
+                          std::cout << "Caught a runtime_error exception: "
+                                    << e.what () << '\n';
+                      }
               }
 
-              if(colli_return.seq_colli > seq_current+1)
+              //set sample end
+              for(int i= seq_inter;i!=FlagWayPoints.size();++i)
               {
-                  if(FlagWayPoints[colli_return.seq_colli-1].flag){
-                      path_gen.SetSampleStart(FlagWayPoints[colli_return.seq_colli-2].pt.x,
-                                              FlagWayPoints[colli_return.seq_colli-2].pt.y,
-                                              FlagWayPoints[colli_return.seq_colli-2].pt.alt);
-                  }
-                  else{
-                      path_gen.SetSampleStart(FlagWayPoints[colli_return.seq_colli-1].pt.x,
-                                              FlagWayPoints[colli_return.seq_colli-1].pt.y,
-                                              FlagWayPoints[colli_return.seq_colli-1].pt.alt);
+                  if(!FlagWayPoints[i].flag){
+                      path_gen.SetSampleEnd(FlagWayPoints[i].pt.x, FlagWayPoints[i].pt.y, FlagWayPoints[i].pt.alt);
+                      break;
                   }
               }
 
               path_gen.SetSampleParas();
               path_gen.SetObs(obss);
-
-              //get must go-through in-between waypoints
-              std::vector<UserStructs::MissionSimPt> wpoints;
-              for(int i= idx_start;i<= idx_end;++i)
-              {
-                 wpoints.push_back(FlagWayPoints[i].pt);
-              }
-              path_gen.SetBetweenWps(wpoints);
 
               //to generate feasible paths
               if (path_gen.AddPaths()> 0 )

@@ -29,13 +29,14 @@ class PathGenerator{
    inline void SetTimeLimit(const double _t_lim){this->t_limit= _t_lim;}
    inline void SetInRos(bool _if_in){this->if_in_ros= _if_in;}
    inline void SetPlot(bool _if_plot){this->if_for_plot= _if_plot;}
+   inline void SetSection(int _section){this->which_section = _section;}
    void SetObs(const std::vector<UserStructs::obstacle3D>& _obs3ds);
    //start state and goal wp
    void SetInitState(UserStructs::PlaneStateSim _st);
    void SetGoalWp(UserStructs::MissionSimPt& _pt);
    void SetInterState(UserStructs::PlaneStateSim& _st);
    void SetSampleStart(double _x_start,double _y_start,double _z_start);
-   void SetSampleEend(double _x_end,double _y_end,double _z_end);
+   void SetSampleEnd(double _x_end,double _y_end,double _z_end);
    void SetBetweenWps(const std::vector<UserStructs::MissionSimPt> _wpoints);
    void SetSampleMethod(int _method);
    void SetNinter(const int _N);
@@ -113,6 +114,8 @@ class PathGenerator{
    double zs_end;
    //yaw_root
    double yaw_root;
+   //which section and inter waypoint should be inserted
+   int which_section;
    //flags to indicate sth was set or not
    bool if_start_set;
    bool if_goal_set;

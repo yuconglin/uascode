@@ -120,6 +120,54 @@ namespace UserTypes{
        sigma_ga= _sig_ga;
    }
 
+   void SamplerPole::SetParams3(double x_start, double y_start, double z_start, double x_end, double y_end, double z_end, double _sig_ga)
+   {
+       //check start and goal position
+       UASLOG(s_logger,LL_DEBUG,"sample start: "
+              <<x_start<<" "
+              <<y_start<<" "
+              <<z_start);
+
+       UASLOG(s_logger,LL_DEBUG,"sample end: "
+              <<x_end<<" "
+              <<y_end<<" "
+              <<z_end);
+
+       double dis_them= sqrt(pow(x_start-x_end,2)+pow(y_start-y_end,2)+pow(z_start-z_end,2));
+       UASLOG(s_logger,LL_DEBUG,"distance between them:"<< dis_them);
+       //
+       double Dx= x_end-x_start;
+       double Dy= y_end-y_start;
+       double Dz= z_end-z_start;
+       double theta0= atan2(Dy,Dx);
+
+       double r0,gamma0 =0.;
+
+       if(sample_method ==0)
+       { //here r0 is different
+         r0= sqrt(Dx*Dx+Dy*Dy+Dz*Dz);
+       }
+       else if(sample_method ==1)
+       {
+         r0= sqrt(Dx*Dx+Dy*Dy);
+       }
+       else {;}
+
+       x0 = x_start;
+       y0 = y_start;
+       z0 = z_start;
+
+       x1 = x_end;
+       y1 = y_end;
+       z1 = z_end;
+
+       this->r0 = r0;
+       sigma_r= 0.5*r0;
+       this->theta0 = theta0;
+       ga0 = gamma0;
+       sigma_ga= _sig_ga;
+   }
+
    void SamplerPole::GetSample(double& x_a,double& y_a,double& z_a,
 			UserStructs::PlaneStateSim& st,
 			UserStructs::MissionSimPt& goal_wp)
@@ -220,13 +268,10 @@ namespace UserTypes{
            double x_r= x_start;
            double y_r= y_start;
            double z_r= z_start;
-           double x_g= goal_wp.x;
-           double y_g= goal_wp.y;
-           double z_g= goal_wp.alt;
 
-           double n_x= -1.*(x_g-x_r)*(z_g-z_r);
-           double n_y= -1.*(y_g-y_r)*(z_g-z_r);
-           double n_z= pow(x_g-x_r,2)+pow(y_g-y_r,2);
+           double n_x= -1.*(x1-x_r)*(z1-z_r);
+           double n_y= -1.*(y1-y_r)*(z1-z_r);
+           double n_z= pow(x1-x_r,2)+pow(y1-y_r,2);
            assert(n_z > 0 );
 
            z_a= z0+ 1./n_z*( n_x*d_x+n_y*d_y );

@@ -80,7 +80,7 @@ namespace UasCode{
   }
 
   //set sampling end
-  void PathGenerator::SetSampleEend(double _x_end, double _y_end, double _z_end)
+  void PathGenerator::SetSampleEnd(double _x_end, double _y_end, double _z_end)
   {
       this->xs_end= _x_end;
       this->ys_end= _y_end;
@@ -161,7 +161,7 @@ namespace UasCode{
 
     sampler_pt->SetSampleMethod(0);
     //sampler_pt->SetParams(st_start,goal_wp,this->max_pitch*0.1);
-    sampler_pt->SetParams2(xs_start,ys_start,zs_start,goal_wp,this->max_pitch*0.1);
+    sampler_pt->SetParams3(xs_start,ys_start,zs_start,xs_end,ys_end,zs_end,this->max_pitch*0.1);
     if_sampler_para_set= true;
   }
 
@@ -172,23 +172,12 @@ namespace UasCode{
     double x_a,y_a,z_a,the_a;
     double rho= max_speed/max_yaw_rate;
     //UASLOG(s_logger,LL_DEBUG,"rho: "<< rho);
-    double dis_total= sqrt(pow(xs_start-goal_wp.x,2)+pow(ys_start-goal_wp.y,2));
+    double dis_total= sqrt(pow(xs_start-xs_end,2)+pow(ys_start-ys_end,2));
 
     while(1)
     {
       sampler_pt->GetSample2(x_a,y_a,z_a,xs_start,ys_start,zs_start,goal_wp);
-      //UASLOG(s_logger,LL_DEBUG,"sample check "<<x_a<<" "<<y_a<<" "<<z_a);
-      //check
-      //if in radius range
-      /*
-      bool if_radius= Utils::NotInRadius(xs_start,ys_start,yaw_root,x_a,y_a,rho);
-      if(!if_radius) {
-        double dis_s= std::sqrt(pow(xs_start-x_a,2)+pow(ys_start-y_a,2));
-        std::ostringstream oss;
-        oss << "in radius: " << "dis_s: "<< dis_s;
-        UASLOG(s_logger,LL_DEBUG,oss.str() );
-        continue;
-      }*/
+
       //if pitch ok
       DubinsPath path;
       the_a= atan2(y_a-ys_start,x_a-xs_start);
@@ -235,7 +224,7 @@ namespace UasCode{
   {
     return (wpl1.length < wpl2.length);
   }
-   
+
   //add more possible paths
   //return the number of possible paths
   int PathGenerator::AddPaths()
@@ -258,21 +247,17 @@ namespace UasCode{
     //clear previous path
     wp_lengths.clear();
 
-    UserStructs::PlaneStateSim st_ps= st_start, st_second;
-    for(int i=0;i!= WpInBetweens.size();++i)
-    {
-       arma::vec::fixed<2> pt_temp;
-       pt_temp << st_ps.lat << st_ps.lon;
-       UASLOG(s_logger,LL_DEBUG,"wp in between:"<< WpInBetweens[i].lat << " "<< WpInBetweens[i].lon);
-       navigator.PropagateWp(st_ps,st_second,pt_temp,WpInBetweens[i]);
-       st_ps= st_second;
-    }
 
-    double x_ps, y_ps;
-    Utils::ToUTM(st_ps.lon,st_ps.lat,x_ps,y_ps);
-    UASLOG(s_logger,LL_DEBUG,"st_ps: "<< st_ps.lat<<" "
-           << st_ps.lon<< " "<< x_ps<<" "<< y_ps <<" "
-           << "hd:"<< st_ps.yaw*180./M_PI);
+    UserStructs::PlaneStateSim st_ps= st_start, st_second;
+
+    //first get to the sampling start point
+    if(!WpInBetweens.empty() && which_section == 2){
+        arma::vec::fixed<2> pt_temp;
+        pt_temp << st_ps.lat << st_ps.lon;
+        //UASLOG(s_logger,LL_DEBUG,"wp in between:"<< WpInBetweens[i].lat << " "<< WpInBetweens[i].lon);
+        navigator.PropagateWp(st_ps,st_second,pt_temp,WpInBetweens[0]);
+        st_ps = st_second;
+    }
 
     //the loop
     double length= 0;
@@ -295,10 +280,7 @@ namespace UasCode{
       
       ++sample_raw;
       UASLOG(s_logger,LL_DEBUG,"sample_raw:"<< sample_raw);
-    //check:
-    //first check from start to each waypoints.
 
-    //then check from start to sample_wp;
       length = 0; 
       int result1= navigator.PropWpCheck2(st_ps,
                                           st_end,
@@ -318,32 +300,61 @@ namespace UasCode{
           navigator.CopyStatePart(temp_part_rec);
 
           temp_part_rec.push_back(UserStructs::StateNode(st_end,length));
-          //check some states in temp_rec, their reachability to the
-          //UASLOG(s_logger,LL_DEBUG,"temp_part_rec size: "<< temp_part_rec.size() );
-          //goal wp
+
           for(int i=0;i!=temp_part_rec.size();++i)
           {
               UserStructs::PlaneStateSim st_init= temp_part_rec[i].state;
-              pt_A<< st_init.lat << st_init.lon;
+              pt_A << st_init.lat << st_init.lon;
               double length1= temp_part_rec[i].length;
 
               length= 0;
-              int result2= navigator.PropWpCheck2(st_init,
-                                                  st_end,
-                                                  pt_A,
-                                                  goal_wp,
-                                                  obs3ds,
-                                                  spacelimit,
-                                                  length,
-                                                  1);
-              if(result2!=-1){
-                  float r_wp= std::max(100., max_speed*2*dt);
-                  UserStructs::MissionSimPt new_wp
-                          = UserStructs::MissionSimPt(0,0,st_init.z,st_init.yaw,r_wp,st_init.x,st_init.y,200,100,50);
-                  new_wp.CheckConvert();
-                  wp_lengths.push_back(UserStructs::WpLength(new_wp,length+length1,result2));
-              }//if result2!=-1 ends
+              if(!WpInBetweens.empty() && which_section == 1)
+              {
+                  int result2= navigator.PropWpCheck2(st_init,
+                                                      st_end,
+                                                      pt_A,
+                                                      WpInBetweens[0],
+                                                      obs3ds,
+                                                      spacelimit,
+                                                      length,
+                                                      1);
+                  double length2 =0;
+                  st_init = st_end;
+                  pt_A << WpInBetweens[0].lat << WpInBetweens[0].lon;
+                  int result3= navigator.PropWpCheck2(st_init,
+                                                      st_end,
+                                                      pt_A,
+                                                      goal_wp,
+                                                      obs3ds,
+                                                      spacelimit,
+                                                      length2,
+                                                      1);
 
+                  if(result2!=-1 && result3!= -1){
+                      float r_wp= std::max(100., max_speed*2*dt);
+                      UserStructs::MissionSimPt new_wp
+                              = UserStructs::MissionSimPt(0,0,st_init.z,st_init.yaw,r_wp,st_init.x,st_init.y,200,100,50);
+                      new_wp.CheckConvert();
+                      wp_lengths.push_back(UserStructs::WpLength(new_wp,length+length1+length2,result2));
+                  }//if result2!=-1 ends
+              }//if(!WpInBetweens.empty() && which_section == 1) ends
+              else{
+                  int result2= navigator.PropWpCheck2(st_init,
+                                                      st_end,
+                                                      pt_A,
+                                                      goal_wp,
+                                                      obs3ds,
+                                                      spacelimit,
+                                                      length,
+                                                      1);
+                  if(result2!=-1){
+                      float r_wp= std::max(100., max_speed*2*dt);
+                      UserStructs::MissionSimPt new_wp
+                              = UserStructs::MissionSimPt(0,0,st_init.z,st_init.yaw,r_wp,st_init.x,st_init.y,200,100,50);
+                      new_wp.CheckConvert();
+                      wp_lengths.push_back(UserStructs::WpLength(new_wp,length+length1,result2));
+                  }//if result2!=-1 ends
+              }
               //timer
               if(!if_limit_reach){
                   sec_count=ros::Time::now().toSec()-t_start.toSec();
@@ -355,7 +366,7 @@ namespace UasCode{
               }//
 
           }//for int i ends
-          //UASLOG(s_logger,LL_DEBUG,"wp_lengths size:"<< wp_lengths.size() );
+
       }//if result1!= -1 ends
       else{
           UASLOG(s_logger,LL_DEBUG,"first section collided");
@@ -442,13 +453,13 @@ namespace UasCode{
 
     UserStructs::PlaneStateSim st_ps= st_current, st_second;
 
-    for(int i=0;i!= WpInBetweens.size();++i)
-    {
-       arma::vec::fixed<2> pt_temp;
-       pt_temp << st_ps.lat << st_ps.lon;
-       UASLOG(s_logger,LL_DEBUG,"wp in between:"<< WpInBetweens[i].lat << " "<< WpInBetweens[i].lon);
-       navigator.PropagateWp(st_ps,st_second,pt_temp,WpInBetweens[i]);
-       st_ps= st_second;
+    //first get to the sampling start point
+    if(!WpInBetweens.empty() && which_section == 2){
+        arma::vec::fixed<2> pt_temp;
+        pt_temp << st_ps.lat << st_ps.lon;
+        //UASLOG(s_logger,LL_DEBUG,"wp in between:"<< WpInBetweens[i].lat << " "<< WpInBetweens[i].lon);
+        navigator.PropagateWp(st_ps,st_second,pt_temp,WpInBetweens[0]);
+        st_ps = st_second;
     }
 
     while(1)
@@ -493,36 +504,75 @@ namespace UasCode{
           total_rec= temp_rec;
       }
 
-      SetInterState(st_end);
+      //SetInterState(st_end);
       //check from the intermediate waypoint to the goal waypoint
       pt_A<< wp.lat << wp.lon;
+      if(!WpInBetweens.empty() && which_section == 1)
+      {
+        result1= navigator.PropWpCheck2(st_end,
+                                        st_end,
+                                        pt_A,
+                                        WpInBetweens[0],
+                                        obs3ds,
+                                        spacelimit,
+                                        length,
+                                        1);
 
-      result1= navigator.PropWpCheck2(st_end,
-                                      st_end,
-                                      pt_A,
-                                      goal_wp,
-                                      obs3ds,
-                                      spacelimit,
-                                      length,
-                                      1);
-
-      if(result1==-1){
-          UASLOG(s_logger,LL_DEBUG,"second half failed");
-          ++count;
-          continue;
+        pt_A << WpInBetweens[0].lat << WpInBetweens[0].lon;
+        int result2= navigator.PropWpCheck2(st_end,
+                                            st_end,
+                                            pt_A,
+                                            goal_wp,
+                                            obs3ds,
+                                            spacelimit,
+                                            length,
+                                            1);
+        if(result1==-1 || result2==-1){
+            UASLOG(s_logger,LL_DEBUG,"second half failed");
+            ++count;
+            continue;
+        }
+        else{
+            navigator.CopyStatesRec(temp_rec);
+            total_rec.insert(total_rec.end(),temp_rec.begin(),temp_rec.end());
+            //final intermediate waypoint
+            inter_wp= wp;
+            UASLOG(s_logger,LL_DEBUG,"the_s: "<< atan2(inter_wp.y-ys_start,inter_wp.x-xs_start)*180./M_PI );
+            UASLOG(s_logger,LL_DEBUG,"wp " << count<< "was selected");
+            UASLOG(s_logger,LL_DEBUG,"xs_start:"<< xs_start<<" "<< "ys_start:"<< ys_start);
+            UASLOG(s_logger,LL_DEBUG,"x_goal:"<< goal_wp.x<<" "<<"y_goal:"<< goal_wp.y);
+            break;
+        }
       }
       else{
-	//for the final log
-          navigator.CopyStatesRec(temp_rec);
-          total_rec.insert(total_rec.end(),temp_rec.begin(),temp_rec.end());
-          //final intermediate waypoint
-          inter_wp= wp;
-          UASLOG(s_logger,LL_DEBUG,"the_s: "<< atan2(inter_wp.y-ys_start,inter_wp.x-xs_start)*180./M_PI );
-          UASLOG(s_logger,LL_DEBUG,"wp " << count<< "was selected");
-          UASLOG(s_logger,LL_DEBUG,"xs_start:"<< xs_start<<" "<< "ys_start:"<< ys_start);
-          UASLOG(s_logger,LL_DEBUG,"x_goal:"<< goal_wp.x<<" "<<"y_goal:"<< goal_wp.y);
-          break;
+          result1= navigator.PropWpCheck2(st_end,
+                                          st_end,
+                                          pt_A,
+                                          goal_wp,
+                                          obs3ds,
+                                          spacelimit,
+                                          length,
+                                          1);
+
+          if(result1==-1){
+              UASLOG(s_logger,LL_DEBUG,"second half failed");
+              ++count;
+              continue;
+          }
+          else{
+        //for the final log
+              navigator.CopyStatesRec(temp_rec);
+              total_rec.insert(total_rec.end(),temp_rec.begin(),temp_rec.end());
+              //final intermediate waypoint
+              inter_wp= wp;
+              UASLOG(s_logger,LL_DEBUG,"the_s: "<< atan2(inter_wp.y-ys_start,inter_wp.x-xs_start)*180./M_PI );
+              UASLOG(s_logger,LL_DEBUG,"wp " << count<< "was selected");
+              UASLOG(s_logger,LL_DEBUG,"xs_start:"<< xs_start<<" "<< "ys_start:"<< ys_start);
+              UASLOG(s_logger,LL_DEBUG,"x_goal:"<< goal_wp.x<<" "<<"y_goal:"<< goal_wp.y);
+              break;
+          }
       }
+
     }//while ends
 
     if(if_time_up)
