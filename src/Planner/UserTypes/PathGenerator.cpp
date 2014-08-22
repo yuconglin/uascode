@@ -263,8 +263,8 @@ namespace UasCode{
     double x_ps, y_ps;
     Utils::ToUTM(st_ps.lon,st_ps.lat,x_ps,y_ps);
     UASLOG(s_logger,LL_DEBUG,"st_ps: "<< st_ps.lat<<" "
-           << st_ps.lon<< " "
-           << x_ps<<" "<< y_ps);
+           << st_ps.lon<< " "<< x_ps<<" "<< y_ps <<" "
+           << "hd:"<< st_ps.yaw*180./M_PI);
 
     //the loop
     double length= 0;
@@ -474,11 +474,6 @@ namespace UasCode{
       }
 
       SetInterState(st_end);
-      /*
-      UASLOG(s_logger,LL_DEBUG,"inter state: "
-             <<"st_end.x: "<< st_end.x<<" "
-             <<"st_end.y: "<< st_end.y<<" "
-             <<"st_end.z: "<< st_end.z); */
       //check from the intermediate waypoint to the goal waypoint
       pt_A<< wp.lat << wp.lon;
 

@@ -323,7 +323,6 @@ namespace UasCode{
           GetCurrentSt();
           GetObssDis();
 
-          UserStructs::PredictColliReturn colli_return;
           //int if_colli= PredictColliNode(st_current,seq_current,30,thres_ratio);
           int if_colli= PredictColliNode2(st_current,seq_current,30,thres_ratio,colli_return);
 
@@ -427,7 +426,7 @@ namespace UasCode{
 
               //get must go-through in-between waypoints
               std::vector<UserStructs::MissionSimPt> wpoints;
-              for(int i= idx_start;i< idx_end;++i)
+              for(int i= idx_start;i<= idx_end;++i)
               {
                  wpoints.push_back(FlagWayPoints[i].pt);
               }
