@@ -330,9 +330,7 @@ namespace UasCode{
 
           if(if_colli==1)
               UASLOG(s_logger,LL_DEBUG,"predict: "<< "seq:"<< colli_return.seq_colli<< " "
-                     << "time:"<< colli_return.time_colli<<" "
-                     << "2d dis:"<< colli_return.dis_colli_2d << " "
-                     << "z dis:"<< colli_return.dis_colli_hgt);
+                     << "time:"<< colli_return.time_colli);
 
           IfColliMsg.if_collision = if_colli;
           pub_if_colli.publish(IfColliMsg);
@@ -365,6 +363,32 @@ namespace UasCode{
               path_gen.SetInitState(st_current.SmallChange(t_limit));
               //get the start and goal for the sample
               int idx_end,idx_start=seq_current;//end and start of must go-through waypoint between current position and the goal
+
+              //get the previous fixed wp
+              if(colli_return.seq_colli > 1){
+
+                  double dis_pre_wp;
+                  for(int i= colli_return.seq_colli-1;i!= 0;--i)
+                  {
+                      if(!FlagWayPoints[i].flag){
+                          dis_pre_wp= std::sqrt(pow(colli_return.x_colli-FlagWayPoints[i].pt.x,2)+pow(colli_return.y_colli-FlagWayPoints[i].pt.y,2) );
+                          break;
+                      }
+                  }
+
+                  //see where to insert a waypoint for avoiding
+                  if(dis_pre_wp < 300)
+                      seq_inter= colli_return.seq_colli-1;
+                  else
+                      seq_inter= colli_return.seq_colli;
+
+                  //set sample start and sample end
+
+                  //set goal
+
+                  //set go-through waypoint
+              }
+              /*
               this->seq_inter= colli_return.seq_colli;
 
               for(int i= colli_return.seq_colli;i!= FlagWayPoints.size();++i)
@@ -379,20 +403,8 @@ namespace UasCode{
               if(colli_return.seq_colli == seq_current)
               {
                   path_gen.SetSampleStart(st_current.x,st_current.y,st_current.z);
+                  path_gen.SetSampleEend(FlagW);
               }
-              /*
-              if(colli_return.seq_colli > seq_current)
-              {
-                  for(int i= seq_current;i!= FlagWayPoints.size();++i)
-                  {
-                      if(!FlagWayPoints[i].flag){
-                          path_gen.SetSampleStart(FlagWayPoints[i].pt.x,
-                                                  FlagWayPoints[i].pt.y,
-                                                  FlagWayPoints[i].pt.alt);
-                          break;
-                      }
-                  }
-              } */
 
               if(colli_return.seq_colli == seq_current+1)
               {
@@ -420,7 +432,7 @@ namespace UasCode{
                                               FlagWayPoints[colli_return.seq_colli-1].pt.alt);
                   }
               }
-
+              */
               path_gen.SetSampleParas();
               path_gen.SetObs(obss);
 

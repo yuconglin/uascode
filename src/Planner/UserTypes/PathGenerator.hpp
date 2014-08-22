@@ -35,6 +35,7 @@ class PathGenerator{
    void SetGoalWp(UserStructs::MissionSimPt& _pt);
    void SetInterState(UserStructs::PlaneStateSim& _st);
    void SetSampleStart(double _x_start,double _y_start,double _z_start);
+   void SetSampleEend(double _x_end,double _y_end,double _z_end);
    void SetBetweenWps(const std::vector<UserStructs::MissionSimPt> _wpoints);
    void SetSampleMethod(int _method);
    void SetNinter(const int _N);
@@ -58,6 +59,7 @@ class PathGenerator{
    //path check with updated uav and obstacle states
    bool PathCheckSingle(UserStructs::PlaneStateSim _st);
    bool PathCheckRepeat(UserStructs::PlaneStateSim _st);
+   bool PathCheckRepeat2(UserStructs::PlaneStateSim _st,int _seq);
    void PrintPath(const char* filename);
    //return pointer to the navigator
    NavigatorSim* NavigatorPt(){return &(this->navigator);}
@@ -105,6 +107,10 @@ class PathGenerator{
    double xs_start;
    double ys_start;
    double zs_start;
+   //sample end
+   double xs_end;
+   double ys_end;
+   double zs_end;
    //yaw_root
    double yaw_root;
    //flags to indicate sth was set or not

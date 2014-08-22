@@ -533,8 +533,11 @@ bool NavigatorSim::PredictColli2(UserStructs::PlaneStateSim &st_current,
             //UASLOG(s_logger,LL_DEBUG,"predict colli time: "<< st_next.t-st_start.t);
             colli_return.seq_colli= i;
             colli_return.time_colli = st_next.t-st_current.t;
-            colli_return.dis_colli_2d = std::sqrt(pow(st_next.x-st_current.x,2)+pow(st_next.y-st_current.y,2));
-            colli_return.dis_colli_hgt = fabs(st_next.z-st_current.z);
+            //colli_return.dis_colli_2d = std::sqrt(pow(st_next.x-st_current.x,2)+pow(st_next.y-st_current.y,2));
+            //colli_return.dis_colli_hgt = fabs(st_next.z-st_current.z);
+            colli_return.x_colli = st_next.x;
+            colli_return.y_colli = st_next.y;
+            colli_return.z_colli = st_next.z;
             return true;
         }
 

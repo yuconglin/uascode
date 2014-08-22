@@ -103,6 +103,8 @@ class PlanNode2{
    double home_alt;
    //threshold ratio for obstacle avoidance
    double thres_ratio;
+   //collision prediction return result
+   UserStructs::PredictColliReturn colli_return;
 
    //log for trajectory
    std::ofstream traj_log;

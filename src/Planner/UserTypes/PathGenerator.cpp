@@ -79,6 +79,14 @@ namespace UasCode{
       this->zs_start= _z_start;
   }
 
+  //set sampling end
+  void PathGenerator::SetSampleEend(double _x_end, double _y_end, double _z_end)
+  {
+      this->xs_end= _x_end;
+      this->ys_end= _y_end;
+      this->zs_end= _z_end;
+  }
+
   //set the intermediate state
   void PathGenerator::SetInterState(UserStructs::PlaneStateSim& _st)
   {
@@ -286,6 +294,7 @@ namespace UasCode{
       }//if_for_plot ends
       
       ++sample_raw;
+      UASLOG(s_logger,LL_DEBUG,"sample_raw:"<< sample_raw);
     //check:
     //first check from start to each waypoints.
 
@@ -349,7 +358,7 @@ namespace UasCode{
           //UASLOG(s_logger,LL_DEBUG,"wp_lengths size:"<< wp_lengths.size() );
       }//if result1!= -1 ends
       else{
-          //UASLOG(s_logger,LL_DEBUG,"first section collided");
+          UASLOG(s_logger,LL_DEBUG,"first section collided");
       }
     
       //timer
@@ -431,6 +440,17 @@ namespace UasCode{
     double length= 0;
     bool if_time_up = false;
 
+    UserStructs::PlaneStateSim st_ps= st_current, st_second;
+
+    for(int i=0;i!= WpInBetweens.size();++i)
+    {
+       arma::vec::fixed<2> pt_temp;
+       pt_temp << st_ps.lat << st_ps.lon;
+       UASLOG(s_logger,LL_DEBUG,"wp in between:"<< WpInBetweens[i].lat << " "<< WpInBetweens[i].lon);
+       navigator.PropagateWp(st_ps,st_second,pt_temp,WpInBetweens[i]);
+       st_ps= st_second;
+    }
+
     while(1)
     {
       //TIME LIMIT FOR CHECK REPEAT
@@ -452,9 +472,9 @@ namespace UasCode{
       UASLOG(s_logger,LL_DEBUG,"wp:"<< count <<" "<< wp.x <<" "<< wp.y);
       //check from current to intermediate waypoint
       arma::vec::fixed<2> pt_A;
-      pt_A << st_current.lat << st_current.lon;
+      pt_A << st_ps.lat << st_ps.lon;
 
-      int result1= navigator.PropWpCheck2(st_current,
+      int result1= navigator.PropWpCheck2(st_ps,
                                           st_end,
                                           pt_A,
                                           wp,
