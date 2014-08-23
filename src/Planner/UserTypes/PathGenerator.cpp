@@ -247,7 +247,6 @@ namespace UasCode{
     //clear previous path
     wp_lengths.clear();
 
-
     UserStructs::PlaneStateSim st_ps= st_start, st_second;
 
     //first get to the sampling start point
@@ -447,11 +446,14 @@ namespace UasCode{
     std::sort(wp_lengths.begin(),wp_lengths.end(),WpCompFunc);
     int count= 0;
     //overhead
-    UserStructs::PlaneStateSim st_end;
+    UserStructs::PlaneStateSim st_init,st_end;
     double length= 0;
     bool if_time_up = false;
 
     UserStructs::PlaneStateSim st_ps= st_current, st_second;
+
+    if(!WpInBetweens.empty() )
+        UASLOG(s_logger,LL_DEBUG,"wp in between:"<< WpInBetweens[0].lat << " "<< WpInBetweens[0].lon);
 
     //first get to the sampling start point
     if(!WpInBetweens.empty() && which_section == 2){
@@ -507,9 +509,10 @@ namespace UasCode{
       //SetInterState(st_end);
       //check from the intermediate waypoint to the goal waypoint
       pt_A<< wp.lat << wp.lon;
+      st_init= st_end;
       if(!WpInBetweens.empty() && which_section == 1)
       {
-        result1= navigator.PropWpCheck2(st_end,
+        result1= navigator.PropWpCheck2(st_init,
                                         st_end,
                                         pt_A,
                                         WpInBetweens[0],
@@ -518,8 +521,10 @@ namespace UasCode{
                                         length,
                                         1);
 
+        st_init= st_end;
+        UASLOG(s_logger,LL_DEBUG,"st_init:"<< st_init.x<<" "<<st_init.y);
         pt_A << WpInBetweens[0].lat << WpInBetweens[0].lon;
-        int result2= navigator.PropWpCheck2(st_end,
+        int result2= navigator.PropWpCheck2(st_init,
                                             st_end,
                                             pt_A,
                                             goal_wp,
@@ -529,6 +534,10 @@ namespace UasCode{
                                             1);
         if(result1==-1 || result2==-1){
             UASLOG(s_logger,LL_DEBUG,"second half failed");
+            if(result1==-1)
+                UASLOG(s_logger,LL_DEBUG,"before between wp failed");
+            if(result2==-1)
+                UASLOG(s_logger,LL_DEBUG,"after between wp failed");
             ++count;
             continue;
         }
@@ -545,7 +554,7 @@ namespace UasCode{
         }
       }
       else{
-          result1= navigator.PropWpCheck2(st_end,
+          result1= navigator.PropWpCheck2(st_init,
                                           st_end,
                                           pt_A,
                                           goal_wp,

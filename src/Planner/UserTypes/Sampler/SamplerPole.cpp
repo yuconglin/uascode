@@ -145,7 +145,8 @@ namespace UserTypes{
 
        if(sample_method ==0)
        { //here r0 is different
-         r0= sqrt(Dx*Dx+Dy*Dy+Dz*Dz);
+         //r0= sqrt(Dx*Dx+Dy*Dy+Dz*Dz);
+         r0= sqrt(Dx*Dx+Dy*Dy);
        }
        else if(sample_method ==1)
        {

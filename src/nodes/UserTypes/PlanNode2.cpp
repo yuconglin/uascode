@@ -398,8 +398,9 @@ namespace UasCode{
                   else
                       seq_inter= colli_return.seq_colli;
 
+                  UASLOG(s_logger,LL_DEBUG,"seq_inter:" << seq_inter);
                   if(seq_inter== colli_return.seq_colli-1)
-                  {
+                  {                 
                       path_gen.SetSampleStart(st_current.x,st_current.y,st_current.z);
                       //get must go-through in-between waypoints
                       std::vector<UserStructs::MissionSimPt> wpoints;
