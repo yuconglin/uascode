@@ -89,6 +89,7 @@ class PlanNode2{
    std::vector<UserStructs::obstacle3D> obss; 
    //geofence/spacelimit
    UserStructs::SpaceLimit spLimit;
+   //collision prediction result
 
    //waypoint vector storage
    std::vector<UserStructs::MissionSimFlagPt> FlagWayPoints;
@@ -103,6 +104,8 @@ class PlanNode2{
    double home_alt;
    //threshold ratio for obstacle avoidance
    double thres_ratio;
+   //collision prediction return result
+   UserStructs::PredictColliReturn colli_return;
 
    //log for trajectory
    std::ofstream traj_log;

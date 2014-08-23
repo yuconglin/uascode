@@ -211,6 +211,7 @@ namespace UasCode{
           oss << i<<":"<< FlagWayPoints[i].pt.lat <<" "
               << FlagWayPoints[i].pt.lon<<" "
               << FlagWayPoints[i].pt.alt <<" "
+              << std::setprecision(7)<< std::fixed
               << FlagWayPoints[i].pt.x<< " "
               << FlagWayPoints[i].pt.y<< '\n';
 
@@ -331,8 +332,10 @@ namespace UasCode{
           if(if_colli==1)
               UASLOG(s_logger,LL_DEBUG,"predict: "<< "seq:"<< colli_return.seq_colli<< " "
                      << "time:"<< colli_return.time_colli<<" "
-                     << "2d dis:"<< colli_return.dis_colli_2d << " "
-                     << "z dis:"<< colli_return.dis_colli_hgt);
+                     << std::setprecision(7)<< std::fixed
+                     << "x_colli:"<< colli_return.x_colli << " "
+                     << "y_colli:"<< colli_return.y_colli << " "
+                     << "z_colli:"<< colli_return.z_colli);
 
           IfColliMsg.if_collision = if_colli;
           pub_if_colli.publish(IfColliMsg);
@@ -380,19 +383,6 @@ namespace UasCode{
               {
                   path_gen.SetSampleStart(st_current.x,st_current.y,st_current.z);
               }
-              /*
-              if(colli_return.seq_colli > seq_current)
-              {
-                  for(int i= seq_current;i!= FlagWayPoints.size();++i)
-                  {
-                      if(!FlagWayPoints[i].flag){
-                          path_gen.SetSampleStart(FlagWayPoints[i].pt.x,
-                                                  FlagWayPoints[i].pt.y,
-                                                  FlagWayPoints[i].pt.alt);
-                          break;
-                      }
-                  }
-              } */
 
               if(colli_return.seq_colli == seq_current+1)
               {

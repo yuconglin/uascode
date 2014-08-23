@@ -431,6 +431,17 @@ namespace UasCode{
     double length= 0;
     bool if_time_up = false;
 
+    UserStructs::PlaneStateSim st_ps= st_current, st_second;
+
+    for(int i=0;i!= WpInBetweens.size();++i)
+    {
+        arma::vec::fixed<2> pt_temp;
+        pt_temp << st_ps.lat << st_ps.lon;
+        UASLOG(s_logger,LL_DEBUG,"wp in between:"<< WpInBetweens[i].lat << " "<< WpInBetweens[i].lon);
+        navigator.PropagateWp(st_ps,st_second,pt_temp,WpInBetweens[i]);
+        st_ps= st_second;
+    }
+
     while(1)
     {
       //TIME LIMIT FOR CHECK REPEAT
@@ -452,9 +463,9 @@ namespace UasCode{
       UASLOG(s_logger,LL_DEBUG,"wp:"<< count <<" "<< wp.x <<" "<< wp.y);
       //check from current to intermediate waypoint
       arma::vec::fixed<2> pt_A;
-      pt_A << st_current.lat << st_current.lon;
+      pt_A << st_ps.lat << st_ps.lon;
 
-      int result1= navigator.PropWpCheck2(st_current,
+      int result1= navigator.PropWpCheck2(st_ps,
                                           st_end,
                                           pt_A,
                                           wp,

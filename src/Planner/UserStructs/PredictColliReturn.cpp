@@ -2,7 +2,7 @@
 
 namespace UserStructs{
 
-PredictColliReturn::PredictColliReturn():colli(false),seq_colli(0),time_colli(0.),dis_colli_2d(0.),dis_colli_hgt(0.)
+PredictColliReturn::PredictColliReturn():colli(false),seq_colli(0),time_colli(0.),x_colli(0.),y_colli(0.),z_colli(0.)
 {
 
 }
