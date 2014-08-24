@@ -10,6 +10,9 @@ lib
 *.swp
 *.txt~
 src/uascode/msg/*
-*.txt
 src/uascode/*
 log/*
+records/*log.txt
+fs_action.txt
+fs_state2.txt
+sample.txt

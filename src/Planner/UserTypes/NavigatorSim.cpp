@@ -85,15 +85,17 @@ void NavigatorSim::PropagateStep(UserStructs::PlaneStateSim& st_start,UserStruct
   double dem_thr= tecs.get_throttle_demand();
 
   //log actions
+  /*
   fs_act<< nav_roll*180./M_PI<<" "
         << nav_yaw*180./M_PI<<" "
 	<< dem_pitch*180./M_PI<<" "
 	<< dem_thr << std::endl;
-
+  */
   //update based on action
 
   st_end= updater.update(st_start,nav_roll,nav_yaw,dem_pitch,dem_thr,dt);
   //log states
+  /*
   fs_state<< std::setprecision(5)<< std::fixed<< st_end.t<<" "
           << st_end.x<<" "
 	  << std::setprecision(7)<< st_end.y<<" "
@@ -107,6 +109,7 @@ void NavigatorSim::PropagateStep(UserStructs::PlaneStateSim& st_start,UserStruct
 	  << sqrt(pow(st_end.x-pt_target.x,2)
 	         +pow(st_end.y-pt_target.y,2))<<" "
 	  << std::endl;
+  */
 }
 
 int NavigatorSim::PropagateWp(UserStructs::PlaneStateSim& st_start,
