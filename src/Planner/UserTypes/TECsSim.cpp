@@ -2,6 +2,7 @@
 #include "common/Utils/MathUtils.h"
 #include "common/UserStructs/constants.h"
 #include "common/Utils/GetTimeNow.h"
+#include "common/Utils/YcLogger.h"
 //std
 #include <cmath>
 #include <sstream>
@@ -9,6 +10,10 @@
 #include <fstream>
 #include <iostream>
 #include <iomanip>
+
+namespace{
+Utils::LoggerPtr s_logger(Utils::getLogger("uascode.TECsSim.YcLogger"));
+}
 
 namespace UasCode{
   TECsSim::TECsSim():
@@ -426,19 +431,17 @@ _hgt_dem_prev = _hgt_dem;
     _integ7_state = Utils::math::constrain(_integ7_state, (gainInv * (_PITCHminf - 0.0783f)) - temp, (gainInv * (_PITCHmaxf + 0.0783f)) - temp);
 
     // Calculate pitch demand from specific energy balance signals
-    //std::cout<<" temp: "<< temp<<" _integ7_state: "<< _integ7_state <<std::endl;
+    //UASLOG(s_logger,LL_DEBUG," temp: "<< temp<<" _integ7_state: "<< _integ7_state);
     _pitch_dem_unc = (temp + _integ7_state) / gainInv;
-    //std::cout<<"_pitch_dem_nuc: "<< _pitch_dem_unc*180/M_PI << std::endl;
+    //UASLOG(s_logger,LL_DEBUG,"_pitch_dem_nuc: "<< _pitch_dem_unc*180/M_PI);
     // Constrain pitch demand
-    //std::cout<<"_PITCHminf: "<< _PITCHminf<<" _PITCHmaxf: "<< _PITCHmaxf <<std::endl;
+    //UASLOG(s_logger,LL_DEBUG,"_PITCHminf: "<< _PITCHminf<<" _PITCHmaxf: "<< _PITCHmaxf);
     _pitch_dem = Utils::math::constrain(_pitch_dem_unc, _PITCHminf, _PITCHmaxf);
         // Rate limit the pitch demand to comply with specified vertical
     // acceleration limit
     //float ptchRateIncr = _DT * std::min(_vertAccLim / _integ5_state, mpitch_rate);
     //_vertAccLim= 1.0;
     float ptchRateIncr = _DT *_vertAccLim / _integ5_state;
-    //std::cout<<"ptchRateIncr: "<< _vertAccLim/_integ5_state*180./M_PI << std::endl;
-    //std::cout<<"last_pitch_dem: "<< _last_pitch_dem<< std::endl;
 
     if ((_pitch_dem - _last_pitch_dem) > ptchRateIncr) {
 	    _pitch_dem = _last_pitch_dem + ptchRateIncr;

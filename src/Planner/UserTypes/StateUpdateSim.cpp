@@ -2,8 +2,13 @@
 #include "common/UserStructs/constants.h"
 #include "common/Utils/GeoUtils.h"
 #include "common/Utils/MathUtils.h"
+#include "common/Utils/YcLogger.h"
 //standard
 #include <cmath>
+
+namespace{
+Utils::LoggerPtr s_logger(Utils::getLogger("uascode.StateUpdateSim.YcLogger"));
+}
 
 namespace UasCode{
 
@@ -39,11 +44,13 @@ namespace UasCode{
   {
       //first get UTM coordinates
       if(st_pre.x==0||st_pre.y==0)
-	st_pre.GetUTM();
+         st_pre.GetUTM();
 
       double K_pitch= 1.0;
+
       double Dpitch= K_pitch*Utils::_wrap_pi(dem_pitch-st_pre.pitch);
       Dpitch= Utils::math::constrain(Dpitch,-mpitch_rate*dt,mpitch_rate*dt);
+
       double pitch1= st_pre.pitch+ Dpitch;
       pitch1= Utils::math::constrain(pitch1,min_pitch,max_pitch);
 

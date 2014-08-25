@@ -74,7 +74,7 @@ namespace UasCode{
     //set
     path_gen.NavUpdaterParams(_Tmax,mpitch_rate,myaw_rate,_Muav,_max_speed,_min_speed,_max_pitch,_min_pitch);
 
-    path_gen.NavTecsReadParams("/home/yucong/ros_workspace/uascode/bin/parameters_sitl.txt");
+    path_gen.NavTecsReadParams("/home/yucong/ros_workspace/uascode/parameters/parameters_sitl.txt");
     path_gen.NavL1SetRollLim(40./180*M_PI);
     path_gen.NavSetDt(dt);
     path_gen.NavSetSpeedTrim(_speed_trim);

@@ -28,9 +28,7 @@ namespace UasCode{
       void update_1hz(float baro_altitude,const double accel_z);
 
       // Update the control loop calculations
-      //void update_pitch_throttle(float pitch, float baro_altitude, float hgt_dem, float EAS_dem, float indicated_airspeed, float EAS2TAS, bool climbOutDem, float ptchMinCO,
-	//			 float throttle_min, float throttle_max, float throttle_cruise,
-	//			 float pitch_limit_min, float pitch_limit_max);
+
       void update_pitch_throttle(float pitch, float yaw,float baro_altitude, float hgt_dem, float EAS_dem, float indicated_airspeed, float EAS2TAS, bool climbOutDem);
 
       // demanded throttle in percentage

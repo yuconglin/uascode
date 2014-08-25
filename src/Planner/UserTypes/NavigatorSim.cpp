@@ -54,6 +54,7 @@ void NavigatorSim::ClearRec(){ states_rec.clear(); }
 void NavigatorSim::PropagateStep(UserStructs::PlaneStateSim& st_start,UserStructs::PlaneStateSim& st_end,arma::vec::fixed<2> pt_A,UserStructs::MissionSimPt& pt_target)
 {
   st_start.CheckConvert();
+
   double spd= st_start.speed;
   double pitch= st_start.pitch;
   double yaw= st_start.yaw;
@@ -541,6 +542,11 @@ bool NavigatorSim::PredictColli2(UserStructs::PlaneStateSim &st_current,
             colli_return.x_colli= st_next.x;
             colli_return.y_colli= st_next.y;
             colli_return.z_colli= st_next.z;
+            /*
+            UASLOG(s_logger,LL_DEBUG,"st_next collision: "<< st_next.x << " "
+                   << st_next.y << " "
+                   << st_next.z);
+            */
             return true;
         }
 
