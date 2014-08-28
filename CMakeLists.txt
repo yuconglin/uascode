@@ -63,6 +63,7 @@ rosbuild_add_library(common_utils
 	  src/common/Utils/PortOperates.cpp
           src/common/Utils/GeoUtils.cpp
           src/common/Utils/MathUtils.cpp
+          src/common/Utils/FindPath.cpp
           src/common/Utils/YcLogger.cpp
           src/common/UserTypes/MavlinkReceiver.cpp
 	  src/common/UserTypes/MavlinkTCP.cpp

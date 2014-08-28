@@ -1,6 +1,7 @@
 #include "ObsFromFile.hpp"
 #include "ros/ros.h"
 #include "common/Utils/YcLogger.h"
+#include "common/Utils/FindPath.h"
 #include <string>
 #include <iostream>
 
@@ -13,7 +14,7 @@ int main(int argc,char** argv)
 
    Utils::LogConfigurator myconfigurator("log4cxx_ObsFromFile.properties", "ObsFromFile");
 
-   std::string filepath="/home/yucong/ros_workspace/uascode/";
+   std::string filepath = Utils::FindPath() ;
    std::string log_file= filepath + argv[1];
    std::string offsets_file= filepath + argv[2];
    std::string data_file= filepath + argv[3];

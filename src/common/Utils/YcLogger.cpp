@@ -1,4 +1,5 @@
 #include "YcLogger.h"
+#include "common/Utils/FindPath.h"
 
 #include <boost/filesystem.hpp>
 #include <log4cxx/propertyconfigurator.h>
@@ -17,7 +18,8 @@ LogConfigurator::LogConfigurator(const std::string& propfile, const std::string&
 
     if (!fs::exists(p))
     {
-        fs::path p2file("/home/yucong/ros_workspace/uascode/LogConfigure/");
+        std::string code_path= Utils::FindPath();
+        fs::path p2file(code_path + "/LogConfigure/");
         p = fs::system_complete(p2file / p);
         if (!fs::exists(p))
         {
