@@ -16,5 +16,5 @@ gnome-terminal \
 				exec bash\""  \
 	--tab --title "obsFromFile" --command "bash -c \"
 				env sleep 3s;
-				rosrun uascode test_obsfile /records/obss_log.txt /records/offsets200.txt /data/20140516-162158obs.txt
+				rosrun uascode test_obsfile /records/obss_log.txt /records/offsets600.txt /data/20140516-162158obs.txt
 				exec bash\""  \

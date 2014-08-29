@@ -26,6 +26,7 @@ namespace UasCode{
     pub_interwp_flag= nh.advertise<uascode::PosSetPointFlag>("inter_wp_flag",100);
     pub_if_colli= nh.advertise<uascode::IfCollision>("if_colli",100);
     pub_WpNum= nh.advertise<uascode::WpNumber>("wp_num",100);
+    pub_colli_pt= nh.advertise<uascode::ColliPoint>("colli_point",100);
     //subscriber
     sub_obss= nh.subscribe("multi_obstacles",100,&PlanNode2::obssCb,this);
     sub_pos= nh.subscribe("global_position",100,&PlanNode2::posCb,this);
@@ -332,13 +333,24 @@ namespace UasCode{
 
           UASLOG(s_logger,LL_DEBUG,"PredictColliNode: "<< if_colli);
 
-          if(if_colli==1)
+          if(if_colli==1){
               UASLOG(s_logger,LL_DEBUG,"predict: "<< "seq:"<< colli_return.seq_colli<< " "
                      << "time:"<< colli_return.time_colli<<" "
                      << std::setprecision(7)<< std::fixed
                      << "x_colli:"<< colli_return.x_colli << " "
                      << "y_colli:"<< colli_return.y_colli << " "
                      << "z_colli:"<< colli_return.z_colli);
+              if(situ== NORMAL || situ== PATH_GEN){
+                  double c_lat, c_lon;
+                  Utils::FromUTM(colli_return.x_colli,colli_return.y_colli,c_lon,c_lat);
+                  colli_pt.lat = c_lat;
+                  colli_pt.lon = c_lon;
+                  UASLOG(s_logger,LL_DEBUG,"colli_point:"<< colli_pt.lat <<" "<< colli_pt.lon);
+                  colli_pt.alt = colli_return.z_colli;
+                  //pub_colli_pt.publish(colli_pt);
+              }
+          }
+          pub_colli_pt.publish(colli_pt);
 
           IfColliMsg.if_collision = if_colli;
           pub_if_colli.publish(IfColliMsg);

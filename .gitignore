@@ -16,3 +16,4 @@ records/*log.txt
 fs_action.txt
 fs_state2.txt
 sample.txt
+*.txt.user.2.5pre1

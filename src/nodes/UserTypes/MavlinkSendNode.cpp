@@ -8,7 +8,7 @@ namespace {
 
 namespace UasCode{
 
-MavlinkSendNode::MavlinkSendNode():wp_num(0),send_pos_method(0),lat_s(0.),lon_s(0.),alt_s(0.),seq_s(0)
+MavlinkSendNode::MavlinkSendNode():wp_num(0),send_pos_method(0),lat_s(0.),lon_s(0.),alt_s(0.),seq_s(0),lat_c(0.),lon_c(0.),alt_c(0.)
 {
   sub_interwp= nh.subscribe("inter_wp",100,&MavlinkSendNode::InterWpCb,this);
   sub_interwp_flag= nh.subscribe("inter_wp_flag",100,&MavlinkSendNode::InterWpFlagCb,this);
@@ -16,6 +16,7 @@ MavlinkSendNode::MavlinkSendNode():wp_num(0),send_pos_method(0),lat_s(0.),lon_s(
   sub_IfColli= nh.subscribe("if_colli",100,&MavlinkSendNode::IfColliCb,this);
   sub_obss= nh.subscribe("multi_obstacles",100,&MavlinkSendNode::obssCb,this);
   sub_WpNum= nh.subscribe("wp_num",100,&MavlinkSendNode::WpNumCb,this);
+  sub_colli_pt= nh.subscribe("colli_point",100,&MavlinkSendNode::ColliPtCb,this);
 }
 
 MavlinkSendNode::~MavlinkSendNode()
@@ -62,6 +63,8 @@ void MavlinkSendNode::working()
 
      if(wp_num!=0)
        sender.SendWpNum(wp_num);
+
+     sender.SendColliPt(lat_c,lon_c,alt_c);
   }
 
 }
@@ -122,6 +125,14 @@ void MavlinkSendNode::WpNumCb(const uascode::WpNumber::ConstPtr &msg)
 {
     wp_num= msg->wp_num;
     UASLOG(s_logger,LL_DEBUG,"waypoints number to send:"<< wp_num);
+}
+
+void MavlinkSendNode::ColliPtCb(const uascode::ColliPoint::ConstPtr &msg)
+{
+    UASLOG(s_logger,LL_DEBUG,"colli point received");
+    lat_c = msg->lat;
+    lon_c = msg->lon;
+    alt_c = msg->alt;
 }
 
 void MavlinkSendNode::SetDefault()

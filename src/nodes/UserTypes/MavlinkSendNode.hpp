@@ -11,6 +11,7 @@
 #include "uascode/IfCollision.h"
 #include "uascode/MultiObsMsg.h"
 #include "uascode/WpNumber.h"
+#include "uascode/ColliPoint.h"
 
 namespace UasCode {
 
@@ -34,6 +35,7 @@ private:
   ros::Subscriber sub_IfColli;
   ros::Subscriber sub_obss;
   ros::Subscriber sub_WpNum;
+  ros::Subscriber sub_colli_pt;
 
   //callback functions
   void InterWpCb(const uascode::PosSetPoint::ConstPtr& msg);
@@ -42,6 +44,7 @@ private:
   void IfColliCb(const uascode::IfCollision::ConstPtr& msg);
   void obssCb(const uascode::MultiObsMsg::ConstPtr& msg);
   void WpNumCb(const uascode::WpNumber::ConstPtr& msg);
+  void ColliPtCb(const uascode::ColliPoint::ConstPtr &msg);
 
   //contains
   double lat_s, lon_s, alt_s;
@@ -51,6 +54,7 @@ private:
   int if_colli;
   std::vector<UserStructs::obstacle3D> obss;
   int wp_num;
+  double lat_c, lon_c, alt_c;
 
   int send_pos_method;
 
