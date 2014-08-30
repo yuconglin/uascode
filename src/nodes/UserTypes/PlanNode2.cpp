@@ -240,7 +240,7 @@ namespace UasCode{
       if(!obss.empty() )
       {
           std::ostringstream oss;
-          oss<< "obss dis:";
+          //oss<< "obss dis:";
           for(int i=0;i!= obss.size();++i)
           {
               double dis= std::sqrt(pow(st_current.x-obss[i].x1,2)
@@ -329,13 +329,18 @@ namespace UasCode{
 
           UASLOG(s_logger,LL_DEBUG,"PredictColliNode: "<< if_colli);
 
-          if(if_colli==1)
+          if(if_colli==1){
+              double dis2wp= std::sqrt( pow(FlagWayPoints[colli_return.seq_colli-1].pt.x-colli_return.x_colli,2)
+                      + pow(FlagWayPoints[colli_return.seq_colli-1].pt.y-colli_return.y_colli,2)
+                      );
               UASLOG(s_logger,LL_DEBUG,"predict: "<< "seq:"<< colli_return.seq_colli<< " "
                      << "time:"<< colli_return.time_colli<<" "
                      << std::setprecision(7)<< std::fixed
                      << "x_colli:"<< colli_return.x_colli << " "
                      << "y_colli:"<< colli_return.y_colli << " "
-                     << "z_colli:"<< colli_return.z_colli);
+                     << "z_colli:"<< colli_return.z_colli << " "
+                     << "dis2wp:"<< dis2wp );
+          }
 
           IfColliMsg.if_collision = if_colli;
           pub_if_colli.publish(IfColliMsg);
