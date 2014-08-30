@@ -340,6 +340,14 @@ namespace UasCode{
                      << "x_colli:"<< colli_return.x_colli << " "
                      << "y_colli:"<< colli_return.y_colli << " "
                      << "z_colli:"<< colli_return.z_colli);
+              //get dis to imediate previous waypoint
+              double w_x = FlagWayPoints[colli_return.seq_colli-1].pt.x;
+              double w_y = FlagWayPoints[colli_return.seq_colli-1].pt.y;
+              double w_z = FlagWayPoints[colli_return.seq_colli-1].pt.alt;
+              double dis_c2d = std::sqrt(pow(w_x-colli_return.x_colli,2)+pow(w_y-colli_return.y_colli,2));
+              double dis_cz = std::abs(w_z-colli_return.z_colli);
+              UASLOG(s_logger,LL_DEBUG,"colli dis:"<< dis_c2d <<" "<< dis_cz);
+
               if(situ== NORMAL || situ== PATH_GEN){
                   double c_lat, c_lon;
                   Utils::FromUTM(colli_return.x_colli,colli_return.y_colli,c_lon,c_lat);
