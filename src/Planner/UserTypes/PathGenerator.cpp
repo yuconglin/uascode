@@ -157,6 +157,11 @@ namespace UasCode{
     if_sampler_para_set= true;
   }
 
+  double PathGenerator::GetTurnRadius()
+  {
+    return max_speed/max_yaw_rate;
+  }
+
   //sample a wp
   void PathGenerator::SamplePt()
   {//sample, check radius limit, check pitch limit

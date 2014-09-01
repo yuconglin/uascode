@@ -61,6 +61,8 @@ class PathGenerator{
    void PrintPath(const char* filename);
    //return pointer to the navigator
    NavigatorSim* NavigatorPt(){return &(this->navigator);}
+   //get the turn radius
+   double GetTurnRadius();
 
  private:
    //some technical parameter
