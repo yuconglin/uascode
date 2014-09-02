@@ -378,26 +378,31 @@ namespace UasCode{
               //if(dis_c2d < allow_dis && colli_return.seq_colli == seq_current+1)
               if(dis_c2d < allow_dis) //using 0.5 to delay reaction and maitain height differenct
               {
-                 UASLOG(s_logger,LL_DEBUG,"local avoidance");
-                 set_pt.seq = colli_return.seq_colli-1;
-                 set_pt.lat = colli_pt.lat;
-                 set_pt.lon = colli_pt.lon;
-                 //set_pt.alt = colli_pt.alt+ obss[0].hr;
-                 set_pt.alt = obss[0].x3 + obss[0].v_vert*colli_return.time_colli + 1.5*obss[0].hr;
+                 if(!if_inter_gen){
+                     UASLOG(s_logger,LL_DEBUG,"local avoidance");
+                     set_pt.seq = colli_return.seq_colli-1;
+                     set_pt.lat = colli_pt.lat;
+                     set_pt.lon = colli_pt.lon;
+                     //set_pt.alt = colli_pt.alt+ obss[0].hr;
+                     set_pt.alt = obss[0].x3 + obss[0].v_vert*colli_return.time_colli + 1.5*obss[0].hr;
 
-                 if(FlagWayPoints[set_pt.seq].flag){
-                    if_inter_exist= true;
-                    FlagWayPoints.erase(FlagWayPoints.begin()+set_pt.seq);
-                 }
+                     if(FlagWayPoints[set_pt.seq].flag){
+                         if_inter_exist= true;
+                         FlagWayPoints.erase(FlagWayPoints.begin()+set_pt.seq);
+                     }
+                     else
+                         if_inter_exist= false;
 
-                 set_pt.inter_exist= if_inter_exist ? 1:0;
+                     set_pt.inter_exist= if_inter_exist ? 1:0;
 
-                 UserStructs::MissionSimPt local_wp = UserStructs::MissionSimPt(set_pt.lat,set_pt.lon,set_pt.alt,0,100,0,0,200,100,50);
-                 local_wp.GetUTM();
-                 FlagWayPoints.insert(FlagWayPoints.begin()+set_pt.seq,UserStructs::MissionSimFlagPt(local_wp,true) );
-                 if_inter_gen= true;
-                 if(situ== NORMAL || situ== PATH_GEN){
-                     situ= PATH_READY;
+                     UserStructs::MissionSimPt local_wp = UserStructs::MissionSimPt(set_pt.lat,set_pt.lon,set_pt.alt,0,100,0,0,200,100,50);
+                     local_wp.GetUTM();
+                     FlagWayPoints.insert(FlagWayPoints.begin()+set_pt.seq,UserStructs::MissionSimFlagPt(local_wp,true) );
+                     if_inter_gen = true;
+
+                     if(situ== NORMAL || situ== PATH_GEN){
+                         situ= PATH_READY;
+                     }
                  }
               }
               else
@@ -530,9 +535,13 @@ namespace UasCode{
                      if_inter_exist= true;
                      FlagWayPoints.erase(FlagWayPoints.begin()+seq_inter);
                   }
+                  else
+                     if_inter_exist= false;
+
                   //this line is wrong
                   set_pt.seq= seq_inter;
                   set_pt.inter_exist= if_inter_exist ? 1:0;
+
                   FlagWayPoints.insert(FlagWayPoints.begin()+seq_inter,UserStructs::MissionSimFlagPt(inter_wp,true) );
                   situ= PATH_READY;
                   if_inter_gen= true;
@@ -549,11 +558,13 @@ namespace UasCode{
               if(!if_receive){
                   //this will be sent to pixhawk by MavlinkReceiver node
                   UASLOG(s_logger,LL_DEBUG,"path ready for sending");
+                  UASLOG(s_logger,LL_DEBUG,"if_inter_exist? "<< (int)set_pt.inter_exist);
                   pub_interwp_flag.publish(set_pt);
               }
               else{
                   UASLOG(s_logger,LL_DEBUG,"path sent");
                   situ= NORMAL;
+                  if_inter_gen= false;
               }
               break;
           }
