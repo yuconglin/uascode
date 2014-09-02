@@ -4,7 +4,7 @@ gnome-terminal \
 				exec bash\""  \
 	--tab --title "planNode2" --command "bash -c \"
 				env sleep 3s;
-				rosrun uascode test_PlanNode2 /home/yucong/yucong_codes_git/sitl/ardupilot/Tools/autotest/ap1.txt
+				rosrun uascode test_PlanNode2 /home/yucong/yucong_codes_git/sitl/ardupilot/Tools/autotest/ap2.txt
 				exec bash\""  \
 	--tab --title "mavlink_rec" --command "bash -c \"
 				env sleep 3s;
@@ -16,5 +16,5 @@ gnome-terminal \
 				exec bash\""  \
 	--tab --title "obsFromFile" --command "bash -c \"
 				env sleep 3s;
-			        rosrun uascode test_obsfile /records/obss_log.txt /records/offsets1100.txt /data/20140516-162158obs.txt
+			        rosrun uascode test_obsfile /records/obss_log.txt /records/offsets1200.txt /data/20140516-162158obs.txt
 				exec bash\""  \

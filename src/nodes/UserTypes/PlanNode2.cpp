@@ -54,7 +54,7 @@ namespace UasCode{
     //set wp_r
     wp_r =30;
 
-    thres_ratio=1.0;
+    thres_ratio=1.2;
     if_receive= false;
     //I use seq_current== -1 to indicate the moment mission starts
     seq_current= -1;
@@ -423,10 +423,12 @@ namespace UasCode{
           WpNumMsg.wp_num= FlagWayPoints.size();
           pub_WpNum.publish(WpNumMsg);
 
+          /*
           if(!if_inter_gen)
               thres_ratio= 1.5;
           else
               thres_ratio=1.;
+          */
 
           UASLOG(s_logger,LL_DEBUG,"situ="<< situ <<" "
                  << "if_receive="<<" "<< if_receive <<" "
