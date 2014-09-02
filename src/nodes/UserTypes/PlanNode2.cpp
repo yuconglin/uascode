@@ -375,7 +375,8 @@ namespace UasCode{
               double allow_dis = std::sqrt(pow(rho+obs_r,2)-pow(rho,2));
               UASLOG(s_logger,LL_DEBUG,"allow_dis:" << allow_dis);
 
-              if(dis_c2d < allow_dis && colli_return.seq_colli == seq_current+1)
+              //if(dis_c2d < allow_dis && colli_return.seq_colli == seq_current+1)
+              if(dis_c2d < allow_dis) //using 0.5 to delay reaction and maitain height differenct
               {
                  UASLOG(s_logger,LL_DEBUG,"local avoidance");
                  set_pt.seq = colli_return.seq_colli-1;
@@ -395,7 +396,7 @@ namespace UasCode{
                  local_wp.GetUTM();
                  FlagWayPoints.insert(FlagWayPoints.begin()+set_pt.seq,UserStructs::MissionSimFlagPt(local_wp,true) );
                  if_inter_gen= true;
-                 if(situ== NORMAL){
+                 if(situ== NORMAL || situ== PATH_GEN){
                      situ= PATH_READY;
                  }
               }
