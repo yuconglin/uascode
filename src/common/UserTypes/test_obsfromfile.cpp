@@ -16,8 +16,8 @@ int main(int argc,char** argv)
 
    std::string filepath = Utils::FindPath() ;
    std::string log_file= filepath + argv[1];
-   std::string offsets_file= filepath + argv[2];
-   std::string data_file= filepath + argv[3];
+   //std::string offsets_file= filepath + argv[2];
+   std::string data_file= filepath + argv[2];
 
    ObsFromFile obsfrom;
 

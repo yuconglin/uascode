@@ -46,4 +46,4 @@ float get_vec_cross(const arma::vec::fixed<2> &vec1,const arma::vec::fixed<2> &v
    return vec1(0)*vec2(1)-vec2(0)*vec1(1);
 }
 
-};
+}

@@ -113,9 +113,12 @@ void MavlinkSendNode::obssCb(const uascode::MultiObsMsg::ConstPtr& msg)
       msg->MultiObs[i].r,0,
       msg->MultiObs[i].hr,0);
 
-    UASLOG(s_logger,LL_DEBUG,"obstacle: "
+    UASLOG(s_logger,LL_DEBUG,"obstacle callback: "
            << std::setprecision(4) << std::fixed
-           << obs3d.t <<" "<< obs3d.x1);
+           << obs3d.t <<" "
+           << obs3d.x1<<" "
+           << obs3d.x2<<" "
+           << obs3d.x3<<" ");
 
     obss.push_back(obs3d);
   }//for ends
