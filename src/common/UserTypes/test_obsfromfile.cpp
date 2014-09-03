@@ -22,9 +22,11 @@ int main(int argc,char** argv)
    ObsFromFile obsfrom;
 
    obsfrom.SetLogFileName(log_file.c_str());
-   obsfrom.LoadOffsets(offsets_file.c_str());
+   //obsfrom.LoadOffsets(offsets_file.c_str());
+   obsfrom.LoadOffsets2("200","200","200");
    obsfrom.ReadObss(data_file.c_str());
 
    //send in ros
-   obsfrom.SendObss(1);
+   //obsfrom.SendObss(1);
+   obsfrom.SendObss2(false,true,false);
 }
