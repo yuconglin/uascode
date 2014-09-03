@@ -381,6 +381,10 @@ namespace UasCode{
                  if(!if_inter_gen){
                      UASLOG(s_logger,LL_DEBUG,"local avoidance");
                      set_pt.seq = colli_return.seq_colli-1;
+
+                     if(colli_return.seq_colli==1)
+                       set_pt.seq = 1;
+
                      set_pt.lat = colli_pt.lat;
                      set_pt.lon = colli_pt.lon;
                      //set_pt.alt = colli_pt.alt+ obss[0].hr;
