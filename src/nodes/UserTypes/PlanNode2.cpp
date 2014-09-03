@@ -594,6 +594,7 @@ namespace UasCode{
     for(int i=0;i!= msg->MultiObs.size();++i)
     {
       UserStructs::obstacle3D obs3d(
+        msg->MultiObs[i].address,
         msg->MultiObs[i].x1,
 	    msg->MultiObs[i].x2,
 	    msg->MultiObs[i].head_xy,
@@ -605,7 +606,7 @@ namespace UasCode{
 	    msg->MultiObs[i].hr,0);
 
       UASLOG(s_logger,LL_DEBUG,"obstacle: "
-             << std::setprecision(4) << std::fixed
+             << std::setprecision(4) << std::fixed << msg->MultiObs[i].address<< " "
              << obs3d.t <<" "<< obs3d.x1);
 
       /*

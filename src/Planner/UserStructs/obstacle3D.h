@@ -22,6 +22,7 @@ namespace UserStructs
    };
 
    struct obstacle3D{
+
         uint32_t address;
 
         double x1,x2,x3;
@@ -42,8 +43,8 @@ namespace UserStructs
             //x1(_x1),x2(_x2),x3(_x3),head_xy(_head_xy),speed(_speed),v_vert(_v_vert),t(_t),r(0.6408),dr(0.1),hr(0.1524),dhr(0.025){ };
 	    
 	    //full
-	    obstacle3D(double _x1, double _x2, double _head_xy, double _speed, double _x3, double _v_vert, double _t, double _r, double _dr,double _hr,double _dhr):
-            x1(_x1),x2(_x2),x3(_x3),head_xy(_head_xy),speed(_speed),v_vert(_v_vert),t(_t),r(_r),dr(_dr),hr(_hr),dhr(_dhr){ }
+        obstacle3D(uint32_t _address,double _x1, double _x2, double _head_xy, double _speed, double _x3, double _v_vert, double _t, double _r, double _dr,double _hr,double _dhr):
+            address(_address),x1(_x1),x2(_x2),x3(_x3),head_xy(_head_xy),speed(_speed),v_vert(_v_vert),t(_t),r(_r),dr(_dr),hr(_hr),dhr(_dhr){ }
             
 	    obs3D Estimate(double t1) const
 	    {

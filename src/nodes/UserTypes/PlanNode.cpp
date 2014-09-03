@@ -397,6 +397,7 @@ namespace UasCode{
     for(int i=0;i!= msg->MultiObs.size();++i)
     {
       UserStructs::obstacle3D obs3d(
+        msg->MultiObs[i].address,
         msg->MultiObs[i].x1,
 	    msg->MultiObs[i].x2,
 	    msg->MultiObs[i].head_xy,
