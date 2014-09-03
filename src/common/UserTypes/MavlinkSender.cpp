@@ -252,4 +252,21 @@ void MavlinkSender::SendMultiObs3(std::vector<UserStructs::obstacle3D> obss)
     numbytes = sendto(sockfd,buf,len,0,p->ai_addr, p->ai_addrlen);
 }//MultiObssSend3
 
+void MavlinkSender::SendColliPt(double lat_c, double lon_c, double alt_c)
+{
+    UASLOG(s_logger,LL_DEBUG,"colli point:"<< lat_c <<" "<< lon_c<<" "<< alt_c);
+    mavlink_colli_point_t colli_t;
+    colli_t.lat= lat_c;
+    colli_t.lon= lon_c;
+    colli_t.alt= alt_c;
+    //sending
+    mavlink_message_t message;
+    char buf[128];
+    mavlink_msg_colli_point_encode(255,0,&message,&colli_t);
+    unsigned len= mavlink_msg_to_send_buffer((uint8_t*)buf,&message);
+    //write to tcp port
+    int numbytes;
+    numbytes = sendto(sockfd,buf,len,0,p->ai_addr, p->ai_addrlen);
+}
+
 }

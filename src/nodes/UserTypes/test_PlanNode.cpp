@@ -1,5 +1,6 @@
 #include "PlanNode.hpp"
 #include "common/Utils/YcLogger.h"
+#include "common/Utils/FindPath.h"
 #include "ros/ros.h"
 #include <iostream>
 
@@ -15,8 +16,10 @@ int main(int argc, char** argv)
   plan_node.SetHomeAlt(585);
   plan_node.LoadFlightPlan(argv[1]);
 
-  if (argc == 2)
-     plan_node.SetLogFileName("/home/yucong/ros_workspace/uascode/records/traj_log.txt");
+  if (argc == 2){
+      std::string traj_file = Utils::FindPath()+"records/traj_log.txt";
+      plan_node.SetLogFileName(traj_file.c_str());
+  }
   else if(argc==3)
      plan_node.SetLogFileName(argv[2]);
   else

@@ -1,3 +1,4 @@
+#include <stdexcept>
 #include "SpaceLimit.h"
 #include "common/Utils/YcLogger.h"
 
@@ -55,8 +56,16 @@ void SpaceLimit::LoadGeoFence(const char* filename)
     UASLOG(s_logger,LL_DEBUG,"load geofence done");
   }//open ends
 
-  else
+  else{
     UASLOG(s_logger,LL_DEBUG,"error:geofence file not found");
+    try {
+        throw std::runtime_error ("error:geofence file not found"); }
+        catch (std::runtime_error &e) {
+        std::cout << "Caught a runtime_error exception: " << e.what () << '\n';
+    }
+
+  }
+
 }//LoadGeoFence ends
 
 }

@@ -5,6 +5,7 @@
 #include "common/Utils/GetTimeNow.h"
 #include "common/Utils/YcLogger.h"
 #include "common/Utils/UTMtransform.h"
+#include "common/Utils/FindPath.h"
 
 //std
 #include <iostream>
@@ -43,7 +44,8 @@ namespace UasCode{
     //set geofence/spacelimit
     UserStructs::SpaceLimit spacelimit(2000,500);
     //geofence.txt location needs changing.
-    spacelimit.LoadGeoFence("/home/yucong/ros_workspace/uascode/bin/geofence.txt");
+    std::string geofence_file= Utils::FindPath()+"parameters/geofence.txt";
+    spacelimit.LoadGeoFence(geofence_file.c_str());
     this->spLimit= spacelimit;
     path_gen.SetSpaceLimit(spacelimit);
 
@@ -71,7 +73,8 @@ namespace UasCode{
     //set
     path_gen.NavUpdaterParams(_Tmax,mpitch_rate,myaw_rate,_Muav,_max_speed,_min_speed,_max_pitch,_min_pitch);
 
-    path_gen.NavTecsReadParams("/home/yucong/ros_workspace/uascode/bin/parameters_sitl.txt");
+    std::string params_file = Utils::FindPath()+"parameters/parameters_sitl.txt";
+    path_gen.NavTecsReadParams(params_file.c_str());
     path_gen.NavL1SetRollLim(40./180*M_PI);
     path_gen.NavSetDt(dt);
     path_gen.NavSetSpeedTrim(_speed_trim);

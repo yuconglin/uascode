@@ -1,3 +1,4 @@
+#pragma once
 namespace Utils{
   
   void ToUTM( double lon, double lat, double& x, double& y );

@@ -5,6 +5,7 @@
 #include "common/Utils/GetTimeNow.h"
 #include "common/Utils/YcLogger.h"
 #include "common/Utils/UTMtransform.h"
+#include "common/Utils/FindPath.h"
 
 //std
 #include <iostream>
@@ -25,6 +26,7 @@ namespace UasCode{
     pub_interwp_flag= nh.advertise<uascode::PosSetPointFlag>("inter_wp_flag",100);
     pub_if_colli= nh.advertise<uascode::IfCollision>("if_colli",100);
     pub_WpNum= nh.advertise<uascode::WpNumber>("wp_num",100);
+    pub_colli_pt= nh.advertise<uascode::ColliPoint>("colli_point",100);
     //subscriber
     sub_obss= nh.subscribe("multi_obstacles",100,&PlanNode2::obssCb,this);
     sub_pos= nh.subscribe("global_position",100,&PlanNode2::posCb,this);
@@ -44,7 +46,8 @@ namespace UasCode{
     //set geofence/spacelimit
     UserStructs::SpaceLimit spacelimit(2000,500);
     //geofence.txt location needs changing.
-    spacelimit.LoadGeoFence("/home/yucong/ros_workspace/uascode/bin/geofence.txt");
+    std::string fence_file = Utils::FindPath()+"parameters/geofence.txt";
+    spacelimit.LoadGeoFence(fence_file.c_str());
     this->spLimit= spacelimit;
     path_gen.SetSpaceLimit(spacelimit);
 
@@ -74,7 +77,8 @@ namespace UasCode{
     //set
     path_gen.NavUpdaterParams(_Tmax,mpitch_rate,myaw_rate,_Muav,_max_speed,_min_speed,_max_pitch,_min_pitch);
 
-    path_gen.NavTecsReadParams("/home/yucong/ros_workspace/uascode/parameters/parameters_sitl.txt");
+    std::string param_file = Utils::FindPath()+"parameters/parameters_sitl.txt";
+    path_gen.NavTecsReadParams(param_file.c_str());
     path_gen.NavL1SetRollLim(40./180*M_PI);
     path_gen.NavSetDt(dt);
     path_gen.NavSetSpeedTrim(_speed_trim);
@@ -330,17 +334,32 @@ namespace UasCode{
           UASLOG(s_logger,LL_DEBUG,"PredictColliNode: "<< if_colli);
 
           if(if_colli==1){
-              double dis2wp= std::sqrt( pow(FlagWayPoints[colli_return.seq_colli-1].pt.x-colli_return.x_colli,2)
-                      + pow(FlagWayPoints[colli_return.seq_colli-1].pt.y-colli_return.y_colli,2)
-                      );
+
               UASLOG(s_logger,LL_DEBUG,"predict: "<< "seq:"<< colli_return.seq_colli<< " "
                      << "time:"<< colli_return.time_colli<<" "
                      << std::setprecision(7)<< std::fixed
                      << "x_colli:"<< colli_return.x_colli << " "
                      << "y_colli:"<< colli_return.y_colli << " "
-                     << "z_colli:"<< colli_return.z_colli << " "
-                     << "dis2wp:"<< dis2wp );
+                     << "z_colli:"<< colli_return.z_colli);
+              //get dis to imediate previous waypoint
+              double w_x = FlagWayPoints[colli_return.seq_colli-1].pt.x;
+              double w_y = FlagWayPoints[colli_return.seq_colli-1].pt.y;
+              double w_z = FlagWayPoints[colli_return.seq_colli-1].pt.alt;
+              double dis_c2d = std::sqrt(pow(w_x-colli_return.x_colli,2)+pow(w_y-colli_return.y_colli,2));
+              double dis_cz = std::abs(w_z-colli_return.z_colli);
+              UASLOG(s_logger,LL_DEBUG,"colli dis:"<< dis_c2d <<" "<< dis_cz);
+
+              if(situ== NORMAL || situ== PATH_GEN){
+                  double c_lat, c_lon;
+                  Utils::FromUTM(colli_return.x_colli,colli_return.y_colli,c_lon,c_lat);
+                  colli_pt.lat = c_lat;
+                  colli_pt.lon = c_lon;
+                  UASLOG(s_logger,LL_DEBUG,"colli_point:"<< colli_pt.lat <<" "<< colli_pt.lon);
+                  colli_pt.alt = colli_return.z_colli;
+                  //pub_colli_pt.publish(colli_pt);
+              }
           }
+          pub_colli_pt.publish(colli_pt);
 
           IfColliMsg.if_collision = if_colli;
           pub_if_colli.publish(IfColliMsg);

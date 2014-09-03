@@ -21,6 +21,7 @@
 #include "uascode/IfMavlinkGood.h"
 #include "uascode/IfCollision.h"
 #include "uascode/WpNumber.h"
+#include "uascode/ColliPoint.h"
 
 #include "ros/ros.h"
 //std lib
@@ -84,6 +85,7 @@ class PlanNode2{
    uascode::PosSetPointFlag set_pt;
    uascode::IfCollision IfColliMsg;
    uascode::WpNumber WpNumMsg;
+   uascode::ColliPoint colli_pt;
 
    //obstacles
    std::vector<UserStructs::obstacle3D> obss; 
@@ -118,6 +120,7 @@ class PlanNode2{
    ros::Publisher pub_interwp_flag;
    ros::Publisher pub_if_colli;
    ros::Publisher pub_WpNum;
+   ros::Publisher pub_colli_pt;
    //subscribers
    ros::Subscriber sub_obss;
    ros::Subscriber sub_pos;

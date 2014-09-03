@@ -553,23 +553,23 @@ void TECsSim::update_pitch_throttle(float pitch, float yaw,float baro_altitude, 
   {
     std::fstream myfile(filename); 
     if(myfile.is_open()){
-      std::string line;
-      while(std::getline(myfile,line))
-      {
-	std::istringstream iss(line);
-        int c,comp;
-	std::string name;
-	float value;
-	iss>>c >>comp >>name >>value;
-        //find
-	std::map<std::string,float*>::iterator it=name_map.find(name);
-	if(it!=name_map.end()) 
-	{
-	  *(it->second)= value;
-	  //std::cout<< it->first<<" "<< *(it->second)<<std::endl;
-	}
-	        	
-      }//while ends
+        std::string line;
+        while(std::getline(myfile,line))
+        {
+            std::istringstream iss(line);
+            int c,comp;
+            std::string name;
+            float value;
+            iss>>c >>comp >>name >>value;
+            //find
+            std::map<std::string,float*>::iterator it=name_map.find(name);
+            if(it!=name_map.end())
+            {
+                *(it->second)= value;
+                //std::cout<< it->first<<" "<< *(it->second)<<std::endl;
+            }
+
+        }//while ends
     }
     else 
       std::cerr<<"error:parameter file unable to open."<<std::endl;
