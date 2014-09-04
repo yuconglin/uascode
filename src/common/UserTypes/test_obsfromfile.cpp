@@ -28,5 +28,5 @@ int main(int argc,char** argv)
 
    //send in ros
    //obsfrom.SendObss(1);
-   obsfrom.SendObss2(false,true,false);
+   obsfrom.SendObss2(false,false,true);
 }
