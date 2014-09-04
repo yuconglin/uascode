@@ -4,6 +4,7 @@
 #include "Planner/Utils/CheckCollision.h"
 #include "common/Utils/UTMtransform.h"
 #include "common/Utils/YcLogger.h"
+#include "common/Utils/GeoUtils.h"
 //other
 #include <iomanip>
 
@@ -275,13 +276,18 @@ int NavigatorSim::PropWpCheck(UserStructs::PlaneStateSim& st_start,
     UserStructs::PlaneStateSim st_next;
     length=0.;//length travelled
 
-    int result=-2;//-1:collision, 0: arrived by closeness, 1: arrived by length
+    int result=-2;//-1:collision, 0: arrived by closeness, 1: arrived by length, 2: location past by
 
     int Nec= 0;
 
     //loop
     while(1){  
       PropagateStep(st_now,st_next,pt_A,pt_target);
+
+      if(Utils::location_passed_point(st_next,pt_A,pt_target)){
+          result =2;
+          break;
+      }
 
       bool if_arrive= false;
       if(option==0) 
@@ -375,7 +381,7 @@ int NavigatorSim::PropWpCheckTime(UserStructs::PlaneStateSim& st_start,
     UserStructs::PlaneStateSim st_next;
     length=0.;//length travelled
 
-    int result=-2;//-1:collision, 0: arrived by closeness, 1: arrived by length, 2: time reached
+    int result=-2;//-1:collision, 0: arrived by closeness, 1: arrived by length, 2: time reached, 3: location passed by
 
     int Nec= 0;
 
@@ -394,6 +400,11 @@ int NavigatorSim::PropWpCheckTime(UserStructs::PlaneStateSim& st_start,
           result= 0;
           break;
       }//if ends
+
+      if(Utils::location_passed_point(st_next,pt_A,pt_target)){
+          result =3;
+          break;
+      }
 
       length+= sqrt( pow(st_now.x-st_next.x,2)
             + pow(st_now.y-st_next.y,2)

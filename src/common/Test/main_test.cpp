@@ -1,6 +1,7 @@
 #include <ros/ros.h>
 #include <iostream>
 #include "common/Utils/GetTimeNow.h"
+#include "common/Utils/GeoUtils.h"
 
 int main(int argc,char** argv)
 {
@@ -19,4 +20,16 @@ int main(int argc,char** argv)
   }//while ends
   std::cout<<"t_diff: "
       << Utils::GetTimeNow()- dt1<< std::endl;
+
+  arma::vec::fixed<2> loc;
+  arma::vec::fixed<2> pt1;
+  arma::vec::fixed<2> pt2;
+
+  loc << 4 << 3;
+  pt1 << 0 << 0;
+  pt2 << 3 << 0;
+  std::cout<<"get_distance:"<< Utils::get_distance(pt1,pt2)<<'\n'
+           <<"get_angle:"<< Utils::get_angle(pt2,pt1,loc)*180./M_PI<<'\n'
+           <<"location_past_pt:"<< Utils::location_passed_pt(loc,pt1,pt2)<<'\n';
+
 }

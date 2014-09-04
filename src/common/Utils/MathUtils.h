@@ -6,4 +6,4 @@ namespace Utils{
     int sgn(double num);
    }
 
-};
+}
