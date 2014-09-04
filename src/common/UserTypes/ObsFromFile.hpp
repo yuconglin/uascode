@@ -18,10 +18,13 @@ public:
    void ReadObss(const char* filename);
    //send obs
    void SendObss(int obs_num);
+   void SendObss2(bool f1,bool f2,bool f3);
    //set obss_file name
    void SetLogFileName(const char *filename);
    //load offsets from file
    void LoadOffsets(const char *filename);
+   void LoadOffsetsSingle(const char *filename,int idx);
+   void LoadOffsets2(const char* off1,const char* off2,const char* off3);
 
 private:
    struct OffSet{
@@ -29,6 +32,8 @@ private:
        double y_off;
        double z_off;
        double hd_off;
+
+       OffSet():x_off(0),y_off(0),z_off(0),hd_off(0){}
    };
    std::vector<OffSet> offsets;
    //ros related

@@ -88,7 +88,8 @@ i1= 1;
 i2= 1;
 i3= 1;
 
-k= 1200;
+k= 200;
+MATDIS= zeros(3,4);
 
 for j=1:length(t_traj)
    
@@ -101,7 +102,8 @@ for j=1:length(t_traj)
                       );
                   
          if(j==k)         
-            disp([virtual_traj(j,2)-obs1(i,2),virtual_traj(j,3)-obs1(i,3),virtual_traj(j,4)-obs1(i,4)]);      
+            disp([virtual_traj(j,2)-obs1(i,2),virtual_traj(j,3)-obs1(i,3),virtual_traj(j,4)-obs1(i,4)]); 
+            MATDIS(1,:) = [virtual_traj(j,2)-obs1(i,2),virtual_traj(j,3)-obs1(i,3),virtual_traj(j,4)-obs1(i,4),0];
          end 
                   
          i1 = i;
@@ -118,7 +120,8 @@ for j=1:length(t_traj)
                       );
                   
          if(j==k)         
-            disp([virtual_traj(j,2)-obs2(i,2),virtual_traj(j,3)-obs2(i,3),virtual_traj(j,4)-obs2(i,4)]);      
+            disp([virtual_traj(j,2)-obs2(i,2),virtual_traj(j,3)-obs2(i,3),virtual_traj(j,4)-obs2(i,4)]);  
+            MATDIS(2,:) = [virtual_traj(j,2)-obs2(i,2),virtual_traj(j,3)-obs2(i,3),virtual_traj(j,4)-obs2(i,4),0];
          end       
                   
          i2 = i;
@@ -135,7 +138,8 @@ for j=1:length(t_traj)
                       );
                   
          if(j==k)         
-            disp([virtual_traj(j,2)-obs3(i,2),virtual_traj(j,3)-obs3(i,3),virtual_traj(j,4)-obs3(i,4)]);      
+            disp([virtual_traj(j,2)-obs3(i,2),virtual_traj(j,3)-obs3(i,3),virtual_traj(j,4)-obs3(i,4)]); 
+            MATDIS(3,:) = [virtual_traj(j,2)-obs3(i,2),virtual_traj(j,3)-obs3(i,3),virtual_traj(j,4)-obs3(i,4),0];
          end        
                   
          i3 = i;
@@ -149,6 +153,7 @@ end
 figure;
 plot3(virtual_traj(:,2),virtual_traj(:,3),virtual_traj(:,4),'r+' );
 
+MATDIS
 % figure;
 % subplot(3,1,1);
 % plot( t_traj, dis1,'b+-' );

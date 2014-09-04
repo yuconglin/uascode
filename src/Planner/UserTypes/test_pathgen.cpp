@@ -95,7 +95,7 @@ int main(int argc, char** argv)
   double r= 640.08;
   double hr= 152.4;
   double dr=0, dhr=0;
-  UserStructs::obstacle3D obs3d(x_o,y_o,head_xy,spd,z_o,vv,t1,r,dr,hr,dhr);
+  UserStructs::obstacle3D obs3d(11,x_o,y_o,head_xy,spd,z_o,vv,t1,r,dr,hr,dhr);
   std::vector<UserStructs::obstacle3D> v_obs3d;
   //v_obs3d.push_back(obs3d);
   path_gen.SetObs(v_obs3d);

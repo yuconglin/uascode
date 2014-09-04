@@ -54,7 +54,7 @@ namespace UasCode{
     //set wp_r
     wp_r =30;
 
-    thres_ratio=1.0;
+    thres_ratio=1.2;
     if_receive= false;
     //I use seq_current== -1 to indicate the moment mission starts
     seq_current= -1;
@@ -342,9 +342,20 @@ namespace UasCode{
                      << "y_colli:"<< colli_return.y_colli << " "
                      << "z_colli:"<< colli_return.z_colli);
               //get dis to imediate previous waypoint
-              double w_x = FlagWayPoints[colli_return.seq_colli-1].pt.x;
-              double w_y = FlagWayPoints[colli_return.seq_colli-1].pt.y;
-              double w_z = FlagWayPoints[colli_return.seq_colli-1].pt.alt;
+              double w_x,w_y,w_z;
+              if(colli_return.seq_colli>1)
+              {
+                  w_x = FlagWayPoints[colli_return.seq_colli-1].pt.x;
+                  w_y = FlagWayPoints[colli_return.seq_colli-1].pt.y;
+                  w_z = FlagWayPoints[colli_return.seq_colli-1].pt.alt;
+
+              }
+              else{
+                  w_x = st_current.x;
+                  w_y = st_current.y;
+                  w_z = st_current.z;
+              }
+
               double dis_c2d = std::sqrt(pow(w_x-colli_return.x_colli,2)+pow(w_y-colli_return.y_colli,2));
               double dis_cz = std::abs(w_z-colli_return.z_colli);
               UASLOG(s_logger,LL_DEBUG,"colli dis:"<< dis_c2d <<" "<< dis_cz);
@@ -354,10 +365,60 @@ namespace UasCode{
                   Utils::FromUTM(colli_return.x_colli,colli_return.y_colli,c_lon,c_lat);
                   colli_pt.lat = c_lat;
                   colli_pt.lon = c_lon;
-                  UASLOG(s_logger,LL_DEBUG,"colli_point:"<< colli_pt.lat <<" "<< colli_pt.lon);
+                  UASLOG(s_logger,LL_DEBUG,"colli_point:"<< std::setprecision(4)<< std::fixed << colli_pt.lat <<" "<< colli_pt.lon);
                   colli_pt.alt = colli_return.z_colli;
                   //pub_colli_pt.publish(colli_pt);
               }
+
+              //see if the colli point is too close to the sample root
+              double rho= this->path_gen.GetTurnRadius();
+              double obs_r= obss[0].r;
+              double allow_dis = std::sqrt(pow(rho+obs_r,2)-pow(rho,2));
+              UASLOG(s_logger,LL_DEBUG,"allow_dis:" << allow_dis);
+
+              //if(dis_c2d < allow_dis && colli_return.seq_colli == seq_current+1)
+              if(dis_c2d < allow_dis) //using 0.5 to delay reaction and maitain height differenct
+              {
+                 if(!if_inter_gen){
+                     UASLOG(s_logger,LL_DEBUG,"local avoidance");
+                     set_pt.seq = colli_return.seq_colli-1;
+
+                     if(colli_return.seq_colli==1)
+                       set_pt.seq = 1;
+
+                     set_pt.lat = colli_pt.lat;
+                     set_pt.lon = colli_pt.lon;
+                     //set_pt.alt = colli_pt.alt+ obss[0].hr;
+                     set_pt.alt = obss[0].x3 + obss[0].v_vert*colli_return.time_colli + 1.5*obss[0].hr;
+
+                     if(FlagWayPoints[set_pt.seq].flag){
+                         if_inter_exist= true;
+                         FlagWayPoints.erase(FlagWayPoints.begin()+set_pt.seq);
+                     }
+                     else
+                         if_inter_exist= false;
+
+                     set_pt.inter_exist= if_inter_exist ? 1:0;
+
+                     UserStructs::MissionSimPt local_wp = UserStructs::MissionSimPt(set_pt.lat,set_pt.lon,set_pt.alt,0,100,0,0,200,100,50);
+                     local_wp.GetUTM();
+                     FlagWayPoints.insert(FlagWayPoints.begin()+set_pt.seq,UserStructs::MissionSimFlagPt(local_wp,true) );
+                     if_inter_gen = true;
+
+                     if(situ== NORMAL || situ== PATH_GEN){
+                         situ= PATH_READY;
+                     }
+                 }
+              }
+              else
+              {
+                  UASLOG(s_logger,LL_DEBUG,"global avoidance");
+                  if(situ== NORMAL){
+                     situ= PATH_GEN;
+                     if_inter_gen= false;
+                 }
+              }
+
           }
           pub_colli_pt.publish(colli_pt);
 
@@ -367,16 +428,12 @@ namespace UasCode{
           WpNumMsg.wp_num= FlagWayPoints.size();
           pub_WpNum.publish(WpNumMsg);
 
-          if( if_colli == 1 && situ== NORMAL )
-          {
-              situ= PATH_GEN;
-              if_inter_gen= false;
-          }
-
+          /*
           if(!if_inter_gen)
               thres_ratio= 1.5;
           else
               thres_ratio=1.;
+          */
 
           UASLOG(s_logger,LL_DEBUG,"situ="<< situ <<" "
                  << "if_receive="<<" "<< if_receive <<" "
@@ -447,7 +504,7 @@ namespace UasCode{
               path_gen.SetBetweenWps(wpoints);
 
               //to generate feasible paths
-              if (path_gen.AddPaths()> 0 )
+              if (path_gen.AddPaths() > 0 )
                   situ= PATH_CHECK;
               else{
                   UASLOG(s_logger,LL_DEBUG,"no path, try again");
@@ -485,9 +542,13 @@ namespace UasCode{
                      if_inter_exist= true;
                      FlagWayPoints.erase(FlagWayPoints.begin()+seq_inter);
                   }
+                  else
+                     if_inter_exist= false;
+
                   //this line is wrong
                   set_pt.seq= seq_inter;
                   set_pt.inter_exist= if_inter_exist ? 1:0;
+
                   FlagWayPoints.insert(FlagWayPoints.begin()+seq_inter,UserStructs::MissionSimFlagPt(inter_wp,true) );
                   situ= PATH_READY;
                   if_inter_gen= true;
@@ -504,11 +565,13 @@ namespace UasCode{
               if(!if_receive){
                   //this will be sent to pixhawk by MavlinkReceiver node
                   UASLOG(s_logger,LL_DEBUG,"path ready for sending");
+                  UASLOG(s_logger,LL_DEBUG,"if_inter_exist? "<< (int)set_pt.inter_exist);
                   pub_interwp_flag.publish(set_pt);
               }
               else{
                   UASLOG(s_logger,LL_DEBUG,"path sent");
                   situ= NORMAL;
+                  if_inter_gen= false;
               }
               break;
           }
@@ -536,6 +599,7 @@ namespace UasCode{
     for(int i=0;i!= msg->MultiObs.size();++i)
     {
       UserStructs::obstacle3D obs3d(
+        msg->MultiObs[i].address,
         msg->MultiObs[i].x1,
 	    msg->MultiObs[i].x2,
 	    msg->MultiObs[i].head_xy,
@@ -547,7 +611,7 @@ namespace UasCode{
 	    msg->MultiObs[i].hr,0);
 
       UASLOG(s_logger,LL_DEBUG,"obstacle: "
-             << std::setprecision(4) << std::fixed
+             << std::setprecision(4) << std::fixed << msg->MultiObs[i].address<< " "
              << obs3d.t <<" "<< obs3d.x1);
 
       /*
