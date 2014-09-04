@@ -1,5 +1,7 @@
 #include "ObsFromFile.hpp"
 #include "fstream"
+#include <stdint.h>
+#include <map>
 #include <vector>
 #include "Planner/UserStructs/obstacle3D.h"
 #include "common/Utils/GetTimeNow.h"
@@ -154,9 +156,12 @@ namespace UasCode{
 
          obs_single.r = 300;
          //obs_single.hr = 70.;
-         //obs_single.head_xy= Utils::_wrap_pi(M_PI/2- obs_single.head_xy * UasCode::DEG2RAD);
+         obs_single.head_xy= obs_single.head_xy * UasCode::DEG2RAD;
+         //insert into address map
+         if(addrs_map.find(obs_single.address)== addrs_map.end())
+             addrs_map[obs_single.address] = addrs_map.size();
 
-         UASLOG(s_logger,LL_DEBUG, "obs_single.head_xy: "<< obs_single.head_xy*M_PI/180.);
+         UASLOG(s_logger,LL_DEBUG, "obs_single.head_xy: "<< obs_single.head_xy);
 
          for(int i=0;i!= obss.size();++i)
          {
@@ -252,6 +257,10 @@ namespace UasCode{
      ros::Rate r(10);
      int count=0;
 
+     std::vector<uint32_t> vec_addrs;
+     for (std::map<uint32_t,int>::iterator it=addrs_map.begin(); it!=addrs_map.end(); ++it)
+         vec_addrs.push_back(it->first);
+
      while(ros::ok())
      {
         ros::spinOnce();
@@ -260,22 +269,95 @@ namespace UasCode{
            std::vector<UserStructs::obstacle3D> obss = all_obss[count];
            obss_msg.MultiObs.clear();
 
+           bool if_pub = false;
+
            if(f1){
-             obss[0].t= Utils::GetTimeNow();
-             obss_msg.MultiObs.push_back(ObsToRosMsg(obss[0]));
+               if_pub = false;
+               for(int j=0;j!= obss.size();++j)
+               {
+                   if(obss[j].address == vec_addrs[0]){
+                       obss[j].t= Utils::GetTimeNow();
+                       if(obss_log.is_open() )
+                       {
+                           obss_log << obss[j].address << " "
+                                    << obss[j].x1 << " "
+                                    << obss[j].x2 << " "
+                                    << obss[j].x3 << " "
+                                    << obss[j].head_xy  << " "
+                                    << obss[j].speed << " "
+                                    << obss[j].v_vert << " "
+                                    << std::setprecision(4) << std::fixed
+                                    << obss[j].t << " "
+                                    << obss[j].r << " "
+                                    << obss[j].hr << " "
+                                    << "\n";
+                       }
+                       obss_msg.MultiObs.push_back(ObsToRosMsg(obss[j]));
+                       if_pub = true;
+                       break;
+                   }
+               }
            }
 
            if(f2){
-               obss[1].t= Utils::GetTimeNow();
-               obss_msg.MultiObs.push_back(ObsToRosMsg(obss[1]));
+               if_pub = false;
+               for(int j=0;j!= obss.size();++j)
+               {
+                   if(obss[j].address == vec_addrs[1]){
+                       obss[j].t= Utils::GetTimeNow();
+                       if(obss_log.is_open() )
+                       {
+                           obss_log << obss[j].address << " "
+                                    << obss[j].x1 << " "
+                                    << obss[j].x2 << " "
+                                    << obss[j].x3 << " "
+                                    << obss[j].head_xy  << " "
+                                    << obss[j].speed << " "
+                                    << obss[j].v_vert << " "
+                                    << std::setprecision(4) << std::fixed
+                                    << obss[j].t << " "
+                                    << obss[j].r << " "
+                                    << obss[j].hr << " "
+                                    << "\n";
+                       }
+                       obss_msg.MultiObs.push_back(ObsToRosMsg(obss[j]));
+                       if_pub = true;
+                       break;
+                   }
+               }
            }
 
            if(f3){
-               obss[2].t= Utils::GetTimeNow();
-               obss_msg.MultiObs.push_back(ObsToRosMsg(obss[2]));
+               if_pub = false;
+               for(int j=0;j!= obss.size();++j)
+               {
+                   if(obss[j].address == vec_addrs[2]){
+                       obss[j].t= Utils::GetTimeNow();
+                       if(obss_log.is_open() )
+                       {
+                           obss_log << obss[j].address << " "
+                                    << obss[j].x1 << " "
+                                    << obss[j].x2 << " "
+                                    << obss[j].x3 << " "
+                                    << obss[j].head_xy  << " "
+                                    << obss[j].speed << " "
+                                    << obss[j].v_vert << " "
+                                    << std::setprecision(4) << std::fixed
+                                    << obss[j].t << " "
+                                    << obss[j].r << " "
+                                    << obss[j].hr << " "
+                                    << "\n";
+                       }
+                       obss_msg.MultiObs.push_back(ObsToRosMsg(obss[j]));
+                       if_pub = true;
+                       break;
+                   }
+               }
            }
-           //ros publish
-           pub_obss.publish(obss_msg);
+
+           if(if_pub)
+               pub_obss.publish(obss_msg);
+
            ++ count;
            sleep(1);
         }//if seq ends

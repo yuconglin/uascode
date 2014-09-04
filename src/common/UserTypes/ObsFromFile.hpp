@@ -6,6 +6,7 @@
 #include "uascode/WpCurrent.h"
 
 #include <fstream>
+#include <map>
 
 namespace UasCode{
 
@@ -35,6 +36,7 @@ private:
 
        OffSet():x_off(0),y_off(0),z_off(0),hd_off(0){}
    };
+   std::map<uint32_t,int> addrs_map;
    std::vector<OffSet> offsets;
    //ros related
    ros::NodeHandle nh;

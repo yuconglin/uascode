@@ -170,5 +170,4 @@ target_link_libraries(test_LoopPredict nodes planner common_utils otherlibs ${AR
 
 #other test
 rosbuild_add_executable(other_test src/common/Test/main_test.cpp)
-rosbuild_add_library(gettimenow src/common/Utils/GetTimeNow.cpp)
-target_link_libraries(other_test gettimenow) 
+target_link_libraries(other_test common_utils ${ARMADILLO_LIBRARIES} ${GeographicLib_LIBRARIES})
