@@ -350,7 +350,7 @@ int NavigatorSim::PropWpCheckTime(UserStructs::PlaneStateSim& st_start,
                      std::vector<UserStructs::obstacle3D> obstacles,
                      UserStructs::SpaceLimit spacelimit,
                      double &length,double t_horizon,double& t_left,
-                     int option,double thres_ratio)
+                     int option,double thres_ratio,int& obs_idx)
  {
     if(pt_target.SeeArriveSphere(st_start.x,st_start.y,st_start.z) )
     {
@@ -410,12 +410,6 @@ int NavigatorSim::PropWpCheckTime(UserStructs::PlaneStateSim& st_start,
             + pow(st_now.y-st_next.y,2)
             + pow(st_now.z-st_next.z,2)
             );
-      /*
-      UASLOG(s_logger,LL_DEBUG,"length/check_step: " << (int)(length/check_step) << " "
-             << "Nec: " << Nec << " "
-             << "length: " << length << " "
-             << "check_step: " << check_step
-             ); */
 
       //if( (int)(length/check_step) > Nec )
       {
@@ -424,6 +418,7 @@ int NavigatorSim::PropWpCheckTime(UserStructs::PlaneStateSim& st_start,
 
               if(Utils::CheckCollision2(st_next,obstacles[i],thres_ratio)==1){
                   result = -1;
+                  obs_idx= i;
                   break;
               }
 
@@ -483,6 +478,7 @@ bool NavigatorSim::PredictColli(UserStructs::PlaneStateSim &st_current,
     double length=0;
     double t_left;
     int result;
+    int obs_idx=-1;
 
     for(int i= seq_current;i!= waypoints.size();++i)
     {
@@ -496,7 +492,7 @@ bool NavigatorSim::PredictColli(UserStructs::PlaneStateSim &st_current,
 
         result= PropWpCheckTime(st_start,st_next,pt_start,pt_target,
                                 obstacles,spacelimit,
-                                length,t_limit,t_left,1,thres_ratio);
+                                length,t_limit,t_left,1,thres_ratio,obs_idx);
 
         if(result == -1){
             UASLOG(s_logger,LL_DEBUG,"predict colli time: "<< st_next.t-st_start.t);
@@ -529,6 +525,7 @@ bool NavigatorSim::PredictColli2(UserStructs::PlaneStateSim &st_current,
     double length=0;
     double t_left;
     int result;
+    int obs_idx = -1;
 
     for(int i= seq_current;i!= waypoints.size();++i)
     {
@@ -542,22 +539,15 @@ bool NavigatorSim::PredictColli2(UserStructs::PlaneStateSim &st_current,
 
         result= PropWpCheckTime(st_start,st_next,pt_start,pt_target,
                                 obstacles,spacelimit,
-                                length,t_limit,t_left,1,thres_ratio);
+                                length,t_limit,t_left,1,thres_ratio,obs_idx);
 
         if(result == -1){
-            //UASLOG(s_logger,LL_DEBUG,"predict colli time: "<< st_next.t-st_start.t);
             colli_return.seq_colli= i;
             colli_return.time_colli = st_next.t-st_current.t;
-            //colli_return.dis_colli_2d = std::sqrt(pow(st_next.x-st_current.x,2)+pow(st_next.y-st_current.y,2));
-            //colli_return.dis_colli_hgt = fabs(st_next.z-st_current.z);
             colli_return.x_colli= st_next.x;
             colli_return.y_colli= st_next.y;
             colli_return.z_colli= st_next.z;
-            /*
-            UASLOG(s_logger,LL_DEBUG,"st_next collision: "<< st_next.x << " "
-                   << st_next.y << " "
-                   << st_next.z);
-            */
+            colli_return.obs_id = obs_idx;
             return true;
         }
 

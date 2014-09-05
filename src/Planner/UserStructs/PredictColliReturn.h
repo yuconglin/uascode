@@ -11,8 +11,11 @@ struct PredictColliReturn{
     double x_colli;
     double y_colli;
     double z_colli;
+
+    int obs_id;
     //constructor
     PredictColliReturn();
 };
+
 
 }

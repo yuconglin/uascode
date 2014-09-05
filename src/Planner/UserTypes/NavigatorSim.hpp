@@ -70,7 +70,7 @@ class NavigatorSim{
                        std::vector<UserStructs::obstacle3D> obstacles,
                        UserStructs::SpaceLimit spacelimit,
                        double &length,double t_horizon,double& t_left,
-                       int option,double thres_ratio);
+                       int option,double thres_ratio,int& obs_idx);
    
    bool PredictColli(UserStructs::PlaneStateSim &st_current,
                      std::vector<UserStructs::MissionSimPt> waypoints,
@@ -94,6 +94,11 @@ class NavigatorSim{
    void EnableAirspd();
 
   private:
+
+   struct PredictResult{
+       int result;
+       int obs_id;
+   };
 
    double dt;
    double speed_trim;

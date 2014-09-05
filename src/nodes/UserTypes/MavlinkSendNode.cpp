@@ -93,7 +93,7 @@ void MavlinkSendNode::IfRecCb(const uascode::IfRecMsg::ConstPtr& msg)
 void MavlinkSendNode::IfColliCb(const uascode::IfCollision::ConstPtr& msg)
 {
   if_colli= msg->if_collision;
-  UASLOG(s_logger,LL_DEBUG,"if_colli: "<< if_colli);
+  UASLOG(s_logger,LL_DEBUG,"cb if_colli: "<< if_colli);
 }
 
 void MavlinkSendNode::obssCb(const uascode::MultiObsMsg::ConstPtr& msg)

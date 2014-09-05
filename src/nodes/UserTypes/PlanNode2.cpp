@@ -244,7 +244,7 @@ namespace UasCode{
       if(!obss.empty() )
       {
           std::ostringstream oss;
-          oss<< "obss dis:";
+          //oss<< "obss dis:";
           for(int i=0;i!= obss.size();++i)
           {
               double dis= std::sqrt(pow(st_current.x-obss[i].x1,2)
@@ -334,12 +334,15 @@ namespace UasCode{
           UASLOG(s_logger,LL_DEBUG,"PredictColliNode: "<< if_colli);
 
           if(if_colli==1){
+
               UASLOG(s_logger,LL_DEBUG,"predict: "<< "seq:"<< colli_return.seq_colli<< " "
                      << "time:"<< colli_return.time_colli<<" "
                      << std::setprecision(7)<< std::fixed
                      << "x_colli:"<< colli_return.x_colli << " "
                      << "y_colli:"<< colli_return.y_colli << " "
-                     << "z_colli:"<< colli_return.z_colli);
+                     << "z_colli:"<< colli_return.z_colli << " "
+                     << "obstacle idx:"<< colli_return.obs_id);
+
               //get dis to imediate previous waypoint
               double w_x,w_y,w_z;
               if(colli_return.seq_colli>1)
@@ -347,7 +350,6 @@ namespace UasCode{
                   w_x = FlagWayPoints[colli_return.seq_colli-1].pt.x;
                   w_y = FlagWayPoints[colli_return.seq_colli-1].pt.y;
                   w_z = FlagWayPoints[colli_return.seq_colli-1].pt.alt;
-
               }
               else{
                   w_x = st_current.x;
@@ -366,7 +368,6 @@ namespace UasCode{
                   colli_pt.lon = c_lon;
                   UASLOG(s_logger,LL_DEBUG,"colli_point:"<< std::setprecision(4)<< std::fixed << colli_pt.lat <<" "<< colli_pt.lon);
                   colli_pt.alt = colli_return.z_colli;
-                  //pub_colli_pt.publish(colli_pt);
               }
 
               //see if the colli point is too close to the sample root
@@ -388,7 +389,7 @@ namespace UasCode{
                      set_pt.lat = colli_pt.lat;
                      set_pt.lon = colli_pt.lon;
                      //set_pt.alt = colli_pt.alt+ obss[0].hr;
-                     set_pt.alt = obss[0].x3 + obss[0].v_vert*colli_return.time_colli + 1.5*obss[0].hr;
+                     set_pt.alt = obss[colli_return.obs_id].x3 + obss[colli_return.obs_id].v_vert*colli_return.time_colli + 1.5*obss[colli_return.obs_id].hr;
 
                      if(FlagWayPoints[set_pt.seq].flag){
                          if_inter_exist= true;
@@ -422,6 +423,7 @@ namespace UasCode{
           pub_colli_pt.publish(colli_pt);
 
           IfColliMsg.if_collision = if_colli;
+          //UASLOG(s_logger,LL_DEBUG,"IfColliMsg:"<< (int)IfColliMsg.if_collision);
           pub_if_colli.publish(IfColliMsg);
 
           WpNumMsg.wp_num= FlagWayPoints.size();

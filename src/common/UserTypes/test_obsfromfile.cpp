@@ -23,10 +23,14 @@ int main(int argc,char** argv)
 
    obsfrom.SetLogFileName(log_file.c_str());
    //obsfrom.LoadOffsets(offsets_file.c_str());
-   obsfrom.LoadOffsets2("400","400","600");
+
+   obsfrom.LoadOffsets2("400","800","400");
+
    obsfrom.ReadObss(data_file.c_str());
 
    //send in ros
    //obsfrom.SendObss(1);
-   obsfrom.SendObss2(false,false,true);
+
+   obsfrom.SendObss2(true,true,false);
+
 }
