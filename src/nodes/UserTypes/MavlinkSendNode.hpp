@@ -52,6 +52,7 @@ private:
   int inter_exist;
   bool if_receive;
   int if_colli;
+  bool if_to_send;
   std::vector<UserStructs::obstacle3D> obss;
   int wp_num;
   double lat_c, lon_c, alt_c;

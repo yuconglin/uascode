@@ -8,7 +8,7 @@ namespace {
 
 namespace UasCode{
 
-MavlinkSendNode::MavlinkSendNode():wp_num(0),send_pos_method(0),lat_s(0.),lon_s(0.),alt_s(0.),seq_s(0),lat_c(0.),lon_c(0.),alt_c(0.)
+MavlinkSendNode::MavlinkSendNode():wp_num(0),send_pos_method(0),lat_s(0.),lon_s(0.),alt_s(0.),seq_s(0),lat_c(0.),lon_c(0.),alt_c(0.),if_to_send(false)
 {
   sub_interwp= nh.subscribe("inter_wp",100,&MavlinkSendNode::InterWpCb,this);
   sub_interwp_flag= nh.subscribe("inter_wp_flag",100,&MavlinkSendNode::InterWpFlagCb,this);
@@ -33,21 +33,18 @@ void MavlinkSendNode::working()
 {
   while(ros::ok())
   {
+     //this->if_to_send = false;
      //SetDefault();
      ros::spinOnce();
-     /*
-     UASLOG(s_logger,LL_DEBUG,"lalala wp: "
-            << lat_s << " "
-            << lon_s << " "
-            << alt_s);
-     */
 
      if(!if_receive)
      {
+        /*
         UASLOG(s_logger,LL_DEBUG,"received wp: "
                << lat_s << " "
                << lon_s << " "
                << alt_s);
+        */
         if(send_pos_method==0)
           sender.SendPosSP(lat_s,lon_s,alt_s);
 
@@ -83,6 +80,7 @@ void MavlinkSendNode::InterWpFlagCb(const uascode::PosSetPointFlag::ConstPtr &ms
    alt_s = msg->alt;
    seq_s = msg->seq;
    inter_exist = msg->inter_exist;
+   //this->if_to_send = true;
 }
 
 void MavlinkSendNode::IfRecCb(const uascode::IfRecMsg::ConstPtr& msg)
