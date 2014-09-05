@@ -24,7 +24,7 @@ int main(int argc,char** argv)
    obsfrom.SetLogFileName(log_file.c_str());
    //obsfrom.LoadOffsets(offsets_file.c_str());
 
-   obsfrom.LoadOffsets2("400","800","400");
+   obsfrom.LoadOffsets2("400","400","400");
 
    obsfrom.ReadObss(data_file.c_str());
 
