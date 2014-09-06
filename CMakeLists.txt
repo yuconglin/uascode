@@ -171,3 +171,6 @@ target_link_libraries(test_LoopPredict nodes planner common_utils otherlibs ${AR
 #other test
 rosbuild_add_executable(other_test src/common/Test/main_test.cpp)
 target_link_libraries(other_test common_utils ${ARMADILLO_LIBRARIES} ${GeographicLib_LIBRARIES})
+
+rosbuild_add_executable(min_dis src/common/Test/read_dis.cpp)
+target_link_libraries(min_dis common_utils ${ARMADILLO_LIBRARIES} ${GeographicLib_LIBRARIES})

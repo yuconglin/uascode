@@ -388,7 +388,6 @@ namespace UasCode{
 
                      set_pt.lat = colli_pt.lat;
                      set_pt.lon = colli_pt.lon;
-                     //set_pt.alt = colli_pt.alt+ obss[0].hr;
                      set_pt.alt = obss[colli_return.obs_id].x3 + obss[colli_return.obs_id].v_vert*colli_return.time_colli + 1.5*obss[colli_return.obs_id].hr- home_alt;
 
                      if(FlagWayPoints[set_pt.seq].flag){
