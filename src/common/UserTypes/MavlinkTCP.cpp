@@ -1,6 +1,5 @@
 #include "MavlinkTCP.hpp"
-//#include "yc_common/mavlink.h"
-//#include "ros/ros.h"
+
 //for socket
 #include <netdb.h>
 #include <sys/socket.h>
@@ -8,9 +7,9 @@
 //std
 #include "stdio.h"
 #include <iostream>
+#include "common/UserStructs/constants.h"
 
-#define PORT 14550
-//#define PORT 19550
+//#define PORT 14550
 
 namespace UasCode{
  
@@ -36,7 +35,7 @@ void *get_in_addr(struct sockaddr *sa)
    memset((char *)&myaddr, 0, sizeof(myaddr));
    myaddr.sin_family = AF_INET;
    myaddr.sin_addr.s_addr = htonl(INADDR_ANY);
-   myaddr.sin_port = htons(PORT);
+   myaddr.sin_port = htons(UasCode::MAVLINK_IN_PORT);
 
    if (bind(fd, (struct sockaddr *)&myaddr, sizeof(myaddr)) < 0) {
 	   perror("bind failed");

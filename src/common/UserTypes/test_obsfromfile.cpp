@@ -20,11 +20,12 @@ int main(int argc,char** argv)
    std::string data_file= filepath + argv[2];
 
    ObsFromFile obsfrom;
+   obsfrom.SetIfMission(false);
 
    obsfrom.SetLogFileName(log_file.c_str());
    //obsfrom.LoadOffsets(offsets_file.c_str());
 
-   obsfrom.LoadOffsets2("400","400","400");
+   obsfrom.LoadOffsets2("400","800","400");
 
    obsfrom.ReadObss(data_file.c_str());
 

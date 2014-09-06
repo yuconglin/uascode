@@ -26,6 +26,7 @@ public:
    void LoadOffsets(const char *filename);
    void LoadOffsetsSingle(const char *filename,int idx);
    void LoadOffsets2(const char* off1,const char* off2,const char* off3);
+   void SetIfMission(const bool _if_mission){this->if_mission = _if_mission;}
 
 private:
    struct OffSet{
@@ -38,6 +39,7 @@ private:
    };
    std::map<uint32_t,int> addrs_map;
    std::vector<OffSet> offsets;
+   bool if_mission;
    //ros related
    ros::NodeHandle nh;
    ros::Publisher pub_obss;

@@ -22,7 +22,7 @@ namespace UasCode{
  uascode::ObsMsg ObsToRosMsg(const UserStructs::obstacle3D& obs);
  //free function ends
 
- ObsFromFile::ObsFromFile():seq_current(-1)
+ ObsFromFile::ObsFromFile():seq_current(-1),if_mission(true)
  {
    pub_obss=nh.advertise<uascode::MultiObsMsg>("multi_obstacles",1);
    sub_wp_curr = nh.subscribe("waypoint_current",100,&ObsFromFile::WpCurrCb,this);
@@ -261,10 +261,17 @@ namespace UasCode{
      for (std::map<uint32_t,int>::iterator it=addrs_map.begin(); it!=addrs_map.end(); ++it)
          vec_addrs.push_back(it->first);
 
+     bool if_start = true;
+
      while(ros::ok())
      {
         ros::spinOnce();
-        if(seq_current > 0 && count!= all_obss.size())
+
+        if(if_mission){
+            if_start= (seq_current >0);
+        }
+
+        if(if_start && count!= all_obss.size())
         {
            std::vector<UserStructs::obstacle3D> obss = all_obss[count];
            obss_msg.MultiObs.clear();

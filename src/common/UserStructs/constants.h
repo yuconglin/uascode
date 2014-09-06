@@ -7,4 +7,6 @@ namespace UasCode{
  const std::string ZONE= "12N"; //12N for AZ, 16N for IN 
  const double feet2meter= 0.3048;
  const double kt2ms= 0.514444444;
-};
+ const int MAVLINK_IN_PORT = 14550;
+ const std::string MAVLINK_OUT_PORT = "19550";
+}

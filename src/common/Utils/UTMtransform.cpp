@@ -29,4 +29,4 @@ void FromUTM( double x, double y, double& lon, double& lat)
      UTMUPS::Reverse(zone, northp, x, y, lat, lon);
 }
 
-};//namespace ends
+}//namespace ends

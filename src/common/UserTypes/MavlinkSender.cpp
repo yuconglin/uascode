@@ -8,7 +8,6 @@
 #include <cstring>
 
 #include <arpa/inet.h>
-#define SERVERPORT "5760"	
 
 namespace{
   Utils::LoggerPtr s_logger(Utils::getLogger("uascode.MavlinkSender.YcLogger"));
@@ -38,7 +37,7 @@ int MavlinkSender::initialize()
 	hints.ai_family = AF_UNSPEC;
 	hints.ai_socktype = SOCK_DGRAM;
 
-	if ((rv = getaddrinfo("127.0.0.1", "19550", &hints, &servinfo)) != 0) {
+    if ((rv = getaddrinfo("127.0.0.1", UasCode::MAVLINK_OUT_PORT.c_str(), &hints, &servinfo)) != 0) {
 		fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(rv));
 		return 1;
 	}
