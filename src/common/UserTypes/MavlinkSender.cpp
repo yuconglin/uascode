@@ -161,7 +161,7 @@ void MavlinkSender::SendMultiObs(std::vector<UserStructs::obstacle3D> obss)
     }//for ends
 
     //set not set ones to zero
-    for(int i= adsb_obss.number;i!=5;++i)
+    for(int i= adsb_obss.number;i!=3;++i)
     {
        adsb_obss.addrs[i]=0;
        adsb_obss.lats[i]=0.;
@@ -203,13 +203,13 @@ void MavlinkSender::SendMultiObs3(std::vector<UserStructs::obstacle3D> obss)
     int size= obss.size();
     adsb_obss.number= size>3 ? 3:size;
 
-    UASLOG(s_logger,LL_DEBUG,"obss to send: "<< (int)adsb_obss.number);
+    //UASLOG(s_logger,LL_DEBUG,"obss to send: "<< (int)adsb_obss.number);
 
     for(int i=0;i!= adsb_obss.number;++i)
     {
        adsb_obss.addrs[i]= obss[i].address;
-       UASLOG(s_logger,LL_DEBUG,"obs address:"
-              << (int)adsb_obss.addrs[i] );
+       //UASLOG(s_logger,LL_DEBUG,"obs address:"
+       //       << (int)adsb_obss.addrs[i] );
 
        double lat,lon;
        Utils::FromUTM(obss[i].x1,obss[i].x2,lon,lat);
