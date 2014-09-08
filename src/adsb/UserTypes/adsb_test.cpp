@@ -1,10 +1,13 @@
 #include "ObsMonitor.hpp"
+#include "common/Utils/YcLogger.h"
 
 using namespace UasCode;
 int main(int argc,char** argv)
 {
+  Utils::LogConfigurator myconfigurator("log4cxx_MavSendNode.properties", "log for MavSendNode");
+
   ObsMonitor monitor;
-  bool if_send= false;
+  bool if_send= true;
   //arguments for mavlink
   char *uart_name = (char*)"/dev/ttyUSB0";
   int baudrate = 57600;
@@ -37,7 +40,8 @@ int main(int argc,char** argv)
 
   if(if_send){
     monitor.SetMavlinkSend(true);
-    monitor.UartInit(uart_name,baudrate);
+    //monitor.UartInit(uart_name,baudrate);
+    monitor.PortSetUp();
   }
   //if(!monitor.PortInit() ) return -1;
   monitor.BytesDecode();

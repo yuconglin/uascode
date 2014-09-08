@@ -9,4 +9,5 @@ namespace UasCode{
  const double kt2ms= 0.514444444;
  const int MAVLINK_IN_PORT = 14550;
  const std::string MAVLINK_OUT_PORT = "19550";
+ const int ADSB_IN_PORT = 4000;
 }

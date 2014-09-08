@@ -1,6 +1,7 @@
 #pragma once
 #include "SageDecoder.hpp"
-#include "MsgSender.hpp"
+//#include "MsgSender.hpp"
+#include "common/UserTypes/MavlinkSender.hpp"
 #include "Planner/UserStructs/obstacle3D.h"
 //for socket
 #include <netdb.h>
@@ -19,7 +20,8 @@ namespace UasCode{
 class ObsMonitor{
  public:
    ObsMonitor();
-   bool UartInit(const char *_uartname,const int _baudrate); 
+   //bool UartInit(const char *_uartname,const int _baudrate);
+   int PortSetUp();
    int BytesDecode();
    inline void SetMavlinkSend(bool _send){mavlink_send=_send;}
    inline bool GetMavlinkSend(){return mavlink_send;}
@@ -28,7 +30,7 @@ class ObsMonitor{
    SageDecoder decoder;
    //for msg send to pixhawk
    bool mavlink_send;
-   MsgSender sender;
+   MavlinkSender sender;
    //for adsb record
    //for convert to mavlink msg
    std::vector<UserStructs::obstacle3D> obss;
