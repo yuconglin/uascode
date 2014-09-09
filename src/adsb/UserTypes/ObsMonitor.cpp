@@ -240,7 +240,7 @@ namespace UasCode{
                obss.push_back(obs);
                obss_msg.MultiObs.push_back(ObsToRosMsg(obs) );
 
-               fs_obs<< obs.address<<" "
+               fs_obs<< obs.address<<" "<< std::setprecision(8) << std::fixed
                      << obs.x1 <<" "<< obs.x2 <<" " << obs.x3<<" "
                      << obs.head_xy*180./M_PI<<" "<< obs.speed<<" "
                      << obs.v_vert<<" "<< obs.t<<" "
