@@ -20,18 +20,19 @@ int main(int argc,char** argv)
    std::string data_file= filepath + argv[2];
 
    ObsFromFile obsfrom;
-   obsfrom.SetIfMission(false);
+   obsfrom.SetIfMission(true);
+   obsfrom.SetIfSendObs(true);
 
    obsfrom.SetLogFileName(log_file.c_str());
    //obsfrom.LoadOffsets(offsets_file.c_str());
 
-   obsfrom.LoadOffsets2("400","800","400");
+   obsfrom.LoadOffsets2("400","200","200","A");
 
    obsfrom.ReadObss(data_file.c_str());
 
    //send in ros
    //obsfrom.SendObss(1);
 
-   obsfrom.SendObss2(true,true,false);
+   obsfrom.SendObss2(true,false,false);
 
 }

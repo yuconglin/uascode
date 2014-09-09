@@ -22,7 +22,7 @@ namespace UasCode{
  uascode::ObsMsg ObsToRosMsg(const UserStructs::obstacle3D& obs);
  //free function ends
 
- ObsFromFile::ObsFromFile():seq_current(-1),if_mission(true)
+ ObsFromFile::ObsFromFile():seq_current(-1),if_mission(true),if_send_obstacle(false)
  {
    pub_obss=nh.advertise<uascode::MultiObsMsg>("multi_obstacles",1);
    sub_wp_curr = nh.subscribe("waypoint_current",100,&ObsFromFile::WpCurrCb,this);
@@ -106,13 +106,13 @@ namespace UasCode{
 
  }
 
- void ObsFromFile::LoadOffsets2(const char* off1, const char* off2, const char* off3)
+ void ObsFromFile::LoadOffsets2(const char* off1, const char* off2, const char* off3, const char* type)
  {
      std::string filepath = Utils::FindPath();
      // /records/offsets1200.txt
-     std::string file1 = filepath + "/records/offsets" + off1 +".txt";
-     std::string file2 = filepath + "/records/offsets" + off2 +".txt";
-     std::string file3 = filepath + "/records/offsets" + off3 +".txt";
+     std::string file1 = filepath + "/records/offsets" + type + off1 +".txt";
+     std::string file2 = filepath + "/records/offsets" + type + off2 +".txt";
+     std::string file3 = filepath + "/records/offsets" + type + off3 +".txt";
 
      UASLOG(s_logger,LL_DEBUG,file1 << "\n"
             << file2 << "\n"
@@ -362,7 +362,7 @@ namespace UasCode{
                }
            }
 
-           if(if_pub)
+           if(if_pub && if_send_obstacle)
                pub_obss.publish(obss_msg);
 
            ++ count;
