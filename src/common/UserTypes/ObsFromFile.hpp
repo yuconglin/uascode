@@ -25,8 +25,9 @@ public:
    //load offsets from file
    void LoadOffsets(const char *filename);
    void LoadOffsetsSingle(const char *filename,int idx);
-   void LoadOffsets2(const char* off1,const char* off2,const char* off3);
+   void LoadOffsets2(const char* off1,const char* off2,const char* off3,const char* type = "");
    void SetIfMission(const bool _if_mission){this->if_mission = _if_mission;}
+   void SetIfSendObs(const bool _if_send_obs){this->if_send_obstacle = _if_send_obs;}
 
 private:
    struct OffSet{
@@ -40,6 +41,7 @@ private:
    std::map<uint32_t,int> addrs_map;
    std::vector<OffSet> offsets;
    bool if_mission;
+   bool if_send_obstacle;
    //ros related
    ros::NodeHandle nh;
    ros::Publisher pub_obss;

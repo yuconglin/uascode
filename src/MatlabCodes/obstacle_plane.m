@@ -2,10 +2,12 @@ close all;
 clear all;
 clc;
 
+k= 1200;
+MATDIS= zeros(3,4);
 %to plot the whole trajectory and the distance between the obstacles and
 %the aircraft
 
-f_traj =fopen('../../records/traj_log0.txt','r');
+f_traj =fopen('../../records/traj_log1.txt','r');
 
 if f_traj == -1
     error('File traj_log.txt could not be opened, check name or path.')
@@ -32,7 +34,7 @@ while ischar(traj_line)
    traj_line= fgetl(f_traj);
 end
 
-f_obss= fopen('../../records/obss_log0.txt');
+f_obss= fopen('../../records/obss_log1.txt');
 
 if f_obss == -1
     error('File obss_log.txt could not be opened, check name or path.')
@@ -86,9 +88,6 @@ t_obs3= obs3(:,1);
 i1= 1;
 i2= 1;
 i3= 1;
-
-k= 200;
-MATDIS= zeros(3,4);
 
 for j=1:length(t_traj)
    
@@ -152,7 +151,7 @@ end
 figure;
 plot3(virtual_traj(:,2),virtual_traj(:,3),virtual_traj(:,4),'r+' );
 
-MATDIS
+%MATDIS
 % figure;
 % subplot(3,1,1);
 % plot( t_traj, dis1,'b+-' );
