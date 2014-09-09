@@ -177,3 +177,6 @@ target_link_libraries(min_dis common_utils ${ARMADILLO_LIBRARIES} ${GeographicLi
 
 rosbuild_add_executable(obss_sep src/common/Test/separate_obs.cpp)
 target_link_libraries(obss_sep common_utils ${ARMADILLO_LIBRARIES} ${GeographicLib_LIBRARIES})
+
+rosbuild_add_executable(obss_whole src/common/Test/obs_intropolate.cpp)
+target_link_libraries(obss_whole common_utils ${ARMADILLO_LIBRARIES} ${GeographicLib_LIBRARIES})
