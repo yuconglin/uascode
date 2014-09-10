@@ -1,0 +1,4 @@
+#ifndef ADSBFROMFILE_HPP
+#define ADSBFROMFILE_HPP
+
+#endif // ADSBFROMFILE_HPP
