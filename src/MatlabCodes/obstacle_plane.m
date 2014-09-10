@@ -3,6 +3,7 @@ clear all;
 clc;
 
 k= 1200;
+time= 10;
 MATDIS= zeros(3,4);
 %to plot the whole trajectory and the distance between the obstacles and
 %the aircraft
@@ -99,8 +100,8 @@ for j=1:length(t_traj)
                       + (virtual_traj(j,4)-obs1(i,4) )^2 ... 
                       );
                   
-         if(j==k)         
-            disp([virtual_traj(j,2)-obs1(i,2),virtual_traj(j,3)-obs1(i,3),virtual_traj(j,4)-obs1(i,4)]); 
+         if(j>1 && t_traj(j-1)-t_traj(1) < time && t_traj(j)-t_traj(1) >= time)         
+            %disp([virtual_traj(j,2)-obs1(i,2),virtual_traj(j,3)-obs1(i,3),virtual_traj(j,4)-obs1(i,4)]); 
             MATDIS(1,:) = [virtual_traj(j,2)-obs1(i,2),virtual_traj(j,3)-obs1(i,3),virtual_traj(j,4)-obs1(i,4),0];
          end 
                   
@@ -117,8 +118,8 @@ for j=1:length(t_traj)
                       + (virtual_traj(j,4)-obs2(i,4) )^2 ... 
                       );
                   
-         if(j==k)         
-            disp([virtual_traj(j,2)-obs2(i,2),virtual_traj(j,3)-obs2(i,3),virtual_traj(j,4)-obs2(i,4)]);  
+         if(j>1 && t_traj(j-1)-t_traj(1) < time && t_traj(j)-t_traj(1) >= time)         
+            %disp([virtual_traj(j,2)-obs2(i,2),virtual_traj(j,3)-obs2(i,3),virtual_traj(j,4)-obs2(i,4)]);  
             MATDIS(2,:) = [virtual_traj(j,2)-obs2(i,2),virtual_traj(j,3)-obs2(i,3),virtual_traj(j,4)-obs2(i,4),0];
          end       
                   
@@ -135,8 +136,8 @@ for j=1:length(t_traj)
                       + (virtual_traj(j,4)-obs3(i,4) )^2 ... 
                       );
                   
-         if(j==k)         
-            disp([virtual_traj(j,2)-obs3(i,2),virtual_traj(j,3)-obs3(i,3),virtual_traj(j,4)-obs3(i,4)]); 
+         if(j>1 && t_traj(j-1)-t_traj(1) < time && t_traj(j)-t_traj(1) >= time)         
+            %disp([virtual_traj(j,2)-obs3(i,2),virtual_traj(j,3)-obs3(i,3),virtual_traj(j,4)-obs3(i,4)]); 
             MATDIS(3,:) = [virtual_traj(j,2)-obs3(i,2),virtual_traj(j,3)-obs3(i,3),virtual_traj(j,4)-obs3(i,4),0];
          end        
                   
