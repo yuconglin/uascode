@@ -93,8 +93,15 @@ namespace Utils{
    vvv= HV & 0x0F;
    vvv= (vvv<<8)+ VV;
    
-   if( (HV>>3)&0x01==1 )
-       vvv= -1*(~vvv+1);
+   if( (HV>>3)&0x01==1 ){
+       vvv= ~vvv;
+       vvv= vvv & 0x0FFF;
+       vvv= -1*(vvv+1);
+   }
+
+   if(vvv==-2048)//vert unavailable
+       vvv=0;
+
    msg.v= hhh;
    msg.vv= vvv*64;
    //next byte is tt, the heading

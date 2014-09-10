@@ -3,10 +3,9 @@ clear all;
 clc;
 
 obs_files =[
-'whole_obstacle_10947687.txt';
-'whole_obstacle_11214846.txt';
-'whole_obstacle_11349796.txt';
-'whole_obstacle_4196010.txt '
+'whole_obstacle_10734770.txt';
+'whole_obstacle_10934723.txt';
+'whole_obstacle_10942331.txt';
 ];
 
 cells = cellstr(obs_files);

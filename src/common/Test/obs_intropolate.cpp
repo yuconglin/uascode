@@ -25,7 +25,7 @@ int main(int argc, char** argv)
             >> obs_pre.speed
             >> obs_pre.v_vert
             >> obs_pre.t >> obs_pre.r >> obs_pre.hr;
-
+    obs_pre.head_xy= obs_pre.head_xy*M_PI/180.;
     obs_vec.push_back(obs_pre);
 
     while(f_obs.good())
@@ -39,6 +39,7 @@ int main(int argc, char** argv)
                >> obs.speed
                >> obs.v_vert
                >> obs.t >> obs.r >> obs.hr;
+        obs.head_xy= obs.head_xy*M_PI/180.;
         //see if extropolate is needed
         if(obs.t - obs_pre.t > 1.0){
             int cnt = (int)(obs.t-obs_pre.t);
