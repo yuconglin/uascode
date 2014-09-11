@@ -2,7 +2,7 @@ close all;
 clear all;
 clc;
 
-time= 10;
+time= 20;
 MATDIS= zeros(3,4);
 
 %load the whole trajectory
@@ -39,7 +39,7 @@ end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %load adsb logged (extropolated data)
-f = fullfile('../../records/','whole_obstacle_10734770.txt');
+f = fullfile('../../records/','pp_obstacle_10734770.txt');
 f_obss =fopen(f,'r');
 
 if f_obss == -1
@@ -61,7 +61,7 @@ while ischar(obss_line)
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-f = fullfile('../../records/','whole_obstacle_10934723.txt');
+f = fullfile('../../records/','pp_obstacle_10934723.txt');
 f_obss =fopen(f,'r');
 
 if f_obss == -1
@@ -83,7 +83,7 @@ while ischar(obss_line)
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-f = fullfile('../../records/','whole_obstacle_10942331.txt');
+f = fullfile('../../records/','pp_obstacle_10942331.txt');
 f_obss =fopen(f,'r');
 
 if f_obss == -1

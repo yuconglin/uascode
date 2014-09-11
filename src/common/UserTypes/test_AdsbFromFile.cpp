@@ -22,9 +22,11 @@ int main(int argc,char** argv)
     file_names.push_back(file_adsb2);
 
     AdsbFromFile adsbfrom;
-    adsbfrom.LoadOffsets2("10","10","10","A");
+
     adsbfrom.ReadADSB(file_names);
-    adsbfrom.SendObss2(false,true,false);
+    //adsbfrom.LoadOffsets2("20","20","20","A");
+    //adsbfrom.SendObss2(false,true,false);
+    adsbfrom.LoadSendConfig(argv[1]);
 
     return 0;
 }
