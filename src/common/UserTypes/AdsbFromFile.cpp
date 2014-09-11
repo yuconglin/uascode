@@ -5,6 +5,8 @@
 #include "common/Utils/GetTimeNow.h"
 //ros
 #include "uascode/MultiObsMsg.h"
+//std
+#include <iostream>
 
 namespace{
   Utils::LoggerPtr s_logger(Utils::getLogger("uascode.AdsbFromFile.YcLogger"));
@@ -88,29 +90,35 @@ void AdsbFromFile::ReadADSB(const std::vector<std::string> &file_names)
         std::string file = Utils::FindPath()+"/records/"+file_names[i];
         std::ifstream adsb_file(file.c_str());
         std::vector<UserStructs::obstacle3D> vec_obs;
-        while(adsb_file.good())
-        {
-           UserStructs::obstacle3D obs_single;
-           adsb_file >> obs_single.address
-                     >> obs_single.x1
-                   >> obs_single.x2
-                   >> obs_single.x3
-                   >> obs_single.head_xy
-                   >> obs_single.speed
-                   >> obs_single.v_vert
-                   >> obs_single.t
-                   >> obs_single.r
-                   >> obs_single.hr;
 
-           obs_single.x1 += offsets[i].x_off;
-           obs_single.x2 += offsets[i].y_off;
-           obs_single.x3 += offsets[i].z_off;
-           obs_single.head_xy += offsets[i].hd_off;
-           obs_single.r = 300;
-           //obs_single.hr = 70.;
-           obs_single.head_xy= obs_single.head_xy * UasCode::DEG2RAD;
-           vec_obs.push_back(obs_single);
+        if(adsb_file.is_open()){
+            std::string line;
+            while(getline(adsb_file,line)){
+                std::istringstream iss(line);
+                UserStructs::obstacle3D obs_single;
+                iss >> obs_single.address
+                        >> obs_single.x1
+                        >> obs_single.x2
+                        >> obs_single.x3
+                        >> obs_single.head_xy
+                        >> obs_single.speed
+                        >> obs_single.v_vert
+                        >> obs_single.t
+                        >> obs_single.r
+                        >> obs_single.hr;
+
+                obs_single.x1 += offsets[i].x_off;
+                obs_single.x2 += offsets[i].y_off;
+                obs_single.x3 += offsets[i].z_off;
+                obs_single.head_xy += offsets[i].hd_off;
+                obs_single.r = 300;
+                //obs_single.hr = 70.;
+                obs_single.head_xy= obs_single.head_xy * UasCode::DEG2RAD;
+                vec_obs.push_back(obs_single);
+            }
         }
+
+        UASLOG(s_logger,LL_DEBUG,"vec_obs"<<" "<<i<<" size:"<< vec_obs.size());
         this->all_obss.push_back(vec_obs);
     }
     UASLOG(s_logger,LL_DEBUG,"ReadADSB ends");
@@ -161,7 +169,7 @@ void AdsbFromFile::SendObss2(bool f0, bool f1, bool f2)
             }
         }
 
-        if(if_start && (if_start0||if_start1||if_start2)){
+        if(if_start && (if_start0||if_start1||if_start2) ){
             UASLOG(s_logger,LL_DEBUG,"count:"<< count);
             for(int i=0;i!=obss_msg.MultiObs.size();++i)
                 obss_msg.MultiObs[i].t = Utils::GetTimeNow();

@@ -12,10 +12,9 @@ int main(int argc,char** argv)
     Utils::LogConfigurator myconfigurator("log4cxx_AdsbFromFile.properties","AdsbFromFile");
 
     //rank from small to large
-    std::string file_adsb0 = "whole_obstacle_10734770.txt";
-    //std::string file_adsb1 = "whole_obstacle_10934723.txt";
-    std::string file_adsb1 = "obstacle_10934723.txt";
-    std::string file_adsb2 = "whole_obstacle_10942331.txt";
+    std::string file_adsb0 = "pp_obstacle_10734770.txt";
+    std::string file_adsb1 = "pp_obstacle_10934723.txt";
+    std::string file_adsb2 = "pp_obstacle_10942331.txt";
 
     std::vector<std::string> file_names;
     file_names.push_back(file_adsb0);
