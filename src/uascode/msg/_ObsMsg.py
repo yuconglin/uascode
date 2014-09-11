@@ -7,18 +7,18 @@ import struct
 import std_msgs.msg
 
 class ObsMsg(genpy.Message):
-  _md5sum = "ab0e7a1be7a279d8bf29565ead64b526"
+  _md5sum = "d855f6bf5b3dc0579d285b4c850a1ea3"
   _type = "uascode/ObsMsg"
   _has_header = True #flag to mark the presence of a Header object
   _full_text = """Header header
-int32 address
+uint32 address
 float32 x1
 float32 x2
 float32 x3
 float32 head_xy
 float32 speed
 float32 v_vert
-float32 t
+float64 t
 float32 r
 float32 hr
 
@@ -42,7 +42,7 @@ string frame_id
 
 """
   __slots__ = ['header','address','x1','x2','x3','head_xy','speed','v_vert','t','r','hr']
-  _slot_types = ['std_msgs/Header','int32','float32','float32','float32','float32','float32','float32','float32','float32','float32']
+  _slot_types = ['std_msgs/Header','uint32','float32','float32','float32','float32','float32','float32','float64','float32','float32']
 
   def __init__(self, *args, **kwds):
     """
@@ -117,9 +117,9 @@ string frame_id
         length = len(_x)
       buff.write(struct.pack('<I%ss'%length, length, _x))
       _x = self
-      buff.write(_struct_i9f.pack(_x.address, _x.x1, _x.x2, _x.x3, _x.head_xy, _x.speed, _x.v_vert, _x.t, _x.r, _x.hr))
-    except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(_x))))
-    except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(_x))))
+      buff.write(_struct_I6fd2f.pack(_x.address, _x.x1, _x.x2, _x.x3, _x.head_xy, _x.speed, _x.v_vert, _x.t, _x.r, _x.hr))
+    except struct.error as se: self._check_types(se)
+    except TypeError as te: self._check_types(te)
 
   def deserialize(self, str):
     """
@@ -145,8 +145,8 @@ string frame_id
         self.header.frame_id = str[start:end]
       _x = self
       start = end
-      end += 40
-      (_x.address, _x.x1, _x.x2, _x.x3, _x.head_xy, _x.speed, _x.v_vert, _x.t, _x.r, _x.hr,) = _struct_i9f.unpack(str[start:end])
+      end += 44
+      (_x.address, _x.x1, _x.x2, _x.x3, _x.head_xy, _x.speed, _x.v_vert, _x.t, _x.r, _x.hr,) = _struct_I6fd2f.unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
@@ -168,9 +168,9 @@ string frame_id
         length = len(_x)
       buff.write(struct.pack('<I%ss'%length, length, _x))
       _x = self
-      buff.write(_struct_i9f.pack(_x.address, _x.x1, _x.x2, _x.x3, _x.head_xy, _x.speed, _x.v_vert, _x.t, _x.r, _x.hr))
-    except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(_x))))
-    except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(_x))))
+      buff.write(_struct_I6fd2f.pack(_x.address, _x.x1, _x.x2, _x.x3, _x.head_xy, _x.speed, _x.v_vert, _x.t, _x.r, _x.hr))
+    except struct.error as se: self._check_types(se)
+    except TypeError as te: self._check_types(te)
 
   def deserialize_numpy(self, str, numpy):
     """
@@ -197,12 +197,12 @@ string frame_id
         self.header.frame_id = str[start:end]
       _x = self
       start = end
-      end += 40
-      (_x.address, _x.x1, _x.x2, _x.x3, _x.head_xy, _x.speed, _x.v_vert, _x.t, _x.r, _x.hr,) = _struct_i9f.unpack(str[start:end])
+      end += 44
+      (_x.address, _x.x1, _x.x2, _x.x3, _x.head_xy, _x.speed, _x.v_vert, _x.t, _x.r, _x.hr,) = _struct_I6fd2f.unpack(str[start:end])
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e) #most likely buffer underfill
 
 _struct_I = genpy.struct_I
 _struct_3I = struct.Struct("<3I")
-_struct_i9f = struct.Struct("<i9f")
+_struct_I6fd2f = struct.Struct("<I6fd2f")

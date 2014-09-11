@@ -111,6 +111,7 @@ for i=2:length(virtual_traj)
        x_traj= virtual_traj(i,2);
        y_traj= virtual_traj(i,3);
        z_traj= virtual_traj(i,4);
+       break;
     end
 end
 
@@ -119,6 +120,7 @@ for i=2:length(obss_vec1)
        x1= obss_vec1(i,2);
        y1= obss_vec1(i,3);
        z1= obss_vec1(i,4);
+       break;
     end
 end
 
@@ -127,6 +129,7 @@ for i=2:length(obss_vec2)
        x2= obss_vec2(i,2);
        y2= obss_vec2(i,3);
        z2= obss_vec2(i,4);
+       break;
     end 
 end
 
@@ -135,6 +138,7 @@ for i=2:length(obss_vec3)
        x3= obss_vec3(i,2);
        y3= obss_vec3(i,3);
        z3= obss_vec3(i,4);
+       break;
     end
 end
 

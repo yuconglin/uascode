@@ -69,6 +69,7 @@ rosbuild_add_library(common_utils
 	  src/common/UserTypes/MavlinkTCP.cpp
 	  src/common/UserTypes/MavlinkSender.cpp
           src/common/UserTypes/ObsFromFile.cpp
+          src/common/UserTypes/AdsbFromFile.cpp
   )
 
 #########library for the path planner
@@ -147,6 +148,10 @@ target_link_libraries(mavlinktcp_log common_utils ${GeographicLib_LIBRARIES})
 #test obs from file
 rosbuild_add_executable(test_obsfile src/common/UserTypes/test_obsfromfile.cpp)
 target_link_libraries(test_obsfile common_utils ${GeographicLib_LIBRARIES})
+
+#test adsb from file
+rosbuild_add_executable(test_adsbfile src/common/UserTypes/test_AdsbFromFile.cpp)
+target_link_libraries(test_adsbfile common_utils ${GeographicLib_LIBRARIES})
 
 #test plan_node
 rosbuild_add_executable(test_PlanNode src/nodes/UserTypes/test_PlanNode.cpp)
