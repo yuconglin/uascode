@@ -4,6 +4,7 @@
 #include "UserStructs/obstacle3D.h"
 //ros messages
 #include "uascode/WpCurrent.h"
+#include "uascode/ObsMsg.h"
 
 #include <fstream>
 #include <map>
@@ -51,6 +52,7 @@ private:
    int seq_current;
    //callback functions
    void WpCurrCb(const uascode::WpCurrent::ConstPtr& msg);
+   uascode::ObsMsg ObsToRosMsg(const UserStructs::obstacle3D& obs);
    //file for obstacles
    std::ifstream obss_file;
    //file for logging sent obstacles
