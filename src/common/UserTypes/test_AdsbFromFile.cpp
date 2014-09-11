@@ -13,7 +13,8 @@ int main(int argc,char** argv)
 
     //rank from small to large
     std::string file_adsb0 = "whole_obstacle_10734770.txt";
-    std::string file_adsb1 = "whole_obstacle_10934723.txt";
+    //std::string file_adsb1 = "whole_obstacle_10934723.txt";
+    std::string file_adsb1 = "obstacle_10934723.txt";
     std::string file_adsb2 = "whole_obstacle_10942331.txt";
 
     std::vector<std::string> file_names;
