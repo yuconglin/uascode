@@ -21,6 +21,7 @@ public:
    void LoadOffsetsSingle(const char *filename,int idx);
    void LoadOffsets2(const char* off1,const char* off2,const char* off3,const char* type = "");
    void LoadSendConfig(const char *filename,const std::vector<std::string> &file_names);
+   void LoadSendRandom(const std::vector<std::string> &file_names,const char* type="");
 
 private:
    struct OffSet{
@@ -42,6 +43,8 @@ private:
    //callback functions
    void WpCurrCb(const uascode::WpCurrent::ConstPtr& msg);
    uascode::ObsMsg ObsToRosMsg(const UserStructs::obstacle3D& obs);
+   int RandSelect(int start,int end);
+   std::string int2string(int _num);
 };
 
 }

@@ -7,6 +7,7 @@
 #include "uascode/MultiObsMsg.h"
 //std
 #include <iostream>
+#include <stdlib.h>
 
 namespace{
   Utils::LoggerPtr s_logger(Utils::getLogger("uascode.AdsbFromFile.YcLogger"));
@@ -211,6 +212,35 @@ void AdsbFromFile::LoadSendConfig(const char *filename,const std::vector<std::st
     this->SendObss2(if0,if1,if2);
 }
 
+void AdsbFromFile::LoadSendRandom(const std::vector<std::string> &file_names,const char* type)
+{
+    int nf0= this->RandSelect(7,9);
+    int nf1= this->RandSelect(8,9);
+    int nf2= this->RandSelect(6,13);
+
+    bool if0 = nf0 > 0;
+    bool if1 = nf1 > 0;
+    bool if2 = nf2 > 0;
+    std::string off0,off1,off2;
+
+    if(if0){
+      off0 = this->int2string(nf0)+"0";
+    }
+
+    if(if1){
+      off1 = this->int2string(nf1)+"0";
+    }
+
+    if(if2){
+      off2 = this->int2string(nf2)+"0";
+    }
+
+    UASLOG(s_logger,LL_DEBUG,"random offsets:"<< off0 <<","<<off1<<","<<off2);
+    this->LoadOffsets2(off0.c_str(),off1.c_str(),off2.c_str(),type);
+    this->ReadADSB(file_names);
+    this->SendObss2(if0,if1,if2);
+}
+
 void AdsbFromFile::WpCurrCb(const uascode::WpCurrent::ConstPtr &msg)
 {
    seq_current= msg->wp_current;
@@ -239,6 +269,24 @@ uascode::ObsMsg AdsbFromFile::ObsToRosMsg(const UserStructs::obstacle3D& obs)
     obs_msg.r= obs.r;
     obs_msg.hr= obs.hr;
     return obs_msg;
+}
+
+int AdsbFromFile::RandSelect(int start, int end)
+{
+    /* initialize random seed: */
+    srand (time(NULL));
+    int len = end-start+1;
+    int num = rand() % (len+1) + start;
+    if(num== end+1)
+        num=0;
+    return num;
+}
+
+std::string AdsbFromFile::int2string(int _num)
+{
+    std::stringstream ss;
+    ss << _num;
+    return ss.str();
 }
 
 }
