@@ -180,7 +180,7 @@ void AdsbFromFile::SendObss2(bool f0, bool f1, bool f2)
     }//while ros ends
 }
 
-void AdsbFromFile::LoadSendConfig(const char *filename)
+void AdsbFromFile::LoadSendConfig(const char *filename,const std::vector<std::string> &file_names)
 {
     std::string file = Utils::FindPath()+"/records/"+std::string(filename);
     std::ifstream config_file(file.c_str());
@@ -207,6 +207,7 @@ void AdsbFromFile::LoadSendConfig(const char *filename)
     }//if ends
 
     this->LoadOffsets2(off0.c_str(),off1.c_str(),off2.c_str(),type.c_str());
+    this->ReadADSB(file_names);
     this->SendObss2(if0,if1,if2);
 }
 

@@ -20,7 +20,7 @@ public:
    //load offsets from files
    void LoadOffsetsSingle(const char *filename,int idx);
    void LoadOffsets2(const char* off1,const char* off2,const char* off3,const char* type = "");
-   void LoadSendConfig(const char *filename);
+   void LoadSendConfig(const char *filename,const std::vector<std::string> &file_names);
 
 private:
    struct OffSet{

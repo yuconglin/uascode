@@ -377,7 +377,7 @@ namespace UasCode{
               UASLOG(s_logger,LL_DEBUG,"allow_dis:" << allow_dis);
 
               //if(dis_c2d < allow_dis && colli_return.seq_colli == seq_current+1)
-              if(dis_c2d < allow_dis) //using 0.5 to delay reaction and maitain height differenct
+              if(dis_c2d < allow_dis && dis_c2d > st_current.speed*1.0) //using 0.5 to delay reaction and maitain height differenct
               {
                  if(!if_inter_gen){
                      UASLOG(s_logger,LL_DEBUG,"local avoidance");

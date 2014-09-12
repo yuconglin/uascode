@@ -2,7 +2,8 @@ close all;
 clear all;
 clc;
 
-time= 20;
+time= 200;
+MATX0= zeros(4,3);
 MATDIS= zeros(3,4);
 
 %load the whole trajectory
@@ -33,6 +34,9 @@ while ischar(traj_line)
    traj_line= fgetl(f_traj);
 end
 
+%plot
+% figure;
+% plot3(virtual_traj(:,2),virtual_traj(:,3),virtual_traj(:,4),'r+' );
 %'whole_obstacle_10734770.txt';
 %'whole_obstacle_10934723.txt';
 %'whole_obstacle_10942331.txt';
@@ -59,6 +63,9 @@ while ischar(obss_line)
    obss_vec1 = [obss_vec1;[t,x,y,z] ];
    obss_line= fgetl(f_obss);
 end
+%plot
+% figure;
+% plot3(obss_vec1(:,2),obss_vec1(:,3),obss_vec1(:,4),'r+' );
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 f = fullfile('../../records/','pp_obstacle_10934723.txt');
@@ -81,7 +88,9 @@ while ischar(obss_line)
    obss_vec2 = [obss_vec2;[t,x,y,z] ];
    obss_line= fgetl(f_obss);
 end
-
+%plot
+% figure;
+% plot3(obss_vec2(:,2),obss_vec2(:,3),obss_vec2(:,4),'r+' );
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 f = fullfile('../../records/','pp_obstacle_10942331.txt');
 f_obss =fopen(f,'r');
@@ -103,7 +112,9 @@ while ischar(obss_line)
    obss_vec3 = [obss_vec3;[t,x,y,z] ];
    obss_line= fgetl(f_obss);
 end
-
+%plot
+% figure;
+% plot3(obss_vec3(:,2),obss_vec3(:,3),obss_vec3(:,4),'r+' );
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 for i=2:length(virtual_traj)
@@ -123,6 +134,12 @@ for i=2:length(obss_vec1)
        break;
     end
 end
+if i== length(obss_vec1)
+    x1= obss_vec1(i,2);
+    y1= obss_vec1(i,3);
+    z1= obss_vec1(i,4);
+end
+
 
 for i=2:length(obss_vec2)
     if(obss_vec2(i-1,1)-obss_vec2(1,1) < time && obss_vec2(i,1)-obss_vec2(1,1) >= time)
@@ -131,6 +148,11 @@ for i=2:length(obss_vec2)
        z2= obss_vec2(i,4);
        break;
     end 
+end
+if i== length(obss_vec2)
+    x2= obss_vec1(i,2);
+    y2= obss_vec1(i,3);
+    z2= obss_vec1(i,4);
 end
 
 for i=2:length(obss_vec3)
@@ -141,8 +163,29 @@ for i=2:length(obss_vec3)
        break;
     end
 end
+if i== length(obss_vec3)
+    x3= obss_vec1(i,2);
+    y3= obss_vec1(i,3);
+    z3= obss_vec1(i,4);
+end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+MATX0(1,:) = [x_traj,y_traj,z_traj];
+MATX0(2,:) = [x1,y1,z1];
+MATX0(3,:) = [x2,y2,z2];
+MATX0(4,:) = [x3,y3,z3];
+
 MATDIS(1,:) = [x_traj-x1, y_traj-y1, z_traj-z1, 0];
 MATDIS(2,:) = [x_traj-x2, y_traj-y2, z_traj-z2, 0];
 MATDIS(3,:) = [x_traj-x3, y_traj-y3, z_traj-z3, 0];
+
+for i=1:length(obss_vec2)
+    obss_vec2(i,2) = obss_vec2(i,2)+ MATDIS(2,1);
+    obss_vec2(i,3) = obss_vec2(i,3)+ MATDIS(2,2);
+    obss_vec2(i,4) = obss_vec2(i,4)+ MATDIS(2,3);
+end
+
+% figure;
+% plot3(virtual_traj(:,2),virtual_traj(:,3),virtual_traj(:,4),'r+' );
+% hold on;
+% plot3(obss_vec2(:,2),obss_vec2(:,3),obss_vec2(:,4),'g+' );
