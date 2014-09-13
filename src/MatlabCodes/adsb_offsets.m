@@ -2,7 +2,7 @@ close all;
 clear all;
 clc;
 
-time= 200;
+time= 140;
 MATX0= zeros(4,3);
 MATDIS= zeros(3,4);
 
@@ -43,7 +43,7 @@ end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %load adsb logged (extropolated data)
-f = fullfile('../../records/','pp_obstacle_10734770.txt');
+f = fullfile('../../records/','tt_obstacle_10734770.txt');
 f_obss =fopen(f,'r');
 
 if f_obss == -1
@@ -68,7 +68,7 @@ end
 % plot3(obss_vec1(:,2),obss_vec1(:,3),obss_vec1(:,4),'r+' );
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-f = fullfile('../../records/','pp_obstacle_10934723.txt');
+f = fullfile('../../records/','tt_obstacle_10934723.txt');
 f_obss =fopen(f,'r');
 
 if f_obss == -1
@@ -92,7 +92,7 @@ end
 % figure;
 % plot3(obss_vec2(:,2),obss_vec2(:,3),obss_vec2(:,4),'r+' );
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-f = fullfile('../../records/','pp_obstacle_10942331.txt');
+f = fullfile('../../records/','tt_obstacle_10942331.txt');
 f_obss =fopen(f,'r');
 
 if f_obss == -1
@@ -150,9 +150,9 @@ for i=2:length(obss_vec2)
     end 
 end
 if i== length(obss_vec2)
-    x2= obss_vec1(i,2);
-    y2= obss_vec1(i,3);
-    z2= obss_vec1(i,4);
+    x2= obss_vec2(i,2);
+    y2= obss_vec2(i,3);
+    z2= obss_vec2(i,4);
 end
 
 for i=2:length(obss_vec3)
@@ -164,9 +164,9 @@ for i=2:length(obss_vec3)
     end
 end
 if i== length(obss_vec3)
-    x3= obss_vec1(i,2);
-    y3= obss_vec1(i,3);
-    z3= obss_vec1(i,4);
+    x3= obss_vec2(i,2);
+    y3= obss_vec2(i,3);
+    z3= obss_vec2(i,4);
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
