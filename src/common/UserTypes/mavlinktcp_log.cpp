@@ -25,6 +25,7 @@ int main(int argc, char** argv)
  double dvz;
  double vx_pre,vy_pre,vz_pre;
  double t_pre=0,dt=0.3;
+ int wp_id=-1;
 
  //while loop
  while(1)
@@ -82,6 +83,13 @@ int main(int argc, char** argv)
 	      yaw= att_t.yaw;
 	      if_atti= true;
 	 }
+
+     if(msg.msgid == MAVLINK_MSG_ID_MISSION_CURRENT){
+         mavlink_mission_current_t current_t;
+         mavlink_msg_mission_current_decode(&msg,&current_t);
+         wp_id = current_t.seq;
+     }
+
 	 std::cout<<"if_accel: "<< if_accel<<" "
 		  <<"if_posi: "<< if_posi<<" "
 		  <<"if_atti: "<< if_atti<< std::endl;
@@ -105,6 +113,7 @@ int main(int argc, char** argv)
 		   << yaw << " "
            << ax <<" "<< ay <<" "<< az << " "
            << dvz << " "
+           << wp_id << " "
 		   << std::endl;
 	   if_accel= false;
 	   if_posi= false;
