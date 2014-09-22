@@ -150,8 +150,8 @@ title('distance in xy');
 % plot( virtual_traj(:,1), virtual_traj(:,6), 'r+-' );
 % title('yaw');
 % 
-% figure;
-% hold on;
-% plot3(sim_traj(:,2),sim_traj(:,3),sim_traj(:,4) );
-% plot3(virtual_traj(:,2),virtual_traj(:,3),virtual_traj(:,4),'r+' );
+figure;
+hold on;
+plot3(sim_traj(:,2),sim_traj(:,3),sim_traj(:,4) );
+plot3(virtual_traj(:,2),virtual_traj(:,3),virtual_traj(:,4),'r+' );
 
