@@ -26,8 +26,8 @@ int main(int argc,char** argv)
     //adsbfrom.ReadADSB(file_names);
     //adsbfrom.LoadOffsets2("20","20","20","A");
     //adsbfrom.SendObss2(false,true,false);
-    //adsbfrom.LoadSendConfig(argv[1],file_names);
-    adsbfrom.LoadSendRandom(file_names,"A");
+    adsbfrom.LoadSendConfig(argv[1],file_names);
+    //adsbfrom.LoadSendRandom(file_names,"A");
 
     return 0;
 }
