@@ -91,31 +91,55 @@ for j=1:length(t_array)
   end
 end
 
-figure;
-hold on;
-plot3( virtual_traj(:,2), virtual_traj(:,3), virtual_traj(:,4),'r+-');
+t0= t_array(1);
+for i=1:size(t_array,1)
+   t_array(i)=t_array(i)-t0;
+end
+
+t0= ts_array(1);
+for i=1:size(ts_array,1)
+   ts_array(i)=ts_array(i)-t0;
+end
+
+% figure;
+% hold on;
+% plot3( virtual_traj(:,2), virtual_traj(:,3), virtual_traj(:,4),'r+-');
 
 figure;
-subplot(2,2,1);
+%subplot(2,2,1);
 hold on;
-plot( sim_traj(:,1), sim_traj(:,2) );
-plot( virtual_traj(:,1), virtual_traj(:,2),'r+-');
+plot( ts_array, sim_traj(:,2) );
+plot( t_array, virtual_traj(:,2),'r+-');
+xlabel('time (sec)');
+ylabel('x coordinate (m)');
+legend('predicted','SITL');
 title('x');  
 
-subplot(2,2,2);
+figure;
+%subplot(2,2,2);
 hold on;
-plot( sim_traj(:,1), sim_traj(:,3) );
-plot( virtual_traj(:,1), virtual_traj(:,3), 'r+-' );
+plot( ts_array, sim_traj(:,3) );
+plot( t_array, virtual_traj(:,3), 'r+-' );
+xlabel('time (sec)');
+ylabel('y coordinate (m)');
+legend('predicted','SITL');
 title('y');
 
-subplot(2,2,3);
+figure;
+%subplot(2,2,3);
 hold on;
-plot( sim_traj(:,1), sim_traj(:,4) );
-plot( virtual_traj(:,1), virtual_traj(:,4), 'r+-' );
+plot( ts_array, sim_traj(:,4) );
+plot( t_array, virtual_traj(:,4), 'r+-' );
+xlabel('time (sec)');
+ylabel('z coordinate (m)');
+legend('predicted','SITL');
 title('z');
 
-subplot(2,2,4);
+figure;
+%subplot(2,2,4);
 hold on;
+xlabel('time (sec)');
+ylabel('distance (m)');
 plot( t_array(1:length(dis)), dis );
 title('distance in xy');
 
@@ -150,8 +174,8 @@ title('distance in xy');
 % plot( virtual_traj(:,1), virtual_traj(:,6), 'r+-' );
 % title('yaw');
 % 
-figure;
-hold on;
-plot3(sim_traj(:,2),sim_traj(:,3),sim_traj(:,4) );
-plot3(virtual_traj(:,2),virtual_traj(:,3),virtual_traj(:,4),'r+' );
+% figure;
+% hold on;
+% plot3(sim_traj(:,2),sim_traj(:,3),sim_traj(:,4) );
+% plot3(virtual_traj(:,2),virtual_traj(:,3),virtual_traj(:,4),'r+' );
 
