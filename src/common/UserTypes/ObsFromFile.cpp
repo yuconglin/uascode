@@ -369,6 +369,37 @@ namespace UasCode{
 
  }
 
+ void ObsFromFile::LoadSendConfig(const char *cfg_file, const char *obs_file)
+ {
+    std::string file= Utils::FindPath()+"/records/"+std::string(cfg_file);
+    std::ifstream config_file(file.c_str());
+
+    int count=0;
+    std::string off0,off1,off2;
+    std::string type;
+    bool if0, if1, if2;
+
+    if(config_file.is_open()){
+        std::string line;
+        while(getline(config_file,line))
+        {
+            std::istringstream iss(line);
+            if(count==0){
+               iss >> off0 >> off1 >> off2 >> type;
+            }
+
+            if(count==1){
+               iss >> if0 >> if1 >> if2;
+            }
+            ++count;
+        }//while ends
+    }//if ends
+
+    this->LoadOffsets2(off0.c_str(),off1.c_str(),off2.c_str(),type.c_str());
+    this->ReadObss(obs_file);
+    this->SendObss2(if0,if1,if2);
+ }
+
  void ObsFromFile::WpCurrCb(const uascode::WpCurrent::ConstPtr &msg)
  {
     seq_current= msg->wp_current;

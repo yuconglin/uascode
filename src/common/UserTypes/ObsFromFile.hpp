@@ -27,9 +27,9 @@ public:
    void LoadOffsets(const char *filename);
    void LoadOffsetsSingle(const char *filename,int idx);
    void LoadOffsets2(const char* off1,const char* off2,const char* off3,const char* type = "");
-   void SetIfMission(const bool _if_mission){this->if_mission = _if_mission;}
-   void SetIfSendObs(const bool _if_send_obs){this->if_send_obstacle = _if_send_obs;}
-
+   inline void SetIfMission(const bool _if_mission){this->if_mission = _if_mission;}
+   inline void SetIfSendObs(const bool _if_send_obs){this->if_send_obstacle = _if_send_obs;}
+   void LoadSendConfig(const char *config_file,const char *obs_file);
 private:
    struct OffSet{
        double x_off;
