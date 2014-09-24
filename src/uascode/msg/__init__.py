@@ -4,10 +4,10 @@ from ._PlaneAttitude import *
 from ._IfCollision import *
 from ._WpCurrent import *
 from ._MultiObsMsg import *
-from ._IfMavlinkGood import *
 from ._WpNumber import *
-from ._ColliPoint import *
+from ._IfMavlinkGood import *
 from ._IfRecMsg import *
 from ._AccelXYZ import *
-from ._PosSetPointFlag import *
 from ._PosSetPoint import *
+from ._PosSetPointFlag import *
+from ._ColliPoint import *

@@ -377,7 +377,7 @@ namespace UasCode{
               UASLOG(s_logger,LL_DEBUG,"allow_dis:" << allow_dis);
 
               //if(dis_c2d < allow_dis && colli_return.seq_colli == seq_current+1)
-              if(dis_c2d < allow_dis) //using 0.5 to delay reaction and maitain height differenct
+              if(dis_c2d < allow_dis && dis_c2d > st_current.speed*1.0) //using 0.5 to delay reaction and maitain height differenct
               {
                  if(!if_inter_gen){
                      UASLOG(s_logger,LL_DEBUG,"local avoidance");
@@ -399,7 +399,7 @@ namespace UasCode{
 
                      set_pt.inter_exist= if_inter_exist ? 1:0;
 
-                     UserStructs::MissionSimPt local_wp = UserStructs::MissionSimPt(set_pt.lat,set_pt.lon,set_pt.alt,0,100,0,0,200,100,50);
+                     UserStructs::MissionSimPt local_wp = UserStructs::MissionSimPt(set_pt.lat,set_pt.lon,set_pt.alt+home_alt,0,100,0,0,200,100,50);
                      local_wp.GetUTM();
                      FlagWayPoints.insert(FlagWayPoints.begin()+set_pt.seq,UserStructs::MissionSimFlagPt(local_wp,true) );
                      if_inter_gen = true;

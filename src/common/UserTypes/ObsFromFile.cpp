@@ -18,10 +18,6 @@ namespace {
 
 namespace UasCode{
 
- //free function
- uascode::ObsMsg ObsToRosMsg(const UserStructs::obstacle3D& obs);
- //free function ends
-
  ObsFromFile::ObsFromFile():seq_current(-1),if_mission(true),if_send_obstacle(false)
  {
    pub_obss=nh.advertise<uascode::MultiObsMsg>("multi_obstacles",1);
@@ -383,7 +379,7 @@ namespace UasCode{
     */
  }
 
- uascode::ObsMsg ObsToRosMsg(const UserStructs::obstacle3D& obs)
+ uascode::ObsMsg ObsFromFile::ObsToRosMsg(const UserStructs::obstacle3D& obs)
  {
      uascode::ObsMsg obs_msg;
      obs_msg.address= obs.address;

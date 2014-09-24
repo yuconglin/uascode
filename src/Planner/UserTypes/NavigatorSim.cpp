@@ -155,6 +155,20 @@ int NavigatorSim::PropagateWp(UserStructs::PlaneStateSim& st_start,
    while(1){
      PropagateStep(st_now,st_next,pt_A,pt_target);
 
+     fs_state<< std::setprecision(5)<< std::fixed<< st_next.t<<" "
+             << st_next.x<<" "
+             << std::setprecision(7)<< st_next.y<<" "
+             << st_next.lat<<" "
+             << st_next.lon<<" "
+             << st_next.z<<" "
+             << st_next.speed<<" "
+             << st_next.yaw/M_PI*180.<<" "
+             << st_next.pitch/M_PI*180.<<" "
+             << st_next.ax<<" "<< st_next.ay<<" "<< st_next.az<<" "
+             << sqrt(pow(st_next.x-pt_target.x,2)
+                     +pow(st_next.y-pt_target.y,2))<<" "
+             << std::endl;
+
      if(pt_target.SeeArrive(st_next.x,st_next.y,st_next.z) ){
        result= 0;
        break;

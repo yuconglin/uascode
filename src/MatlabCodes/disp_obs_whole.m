@@ -3,9 +3,12 @@ clear all;
 clc;
 
 obs_files =[
-'whole_obstacle_10734770.txt';
-'whole_obstacle_10934723.txt';
-'whole_obstacle_10942331.txt';
+%'obstacle_10734770.txt   ';
+'obstacle_10934723.txt   ';
+% 'obstacle_10942331.txt   ';
+'tt_obstacle_10734770.txt';
+'tt_obstacle_10934723.txt';
+'tt_obstacle_10942331.txt';
 ];
 
 cells = cellstr(obs_files);
@@ -38,5 +41,6 @@ for i=1:length(cells)
    h=plot3(obss_vec(:,1),obss_vec(:,2),obss_vec(:,3),'r+');
 %    f_png = fullfile('../../pngs/',strcat(int2str(address),'.png') );
 %    saveas(h, f_png, 'png');
+   view(2);
    
 end

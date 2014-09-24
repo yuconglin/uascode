@@ -1,6 +1,7 @@
 #include "NavigatorSim.hpp"
 #include "common/UserStructs/constants.h"
 #include "common/Utils/GetTimeUTC.h"
+#include "common/Utils/FindPath.h"
 #include "Planner/UserStructs/PlaneStateSim.h"
 //other
 #include "armadillo"
@@ -26,40 +27,92 @@ int main(int argc,char** argv)
   double dt= 1.0;
   //double _speed_trim= 0.5*(_max_speed+_min_speed);
   double _speed_trim= _max_speed;
+  //the start id of waypoint
+  int des_id= atoi(argv[1]);
 
   navigator.UpdaterSetParams(_Tmax,mpitch_rate,myaw_rate,_Muav,
       _max_speed,_min_speed,_max_pitch,_min_pitch);
 
-  navigator.TECsReadParams("parameters_sitl.txt");
-  //navigator.TECsReadParams("parameters.txt");
+  std::string param_file = Utils::FindPath()+"parameters/parameters_sitl.txt";
+  navigator.TECsReadParams(param_file.c_str());
   navigator.L1SetRollLim(40./180*M_PI);
   navigator.SetDt(dt);
   navigator.SetSpeedTrim(_speed_trim);
   //navigator.EnableAirspd();
+
   /****read start state****/
-  std::ifstream start_file("/home/yucong/ros_workspace/uascode/bin/sitl_state1.txt");
+  std::ifstream start_file("/home/yucong/ros_workspace/uascode/records/sitl_state_large.txt");
   double t_now,lon_f,lat_f,hgt_f,speed_f,x_f,y_f,hd_f,roll_f,pitch_f,yaw_f,ax_f,ay_f,az_f,dvz_f;
-  for(int i=0;i!=1;++i){
-    start_file >> t_now
-            >> lon_f
-            >> lat_f
-            >> hgt_f
-            >> speed_f
-            >> x_f >> y_f >> hd_f
-            >> roll_f >> pitch_f >> yaw_f
-            >> ax_f >> ay_f >> az_f >> dvz_f;
+  int wp_id = -1;
+
+  std::string line;
+  while(std::getline(start_file,line)){
+      std::istringstream iss(line);
+      iss >> t_now
+              >> lon_f
+              >> lat_f
+              >> hgt_f
+              >> speed_f
+              >> x_f >> y_f >> hd_f
+              >> roll_f >> pitch_f >> yaw_f
+              >> ax_f >> ay_f >> az_f >> dvz_f >> wp_id;
+      if(wp_id == des_id) break;
   }
   /****read end state****/
+
+  /****read all waypoints****/
+  std::vector< arma::vec::fixed<3> > wps;
+  std::ifstream plan_file("/home/yucong/yucong_codes_git/sitl/ardupilot/Tools/autotest/ap_large.txt");
+  int line_count = 0;
+  if(plan_file.is_open())
+  {
+      std::string line;
+      while(getline(plan_file,line))
+      {
+          if(line_count == 0){
+              std::string str1, str2, str3;
+              std::istringstream iss(line);
+              iss >> str1 >> str2 >> str3;
+          }
+          else{
+              std::istringstream iss(line);
+              //0 1 0 16 0.00000 0.000000 0.000000 0.000000 33.422036 -111.926263 30 1
+              int seq,frame,command,current,autocontinue;
+              float param1,param2,param3,param4;
+              double lat,lon,alt;
+
+              iss >> seq >> current >> frame >> command
+                      >> param1 >> param2 >> param3 >> param4
+                      >> lat >> lon >> alt >> autocontinue;
+
+              alt= alt+585;
+              arma::vec::fixed<3> wp;
+              wp<< lat<< lon<< alt;
+              wps.push_back(wp);
+          }//if line_count > 0 ends
+          ++line_count;
+      }//while plan_file ends
+
+  }
+  /****read all waypoints ends***/
   //test
   arma::vec::fixed<2> pt_A, pt_B;
-//1405185947.83948 -111.92720 33.42759 734.04000 26.47640 413803.76236 3699075.94730 13.00000 -0.73547 0.23162 0.22899 -100.00000 547.00000 -707.00000 -16.66667
-  double lon= lon_f, lat= lat_f;
 
-  double lat1= 33.421964, lon1= -111.940082;//wp 1
-  //double lat1= 33.414728, lon1= -111.939738;//wp 2
-  pt_A << 33.427559 << -111.926697; //here needs to be changed
-  pt_B << lat1 << lon1;
+  if(des_id == 1){
+      pt_A << lat_f << lon_f;
+  }
+  else{
+      arma::vec::fixed<3> wpp= wps[des_id-1];
+      pt_A << wpp(0) << wpp(1);
+  }
+  arma::vec::fixed<3> wpp= wps[des_id];
+  pt_B << wpp(0)<< wpp(1);
 
+  std::cout<<"pt_A: "<< pt_A(0)<<" "<< pt_A(1)<<"\n";
+  std::cout<<"pt_B: "<< pt_B(0)<<" "<< pt_B(1)<<"\n";
+
+  double lat= lat_f;
+  double lon= lon_f;
   double hgt= hgt_f;
   double spd= speed_f;
   double t= t_now;
@@ -67,7 +120,7 @@ int main(int argc,char** argv)
   double pitch= pitch_f;
   double alt_B= 615;
   double ax= ax_f/1000*CONSTANT_G, ay= ay_f/1000*CONSTANT_G;
-  //double az= -(1.0-793.00000/1000)*CONSTANT_G;
+
   double az= az_f/1000*CONSTANT_G;
 
   UserStructs::PlaneStateSim st(t,0,0,lat,lon,hgt,spd,yaw,pitch,ax,ay,az); 

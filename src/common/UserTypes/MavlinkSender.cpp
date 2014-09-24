@@ -221,6 +221,8 @@ void MavlinkSender::SendMultiObs3(std::vector<UserStructs::obstacle3D> obss)
              << adsb_obss.lons[i]);
 
        double hd= M_PI/2- obss[i].head_xy;
+       UASLOG(s_logger,LL_DEBUG,"obs hd:"<< hd/UasCode::DEG2RAD);
+
        if(hd<0)
            hd+= 2*M_PI;
        hd= hd / UasCode::DEG2RAD;
