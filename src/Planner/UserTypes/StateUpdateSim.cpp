@@ -36,7 +36,7 @@ namespace UasCode{
   }
 
   UserStructs::PlaneStateSim StateUpdateSim::update(UserStructs::PlaneStateSim &st_pre,
-                        double nav_roll,
+            double nav_roll,
 			double dem_yaw,
 			double dem_pitch,
 			double dem_thr,
@@ -79,10 +79,7 @@ namespace UasCode{
       //x,y
       double x1= st_pre.x+avg_speed*cos(avg_pitch)*cos(u_yaw+ Dyaw/2)*dt;
       double y1= st_pre.y+avg_speed*cos(avg_pitch)*sin(u_yaw+ Dyaw/2)*dt;
-      //std::cout<<"len: "<< sqrt(pow(x1-st_pre.x,2)
-      //                     +pow(y1-st_pre.y,2)
-    //		       +pow(z1-st_pre.z,2))
-       //            << std::endl;
+
       double yaw1= Utils::_wrap_pi(u_yaw+Dyaw);
       //get accelaration
       double ax1= (speed1*cos(pitch1)*cos(yaw1)-st_pre.speed*cos(st_pre.pitch)*cos(u_yaw) )/dt;

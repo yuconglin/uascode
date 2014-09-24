@@ -42,4 +42,4 @@ class StateUpdateSim{
    double min_pitch;
 };
 
-};
+}

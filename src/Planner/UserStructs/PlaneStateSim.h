@@ -46,4 +46,4 @@ namespace UserStructs{
 
   };//struct StateNode ends
 
-};
+}
