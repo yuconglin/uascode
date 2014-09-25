@@ -24,15 +24,7 @@ int main(int argc,char** argv)
    obsfrom.SetIfSendObs(true);
 
    obsfrom.SetLogFileName(log_file.c_str());
-   //obsfrom.LoadOffsets(offsets_file.c_str());
 
-   //obsfrom.LoadOffsets2("400","200","200","A");
-
-   //obsfrom.ReadObss(data_file.c_str());
-
-   //send in ros
-   //obsfrom.SendObss(1);
-
-   //obsfrom.SendObss2(true,false,false);
-   obsfrom.LoadSendConfig(argv[3],data_file.c_str());
+   //obsfrom.LoadSendConfig(argv[3],data_file.c_str());
+   obsfrom.LoadSendRandom(data_file.c_str(),"A");
 }

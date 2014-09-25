@@ -30,6 +30,8 @@ public:
    inline void SetIfMission(const bool _if_mission){this->if_mission = _if_mission;}
    inline void SetIfSendObs(const bool _if_send_obs){this->if_send_obstacle = _if_send_obs;}
    void LoadSendConfig(const char *config_file,const char *obs_file);
+   void LoadSendRandom(const char *obs_file,const char* type="");
+
 private:
    struct OffSet{
        double x_off;
@@ -53,6 +55,8 @@ private:
    //callback functions
    void WpCurrCb(const uascode::WpCurrent::ConstPtr& msg);
    uascode::ObsMsg ObsToRosMsg(const UserStructs::obstacle3D& obs);
+   int RandSelectVec(const std::vector<int>& ints);
+   std::string int2string(int _num);
    //file for obstacles
    std::ifstream obss_file;
    //file for logging sent obstacles

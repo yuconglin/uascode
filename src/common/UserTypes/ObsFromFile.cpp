@@ -157,7 +157,7 @@ namespace UasCode{
          if(addrs_map.find(obs_single.address)== addrs_map.end())
              addrs_map[obs_single.address] = addrs_map.size();
 
-         UASLOG(s_logger,LL_DEBUG, "obs_single.head_xy: "<< obs_single.head_xy);
+         //UASLOG(s_logger,LL_DEBUG, "obs_single.head_xy: "<< obs_single.head_xy);
 
          for(int i=0;i!= obss.size();++i)
          {
@@ -369,6 +369,40 @@ namespace UasCode{
 
  }
 
+ void ObsFromFile::LoadSendRandom(const char *obs_file, const char *type)
+ {
+     const int arr[]={40,60,100,120,140,160,180,200,220,240,260};
+     std::vector<int> vec (arr, arr + sizeof(arr) / sizeof(arr[0]) );
+
+     srand (time(NULL));
+     int nf0= this->RandSelectVec(vec);
+     int nf1= this->RandSelectVec(vec);
+     int nf2= this->RandSelectVec(vec);
+
+     bool if0 = nf0 > 0;
+     bool if1 = nf1 > 0;
+     bool if2 = nf2 > 0;
+     std::string off0="0",off1="0",off2="0";
+
+     if(if0){
+       off0 = this->int2string(nf0);
+     }
+
+     if(if1){
+       off1 = this->int2string(nf1);
+     }
+
+     if(if2){
+       off2 = this->int2string(nf2);
+     }
+
+     UASLOG(s_logger,LL_DEBUG,"random offsets:"<< off0 <<","<<off1<<","<<off2);
+
+     this->LoadOffsets2(off0.c_str(),off1.c_str(),off2.c_str(),type);
+     this->ReadObss(obs_file);
+     this->SendObss2(if0,if1,if2);
+ }
+
  void ObsFromFile::LoadSendConfig(const char *cfg_file, const char *obs_file)
  {
     std::string file= Utils::FindPath()+"/records/"+std::string(cfg_file);
@@ -399,6 +433,31 @@ namespace UasCode{
     this->ReadObss(obs_file);
     this->SendObss2(if0,if1,if2);
  }
+
+ int ObsFromFile::RandSelectVec(const std::vector<int> &ints)
+ {
+     /* initialize random seed: */
+     //srand (time(NULL));
+     /* to generate a random number */
+     int len = ints.size();
+     int num = rand() % (len+1);
+     int idx;
+
+     if (num > len-1)
+         idx=0;
+     else{
+         idx= ints[num];
+     }
+     return idx;
+ }
+
+ std::string ObsFromFile::int2string(int _num)
+ {
+     std::stringstream ss;
+     ss << _num;
+     return ss.str();
+ }
+
 
  void ObsFromFile::WpCurrCb(const uascode::WpCurrent::ConstPtr &msg)
  {

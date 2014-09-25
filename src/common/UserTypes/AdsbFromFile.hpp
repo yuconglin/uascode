@@ -44,6 +44,7 @@ private:
    void WpCurrCb(const uascode::WpCurrent::ConstPtr& msg);
    uascode::ObsMsg ObsToRosMsg(const UserStructs::obstacle3D& obs);
    int RandSelect(int start,int end);
+   int RandSelectVec(const std::vector<int>& ints);
    std::string int2string(int _num);
 };
 

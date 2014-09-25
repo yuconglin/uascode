@@ -213,26 +213,30 @@ void AdsbFromFile::LoadSendConfig(const char *filename,const std::vector<std::st
 }
 
 void AdsbFromFile::LoadSendRandom(const std::vector<std::string> &file_names,const char* type)
-{
-    int nf0= this->RandSelect(7,9);
-    int nf1= this->RandSelect(8,9);
-    int nf2= this->RandSelect(6,13);
+{   
+    const int arr[] = {60,80,100,120,140,170,190,210,230,250};
+    std::vector<int> vec (arr, arr + sizeof(arr) / sizeof(arr[0]) );
+
+    srand (time(NULL));
+    int nf0= this->RandSelectVec(vec);
+    int nf1= this->RandSelectVec(vec);
+    int nf2= this->RandSelectVec(vec);
 
     bool if0 = nf0 > 0;
     bool if1 = nf1 > 0;
     bool if2 = nf2 > 0;
-    std::string off0,off1,off2;
+    std::string off0="0",off1="0",off2="0";
 
     if(if0){
-      off0 = this->int2string(nf0)+"0";
+      off0 = this->int2string(nf0);
     }
 
     if(if1){
-      off1 = this->int2string(nf1)+"0";
+      off1 = this->int2string(nf1);
     }
 
     if(if2){
-      off2 = this->int2string(nf2)+"0";
+      off2 = this->int2string(nf2);
     }
 
     UASLOG(s_logger,LL_DEBUG,"random offsets:"<< off0 <<","<<off1<<","<<off2);
@@ -280,6 +284,23 @@ int AdsbFromFile::RandSelect(int start, int end)
     if(num== end+1)
         num=0;
     return num;
+}
+
+int AdsbFromFile::RandSelectVec(const std::vector<int> &ints)
+{
+    /* initialize random seed: */
+    //srand (time(NULL));
+    /* to generate a random number */
+    int len = ints.size();
+    int num = rand() % (len+1);
+    int idx;
+
+    if (num > len-1)
+        idx=0;
+    else{
+        idx= ints[num];
+    }
+    return idx;
 }
 
 std::string AdsbFromFile::int2string(int _num)
