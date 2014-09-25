@@ -163,15 +163,17 @@ namespace UasCode{
                       << (int)msg.x<< std::endl;
 
                //converted to obstacles and log
-               /*
+
                UserStructs::obstacle3D obs;
                Utils::AdsbToObs(msg,obs);
+               obss.push_back(obs);
+               obss_msg.MultiObs.push_back(ObsToRosMsg(obs) );
                fs_obs<< obs.address<<" "
                      << obs.x1 <<" "<< obs.x2 <<" " << obs.x3<<" "
                      << obs.head_xy*M_PI/180.<<" "<< obs.speed<<" "
                      << obs.v_vert<<" "<< obs.t<<" "
                      << obs.r <<" "<< obs.hr << std::endl;
-               */
+
            }
            //adsb log
            if(msg_re== 20)

@@ -106,9 +106,9 @@ namespace UasCode{
  {
      std::string filepath = Utils::FindPath();
      // /records/offsets1200.txt
-     std::string file1 = filepath + "/records/offsets" + type + off1 +".txt";
-     std::string file2 = filepath + "/records/offsets" + type + off2 +".txt";
-     std::string file3 = filepath + "/records/offsets" + type + off3 +".txt";
+     std::string file1 = filepath + "/records/offsets_simu" + type + off1 +".txt";
+     std::string file2 = filepath + "/records/offsets_simu" + type + off2 +".txt";
+     std::string file3 = filepath + "/records/offsets_simu" + type + off3 +".txt";
 
      UASLOG(s_logger,LL_DEBUG,file1 << "\n"
             << file2 << "\n"

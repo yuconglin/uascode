@@ -3,7 +3,7 @@ clear all;
 clc;
 
 k= 1200;
-time= 30;
+time= 260;
 MATDIS= zeros(3,4);
 %to plot the whole trajectory and the distance between the obstacles and
 %the aircraft
@@ -35,7 +35,8 @@ while ischar(traj_line)
    traj_line= fgetl(f_traj);
 end
 
-f_obss= fopen('../../records/obss_log1.txt');
+%f_obss= fopen('../../records/obss_log1.txt');
+f_obss= fopen('../../data/20140924-212359obs.txt');
 
 if f_obss == -1
     error('File obss_log.txt could not be opened, check name or path.')
@@ -48,7 +49,7 @@ obs3= [];
 addrs = [11259136,11259137,11259138];
 
 while ischar(obss_line)
-  % 11259136 406288.0000 3699520.0000 30899.1000 0.0000 61.7333 0.0000 1406173248.8122 640.0800 152.4000 
+  % 11259137 406094.60604366 3700204.69378400 10363.20000000 150.46875323 249.50555534 0.00000000 15846.00000000 640.08000000 152.40000000 
   log_obss = textscan(obss_line,'%d %f %f %f %f %f %f %f %f %f');
   address= log_obss{1};
   x= log_obss{2};
@@ -74,93 +75,61 @@ while ischar(obss_line)
   obss_line= fgetl(f_obss);
   
 end
-
-%match time
-dis1=[];
-dis2=[];
-dis3=[];
-
-t_traj= virtual_traj(:,1);
-
-t_obs1= obs1(:,1);
-t_obs2= obs2(:,1);
-t_obs3= obs3(:,1);
-
-i1= 1;
-i2= 1;
-i3= 1;
-
-for j=1:length(t_traj)
-   
-   %obs1
-   for i=i1:length(t_obs1)-1
-     if t_obs1(i)<= t_traj(j) && t_obs1(i+1)>= t_traj(j)
-         dis1(j)= sqrt( (virtual_traj(j,2)-obs1(i,2) )^2 ...
-                      + (virtual_traj(j,3)-obs1(i,3) )^2 ...
-                      + (virtual_traj(j,4)-obs1(i,4) )^2 ... 
-                      );
-                  
-         if(j>1 && t_traj(j-1)-t_traj(1) < time && t_traj(j)-t_traj(1) >= time)         
-            %disp([virtual_traj(j,2)-obs1(i,2),virtual_traj(j,3)-obs1(i,3),virtual_traj(j,4)-obs1(i,4)]); 
-            MATDIS(1,:) = [virtual_traj(j,2)-obs1(i,2),virtual_traj(j,3)-obs1(i,3),virtual_traj(j,4)-obs1(i,4),0];
-         end 
-                  
-         i1 = i;
-         break;
-     end
-   end
-   
-   %obs2
-   for i=i2:length(t_obs2)-1
-     if t_obs2(i)<= t_traj(j) && t_obs2(i+1)>= t_traj(j)
-         dis2(j)= sqrt( (virtual_traj(j,2)-obs2(i,2) )^2 ...
-                      + (virtual_traj(j,3)-obs2(i,3) )^2 ...
-                      + (virtual_traj(j,4)-obs2(i,4) )^2 ... 
-                      );
-                  
-         if(j>1 && t_traj(j-1)-t_traj(1) < time && t_traj(j)-t_traj(1) >= time)         
-            %disp([virtual_traj(j,2)-obs2(i,2),virtual_traj(j,3)-obs2(i,3),virtual_traj(j,4)-obs2(i,4)]);  
-            MATDIS(2,:) = [virtual_traj(j,2)-obs2(i,2),virtual_traj(j,3)-obs2(i,3),virtual_traj(j,4)-obs2(i,4),0];
-         end       
-                  
-         i2 = i;
-         break;
-     end
-   end
-   
-   %obs3
-   for i=i3:length(t_obs3)-1
-     if t_obs3(i)<= t_traj(j) && t_obs3(i+1)>= t_traj(j)
-         dis3(j)= sqrt( (virtual_traj(j,2)-obs3(i,2) )^2 ...
-                      + (virtual_traj(j,3)-obs3(i,3) )^2 ...
-                      + (virtual_traj(j,4)-obs3(i,4) )^2 ... 
-                      );
-                  
-         if(j>1 && t_traj(j-1)-t_traj(1) < time && t_traj(j)-t_traj(1) >= time)         
-            %disp([virtual_traj(j,2)-obs3(i,2),virtual_traj(j,3)-obs3(i,3),virtual_traj(j,4)-obs3(i,4)]); 
-            MATDIS(3,:) = [virtual_traj(j,2)-obs3(i,2),virtual_traj(j,3)-obs3(i,3),virtual_traj(j,4)-obs3(i,4),0];
-         end        
-                  
-         i3 = i;
-         break;
-     end
-   end
-   
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+for i=2:length(virtual_traj)
+    if(virtual_traj(i-1,1)-virtual_traj(1,1) < time && virtual_traj(i,1)-virtual_traj(1,1) >= time)
+       x_traj= virtual_traj(i,2);
+       y_traj= virtual_traj(i,3);
+       z_traj= virtual_traj(i,4);
+       break;
+    end
 end
 
-%plot
-figure;
-plot3(virtual_traj(:,2),virtual_traj(:,3),virtual_traj(:,4),'r+' );
+for i=2:length(obs1)
+    if(obs1(i-1,1)-obs1(1,1) < time && obs1(i,1)-obs1(1,1) >= time)
+       x1= obs1(i,2);
+       y1= obs1(i,3);
+       z1= obs1(i,4);
+       break;
+    end
+end
+if i== length(obs1)
+    x1= obs1(i,2);
+    y1= obs1(i,3);
+    z1= obs1(i,4);
+end
 
-%MATDIS
-% figure;
-% subplot(3,1,1);
-% plot( t_traj, dis1,'b+-' );
-% 
-% subplot(3,1,2);
-% plot( t_traj, dis2,'b+-' );
-% 
-% subplot(3,1,3);
-% plot( t_traj, dis3,'b+-' );
+for i=2:length(obs2)
+    if(obs2(i-1,1)-obs2(1,1) < time && obs2(i,1)-obs2(1,1) >= time)
+       x2= obs2(i,2);
+       y2= obs2(i,3);
+       z2= obs2(i,4);
+       break;
+    end
+end
+if i== length(obs2)
+    x2= obs2(i,2);
+    y2= obs2(i,3);
+    z2= obs2(i,4);
+end
+
+for i=2:length(obs3)
+    if(obs3(i-1,1)-obs3(1,1) < time && obs3(i,1)-obs3(1,1) >= time)
+       x3= obs3(i,2);
+       y3= obs3(i,3);
+       z3= obs3(i,4);
+       break;
+    end
+end
+if i== length(obs3)
+    x3= obs3(i,2);
+    y3= obs3(i,3);
+    z3= obs3(i,4);
+end
+
+MATDIS(1,:) = [x_traj-x1, y_traj-y1, z_traj-z1, 0];
+MATDIS(2,:) = [x_traj-x2, y_traj-y2, z_traj-z2, 0];
+MATDIS(3,:) = [x_traj-x3, y_traj-y3, z_traj-z3, 0];
+
 
 
