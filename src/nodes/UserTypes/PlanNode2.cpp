@@ -250,7 +250,8 @@ namespace UasCode{
               double dis= std::sqrt(pow(st_current.x-obss[i].x1,2)
                                     +pow(st_current.y-obss[i].x2,2) );
               double dis_h= fabs(obss[i].x3-st_current.z);
-              oss << (int)obss[i].address <<" " << dis <<" "<< dis_h <<'\n';
+              double dis_total= std::sqrt(dis*dis+dis_h*dis_h);
+              oss << (int)obss[i].address <<" " << dis <<" "<< dis_h<<" "<< dis_total <<'\n';
           }
           obdis_log << oss.str();
       }

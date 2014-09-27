@@ -99,6 +99,8 @@ namespace UserTypes{
        if(sample_method ==0)
        { //here r0 is different
          r0= sqrt(Dx*Dx+Dy*Dy+Dz*Dz);
+         if(r0> 500)
+             r0= 500;
        }
        else if(sample_method ==1)
        {
@@ -190,7 +192,8 @@ namespace UserTypes{
        double r= r_nor();
 
        //UASLOG(s_logger,LL_DEBUG,"sample theta0:"<< theta0*180./M_PI);
-       boost::uniform_real<> the_uniform(theta0-M_PI/2.0, theta0+M_PI/2.0);
+       double alpha= 3./4*1./2*M_PI;
+       boost::uniform_real<> the_uniform(theta0-alpha, theta0+alpha);
        boost::variate_generator<boost::mt19937&,boost::uniform_real<> > the_nor(generator, the_uniform);
        double theta= the_nor();
        if(sample_method == 0)

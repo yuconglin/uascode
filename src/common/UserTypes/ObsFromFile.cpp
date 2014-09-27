@@ -403,6 +403,82 @@ namespace UasCode{
      this->SendObss2(if0,if1,if2);
  }
 
+ void ObsFromFile::LoadSendRandomNum(const char *obs_file, int num, const char *type)
+ {
+     const int arr[]={40,60,100,120,140,160,180,200,220,240,260};
+     std::vector<int> vec (arr, arr + sizeof(arr) / sizeof(arr[0]) );
+
+     bool if0,if1,if2;
+     std::string off0="0",off1="0",off2="0";
+
+     srand(time(NULL));
+     if(num==1)
+     {
+         int idx = rand() % 3;
+         if(idx==0){
+             if0= true;
+             if1= false;
+             if2= false;
+         }
+         else if(idx==1){
+             if0= false;
+             if1= true;
+             if2= false;
+         }
+         else{
+             if0= false;
+             if1= false;
+             if2= true;
+         }
+         //
+     }
+     else if(num==2){
+         int idx = rand() % 3;
+         if(idx==0){
+           if0= false;
+           if1= true;
+           if2= true;
+         }
+         else if(idx==1){
+           if0= true;
+           if1= false;
+           if2= true;
+         }
+         else{
+           if0= true;
+           if1= true;
+           if2= false;
+         }
+         //
+     }
+     else{
+         if0= true;
+         if1= true;
+         if2= true;
+     }
+
+     if(if0){
+       int nf0= this->RandSelectVec(vec);
+       off0 = this->int2string(nf0);
+     }
+
+     if(if1){
+       int nf1= this->RandSelectVec(vec);
+       off1 = this->int2string(nf1);
+     }
+
+     if(if2){
+       int nf2= this->RandSelectVec(vec);
+       off2 = this->int2string(nf2);
+     }
+
+     UASLOG(s_logger,LL_DEBUG,"random offsets:"<< off0 <<","<<off1<<","<<off2);
+
+     this->LoadOffsets2(off0.c_str(),off1.c_str(),off2.c_str(),type);
+     this->ReadObss(obs_file);
+     this->SendObss2(if0,if1,if2);
+ }
+
  void ObsFromFile::LoadSendConfig(const char *cfg_file, const char *obs_file)
  {
     std::string file= Utils::FindPath()+"/records/"+std::string(cfg_file);

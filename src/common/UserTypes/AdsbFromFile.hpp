@@ -22,6 +22,7 @@ public:
    void LoadOffsets2(const char* off1,const char* off2,const char* off3,const char* type = "");
    void LoadSendConfig(const char *filename,const std::vector<std::string> &file_names);
    void LoadSendRandom(const std::vector<std::string> &file_names,const char* type="");
+   void LoadSendRandomNum(const std::vector<std::string> &file_names,int num,const char* type="");
 
 private:
    struct OffSet{

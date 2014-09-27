@@ -31,6 +31,7 @@ public:
    inline void SetIfSendObs(const bool _if_send_obs){this->if_send_obstacle = _if_send_obs;}
    void LoadSendConfig(const char *config_file,const char *obs_file);
    void LoadSendRandom(const char *obs_file,const char* type="");
+   void LoadSendRandomNum(const char *obs_file,int num,const char* type="");
 
 private:
    struct OffSet{

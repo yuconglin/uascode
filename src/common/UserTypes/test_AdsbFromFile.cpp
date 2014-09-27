@@ -24,7 +24,7 @@ int main(int argc,char** argv)
     AdsbFromFile adsbfrom;
 
     //adsbfrom.LoadSendConfig(argv[1],file_names);
-    adsbfrom.LoadSendRandom(file_names,"A");
-
+    //adsbfrom.LoadSendRandom(file_names,"A");
+    adsbfrom.LoadSendRandomNum(file_names,atoi(argv[2]),"A");
     return 0;
 }

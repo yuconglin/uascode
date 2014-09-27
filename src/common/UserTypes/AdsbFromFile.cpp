@@ -217,9 +217,17 @@ void AdsbFromFile::LoadSendRandom(const std::vector<std::string> &file_names,con
     const int arr[] = {60,80,100,120,140,170,190,210,230,250};
     std::vector<int> vec (arr, arr + sizeof(arr) / sizeof(arr[0]) );
 
+    const int arr1[]={60,80,100,120};
+    std::vector<int> vec1 (arr1, arr1 + sizeof(arr1) / sizeof(arr1[0]) );
+    /*for reference, don't erease
+     int nf0= this->RandSelect(7,9);
+     int nf1= this->RandSelect(8,9);
+     int nf2= this->RandSelect(6,13);
+    */
+
     srand (time(NULL));
     int nf0= this->RandSelectVec(vec);
-    int nf1= this->RandSelectVec(vec);
+    int nf1= this->RandSelectVec(vec1);
     int nf2= this->RandSelectVec(vec);
 
     bool if0 = nf0 > 0;
@@ -236,6 +244,84 @@ void AdsbFromFile::LoadSendRandom(const std::vector<std::string> &file_names,con
     }
 
     if(if2){
+      off2 = this->int2string(nf2);
+    }
+
+    UASLOG(s_logger,LL_DEBUG,"random offsets:"<< off0 <<","<<off1<<","<<off2);
+    this->LoadOffsets2(off0.c_str(),off1.c_str(),off2.c_str(),type);
+    this->ReadADSB(file_names);
+    this->SendObss2(if0,if1,if2);
+}
+
+void AdsbFromFile::LoadSendRandomNum(const std::vector<std::string> &file_names, int num, const char *type)
+{
+    const int arr[] = {60,80,100,120,140,170,190,210,230,250};
+    std::vector<int> vec (arr, arr + sizeof(arr) / sizeof(arr[0]) );
+
+    const int arr1[]={60,80,100,120};
+    std::vector<int> vec1 (arr1, arr1 + sizeof(arr1) / sizeof(arr1[0]) );
+
+    bool if0,if1,if2;
+    std::string off0="0",off1="0",off2="0";
+
+    srand(time(NULL));
+    if(num==1)
+    {
+        int idx = rand() % 3;
+        if(idx==0){
+            if0= true;
+            if1= false;
+            if2= false;
+        }
+        else if(idx==1){
+            if0= false;
+            if1= true;
+            if2= false;
+        }
+        else{
+            if0= false;
+            if1= false;
+            if2= true;
+        }
+        //
+    }
+    else if(num==2){
+        int idx = rand() % 3;
+        if(idx==0){
+          if0= false;
+          if1= true;
+          if2= true;
+        }
+        else if(idx==1){
+          if0= true;
+          if1= false;
+          if2= true;
+        }
+        else{
+          if0= true;
+          if1= true;
+          if2= false;
+        }
+        //
+    }
+    else{
+        if0= true;
+        if1= true;
+        if2= true;
+    }
+
+    if(if0){
+      int nf0= this->RandSelectVec(vec);
+      off0 = this->int2string(nf0);
+    }
+
+    if(if1){
+      int nf1= this->RandSelectVec(vec1);
+      off1 = this->int2string(nf1);
+    }
+
+    if(if2){
+      int nf2= this->RandSelectVec(vec);
       off2 = this->int2string(nf2);
     }
 
@@ -292,7 +378,8 @@ int AdsbFromFile::RandSelectVec(const std::vector<int> &ints)
     //srand (time(NULL));
     /* to generate a random number */
     int len = ints.size();
-    int num = rand() % (len+1);
+    //int num = rand() % (len+1);
+    int num = rand() % len;
     int idx;
 
     if (num > len-1)
