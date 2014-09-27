@@ -457,6 +457,7 @@ namespace UasCode{
          if2= true;
      }
 
+     srand(time(NULL));
      if(if0){
        int nf0= this->RandSelectVec(vec);
        off0 = this->int2string(nf0);
@@ -516,7 +517,7 @@ namespace UasCode{
      //srand (time(NULL));
      /* to generate a random number */
      int len = ints.size();
-     int num = rand() % (len+1);
+     int num = rand() % len;
      int idx;
 
      if (num > len-1)
