@@ -32,6 +32,8 @@ class PathGenerator{
    void SetObs(const std::vector<UserStructs::obstacle3D>& _obs3ds);
    //start state and goal wp
    void SetInitState(UserStructs::PlaneStateSim _st);
+   void SetStartWp(UserStructs::MissionSimPt& _pt);
+   void SetBeginWp(UserStructs::MissionSimPt& _pt);
    void SetGoalWp(UserStructs::MissionSimPt& _pt);
    void SetInterState(UserStructs::PlaneStateSim& _st);
    void SetSampleStart(double _x_start,double _y_start,double _z_start);
@@ -72,8 +74,12 @@ class PathGenerator{
    double dt;
    //sample method
    int sample_method;
-   //start state
+   //current state
    UserStructs::PlaneStateSim st_start;
+   //current waypoint to begin the straight line path
+   UserStructs::MissionSimPt begin_wp;
+   //path start waypoint
+   UserStructs::MissionSimPt start_wp;
    //goal waypoint
    UserStructs::MissionSimPt goal_wp;
    //sample waypoint
@@ -111,6 +117,7 @@ class PathGenerator{
    double yaw_root;
    //flags to indicate sth was set or not
    bool if_start_set;
+   bool if_start_wp_set;
    bool if_goal_set;
    //bool if_goal_reach;
    bool if_sampler_set;
@@ -122,6 +129,7 @@ class PathGenerator{
    bool if_limit_reach;
    //check flags
    void CheckStartSet();
+   void CheckStartWpSet();
    void CheckGoalSet();
    void CheckSamplerSet();
    void CheckSamplerParaSet();

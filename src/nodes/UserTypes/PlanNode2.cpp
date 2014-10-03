@@ -315,6 +315,10 @@ namespace UasCode{
                   wp_init.lon= global_posi.lon;
                   wp_init.alt= global_posi.alt;
 
+                  FlagWayPoints[0].pt.lat = wp_init.lat;
+                  FlagWayPoints[0].pt.lon = wp_init.lon;
+                  FlagWayPoints[0].pt.alt = wp_init.alt;
+
                   UASLOG(s_logger,LL_DEBUG,"wp_init:" <<" "
                          << std::setprecision(6) << std::fixed
                          << "lat:" << wp_init.lat<< " "
@@ -452,6 +456,7 @@ namespace UasCode{
               int idx_end,idx_start=seq_current;//end and start of must go-through waypoint between current position and the goal
               this->seq_inter= colli_return.seq_colli;
 
+              //set path goal
               for(int i= colli_return.seq_colli;i!= FlagWayPoints.size();++i)
               {
                   if(!FlagWayPoints[i].flag){
@@ -460,6 +465,16 @@ namespace UasCode{
                       break;
                   }
               }
+              //set path start
+              for(int i= colli_return.seq_colli-1;i!= 0;--i)
+              {
+                  if(!FlagWayPoints[i].flag){
+                      path_gen.SetStartWp(FlagWayPoints[i].pt);
+                      break;
+                  }
+              }
+              //set begin waypoint for navigation
+              path_gen.SetBeginWp(FlagWayPoints[seq_current-1].pt);
 
               if(colli_return.seq_colli == seq_current)
               {
@@ -574,13 +589,6 @@ namespace UasCode{
                   situ= NORMAL;
                   if_inter_gen= false;
               }
-              break;
-          }
-
-          case PATH_RECHECK:
-          {
-              if(path_gen.PathCheckSingle(st_current) )
-                  situ= NORMAL;
               break;
           }
 

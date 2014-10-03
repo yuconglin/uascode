@@ -20,6 +20,7 @@ namespace UasCode{
   PathGenerator::PathGenerator():sample_method(0)
   {
     if_start_set= false;
+    if_start_wp_set= false;
     if_goal_set= false;
     //if_goal_reach= false;
     if_sampler_set= false;
@@ -84,6 +85,18 @@ namespace UasCode{
   {
     this->st_inter= _st;
   }
+  //set the start waypoint
+  void PathGenerator::SetStartWp(UserStructs::MissionSimPt &_pt)
+  {
+    this->start_wp= _pt;
+    if_start_wp_set= true;
+  }
+  //set the begin waypoint
+  void PathGenerator::SetBeginWp(UserStructs::MissionSimPt& _pt)
+  {
+     this->begin_wp= _pt;
+  }
+
   //set the goal waypoint
   void PathGenerator::SetGoalWp(UserStructs::MissionSimPt& _pt)
   {
@@ -174,18 +187,6 @@ namespace UasCode{
     while(1)
     {
       sampler_pt->GetSample2(x_a,y_a,z_a,xs_start,ys_start,zs_start,goal_wp);
-      //UASLOG(s_logger,LL_DEBUG,"sample check "<<x_a<<" "<<y_a<<" "<<z_a);
-      //check
-      //if in radius range
-      /*
-      bool if_radius= Utils::NotInRadius(xs_start,ys_start,yaw_root,x_a,y_a,rho);
-      if(!if_radius) {
-        double dis_s= std::sqrt(pow(xs_start-x_a,2)+pow(ys_start-y_a,2));
-        std::ostringstream oss;
-        oss << "in radius: " << "dis_s: "<< dis_s;
-        UASLOG(s_logger,LL_DEBUG,oss.str() );
-        continue;
-      }*/
       //if pitch ok
       DubinsPath path;
       the_a= atan2(y_a-ys_start,x_a-xs_start);
@@ -259,7 +260,12 @@ namespace UasCode{
     for(int i=0;i!= WpInBetweens.size();++i)
     {
        arma::vec::fixed<2> pt_temp;
-       pt_temp << st_ps.lat << st_ps.lon;
+       if(i==0){
+           pt_temp << begin_wp.lat << begin_wp.lon;
+       }
+       else{
+           pt_temp << WpInBetweens[i-1].lat << WpInBetweens[i-1].lon;
+       }
        UASLOG(s_logger,LL_DEBUG,"wp in between:"<< WpInBetweens[i].lat << " "<< WpInBetweens[i].lon);
        navigator.PropagateWp(st_ps,st_second,pt_temp,WpInBetweens[i]);
        st_ps= st_second;
@@ -275,7 +281,7 @@ namespace UasCode{
     double length= 0;
     UserStructs::PlaneStateSim st_end;
     arma::vec::fixed<2> pt_A;
-    pt_A << st_ps.lat << st_ps.lon;
+    pt_A << start_wp.lat << start_wp.lon;
     this->SetYawRootSample(M_PI/2-st_ps.yaw);
 
     while(1)
@@ -320,7 +326,8 @@ namespace UasCode{
           for(int i=0;i!=temp_part_rec.size();++i)
           {
               UserStructs::PlaneStateSim st_init= temp_part_rec[i].state;
-              pt_A<< st_init.lat << st_init.lon;
+              //pt_A<< st_init.lat << st_init.lon;
+              pt_A<< sample_wp.lat << sample_wp.lon;
               double length1= temp_part_rec[i].length;
 
               length= 0;
@@ -440,11 +447,16 @@ namespace UasCode{
 
     for(int i=0;i!= WpInBetweens.size();++i)
     {
-        arma::vec::fixed<2> pt_temp;
-        pt_temp << st_ps.lat << st_ps.lon;
-        UASLOG(s_logger,LL_DEBUG,"wp in between:"<< WpInBetweens[i].lat << " "<< WpInBetweens[i].lon);
-        navigator.PropagateWp(st_ps,st_second,pt_temp,WpInBetweens[i]);
-        st_ps= st_second;
+       arma::vec::fixed<2> pt_temp;
+       if(i==0){
+           pt_temp << begin_wp.lat << begin_wp.lon;
+       }
+       else{
+           pt_temp << WpInBetweens[i-1].lat << WpInBetweens[i-1].lon;
+       }
+       UASLOG(s_logger,LL_DEBUG,"wp in between:"<< WpInBetweens[i].lat << " "<< WpInBetweens[i].lon);
+       navigator.PropagateWp(st_ps,st_second,pt_temp,WpInBetweens[i]);
+       st_ps= st_second;
     }
 
     while(1)
@@ -468,7 +480,7 @@ namespace UasCode{
       UASLOG(s_logger,LL_DEBUG,"wp:"<< count <<" "<< wp.x <<" "<< wp.y);
       //check from current to intermediate waypoint
       arma::vec::fixed<2> pt_A;
-      pt_A << st_ps.lat << st_ps.lon;
+      pt_A << start_wp.lat << start_wp.lon;
 
       int result1= navigator.PropWpCheck2(st_ps,
                                           st_end,
@@ -563,6 +575,17 @@ namespace UasCode{
 	   << e.what() << std::endl;
       }
     }
+  }
+
+  void PathGenerator::CheckStartWpSet()
+  {
+      if(!if_start_wp_set){
+          try{ throw std::runtime_error("start wp not set"); }
+          catch(std::runtime_error& e){
+              std::cout<< "caught a runtime_error execption: "
+                       << e.what() << std::endl;
+          }
+      }
   }
 
   void PathGenerator::CheckGoalSet()
