@@ -16,5 +16,5 @@ gnome-terminal \
 				exec bash\""  \
 	--tab --title "AdsbFromFile" --command "bash -c \"
 				env sleep 3s;
-			        rosrun uascode test_adsbfile LoadSendConfig.txt 3
+			        rosrun uascode test_adsbfile LoadSendConfig.txt 2
 				exec bash\""  \
