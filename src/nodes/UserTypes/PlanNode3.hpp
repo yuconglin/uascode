@@ -1,0 +1,4 @@
+#ifndef PLANNODE3_HPP
+#define PLANNODE3_HPP
+
+#endif // PLANNODE3_HPP
