@@ -48,9 +48,9 @@ void *get_in_addr(struct sockaddr *sa)
  {
      //receiving loop
      socklen_t addrlen = sizeof(remaddr); /*length of addresses */
-     unsigned char buf[BUFSIZE]; /* receive buffer */
+     unsigned char buf[BUFFER]; /* receive buffer */
      char s[INET6_ADDRSTRLEN];
-     int recvlen = recvfrom(fd, buf, BUFSIZE, 0, (struct sockaddr *)&remaddr, &addrlen); 
+     int recvlen = recvfrom(fd, buf, BUFFER, 0, (struct sockaddr *)&remaddr, &addrlen);
      //printf("listener: got packet from %s\n",inet_ntop(remaddr.sin_family,get_in_addr((struct sockaddr *)&remaddr),s, sizeof s));
 
      //mavlink decode
@@ -74,4 +74,4 @@ void *get_in_addr(struct sockaddr *sa)
    }
  }
 
-};//namespace UasCode ends
+}//namespace UasCode ends

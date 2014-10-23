@@ -60,6 +60,11 @@ include_directories(
   ${GeographicLib_INCLUDE_DIRS}
 )
 
+#########other libs
+add_library(otherlibs
+   src/OtherLibs/Dubins2D/dubins.cpp
+   )
+
 ####library for other utilities
 add_library(common_utils
           src/common/Utils/GetTimeUTC.cpp
@@ -79,9 +84,11 @@ add_library(common_utils
           src/common/UserTypes/AdsbFromFile.cpp
 	  )
 add_dependencies(common_utils
-          uascode_july13_generate_messages_cpp
+          uascode_generate_messages_cpp
+	  otherlibs
 )
 target_link_libraries(common_utils
+	  otherlibs
           ${catkin_LIBRARIES}
           ${Boost_LIBRARIES}
 	  ${ARMADILLO_LIBRARIES}
@@ -99,7 +106,7 @@ add_library(adsb
 	  src/adsb/Utils/AdsbMsgToQGC.cpp
 )
 add_dependencies(adsb
-        uascode_july13_generate_messages_cpp
+        uascode_generate_messages_cpp
         common_utils
 )
 target_link_libraries(adsb
