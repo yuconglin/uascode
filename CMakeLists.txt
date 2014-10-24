@@ -150,6 +150,7 @@ target_link_libraries(planner
 add_library(nodes
 	src/nodes/UserTypes/PlanNode.cpp
 	src/nodes/UserTypes/PlanNode2.cpp
+        src/nodes/UserTypes/PlanNode3.cpp
 	src/nodes/UserTypes/MavlinkRecNode.cpp
 	src/nodes/UserTypes/MavlinkSendNode.cpp
 )
