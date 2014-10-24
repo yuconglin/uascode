@@ -8,13 +8,17 @@
 #include "nodes/UserStructs/GlobalPosi.h"
 #include "nodes/UserStructs/PlaneAtt.h"
 //ros msg headers
+#include "mavros/Mavlink.h"
 #include "uascode/MultiObsMsg.h"
 #include "sensor_msgs/NavSatFix.h"
 #include "geometry_msgs/TwistStamped.h"
-#include "sensor_msgs/Imu.h"G
+#include "sensor_msgs/Imu.h"
+#include "geometry_msgs/Vector3Stamped.h"
+#include "std_msgs/Float64.h"
 #include "ros/ros.h"
 
 #include <vector>
+#include "mavlink/v1.0/common/mavlink.h"
 
 namespace UasCode{
 
@@ -22,7 +26,18 @@ class PlanNode3{
 public:
     PlanNode3();
     ~PlanNode3();
+    void SetTimeLimit(const double _t_limit);
+    inline void SetWpR(const double _r){this->wp_r= _r;}
+    inline void SetHomeAlt(const double _alt){home_alt= _alt; }
 
+    //load trajectory log file
+    void SetLogFileName(const char* filename);
+    //load obs distance log
+    void SetObsDisFile(const char* filename);
+    //load flight plan from txt
+    void LoadFlightPlan(const char* filename);
+    //working part
+    void working();
 private:
     enum possible_cases{NORMAL,PATH_READY,PATH_GEN,PATH_CHECK,PATH_RECHECK,WAIT_STATE,ARRIVED};
     //path generator
@@ -37,6 +52,9 @@ private:
     UserStructs::PlaneAtt plane_att;
     //current waypoint
     int seq_current;
+    //mavlink message
+    //mavlink_message_t mavlink_in;
+    //mavlink_message_t malvink_out;
 
     //flag to indicate if an inter wp was generated
     bool if_inter_gen;
@@ -78,20 +96,29 @@ private:
     //ros related
     ros::NodeHandle nh;
     //publisher
-    ros::Publisher pub_mavlink;
+    //ros::Publisher pub_mavlink;
     //subscribers
+    //ros::Subscriber sub_mavlink;
     ros::Subscriber sub_obss;
     ros::Subscriber sub_posi;
     ros::Subscriber sub_vel;
+    ros::Subscriber sub_global_posi;
+    ros::Subscriber sub_global_vel;
+    ros::Subscriber sub_global_hdg;
     ros::Subscriber sub_att;
     //service
     ros::ServiceClient client_wp;
 
     //callback functions
+    void mavlinkCb(const mavros::Mavlink::ConstPtr& msg);
     void obssCb(const uascode::MultiObsMsg::ConstPtr& msg);
     void posiCb(const sensor_msgs::NavSatFix::ConstPtr& msg);
     void velCb(const geometry_msgs::TwistStamped::ConstPtr& msg);
+    void global_posiCb(const sensor_msgs::NavSatFix::ConstPtr& msg);
+    void global_velCb(const geometry_msgs::Vector3Stamped::ConstPtr& msg);
+    void global_hdgCb(const std_msgs::Float64::ConstPtr& msg);
     void attCb(const sensor_msgs::Imu::ConstPtr& msg);
+
     //other functions
     void GetCurrentSt();
     void GetObssDis();
