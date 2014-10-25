@@ -29,8 +29,9 @@ namespace UasCode{
     //subscriber
     //sub_mavlink= nh.subscribe("/mavlink/from",100,&PlanNode3::mavlinkCb,this);
     sub_obss= nh.subscribe("multi_obstacles",100,&PlanNode3::obssCb,this);
-    sub_posi= nh.subscribe("/mavros/fix",100,&PlanNode3::posiCb,this);
-    sub_vel= nh.subscribe("/mavros/gps_vel",100,&PlanNode3::velCb,this);
+    sub_posi= nh.subscribe("/mavros/fix2",100,&PlanNode3::posiCb,this);
+    sub_vel= nh.subscribe("/mavros/gps2_vel",100,&PlanNode3::velCb,this);
+    sub_hdg= nh.subscribe("/mavros/gps2_hdg",100,&PlanNode3::hdgCb,this);
     sub_global_posi= nh.subscribe("/mavros/global_position/global",100,&PlanNode3::global_posiCb,this);
     sub_global_vel= nh.subscribe("/mavros/global_position/gps_vel",100,&PlanNode3::global_velCb,this);
     sub_global_hdg= nh.subscribe("/mavros/global_position/compass_hdg",100,&PlanNode3::global_hdgCb,this);
@@ -294,14 +295,17 @@ namespace UasCode{
 
   }//posiCb ends
 
-  void PlanNode3::velCb(const geometry_msgs::TwistStamped::ConstPtr &msg)
+  void PlanNode3::velCb(const std_msgs::Float64::ConstPtr& msg)
   {
       UASLOG(s_logger,LL_DEBUG,"vecCb:"
-             << msg->twist.linear.x<<" "
-             << msg->twist.linear.y<<" "
-             << msg->twist.linear.z
-             );
+             << msg->data
+            );
   }//velCb ends
+
+  void PlanNode3::hdgCb(const std_msgs::Float64::ConstPtr& msg)
+  {
+      UASLOG(s_logger,LL_DEBUG,"hdgCb:"<< msg->data*180./M_PI);
+  }//hdgCb ends
 
   void PlanNode3::global_posiCb(const sensor_msgs::NavSatFix::ConstPtr &msg)
   {
@@ -314,10 +318,14 @@ namespace UasCode{
 
   void PlanNode3::global_velCb(const geometry_msgs::Vector3Stamped::ConstPtr &msg)
   {
+      double vel= std::sqrt(std::pow(msg->vector.x,2)
+                            +std::pow(msg->vector.y,2)
+                            +std::pow(msg->vector.z,2));
       UASLOG(s_logger,LL_DEBUG,"global_velCb:"
              << msg->vector.x <<" "
              << msg->vector.y <<" "
-             << msg->vector.z
+             << msg->vector.z <<" "
+             << vel
              );
   }//global_velCb ends
 

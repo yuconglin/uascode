@@ -102,6 +102,7 @@ private:
     ros::Subscriber sub_obss;
     ros::Subscriber sub_posi;
     ros::Subscriber sub_vel;
+    ros::Subscriber sub_hdg;
     ros::Subscriber sub_global_posi;
     ros::Subscriber sub_global_vel;
     ros::Subscriber sub_global_hdg;
@@ -113,7 +114,8 @@ private:
     void mavlinkCb(const mavros::Mavlink::ConstPtr& msg);
     void obssCb(const uascode::MultiObsMsg::ConstPtr& msg);
     void posiCb(const sensor_msgs::NavSatFix::ConstPtr& msg);
-    void velCb(const geometry_msgs::TwistStamped::ConstPtr& msg);
+    void velCb(const std_msgs::Float64::ConstPtr& msg);
+    void hdgCb(const std_msgs::Float64::ConstPtr& msg);
     void global_posiCb(const sensor_msgs::NavSatFix::ConstPtr& msg);
     void global_velCb(const geometry_msgs::Vector3Stamped::ConstPtr& msg);
     void global_hdgCb(const std_msgs::Float64::ConstPtr& msg);
