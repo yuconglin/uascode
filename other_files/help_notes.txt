@@ -1,0 +1,3 @@
+put CMakeLists.txt mavros_plugin.xml in mavros/mavros
+put gps2_raw.cpp in mavros/mavros/plugins
+put common.xml in messags_definitions
