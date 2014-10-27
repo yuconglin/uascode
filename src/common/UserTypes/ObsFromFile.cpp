@@ -9,8 +9,9 @@
 #include "common/UserStructs/constants.h"
 #include "common/Utils/GeoUtils.h"
 #include "common/Utils/FindPath.h"
+#include "common/Utils/UTMtransform.h"
 //ros
-#include "uascode/MultiObsMsg.h"
+#include "yucong_rosmsg/MultiObsMsg2.h"
 
 namespace {
     Utils::LoggerPtr s_logger(Utils::getLogger("uascode.ObsFromFile.YcLogger"));
@@ -20,8 +21,8 @@ namespace UasCode{
 
  ObsFromFile::ObsFromFile():seq_current(-1),if_mission(true),if_send_obstacle(false)
  {
-   pub_obss=nh.advertise<uascode::MultiObsMsg>("multi_obstacles",1);
-   sub_wp_curr = nh.subscribe("waypoint_current",100,&ObsFromFile::WpCurrCb,this);
+   pub_obss=nh.advertise<yucong_rosmsg::MultiObsMsg2>("/mavros/multi_obstacles",1);
+   sub_wp_curr = nh.subscribe("/mavros/mission_current",100,&ObsFromFile::WpCurrCb,this);
 
    for(int i=0;i!=3;++i)
        this->offsets.push_back(OffSet());
@@ -186,69 +187,9 @@ namespace UasCode{
 
  }
 
- void ObsFromFile::SendObss(int obs_num)
- {
-     uascode::MultiObsMsg obss_msg;
-     //please pay attention to time of obstacles
-     //being sent
-
-     //index of obstacles
-     int i= 0;
-     ros::Rate r(10);
-
-     while(ros::ok() )
-     {
-        ros::spinOnce();
-
-        if(seq_current > 0 && i!= all_obss.size() )
-        {//start to publish obstacles
-          UASLOG(s_logger,LL_DEBUG,"send obstacles.");
-
-          std::vector<UserStructs::obstacle3D> obss
-                  = all_obss[i];
-          obss_msg.MultiObs.clear();
-
-          int up_limit= obs_num > obss.size() ? obss.size():obs_num;
-
-          for(int i=0;i!= up_limit;++i){
-              //here obs_num is used to select num of obstacles to use
-              //otherwise we can just use obss.size()
-              //obss[i].t= Utils::GetTimeUTC();
-              obss[i].t= Utils::GetTimeNow();
-
-              //log to file
-              if(obss_log.is_open() )
-              {
-                  obss_log << obss[i].address << " "
-                           << obss[i].x1 << " "
-                           << obss[i].x2 << " "
-                           << obss[i].x3 << " "
-                           << obss[i].head_xy  << " "
-                           << obss[i].speed << " "
-                           << obss[i].v_vert << " "
-                           << std::setprecision(4) << std::fixed
-                           << obss[i].t << " "
-                           << obss[i].r << " "
-                           << obss[i].hr
-                           << "\n";
-              }
-              obss_msg.MultiObs.push_back(ObsToRosMsg(obss[i]));
-          }
-          //ros publish
-          pub_obss.publish(obss_msg);
-          ++i;
-          sleep(1);
-        }
-
-        r.sleep();
-
-     }//while ends
-
- }
-
  void ObsFromFile::SendObss2(bool f1, bool f2, bool f3)
  {
-     uascode::MultiObsMsg obss_msg;
+     yucong_rosmsg::MultiObsMsg2 obss_msg;
 
      ros::Rate r(10);
      int count=0;
@@ -295,7 +236,7 @@ namespace UasCode{
                                     << obss[j].hr << " "
                                     << "\n";
                        }
-                       obss_msg.MultiObs.push_back(ObsToRosMsg(obss[j]));
+                       obss_msg.MultiObs.push_back(ObsToRosMsg2(obss[j]));
                        if_pub = true;
                        break;
                    }
@@ -323,7 +264,7 @@ namespace UasCode{
                                     << obss[j].hr << " "
                                     << "\n";
                        }
-                       obss_msg.MultiObs.push_back(ObsToRosMsg(obss[j]));
+                       obss_msg.MultiObs.push_back(ObsToRosMsg2(obss[j]));
                        if_pub = true;
                        break;
                    }
@@ -351,7 +292,7 @@ namespace UasCode{
                                     << obss[j].hr << " "
                                     << "\n";
                        }
-                       obss_msg.MultiObs.push_back(ObsToRosMsg(obss[j]));
+                       obss_msg.MultiObs.push_back(ObsToRosMsg2(obss[j]));
                        if_pub = true;
                        break;
                    }
@@ -536,9 +477,9 @@ namespace UasCode{
  }
 
 
- void ObsFromFile::WpCurrCb(const uascode::WpCurrent::ConstPtr &msg)
+ void ObsFromFile::WpCurrCb(const std_msgs::UInt16::ConstPtr &msg)
  {
-    seq_current= msg->wp_current;
+    seq_current= (int)msg->data;
     /*
     std::cout<<"current waypoint #: "
              << seq_current
@@ -552,6 +493,28 @@ namespace UasCode{
      obs_msg.address= obs.address;
      obs_msg.x1= obs.x1;
      obs_msg.x2= obs.x2;
+     obs_msg.x3= obs.x3;
+     obs_msg.head_xy= obs.head_xy;
+     obs_msg.speed= obs.speed;
+     obs_msg.v_vert= obs.v_vert;
+     obs_msg.t= obs.t;
+     UASLOG(s_logger,LL_DEBUG,"obs_msg.t: "
+            << std::setprecision(4)<< std::fixed
+            << obs_msg.t
+            << "obs.t: " << obs.t);
+     obs_msg.r= obs.r;
+     obs_msg.hr= obs.hr;
+     return obs_msg;
+ }
+
+ yucong_rosmsg::ObsMsg2 ObsFromFile::ObsToRosMsg2(const UserStructs::obstacle3D &obs)
+ {
+     yucong_rosmsg::ObsMsg2 obs_msg;
+     obs_msg.address= obs.address;
+     double lon,lat;
+     Utils::FromUTM(obs.x1,obs.x2,lon,lat);
+     obs_msg.lat= lat;
+     obs_msg.lon= lon;
      obs_msg.x3= obs.x3;
      obs_msg.head_xy= obs.head_xy;
      obs_msg.speed= obs.speed;

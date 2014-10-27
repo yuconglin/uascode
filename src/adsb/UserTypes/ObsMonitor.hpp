@@ -10,6 +10,7 @@
 //other
 #include <vector>
 //ros
+#include "yucong_rosmsg/MultiObsMsg2.h"
 #include "ros/ros.h"
 
 #define BUFSIZE 2048
@@ -33,9 +34,10 @@ class ObsMonitor{
    MavlinkSender sender;
    //for adsb record
    //for convert to mavlink msg
-   std::vector<UserStructs::obstacle3D> obss;
+   //std::vector<UserStructs::obstacle3D> obss;
+   std::vector<yucong_rosmsg::ObsMsg2> obss2;
    //ros related
-   //ros::NodeHandle nh;
-   //ros::Publisher pub_obss;
+   ros::NodeHandle nh;
+   ros::Publisher pub_obss;
 };// ObsMonitor ends
 }//namespace ends

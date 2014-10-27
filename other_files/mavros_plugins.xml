@@ -14,6 +14,15 @@
 	<class name="gps2_raw" type="mavplugin::GPS2Plugin" base_class_type="mavplugin::MavRosPlugin">
 		<description>Publish GPS2 raw.</description>
 	</class>
+        <class name="mission_current" type="mavplugin::MissionCurrentPubPlugin" base_class_type="mavplugin::MavRosPlugin">
+                <description>Publish the current waypoit number that the aircraft is heading to.</description>
+        </class>
+        <class name="multi_adsb3" type="mavplugin::MultiAdsb3Plugin" base_class_type="mavplugin::MavRosPlugin">
+                <description>to receive adsb and send it autopilot</description>
+        </class>
+        <class name="colli_point" type="mavplugin::ColliPointPlugin" base_class_type="mavplugin::MavRosPlugin">
+                <descritipon>to receive collision point and send it to the autopilot</description>
+        </class>
 	<class name="param" type="mavplugin::ParamPlugin" base_class_type="mavplugin::MavRosPlugin">
 		<description>Access to FCU parameters.</description>
 	</class>

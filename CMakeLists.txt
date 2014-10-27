@@ -4,7 +4,9 @@ project(uascode)
 find_package(catkin REQUIRED COMPONENTS
  roscpp
  std_msgs
+ message_generation
  mavros
+ yucong_rosmsg
 )
 
 find_package(Boost REQUIRED COMPONENTS 
@@ -44,7 +46,7 @@ generate_messages(
 catkin_package(
   INCLUDE_DIRS src
   LIBRARIES  #TBD
-  CATKIN_DEPENDS roscpp mavros std_msgs
+  CATKIN_DEPENDS roscpp mavros std_msgs yucong_rosmsg
   DEPENDS Boost mavlink Armadillo GeographicLib 
 )
 

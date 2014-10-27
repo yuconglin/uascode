@@ -6,6 +6,8 @@
 #include "ros/ros.h"
 #include "uascode/WpCurrent.h"
 #include "uascode/ObsMsg.h"
+#include "yucong_rosmsg/ObsMsg2.h"
+#include "std_msgs/UInt16.h"
 
 namespace UasCode{
 
@@ -42,8 +44,9 @@ private:
    ros::Publisher pub_obss;
    ros::Subscriber sub_wp_curr;
    //callback functions
-   void WpCurrCb(const uascode::WpCurrent::ConstPtr& msg);
+   void WpCurrCb(const std_msgs::UInt16::ConstPtr &msg);
    uascode::ObsMsg ObsToRosMsg(const UserStructs::obstacle3D& obs);
+   yucong_rosmsg::ObsMsg2 ObsToRosMsg2(const UserStructs::obstacle3D& obs);
    int RandSelect(int start,int end);
    int RandSelectVec(const std::vector<int>& ints);
    std::string int2string(int _num);

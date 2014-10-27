@@ -3,8 +3,10 @@
 #include "common/Utils/FindPath.h"
 #include "common/UserStructs/constants.h"
 #include "common/Utils/GetTimeNow.h"
+#include "common/Utils/UTMtransform.h"
 //ros
-#include "uascode/MultiObsMsg.h"
+//#include "uascode/MultiObsMsg.h"
+#include "yucong_rosmsg/MultiObsMsg2.h"
 //std
 #include <iostream>
 #include <stdlib.h>
@@ -14,13 +16,10 @@ namespace{
 }
 
 namespace UasCode{
-//free function
-uascode::ObsMsg ObsToRosMsg(const UserStructs::obstacle3D& obs);
-//free function ends
 
 AdsbFromFile::AdsbFromFile():seq_current(-1)
 {
-    pub_obss=nh.advertise<uascode::MultiObsMsg>("multi_obstacles",1);
+    pub_obss=nh.advertise<yucong_rosmsg::MultiObsMsg2>("/mavros/multi_obstacles",1);
     sub_wp_curr = nh.subscribe("waypoint_current",100,&AdsbFromFile::WpCurrCb,this);
 
     for(int i=0;i!=3;++i)
@@ -128,7 +127,7 @@ void AdsbFromFile::ReadADSB(const std::vector<std::string> &file_names)
 void AdsbFromFile::SendObss2(bool f0, bool f1, bool f2)
 {
     int count=0;
-    uascode::MultiObsMsg obss_msg;
+    yucong_rosmsg::MultiObsMsg2 obss_msg;
 
     std::vector<UserStructs::obstacle3D>* obs_vec0= &all_obss[0];
     std::vector<UserStructs::obstacle3D>* obs_vec1= &all_obss[1];
@@ -148,7 +147,7 @@ void AdsbFromFile::SendObss2(bool f0, bool f1, bool f2)
             if(count >= obs_vec0->size())
               if_start0 = false;
             if(count!= obs_vec0->size() && if_start && if_start0){
-                obss_msg.MultiObs.push_back(ObsToRosMsg(obs_vec0->at(count)));
+                obss_msg.MultiObs.push_back(ObsToRosMsg2(obs_vec0->at(count)));
             }
         }
 
@@ -157,7 +156,7 @@ void AdsbFromFile::SendObss2(bool f0, bool f1, bool f2)
             if(count >= obs_vec1->size())
               if_start1 = false;
             if(count!= obs_vec1->size() && if_start && if_start1){
-                obss_msg.MultiObs.push_back(ObsToRosMsg(obs_vec1->at(count)));
+                obss_msg.MultiObs.push_back(ObsToRosMsg2(obs_vec1->at(count)));
             }
         }
 
@@ -166,7 +165,7 @@ void AdsbFromFile::SendObss2(bool f0, bool f1, bool f2)
             if(count >= obs_vec2->size())
               if_start2 = false;
             if(count!= obs_vec2->size() && if_start && if_start2){
-                obss_msg.MultiObs.push_back(ObsToRosMsg(obs_vec2->at(count)));
+                obss_msg.MultiObs.push_back(ObsToRosMsg2(obs_vec2->at(count)));
             }
         }
 
@@ -331,9 +330,9 @@ void AdsbFromFile::LoadSendRandomNum(const std::vector<std::string> &file_names,
     this->SendObss2(if0,if1,if2);
 }
 
-void AdsbFromFile::WpCurrCb(const uascode::WpCurrent::ConstPtr &msg)
+void AdsbFromFile::WpCurrCb(const std_msgs::UInt16::ConstPtr &msg)
 {
-   seq_current= msg->wp_current;
+   seq_current = (int)msg->data;
    /*
    std::cout<<"current waypoint #: "
             << seq_current
@@ -347,6 +346,28 @@ uascode::ObsMsg AdsbFromFile::ObsToRosMsg(const UserStructs::obstacle3D& obs)
     obs_msg.address= obs.address;
     obs_msg.x1= obs.x1;
     obs_msg.x2= obs.x2;
+    obs_msg.x3= obs.x3;
+    obs_msg.head_xy= obs.head_xy;
+    obs_msg.speed= obs.speed;
+    obs_msg.v_vert= obs.v_vert;
+    obs_msg.t= obs.t;
+    UASLOG(s_logger,LL_DEBUG,"obs_msg.t: "
+           << std::setprecision(4)<< std::fixed
+           << obs_msg.t
+           << "obs.t: " << obs.t);
+    obs_msg.r= obs.r;
+    obs_msg.hr= obs.hr;
+    return obs_msg;
+}
+
+yucong_rosmsg::ObsMsg2 AdsbFromFile::ObsToRosMsg2(const UserStructs::obstacle3D &obs)
+{
+    yucong_rosmsg::ObsMsg2 obs_msg;
+    obs_msg.address= obs.address;
+    double lon,lat;
+    Utils::FromUTM(obs.x1,obs.x2, lon, lat);
+    obs_msg.lon= lon;
+    obs_msg.lat= lat;
     obs_msg.x3= obs.x3;
     obs_msg.head_xy= obs.head_xy;
     obs_msg.speed= obs.speed;

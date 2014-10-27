@@ -9,12 +9,16 @@
 #include "nodes/UserStructs/PlaneAtt.h"
 //ros msg headers
 #include "mavros/Mavlink.h"
-#include "uascode/MultiObsMsg.h"
+#include "yucong_rosmsg/MultiObsMsg2.h"
 #include "sensor_msgs/NavSatFix.h"
 #include "geometry_msgs/TwistStamped.h"
 #include "sensor_msgs/Imu.h"
 #include "geometry_msgs/Vector3Stamped.h"
 #include "std_msgs/Float64.h"
+#include "geometry_msgs/Quaternion.h"
+#include "std_msgs/UInt16.h"
+#include "yucong_rosmsg/ColliPoint.h"
+
 #include "ros/ros.h"
 
 #include <vector>
@@ -40,6 +44,8 @@ public:
     void working();
 private:
     enum possible_cases{NORMAL,PATH_READY,PATH_GEN,PATH_CHECK,PATH_RECHECK,WAIT_STATE,ARRIVED};
+    possible_cases situ;
+
     //path generator
     PathGenerator path_gen;
     //plane state current
@@ -48,13 +54,12 @@ private:
     UserStructs::MissionSimPt goal_wp;
     //plane position
     UserStructs::GlobalPosi global_posi;
+    //quaternion
+    geometry_msgs::Quaternion plane_quat;
     //plane attitude
     UserStructs::PlaneAtt plane_att;
     //current waypoint
     int seq_current;
-    //mavlink message
-    //mavlink_message_t mavlink_in;
-    //mavlink_message_t malvink_out;
 
     //flag to indicate if an inter wp was generated
     bool if_inter_gen;
@@ -67,7 +72,7 @@ private:
     //custom mavlink message to send to the autopilot
     //adsb obstacles
     //collision point
-
+    yucong_rosmsg::ColliPoint colli_pt;
     //obstacles
     std::vector<UserStructs::obstacle3D> obss;
     //geofence/spacelimit
@@ -96,34 +101,31 @@ private:
     //ros related
     ros::NodeHandle nh;
     //publisher
-    //ros::Publisher pub_mavlink;
+    ros::Publisher pub_colli_pt;
     //subscribers
-    //ros::Subscriber sub_mavlink;
+
     ros::Subscriber sub_obss;
     ros::Subscriber sub_posi;
     ros::Subscriber sub_vel;
     ros::Subscriber sub_hdg;
-    ros::Subscriber sub_global_posi;
-    ros::Subscriber sub_global_vel;
-    ros::Subscriber sub_global_hdg;
     ros::Subscriber sub_att;
+    ros::Subscriber sub_mc;//mission current
     //service
     ros::ServiceClient client_wp;
 
     //callback functions
     void mavlinkCb(const mavros::Mavlink::ConstPtr& msg);
-    void obssCb(const uascode::MultiObsMsg::ConstPtr& msg);
+    void obssCb(const yucong_rosmsg::MultiObsMsg2::ConstPtr& msg);
     void posiCb(const sensor_msgs::NavSatFix::ConstPtr& msg);
     void velCb(const std_msgs::Float64::ConstPtr& msg);
     void hdgCb(const std_msgs::Float64::ConstPtr& msg);
-    void global_posiCb(const sensor_msgs::NavSatFix::ConstPtr& msg);
-    void global_velCb(const geometry_msgs::Vector3Stamped::ConstPtr& msg);
-    void global_hdgCb(const std_msgs::Float64::ConstPtr& msg);
     void attCb(const sensor_msgs::Imu::ConstPtr& msg);
+    void mission_currentCb(const std_msgs::UInt16::ConstPtr& msg);
 
     //other functions
     void GetCurrentSt();
     void GetObssDis();
+    void SendWaypoints();
     int PredictColliNode2(UserStructs::PlaneStateSim &st_current,int seq_current,double t_limit,double thres_ratio,UserStructs::PredictColliReturn& colli_return);
 };
 

@@ -18,31 +18,17 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 //ros
-#include "uascode/MultiObsMsg.h"
+#include "yucong_rosmsg/MultiObsMsg2.h"
+#include "yucong_rosmsg/ObsMsg2.h"
 #include "uascode/ObsMsg.h"
 
 namespace UasCode{
-  //free function
-   uascode::ObsMsg ObsToRosMsg(const UserStructs::obstacle3D& obs); 
-  //free function ends
 
    ObsMonitor::ObsMonitor()
    {
-     //pub_obss=nh.advertise<uascode::MultiObsMsg>("multi_obstacles",1);
+      //publisher
+      pub_obss=nh.advertise<yucong_rosmsg::MultiObsMsg2>("/mavros/multi_obstacles",100);
    }
-   /*
-   bool ObsMonitor::UartInit(const char *_uartname,const int _baudrate)
-   {
-      if(!mavlink_send) return false;
-      sender.SetUartname(_uartname);
-      sender.SetBaudrate(_baudrate);
-      bool setup= false;
-      while(!setup){
-        sender.OpenPort();
-        setup= sender.SetupPort();
-      }
-      return setup;
-   }*/
 
    int ObsMonitor::PortSetUp()
    {
@@ -98,11 +84,13 @@ namespace UasCode{
        std::ofstream fs_obs(file_obs);
 
        int count=0;//count for useful byte sequence to decode
-       uascode::MultiObsMsg obss_msg;
+       yucong_rosmsg::MultiObsMsg2 obss_msg;
        //decoding bytes
-       while(1)
-           //while(ros::ok() )
+       //while(1)
+       ros::Rate r(10);
+       while(ros::ok() )
        {
+           ros::spinOnce();
            recvlen = recvfrom(fd, buf, BUFSIZE, 0, (struct sockaddr *)&remaddr, &addrlen);
            std::cout<<"recvlen: "<< recvlen<< std::endl;
            int msg_re= decoder.Decode(buf,recvlen);
@@ -163,9 +151,11 @@ namespace UasCode{
                       << (int)msg.x<< std::endl;
 
                //converted to obstacles and log
-
-               UserStructs::obstacle3D obs;
-               Utils::AdsbToObs(msg,obs);
+               /*
+               //UserStructs::obstacle3D obs;
+               yucong_rosmsg::ObsMsg2 msg2;
+               //Utils::AdsbToObs(msg,obs);
+               Utils::AdsbToObsMsg2(adsb,msg2);
                obss.push_back(obs);
                obss_msg.MultiObs.push_back(ObsToRosMsg(obs) );
                fs_obs<< obs.address<<" "
@@ -173,7 +163,7 @@ namespace UasCode{
                      << obs.head_xy*M_PI/180.<<" "<< obs.speed<<" "
                      << obs.v_vert<<" "<< obs.t<<" "
                      << obs.r <<" "<< obs.hr << std::endl;
-
+               */
            }
            //adsb log
            if(msg_re== 20)
@@ -182,20 +172,21 @@ namespace UasCode{
 
                //if no repeats find, just insert it
                bool repeat= false;
-               for(int i=0;i!= obss.size();++i)
+               for(int i=0;i!= obss2.size();++i)
                {
-                   if(msg.address== obss[i].address){
+                   if(msg.address== obss2[i].address){
                        repeat= true;
                        break;
                    }
                }
 
-               if(repeat) {
+               if(repeat){
+                   /*
                    if(mavlink_send)
                        sender.SendMultiObs3(obss);
-                   obss.clear();
+                       */
                    //ros publish
-                   //pub_obss.publish(obss_msg);
+                   pub_obss.publish(obss_msg);
                    obss_msg.MultiObs.clear();
                }
 
@@ -239,10 +230,11 @@ namespace UasCode{
                //converted to obstacles and log
                UserStructs::obstacle3D obs;
                Utils::AdsbToObs(msg,obs);
-               obss.push_back(obs);
-               obss_msg.MultiObs.push_back(ObsToRosMsg(obs) );
+               yucong_rosmsg::ObsMsg2 msg2;
+               Utils::AdsbToObsMsg2(msg,msg2);
+               obss_msg.MultiObs.push_back(msg2);
 
-               fs_obs<< obs.address<<" "<< std::setprecision(8) << std::fixed
+               fs_obs<< msg2.address<<" "<< std::setprecision(8) << std::fixed
                      << obs.x1 <<" "<< obs.x2 <<" " << obs.x3<<" "
                      << obs.head_xy*180./M_PI<<" "<< obs.speed<<" "
                      << obs.v_vert<<" "<< obs.t<<" "
@@ -251,8 +243,6 @@ namespace UasCode{
            }//adsb
            if(msg_re== 0)
            {
-               //adsbs.clear();
-               //obss.clear();
                UserStructs::HeartMsg msg= decoder.GetHeart();
                fs_adsb<<"time:"<< msg.TimeStamp<<" "
                      <<"time ref:"<<Utils::GetTimeUTC()<< std::endl;

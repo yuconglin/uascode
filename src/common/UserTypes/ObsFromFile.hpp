@@ -5,6 +5,8 @@
 //ros messages
 #include "uascode/WpCurrent.h"
 #include "uascode/ObsMsg.h"
+#include "yucong_rosmsg/ObsMsg2.h"
+#include "std_msgs/UInt16.h"
 
 #include <fstream>
 #include <map>
@@ -19,7 +21,6 @@ public:
    //read obs
    void ReadObss(const char* filename);
    //send obs
-   void SendObss(int obs_num);
    void SendObss2(bool f1,bool f2,bool f3);
    //set obss_file name
    void SetLogFileName(const char *filename);
@@ -54,8 +55,9 @@ private:
    std::vector<std::vector<UserStructs::obstacle3D> > all_obss;
    int seq_current;
    //callback functions
-   void WpCurrCb(const uascode::WpCurrent::ConstPtr& msg);
+   void WpCurrCb(const std_msgs::UInt16::ConstPtr &msg);
    uascode::ObsMsg ObsToRosMsg(const UserStructs::obstacle3D& obs);
+   yucong_rosmsg::ObsMsg2 ObsToRosMsg2(const UserStructs::obstacle3D& obs);
    int RandSelectVec(const std::vector<int>& ints);
    std::string int2string(int _num);
    //file for obstacles

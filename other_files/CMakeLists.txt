@@ -16,6 +16,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_srvs
   tf
   angles
+  yucong_rosmsg
 )
 
 ## System dependencies are found with CMake's conventions
@@ -131,7 +132,7 @@ generate_messages(
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES mavconn mavros
-  CATKIN_DEPENDS diagnostic_msgs diagnostic_updater pluginlib roscpp sensor_msgs std_msgs tf geometry_msgs
+  CATKIN_DEPENDS diagnostic_msgs diagnostic_updater pluginlib roscpp sensor_msgs std_msgs tf geometry_msgs yucong_rosmsg
   DEPENDS Boost mavlink
   CFG_EXTRAS mavros-extras.cmake
 )
@@ -202,6 +203,9 @@ add_library(mavros_plugins
   src/plugins/vfr_hud.cpp
   src/plugins/ftp.cpp
   src/plugins/gps2_raw.cpp
+  src/plugins/mission_current.cpp
+  src/plugins/multi_adsb3.cpp
+  src/plugins/colli_point.cpp
 )
 add_dependencies(mavros_plugins
   mavros
