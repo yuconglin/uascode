@@ -4,9 +4,7 @@ gnome-terminal \
 				exec bash\""  \
 	--tab --title "mavros" --command "bash -c \"
 				env sleep 3s;
-				rosrun mavros mavros_node _fcu_url:='tcp://0.0.0.0:5762'
-
-				#rosrun mavros mavros_node _fcu_url:='udp://19550@127.0.0.1:14550'
+				rosrun mavros mavros_node _fcu_url:='tcp://127.0.0.1:5763'
 				exec bash\""  \
 	--tab --title "planNode3" --command "bash -c \"
 		                env sleep 3s;
