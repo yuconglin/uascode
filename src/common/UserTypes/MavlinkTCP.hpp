@@ -7,7 +7,7 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 
-#define BUFFER 2048
+#define BUFFER 1024
 
 namespace UasCode{
 
@@ -31,4 +31,4 @@ class MavlinkTCP{
   void handle_message_attitude(mavlink_message_t *msg); 
 };//class ends
 
-};//namespace ends
+}//namespace ends
