@@ -7,7 +7,7 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 
-#define BUFSIZE 2048
+#define BUFFER 2048
 
 namespace UasCode{
 

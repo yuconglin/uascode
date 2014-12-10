@@ -12,7 +12,7 @@
 //ros
 #include "ros/ros.h"
 
-#define BUFSIZE 2048
+#define BUFFER 2048
 //#define PORT 4000
 #define PORT 14550
 

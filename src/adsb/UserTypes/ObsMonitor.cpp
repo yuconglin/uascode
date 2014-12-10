@@ -56,7 +56,7 @@ namespace UasCode{
        socklen_t addrlen = sizeof(remaddr);		/* length of addresses */
        int recvlen;			/* # bytes received */
        int fd;				/* our socket */
-       unsigned char buf[BUFSIZE];	/* receive buffer */
+       unsigned char buf[BUFFER];	/* receive buffer */
        /* create a U<DP socket */
        if ((fd = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {
            perror("cannot create socket\n");
@@ -103,7 +103,7 @@ namespace UasCode{
        while(1)
            //while(ros::ok() )
        {
-           recvlen = recvfrom(fd, buf, BUFSIZE, 0, (struct sockaddr *)&remaddr, &addrlen);
+           recvlen = recvfrom(fd, buf, BUFFER, 0, (struct sockaddr *)&remaddr, &addrlen);
            std::cout<<"recvlen: "<< recvlen<< std::endl;
            int msg_re= decoder.Decode(buf,recvlen);
            if(msg_re!=-10) ++count;
