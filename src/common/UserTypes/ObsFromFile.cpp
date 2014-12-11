@@ -539,11 +539,6 @@ namespace UasCode{
  void ObsFromFile::WpCurrCb(const uascode::WpCurrent::ConstPtr &msg)
  {
     seq_current= msg->wp_current;
-    /*
-    std::cout<<"current waypoint #: "
-             << seq_current
-             << std::endl;
-    */
  }
 
  uascode::ObsMsg ObsFromFile::ObsToRosMsg(const UserStructs::obstacle3D& obs)
