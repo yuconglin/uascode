@@ -232,3 +232,12 @@ target_link_libraries(test_MavSendNode
 	${ARMADILLO_LIBRARIES} 
 	${GeographicLib_LIBRARIES}
 	)
+
+#read the smallest distance
+add_executable(read_dis src/common/Test/read_dis.cpp)
+add_dependencies(read_dis common_utils)
+target_link_libraries(read_dis
+        common_utils
+        ${catkin_LIBRARIES}
+        ${GeographicLib_LIBRARIES}
+)

@@ -25,7 +25,7 @@ int main(int argc,char** argv)
 
    obsfrom.SetLogFileName(log_file.c_str());
 
-   //obsfrom.LoadSendConfig(argv[3],data_file.c_str());
+   obsfrom.LoadSendConfig(argv[3],data_file.c_str());
    //obsfrom.LoadSendRandom(data_file.c_str(),"A");
-   obsfrom.LoadSendRandomNum(data_file.c_str(),atoi(argv[4]),"A");
+   //obsfrom.LoadSendRandomNum(data_file.c_str(),atoi(argv[4]),"A");
 }
