@@ -54,7 +54,7 @@ namespace UasCode{
     //set wp_r
     wp_r =30;
 
-    thres_ratio=1.2;
+    thres_ratio=1.4;
     if_receive= false;
     //I use seq_current== -1 to indicate the moment mission starts
     seq_current= -1;
