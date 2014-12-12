@@ -461,6 +461,8 @@ namespace UasCode{
               {
                   if(!FlagWayPoints[i].flag){
                       path_gen.SetGoalWp(FlagWayPoints[i].pt);
+                      double dis_goal= std::sqrt(pow(st_current.x-FlagWayPoints[i].pt.x,2)+pow(st_current.y-FlagWayPoints[i].pt.y,2));
+                      std::cout<<"dis_goal:"<< dis_goal<<"\n";
                       idx_end= i-1;
                       break;
                   }

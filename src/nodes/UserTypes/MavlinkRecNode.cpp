@@ -37,7 +37,7 @@ void MavlinkRecNode::working()
         to indicate if mavlink still
         available */
        if_MavLink= true;
-       std::cout << "receiving mavlink messages" << "\n";
+
        mavlink_message_t msg= mavlink_tcp.GetMessage();
        //IF INTER WP RECEIVED
        if(msg.msgid == MAVLINK_MSG_ID_INTER_RECEIVE)
@@ -103,9 +103,6 @@ void MavlinkRecNode::working()
        {
          mavlink_mission_current_t current_t;
          mavlink_msg_mission_current_decode(&msg,&current_t);
-         std::cout<<"current waypoint rec: "
-                  << current_t.seq
-                  << std::endl;
          wp_current.wp_current= current_t.seq;
          pub_wp_current.publish(wp_current);
        }
