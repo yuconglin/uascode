@@ -3,7 +3,7 @@ clear all;
 clc;
 
 k= 1200;
-time= 250;
+time= 300;
 MATDIS= zeros(3,4);
 %to plot the whole trajectory and the distance between the obstacles and
 %the aircraft
