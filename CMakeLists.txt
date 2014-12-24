@@ -241,3 +241,14 @@ target_link_libraries(read_dis
         ${catkin_LIBRARIES}
         ${GeographicLib_LIBRARIES}
 )
+
+#test navigator
+add_executable(propagate_test src/Planner/UserTypes/test_navigator.cpp)
+add_dependencies(propagate_test planner common_utils otherlibs)
+target_link_libraries(propagate_test
+              planner
+              common_utils
+              otherlibs
+              ${ARMADILLO_LIBRARIES}
+              ${GeographicLib_LIBRARIES}
+)

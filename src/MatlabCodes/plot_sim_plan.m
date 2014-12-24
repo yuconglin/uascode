@@ -4,7 +4,7 @@ clc;
 %to compare simulated and planned trajectory
 %load planned path
 %f_traj =fopen('../../bin/fs_state.txt','r');
-f_traj = fopen('../../fs_state2.txt','r');
+f_traj = fopen('/home/yucong/catkin_ws/devel/lib/uascode/fs_state.txt','r');
 
 if f_traj == -1
     error('File fs_state.txt could not be opened, check name or path.')
@@ -45,7 +45,7 @@ while ischar(traj_line)
 end
 
 %load actual sitl path
-s_traj =fopen('../../bin/sitl_state1.txt','r');
+s_traj =fopen('/home/yucong/catkin_ws/src/uascode/records/sitl_state_large.txt','r');
 
 if s_traj == -1
     error('File sitl_state.txt could not be opened, check name or path.')
@@ -55,32 +55,41 @@ sim_traj = [];
 count2= 0;
 while ischar(sim_line)
 %1405050339.43151 -111.93368 33.42466 624.63000 26.40076 413198.24766 3698756.30170 254.00000 -0.04974 -0.06831 -1.84719 262.00000 153.00000 -603.00000
-   log_traj = textscan(sim_line,'%f %f %f %f %f %f %f %f %f %f %f %f %f %f %f');
-   lat_s = log_traj{3};
-   lon_s = log_traj{2};
+   log_traj = textscan(sim_line,'%f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %d');
+   id = log_traj{16};
    
-   if count2== 0
-     t0= log_traj{1};    
+   if id == 1
+       lat_s = log_traj{3};
+       lon_s = log_traj{2};
+
+       if count2== 0
+         t0= log_traj{1};    
+       end
+
+       z_s = log_traj{4};
+       t_s = log_traj{1}-t0;
+       v_s = log_traj{5};
+       x_s = log_traj{6};
+       y_s = log_traj{7};
+
+       hd_s = log_traj{8};
+       pitch_s = log_traj{10};
+       yaw_s = log_traj{11};
+
+    %    if hd_s > 180
+    %        hd_s= hd_s -180;
+    %    elseif hd_s < -180
+    %        hd_s= hd_s +180;
+    %    end
+       if id == 1
+          sim_traj = [ sim_traj; [t_s,x_s,y_s,z_s,v_s,hd_s,pitch_s,yaw_s] ];
+       end
+       count2= count2+1;
+   
    end
    
-   z_s = log_traj{4};
-   t_s = log_traj{1}-t0;
-   v_s = log_traj{5};
-   x_s = log_traj{6};
-   y_s = log_traj{7};
-   
-   hd_s = log_traj{8};
-   pitch_s = log_traj{10};
-   yaw_s = log_traj{11};
-%    if hd_s > 180
-%        hd_s= hd_s -180;
-%    elseif hd_s < -180
-%        hd_s= hd_s +180;
-%    end
-   
-   sim_traj = [ sim_traj; [t_s,x_s,y_s,z_s,v_s,hd_s,pitch_s,yaw_s] ];
    sim_line= fgetl(s_traj);
-   count2= count2+1;
+   
 end
 
 %time stamp matching
@@ -100,46 +109,55 @@ figure;
 hold on;
 plot3( virtual_traj(:,2), virtual_traj(:,3), virtual_traj(:,4),'r+-');
 
-% figure;
-% subplot(2,2,1);
-% hold on;
-% plot( sim_traj(:,1), sim_traj(:,2) );
-% plot( virtual_traj(:,1), virtual_traj(:,2),'r+-');
-% 
-% subplot(2,2,2);
-% hold on;
-% plot( sim_traj(:,1), sim_traj(:,3) );
-% plot( virtual_traj(:,1), virtual_traj(:,3), 'r+-' );
-% 
-% subplot(2,2,3);
-% hold on;
-% plot( sim_traj(:,1), sim_traj(:,4) );
-% plot( virtual_traj(:,1), virtual_traj(:,4), 'r+-' );
-% 
-% subplot(2,2,4);
-% hold on;
-% plot( sim_traj(:,1), sim_traj(:,5) );
-% plot( virtual_traj(:,1), virtual_traj(:,5), 'r+-' );
-% 
-% figure;
-% subplot(2,2,1);
-% hold on;
-% plot( sim_traj(:,1), sim_traj(:,6) );
-% plot( virtual_traj(:,1), virtual_traj(:,6), 'r+-' ); 
-% 
-% subplot(2,2,2);
-% hold on;
-% plot( t_array(1:length(dis)), dis );
-% 
-% subplot(2,2,3);
-% hold on;
-% plot( sim_traj(:,1), sim_traj(:,7)*180/pi );
-% plot( virtual_traj(:,1), virtual_traj(:,7), 'r+-' );
-% 
-% subplot(2,2,4);
-% hold on;
-% plot( sim_traj(:,1), sim_traj(:,8)*180/pi );
-% plot( virtual_traj(:,1), virtual_traj(:,6), 'r+-' );
+% x
+figure;
+subplot(2,2,1);
+hold on;
+plot( sim_traj(:,1), sim_traj(:,2) );
+plot( virtual_traj(:,1), virtual_traj(:,2),'r+-');
+
+% y
+subplot(2,2,2);
+hold on;
+plot( sim_traj(:,1), sim_traj(:,3) );
+plot( virtual_traj(:,1), virtual_traj(:,3), 'r+-' );
+
+% z
+subplot(2,2,3);
+hold on;
+plot( sim_traj(:,1), sim_traj(:,4) );
+plot( virtual_traj(:,1), virtual_traj(:,4), 'r+-' );
+
+% v
+subplot(2,2,4);
+hold on;
+plot( sim_traj(:,1), sim_traj(:,5) );
+plot( virtual_traj(:,1), virtual_traj(:,5), 'r+-' );
+
+
+% heading
+figure;
+subplot(2,2,1);
+hold on;
+plot( sim_traj(:,1), sim_traj(:,6) );
+plot( virtual_traj(:,1), virtual_traj(:,6), 'r+-' ); 
+
+% distance
+subplot(2,2,2);
+hold on;
+plot( t_array(1:length(dis)), dis );
+
+% pitch
+subplot(2,2,3);
+hold on;
+plot( sim_traj(:,1), sim_traj(:,7)*180/pi );
+plot( virtual_traj(:,1), virtual_traj(:,7), 'r+-' );
+
+% yaw
+subplot(2,2,4);
+hold on;
+plot( sim_traj(:,1), sim_traj(:,8)*180/pi );
+plot( virtual_traj(:,1), virtual_traj(:,6), 'r+-' );
 % 
 % figure;
 % hold on;

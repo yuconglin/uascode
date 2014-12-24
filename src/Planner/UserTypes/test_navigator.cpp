@@ -13,18 +13,18 @@ int main(int argc,char** argv)
 {
   NavigatorSim navigator("fs_action.txt","fs_state.txt");
   //parameters
-  double _Tmax= 12.49*CONSTANT_G;
-  //double _Tmax= 5*CONSTANT_G;
+  //double _Tmax= 12.49*CONSTANT_G;
+  double _Tmax= 6.79*CONSTANT_G;
   //double _Muav= 29.2; //kg
-  double _Muav= 10;
+  double _Muav= 0.453592*13;
   double myaw_rate= 20./180*M_PI;
   double mpitch_rate= 10./180*M_PI;
-  double _max_speed= 30; //m/s
+  double _max_speed= 30.8667; //m/s
   double _min_speed= 10; //m/s
   double _max_pitch= 25./180*M_PI;
   double _min_pitch= -20./180*M_PI;
 
-  double dt= 1.0;
+  double dt= 0.1;
   //double _speed_trim= 0.5*(_max_speed+_min_speed);
   double _speed_trim= _max_speed;
   //the start id of waypoint
@@ -41,7 +41,7 @@ int main(int argc,char** argv)
   //navigator.EnableAirspd();
 
   /****read start state****/
-  std::ifstream start_file("/home/yucong/ros_workspace/uascode/records/sitl_state_large.txt");
+  std::ifstream start_file( (Utils::FindPath()+"/records/sitl_state_large.txt").c_str() );
   double t_now,lon_f,lat_f,hgt_f,speed_f,x_f,y_f,hd_f,roll_f,pitch_f,yaw_f,ax_f,ay_f,az_f,dvz_f;
   int wp_id = -1;
 
