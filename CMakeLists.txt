@@ -77,11 +77,12 @@ add_library(common_utils
           src/common/Utils/MathUtils.cpp
           src/common/Utils/FindPath.cpp
           src/common/Utils/YcLogger.cpp
+          src/common/Utils/AeroCoefficients.cpp
           src/common/UserTypes/MavlinkReceiver.cpp
 	  src/common/UserTypes/MavlinkTCP.cpp
 	  src/common/UserTypes/MavlinkSender.cpp
           src/common/UserTypes/ObsFromFile.cpp
-          src/common/UserTypes/AdsbFromFile.cpp
+          src/common/UserTypes/AdsbFromFile.cpp      
 	  )
 add_dependencies(common_utils
           uascode_generate_messages_cpp

@@ -53,12 +53,13 @@ end
 sim_line= fgetl(s_traj);
 sim_traj = [];
 count2= 0;
+id_p = 2;
 while ischar(sim_line)
 %1405050339.43151 -111.93368 33.42466 624.63000 26.40076 413198.24766 3698756.30170 254.00000 -0.04974 -0.06831 -1.84719 262.00000 153.00000 -603.00000
    log_traj = textscan(sim_line,'%f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %d');
    id = log_traj{16};
    
-   if id == 1
+   if id == id_p
        lat_s = log_traj{3};
        lon_s = log_traj{2};
 
@@ -81,9 +82,7 @@ while ischar(sim_line)
     %    elseif hd_s < -180
     %        hd_s= hd_s +180;
     %    end
-       if id == 1
-          sim_traj = [ sim_traj; [t_s,x_s,y_s,z_s,v_s,hd_s,pitch_s,yaw_s] ];
-       end
+       sim_traj = [ sim_traj; [t_s,x_s,y_s,z_s,v_s,hd_s,pitch_s,yaw_s] ];
        count2= count2+1;
    
    end

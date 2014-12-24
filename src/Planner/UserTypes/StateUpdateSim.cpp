@@ -3,6 +3,7 @@
 #include "common/Utils/GeoUtils.h"
 #include "common/Utils/MathUtils.h"
 #include "common/Utils/YcLogger.h"
+#include "common/Utils/AeroCoefficients.h"
 //standard
 #include <cmath>
 
@@ -57,8 +58,18 @@ namespace UasCode{
       double avg_pitch= 0.5*(pitch1+st_pre.pitch);
       //2) throttle effect
       double KaV= 1;
-      double aV= KaV*(dem_thr*Tmax-Muav*CONSTANT_G*sin(avg_pitch))/Muav;
-      //std::cout<<"aV: "<< aV<< std::endl;
+
+      double rho0 = 1.225; //kg*m^-3
+      double S = 10.57 * 0.092903; //m^2
+      double CD0 = Utils::CD0_Drag0Lift(avg_pitch);
+      double CL = Utils::CL_Lift(avg_pitch);
+      double K = Utils::K_InducedDrag();
+      double kg2pl = 2.20462;
+      double m2ft = 3.28084;
+      double Drag= 0.5 * rho0 * S * pow( st_pre.speed, 2 ) * ( CD0 + K * CL * CL )* kg2pl * m2ft;
+
+      double aV= KaV*(dem_thr*Tmax - Drag - Muav*CONSTANT_G*sin(avg_pitch))/Muav;
+
       double speed1= st_pre.speed+aV*dt;
       speed1= Utils::math::constrain(speed1,min_speed,max_speed);
 
