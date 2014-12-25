@@ -24,7 +24,7 @@ int main(int argc,char** argv)
   double _max_pitch= 25./180*M_PI;
   double _min_pitch= -20./180*M_PI;
 
-  double dt= 0.01;
+  double dt= 1.0;
   //double _speed_trim= 0.5*(_max_speed+_min_speed);
   double _speed_trim= _max_speed;
   //the start id of waypoint
