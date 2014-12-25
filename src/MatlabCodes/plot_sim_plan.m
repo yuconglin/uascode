@@ -104,9 +104,9 @@ for j=1:length(t_array)
   end
 end
 
-figure;
-hold on;
-plot3( virtual_traj(:,2), virtual_traj(:,3), virtual_traj(:,4),'r+-');
+% figure;
+% hold on;
+% plot3( virtual_traj(:,2), virtual_traj(:,3), virtual_traj(:,4),'r+-');
 
 % x
 figure;
@@ -114,25 +114,25 @@ subplot(2,2,1);
 hold on;
 plot( sim_traj(:,1), sim_traj(:,2) );
 plot( virtual_traj(:,1), virtual_traj(:,2),'r+-');
-
+title('x');
 % y
 subplot(2,2,2);
 hold on;
 plot( sim_traj(:,1), sim_traj(:,3) );
 plot( virtual_traj(:,1), virtual_traj(:,3), 'r+-' );
-
+title('y');
 % z
 subplot(2,2,3);
 hold on;
 plot( sim_traj(:,1), sim_traj(:,4) );
 plot( virtual_traj(:,1), virtual_traj(:,4), 'r+-' );
-
+title('z');
 % v
 subplot(2,2,4);
 hold on;
 plot( sim_traj(:,1), sim_traj(:,5) );
 plot( virtual_traj(:,1), virtual_traj(:,5), 'r+-' );
-
+title('speed');
 
 % heading
 figure;
@@ -140,25 +140,29 @@ subplot(2,2,1);
 hold on;
 plot( sim_traj(:,1), sim_traj(:,6) );
 plot( virtual_traj(:,1), virtual_traj(:,6), 'r+-' ); 
+title('heading');
 
 % distance
 subplot(2,2,2);
 hold on;
 plot( t_array(1:length(dis)), dis );
+title('xy_dis');
 
 % pitch
 subplot(2,2,3);
 hold on;
 plot( sim_traj(:,1), sim_traj(:,7)*180/pi );
 plot( virtual_traj(:,1), virtual_traj(:,7), 'r+-' );
+title('pitch');
 
 % yaw
 subplot(2,2,4);
 hold on;
 plot( sim_traj(:,1), sim_traj(:,8)*180/pi );
 plot( virtual_traj(:,1), virtual_traj(:,6), 'r+-' );
+title('yaw');
 % 
-% figure;
-% hold on;
-% plot3(sim_traj(:,2),sim_traj(:,3),sim_traj(:,4) );
-% plot3(virtual_traj(:,2),virtual_traj(:,3),virtual_traj(:,4),'r+' );
+figure;
+hold on;
+plot3(sim_traj(:,2),sim_traj(:,3),sim_traj(:,4) );
+plot3(virtual_traj(:,2),virtual_traj(:,3),virtual_traj(:,4),'r+' );
