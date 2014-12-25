@@ -433,13 +433,6 @@ namespace UasCode{
           WpNumMsg.wp_num= FlagWayPoints.size();
           pub_WpNum.publish(WpNumMsg);
 
-          /*
-          if(!if_inter_gen)
-              thres_ratio= 1.5;
-          else
-              thres_ratio=1.;
-          */
-
           UASLOG(s_logger,LL_DEBUG,"situ="<< situ <<" "
                  << "if_receive="<<" "<< if_receive <<" "
                  << "seq_current="<<" "<< seq_current);
@@ -511,7 +504,9 @@ namespace UasCode{
               }
 
               path_gen.SetSampleParas();
-              path_gen.SetObs(obss);
+
+              //path_gen.SetObs(obss);
+              path_gen.SetObsThres(obss,thres_ratio);
 
               //get must go-through in-between waypoints
               std::vector<UserStructs::MissionSimPt> wpoints;

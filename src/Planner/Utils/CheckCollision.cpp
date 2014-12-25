@@ -29,10 +29,10 @@ int CheckCollision(const UserStructs::PlaneStateSim& plane, UserStructs::obstacl
          << plane.t
          ); */
 
-  double uncertain_ratio = 1.2;
+  //double uncertain_ratio = 1.2;
 
   if( fabs(obs3d.z-plane.z)> obs3d.hr ||
-      sqrt(pow(obs3d.x-plane.x,2)+pow(obs3d.y-plane.y,2)) > uncertain_ratio*obs3d.r
+      sqrt(pow(obs3d.x-plane.x,2)+pow(obs3d.y-plane.y,2)) > obs3d.r
     )
     return 0;
       

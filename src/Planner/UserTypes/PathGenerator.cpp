@@ -52,11 +52,21 @@ namespace UasCode{
     this->spacelimit= _limit;
     if_spacelimit_set= true;
   }
+
   //set obstacles
   void PathGenerator::SetObs(const std::vector<UserStructs::obstacle3D>& _obs3ds)
   {
     this->obs3ds= _obs3ds;
   }
+
+  //set obstacles but multiplied by a thres_ratio
+  void PathGenerator::SetObsThres(const std::vector<UserStructs::obstacle3D> &_obs3ds, const double _thres){
+     this->obs3ds = _obs3ds;
+     for(int i=0;i!= obs3ds.size();++i){
+            obs3ds[i].r *= _thres;
+     }
+  }
+
   //set N_inter for navigator
   void PathGenerator::SetNinter(const int _N)
   {
