@@ -521,8 +521,10 @@ namespace UasCode{
                   situ= PATH_CHECK;
               else{
                   UASLOG(s_logger,LL_DEBUG,"no path, try again");
+                  /*
                   if(thres_ratio > 1.)
                       thres_ratio-= 0.1;
+                      */
               }
               break;
           }
