@@ -30,6 +30,7 @@ class PathGenerator{
    inline void SetInRos(bool _if_in){this->if_in_ros= _if_in;}
    inline void SetPlot(bool _if_plot){this->if_for_plot= _if_plot;}
    void SetObs(const std::vector<UserStructs::obstacle3D>& _obs3ds);
+   void SetObsThres(const std::vector<UserStructs::obstacle3D> & _obs3ds, const double _thres);
    //start state and goal wp
    void SetInitState(UserStructs::PlaneStateSim _st);
    void SetStartWp(UserStructs::MissionSimPt& _pt);
