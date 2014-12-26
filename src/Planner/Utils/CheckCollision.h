@@ -9,4 +9,6 @@ namespace Utils{
 
   int CheckCollision2(const UserStructs::PlaneStateSim &plane, UserStructs::obstacle3D &obs, double thres_ratio);
 
+  int CheckCollisionSet(const UserStructs::PlaneStateSim &plane,
+                        UserStructs::obstacle3D &obs);
 }

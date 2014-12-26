@@ -123,6 +123,7 @@ add_library(planner
 	src/Planner/UserTypes/StateUpdateSim.cpp
 	src/Planner/UserTypes/NavigatorSim.cpp
 	src/Planner/UserTypes/PathGenerator.cpp
+        src/Planner/UserTypes/ReachabilitySet.cpp
 	src/Planner/UserTypes/Sampler/Sampler.cpp
 	src/Planner/UserTypes/Sampler/SamplerPole.cpp
 	src/Planner/UserTypes/Sampler/SamplerRect.cpp
@@ -132,6 +133,7 @@ add_library(planner
 	src/Planner/Utils/DubinsLength3D.cpp
 	src/Planner/Utils/DubinsLength2.cpp
 	src/Planner/Utils/DubinsLength3D.cpp
+        src/Planner/Utils/CreateSetPoints.cpp
 	src/Planner/UserStructs/SpaceLimit.cpp
 	src/Planner/UserStructs/PlaneStateSim.cpp
 	src/Planner/UserStructs/MissionSimFlagPt.cpp
