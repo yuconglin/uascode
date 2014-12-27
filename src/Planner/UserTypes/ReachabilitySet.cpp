@@ -26,6 +26,7 @@ namespace UasCode{
     vert = _obs.v_vert;
     r = _obs.r;
     hr = _obs.hr;
+    this->up_the = M_PI / 16.;
   }
 
   void ReachabilitySet::GetSet(int num, double t)
@@ -33,9 +34,9 @@ namespace UasCode{
      assert(t>=t0);
      //first get the points
      set_points.clear();
-     double d_the = 2*M_PI/num;
+     double d_the = 2*up_the/num;
      for(int i=0;i!= num+1;++i){
-         double the= -M_PI + d_the * i;
+         double the= -up_the + d_the * i;
          set_points.push_back( UserStructs::point2D(x(the,t-t0),y(the,t-t0)) );
      }
 

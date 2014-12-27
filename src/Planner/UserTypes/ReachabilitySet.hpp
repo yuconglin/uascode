@@ -38,6 +38,7 @@ private:
     double t0;
     double z0;
     double vert;
+    double up_the;
     //set components
     std::vector<UserStructs::point2D> set_points;
     double h_low;

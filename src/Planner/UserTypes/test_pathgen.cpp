@@ -94,7 +94,7 @@ int main(int argc, char** argv)
   double xo= 411921.4375,yo= 3698478.2500,zo= 611.6400;
 
   double head_xy= 0.;
-  double spd1= 61.73328;
+  double spd1= 67;
   double vv= 0;
   double t1= t;
   double r= 300;

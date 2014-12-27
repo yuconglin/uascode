@@ -134,31 +134,33 @@ rho= v/omiga
 r= 100
 '''
 
-r=5.
-t=20.
-v=1.
-rho=10.
-omiga= v/rho
+r=300.
+t=30.
+v=67.
+omiga= 3./180*np.pi
+rho = v/omiga
 
+#up_the = np.pi/16
+up_the = 0
 n_theta= 1001;
-d_theta= 2*np.pi/(n_theta-1)
+d_theta= 2*up_the/(n_theta-1)
 #theta= np.arange(-np.pi, np.pi, d_theta)
-theta= np.linspace(-np.pi, np.pi, num=n_theta)
+theta= np.linspace(-up_the, up_the, num=n_theta)
 area1=0.
 for i in range(0,theta.size-1):
     area1+= x_dot(theta[i],t)*y(theta[i],t)*d_theta
     
-sq_area= (x(np.pi,t)-x(-np.pi,t) )*y(np.pi,t)
+sq_area= ( x(up_the,t) - x(-up_the,t) ) * y(up_the,t)
 area1-= sq_area
 print("integrated area:%f" % area1)
 
 x_set = xfun(theta,t)
 y_set = yfun(theta,t)
 
-xl= x(-np.pi,t)
-yl= y(-np.pi,t)
-xr= x(np.pi,t)
-yr= y(np.pi,t)
+xl= x(-up_the,t)
+yl= y(-up_the,t)
+xr= x(up_the,t)
+yr= y(up_the,t)
 
 plt.plot(x_set,y_set)
 plt.plot([xl,xr],[yl,yr])
@@ -176,8 +178,9 @@ yr= y(np.pi,t)
 plt.plot(x_set,y_set)
 plt.plot([xl,xr],[yl,yr])
 '''
-n1= 10
-theta1= np.linspace(-np.pi,np.pi,num=n1)
+n1= 20
+#up_the = np.pi/2
+theta1= np.linspace(-up_the,up_the,num=n1)
 x_dis = xfun(theta1,t)
 y_dis = yfun(theta1,t)
 for i in range(0,theta1.size-1):
