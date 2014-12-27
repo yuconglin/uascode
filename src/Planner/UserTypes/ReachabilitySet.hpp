@@ -18,7 +18,9 @@ public:
 
     //public functions
     void GetSet( int num, double t );
-
+    bool InSet( double x, double y );
+    bool InSet3( double x, double y, double z);
+    void OutputSet( const char* filename );
 private:
     //set default constructor to default
     ReachabilitySet():spd(0.),omiga(0.),r(0.){
@@ -29,11 +31,17 @@ private:
     double omiga;
     double rho;
     double r;
+    double hr;
     double hd; //heading defined w.r.t x-axial
     double x0;
     double y0;
     double t0;
+    double z0;
+    double vert;
+    //set components
     std::vector<UserStructs::point2D> set_points;
+    double h_low;
+    double h_high;
 
     //member functions
     //x, y

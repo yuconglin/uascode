@@ -36,25 +36,28 @@ for i=1:length(cells)
        z= log_obss{4}; 
        hd= log_obss{5};
        speed= log_obss{6};
+       v_vert = log_obss{7};
        t= log_obss{8};
        obss_vec = [obss_vec;[x,y,z] ];
-       data_t = [data_t;[t,speed,hd] ];
+       data_t = [data_t;[t,speed,hd,v_vert] ];
        obss_line= fgetl(f_obss);
    end
    
+%    figure;
+%    h=plot3(obss_vec(:,1),obss_vec(:,2),obss_vec(:,3),'r+');
+%    view(2);
+
+%    figure;
+%    plot(data_t(:,1),data_t(:,2) );
+   
    figure;
-   h=plot3(obss_vec(:,1),obss_vec(:,2),obss_vec(:,3),'r+');
-   view(2);
-%    f_png = fullfile('../../pngs/',strcat(int2str(address),'.png') );
-%    saveas(h, f_png, 'png');
-   figure;
-   plot(data_t(:,1),data_t(:,2) );
+   plot(data_t(:,1),data_t(:,4) );
    
    lm = length(data_t);
    hd_pre = data_t(1:lm-1,3);
    hd = data_t(2:lm,3);
    
-   figure;
-   plot(data_t(2:lm,1), hd-hd_pre, 'k+');
+%    figure;
+%    plot(data_t(2:lm,1), hd-hd_pre, 'k+');
    
 end

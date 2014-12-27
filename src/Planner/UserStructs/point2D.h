@@ -17,5 +17,5 @@ namespace UserStructs{
  	    }
      };
 
-};//namespace strucs ends
+}//namespace strucs ends
 

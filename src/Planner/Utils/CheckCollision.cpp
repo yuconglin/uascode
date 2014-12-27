@@ -1,7 +1,7 @@
 #include "CheckCollision.h"
 #include "common/Utils/YcLogger.h"
 #include "Planner/UserStructs/point2D.h"
-#include "Planner/Utils/CreateSetPoints.h"
+#include "Planner/UserTypes/ReachabilitySet.hpp"
 
 #include "iostream"
 #include <iomanip>
@@ -47,8 +47,13 @@ int CheckCollision2(const UserStructs::PlaneStateSim &plane, UserStructs::obstac
 
 int CheckCollisionSet(const UserStructs::PlaneStateSim &plane, UserStructs::obstacle3D &obs)
 {
-   std::vector<UserStructs::point2D> set_points;
-   Utils::
+   UasCode::ReachabilitySet set(obs);
+   set.GetSet(20,plane.t);
+
+   int result = set.InSet3(plane.x,plane.y,plane.z) ? 1 : 0;
+   if (result == 1)
+       set.OutputSet("real_set.txt");
+   return result;
 }
 
 }

@@ -133,7 +133,6 @@ add_library(planner
 	src/Planner/Utils/DubinsLength3D.cpp
 	src/Planner/Utils/DubinsLength2.cpp
 	src/Planner/Utils/DubinsLength3D.cpp
-        src/Planner/Utils/CreateSetPoints.cpp
 	src/Planner/UserStructs/SpaceLimit.cpp
 	src/Planner/UserStructs/PlaneStateSim.cpp
 	src/Planner/UserStructs/MissionSimFlagPt.cpp
@@ -249,6 +248,17 @@ target_link_libraries(read_dis
 add_executable(propagate_test src/Planner/UserTypes/test_navigator.cpp)
 add_dependencies(propagate_test planner common_utils otherlibs)
 target_link_libraries(propagate_test
+              planner
+              common_utils
+              otherlibs
+              ${ARMADILLO_LIBRARIES}
+              ${GeographicLib_LIBRARIES}
+)
+
+#test Reachability set
+add_executable(reachset_test src/Planner/UserTypes/test_ReachSet.cpp)
+add_dependencies(reachset_test planner common_utils otherlibs)
+target_link_libraries(reachset_test
               planner
               common_utils
               otherlibs
