@@ -63,11 +63,12 @@ namespace UasCode{
     if_inter_exist= false;
 
     //parameters for the navigator
-    double _Tmax= 12.49*UasCode::CONSTANT_G;
-    double _Muav= 29.2; //kg
+    double _Tmax= 6.79*CONSTANT_G;
+    //double _Muav= 29.2; //kg
+    double _Muav= 0.453592*13;
     double myaw_rate= 20./180*M_PI;
     double mpitch_rate= 10./180*M_PI;
-    double _max_speed= 30; //m/s
+    double _max_speed= 30.8667; //m/s
     double _min_speed= 10; //m/s
     double _max_pitch= 25./180*M_PI;
     double _min_pitch= -20./180*M_PI;
@@ -620,7 +621,10 @@ namespace UasCode{
 
       UASLOG(s_logger,LL_DEBUG,"obstacle: "
              << std::setprecision(4) << std::fixed << msg->MultiObs[i].address<< " "
-             << obs3d.t <<" "<< obs3d.x1);
+             << obs3d.t <<" "
+             << obs3d.x1 <<" "
+             << obs3d.x2 <<" "
+             << obs3d.x3);
 
       /*
       std::cout<< "obstacle: "<< std::setprecision(4) << std::fixed

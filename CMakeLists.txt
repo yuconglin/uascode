@@ -1,4 +1,10 @@
 cmake_minimum_required(VERSION 2.8.3)
+
+IF(CMAKE_COMPILER_IS_GNUCXX)
+   SET(CMAKE_CXX_FLAGS "-g3 -ggdb")
+#SET(CMAKE_BUILD_TYPE DEBUG)
+ENDIF()
+
 project(uascode)
 
 find_package(catkin REQUIRED COMPONENTS
@@ -259,6 +265,18 @@ target_link_libraries(propagate_test
 add_executable(reachset_test src/Planner/UserTypes/test_ReachSet.cpp)
 add_dependencies(reachset_test planner common_utils otherlibs)
 target_link_libraries(reachset_test
+              planner
+              common_utils
+              otherlibs
+              ${ARMADILLO_LIBRARIES}
+              ${GeographicLib_LIBRARIES}
+)
+
+
+#test PathGenerator
+add_executable(pathgen_test src/Planner/UserTypes/test_pathgen.cpp)
+add_dependencies(pathgen_test planner common_utils otherlibs)
+target_link_libraries(pathgen_test
               planner
               common_utils
               otherlibs

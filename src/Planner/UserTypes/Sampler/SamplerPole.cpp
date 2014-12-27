@@ -63,7 +63,7 @@ namespace UserTypes{
              << " z0: "<< z0);
     */
       sigma_r= 0.5*r0;
-      
+      std::cout << "sigma_r:" << sigma_r << '\n';
       this->theta0 = theta0;
       //sigma_theta= 0.125*M_PI;
       ga0 = gamma0;
@@ -117,6 +117,7 @@ namespace UserTypes{
 
        this->r0 = r0;
        sigma_r= 0.5*r0;
+       std::cout << "sigma_r:" << sigma_r << '\n';
        this->theta0 = theta0;
        ga0 = gamma0;
        sigma_ga= _sig_ga;

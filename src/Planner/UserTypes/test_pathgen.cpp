@@ -9,6 +9,7 @@
 //utils
 #include "common/Utils/UTMtransform.h"
 #include "common/Utils/GetTimeNow.h"
+#include "common/Utils/FindPath.h"
 //std
 #include <iostream>
 #include <fstream>
@@ -21,83 +22,87 @@ int main(int argc, char** argv)
   UasCode::PathGenerator path_gen;
   //spacelimit
   UserStructs::SpaceLimit spacelimit(2000,500);
-  spacelimit.LoadGeoFence("geofence.txt");
+  spacelimit.LoadGeoFence( (Utils::FindPath()+"parameters/geofence.txt").c_str() );
   path_gen.SetSpaceLimit(spacelimit); 
   path_gen.SetTimeLimit(1.0);
-  path_gen.SetNinter(5);
+  //path_gen.SetNinter(5);
   //if in ros?
   path_gen.SetInRos(false);
   //init state
-  //double lat=33.388635, lon=-112.034193;
-  double lat=33.440081, lon=-112.029698;
-  double hgt= 1000;
-  double spd= 25;
+
+  //double lat=33.440081, lon=-112.029698;
+  double xs = 414946;
+  double ys = 3.69845e+06;
+  double hgt= 624.23;
+  double spd= 27.84;
   //double t= Utils::GetTimeUTC();
   double t= 0;
-  double yaw= 90./180*M_PI;
-  double pitch= 0.;
-  double alt_B= 1010;
-  UserStructs::PlaneStateSim st(t,0,0,lat,lon,hgt,spd,yaw,pitch,0,0,0);
-  st.GetUTM();
+  double yaw= (90.-268.36)/180*M_PI;
+  double pitch= 2.25761/180*M_PI;
+
+  UserStructs::PlaneStateSim st(t,xs,ys,0,0,hgt,spd,yaw,pitch,0,0,0);
+  st.GetGCS();
 
   std::cout<<"start_x: "<< st.x<<" "
            <<"start_y: "<< st.y<<" "
 	   <<"start_z: "<< st.z<<" "
 	   << std::endl;
   fs_points<<st.x<<" "<<st.y<<" "<<st.z<<" "<<std::endl;
-  //goal waypoint
-  //double lat1=33.374301,lon1=-111.842276;
-  double lat1=33.437753,lon1= -111.985238;
-  UserStructs::MissionSimPt pt(lat1,lon1,alt_B,yaw,100,0,0,200,250,150);
+
+  //start waypoint
+  double lat1=33.4219620, lon1= -111.9090470, alt_A = 615;
+  UserStructs::MissionSimPt pt(lat1,lon1,alt_A,0,100,0,0,200,250,150);
   pt.GetUTM();
-  std::cout<<"goal_x: "<< pt.x<<" "
-           <<"goal_y: "<< pt.y<<" "
-	   <<"goal_z: "<< pt.alt<< std::endl;
-  fs_points<<pt.x<<" "<<pt.y<<" "<<pt.alt<<std::endl;
+
   //set start state and goal waypoint
   path_gen.SetInitState(st);
-  path_gen.SetGoalWp(pt);
-  
+  path_gen.SetStartWp(pt);
+
+  //goal waypoint
+  double lat2=33.4219620, lon2= -111.9399030, alt_B = 615.;
+  UserStructs::MissionSimPt pt1(lat2,lon2,alt_B,0,100,0,0,200,250,150);
+  pt1.GetUTM();
+  path_gen.SetGoalWp(pt1);
+
+  path_gen.SetSampleStart(st.x,st.y,st.z);
+
   //parameters for the navigator
   //parameters
-  double _Tmax= 12.49*UasCode::CONSTANT_G;
-  double _Muav= 29.2; //kg
-  double myaw_rate= 10./180*M_PI;
-  double mpitch_rate= 5./180*M_PI;
-  double _max_speed= 35; //m/s
-  double _min_speed= 20; //m/s
-  double _max_pitch= 20./180*M_PI;
+  double _Tmax= 6.79*UasCode::CONSTANT_G;
+  double _Muav= 0.453592*13;
+  double myaw_rate= 20./180*M_PI;
+  double mpitch_rate= 10./180*M_PI;
+  double _max_speed= 30.8667; //m/s
+  double _min_speed= 10; //m/s
+  double _max_pitch= 25./180*M_PI;
   double _min_pitch= -20./180*M_PI;
   
   double dt= 1.;
-  double _speed_trim= 30.;
+  double _speed_trim= _max_speed;
   //set
   path_gen.NavUpdaterParams(_Tmax,mpitch_rate,myaw_rate,_Muav,_max_speed,_min_speed,_max_pitch,_min_pitch);
 
-  path_gen.NavTecsReadParams("parameters.txt");
+  path_gen.NavTecsReadParams((Utils::FindPath()+"parameters/parameters_sitl.txt").c_str());
   path_gen.NavL1SetRollLim(10./180*M_PI);
   path_gen.NavSetDt(dt);
   path_gen.NavSetSpeedTrim(_speed_trim);
   //set sampler parameters
   path_gen.SetSampler(new UserTypes::SamplerPole() );
   path_gen.SetSampleParas();
+
   //set obstacles
-  //start from one simple static obstacle 
-  //obstacle3D(double _x1, double _x2, double _head_xy, double _speed, double _x3, double _v_vert, double _t, double _r, double _dr,double _hr,double _dhr): 
-  double lat2=33.379461,lon2=-111.664435;
-  double x_o,y_o;
-  Utils::ToUTM(lon2,lat2,x_o,y_o);
-  double head_xy= M_PI;
-  //double spd= 35;
-  double z_o = 1005;
+  double xo= 411921.4375,yo= 3698478.2500,zo= 611.6400;
+
+  double head_xy= 0.;
+  double spd1= 61.73328;
   double vv= 0;
   double t1= t;
-  double r= 640.08;
-  double hr= 152.4;
+  double r= 300;
+  double hr= 50;
   double dr=0, dhr=0;
-  UserStructs::obstacle3D obs3d(11,x_o,y_o,head_xy,spd,z_o,vv,t1,r,dr,hr,dhr);
+  UserStructs::obstacle3D obs3d(11,xo,yo,head_xy,spd1,zo,vv,t1,r,dr,hr,dhr);
   std::vector<UserStructs::obstacle3D> v_obs3d;
-  //v_obs3d.push_back(obs3d);
+  v_obs3d.push_back(obs3d);
   path_gen.SetObs(v_obs3d);
 
   double tc1= Utils::GetTimeNow();
