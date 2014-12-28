@@ -140,8 +140,7 @@ v=67.
 omiga= 3./180*np.pi
 rho = v/omiga
 
-#up_the = np.pi/16
-up_the = 0
+up_the = np.pi/16
 n_theta= 1001;
 d_theta= 2*up_the/(n_theta-1)
 #theta= np.arange(-np.pi, np.pi, d_theta)

@@ -565,6 +565,8 @@ namespace UasCode{
                   set_pt.seq= seq_inter;
                   set_pt.inter_exist= if_inter_exist ? 1:0;
 
+                  UASLOG(s_logger,LL_DEBUG,"seq_inter:" << seq_inter);
+
                   FlagWayPoints.insert(FlagWayPoints.begin()+seq_inter,UserStructs::MissionSimFlagPt(inter_wp,true) );
                   situ= PATH_READY;
                   if_inter_gen= true;

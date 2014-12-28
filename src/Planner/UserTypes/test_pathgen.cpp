@@ -166,7 +166,6 @@ int main(int argc, char** argv)
 	  << pt.alt_rec
 	  << std::endl;
      
-    //path_gen.PrintPath("/home/yucong/fuerte_workspace/sandbox/uascode/bin/path_log.txt");
     path_gen.PrintPath("path_log.txt");
   }
   std::cout<<"time used: "<< Utils::GetTimeNow()-tc1<< std::endl;

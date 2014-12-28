@@ -15,7 +15,7 @@ namespace {
 namespace UasCode{
   
   ReachabilitySet::ReachabilitySet(const UserStructs::obstacle3D& _obs) {
-    spd = _obs.speed + 10;
+    spd = _obs.speed;
     omiga = ( UasCode::CONSTANT_G * tan(25./180*M_PI) / spd ) < 3*M_PI/180. ? UasCode::CONSTANT_G * tan(25./180*M_PI) / spd : 3*M_PI/180. ;
     rho = spd / omiga;
     hd = _obs.head_xy;
@@ -92,33 +92,37 @@ namespace UasCode{
   }
 
   double ReachabilitySet::x3(double the, double t){
-    return -rho*(1-cos(omiga*t))+r*sin(the);
+    //return -rho*(1-cos(omiga*t))+r*sin(the);
+    return -rho*(1-cos(up_the)) - (spd*t-rho*up_the)*sin(up_the) + r*sin(the);
   }
 
   double ReachabilitySet::y3(double the, double t){
-    return rho*sin(omiga*t)+r*cos(the);
+    //return rho*sin(omiga*t)+r*cos(the);
+    return rho*sin(up_the) + (spd*t-rho*up_the)*cos(up_the) + r*cos(the);
   }
 
   double ReachabilitySet::x4(double the, double t){
-    return rho*(1-cos(omiga*t))+r*sin(the);
+    //return rho*(1-cos(omiga*t))+r*sin(the);
+    return rho*(1-cos(up_the)) + (spd*t-rho*up_the)*sin(up_the) + r*sin(the);
   }
 
   double ReachabilitySet::y4(double the, double t){
-    return rho*sin(omiga*t)+r*cos(the);
+    //return rho*sin(omiga*t)+r*cos(the);
+    return rho*sin(up_the) + (spd*t-rho*up_the)*cos(up_the) + r*cos(the);
   }
 
   double ReachabilitySet::x(double the, double t){
     //y-axis or north is zero degree direction
     assert( -M_PI <= the && the <= M_PI);
     double xs;
-    if(omiga*t <= M_PI){
-	    if(-omiga*t <= the && the <=0){
+    if(up_the <= M_PI){
+	    if(-up_the <= the && the <=0){
 	       xs = x1(the,t);
         }
-	    else if (0<= the && the <= omiga*t){
+	    else if (0<= the && the <= up_the){
 	       xs = x2(the,t);
 	    }
-	    else if (-M_PI <= the && the <= -omiga*t){
+	    else if (-M_PI <= the && the <= -up_the){
 	       xs = x3(the,t);
 	    }
 	    else{
@@ -140,14 +144,14 @@ namespace UasCode{
     //y-axis or north is zero degree direction
     assert( -M_PI <= the && the <= M_PI);
     double ys;
-    if(omiga*t <= M_PI){
-         if(-omiga*t <= the && the <=0){
+    if(up_the <= M_PI){
+         if(-up_the <= the && the <=0){
 	    ys = y1(the,t);
 	 }
-	 else if (0<= the && the <= omiga*t){
+	 else if (0<= the && the <= up_the){
 	    ys = y2(the,t);
 	 }
-	 else if (-M_PI <= the && the <= -omiga*t){
+	 else if (-M_PI <= the && the <= -up_the){
 	    ys = y3(the,t);
 	 }
 	 else{

@@ -23,7 +23,7 @@ int main(int argc, char** argv)
     //set.GetSet(360,t+10);
     //set.OutputSet("set360.txt");
 
-    set.GetSet(20,t+20);
+    set.GetSet(20,t+30);
     set.OutputSet("set20.txt");
 
     //test in and out

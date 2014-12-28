@@ -99,8 +99,8 @@ namespace UserTypes{
        if(sample_method ==0)
        { //here r0 is different
          r0= sqrt(Dx*Dx+Dy*Dy+Dz*Dz);
-         if(r0> 500)
-             r0= 500;
+         //if(r0> 500)
+         //    r0= 500;
        }
        else if(sample_method ==1)
        {

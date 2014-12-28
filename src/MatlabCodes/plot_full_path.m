@@ -1,5 +1,5 @@
 close all
-f_traj= fopen('../../bin/path_log.txt','r');
+f_traj= fopen('/home/yucong/catkin_ws/devel/lib/uascode/path_log.txt','r');
 
 if f_traj == -1
   error('file path_log.txt could not be opened, check name or path.')
@@ -19,7 +19,7 @@ while ischar(traj_line)
   traj_line= fgetl(f_traj);
 end
 
-f1= fopen('../../bin/out_points.txt','r');
+f1= fopen('/home/yucong/catkin_ws/devel/lib/uascode/out_points.txt','r');
 
 if f1 == -1
   error('file out_points.txt could not be opened');
@@ -45,8 +45,33 @@ xlabel('x(m)');
 ylabel('y(m)');
 zlabel('z(m)');
 plot3( traj(:,1),traj(:,2),traj(:,3), 'r*' );
-%plot3(422126, 3.69454e+06, 1010, 'b*' );
-%plot3(421651,3.6931e+06,1010,'b*');
 plot3( point(:,1),point(:,2),point(:,3), 'b*');
 
 view(3);
+
+figure;
+hold on;
+axis auto;
+grid on;
+
+f_traj = fopen('/home/yucong/catkin_ws/devel/lib/uascode/real_set.txt','r');
+
+if f_traj == -1
+    error('File set.txt could not be opened, check name or path.')
+end
+line1 = fgetl(f_traj);
+set_points = [];
+
+while ischar(line1)
+    log_traj = textscan(line1,'%f %f');
+    x = log_traj{1};
+    y = log_traj{2};
+    set_points = [ set_points; [x,y] ];
+    line1= fgetl(f_traj);
+end
+
+plot( set_points(:,1), set_points(:,2), '-r+' );
+%line( [100,100+50*cosd(30)], [34,34+50*sind(30)] ); 
+hold on;
+plot( traj(:,1),traj(:,2), 'r*' );
+plot( point(:,1),point(:,2), 'b*');
