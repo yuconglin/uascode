@@ -283,3 +283,12 @@ target_link_libraries(pathgen_test
               ${ARMADILLO_LIBRARIES}
               ${GeographicLib_LIBRARIES}
 )
+
+#to intropolate the ADS-B data
+add_executable(obss_whole src/common/Test/obs_intropolate.cpp)
+add_dependencies(obss_whole common_utils)
+target_link_libraries(obss_whole
+                      common_utils
+                      ${ARMADILLO_LIBRARIES}
+                      ${GeographicLib_LIBRARIES}
+)

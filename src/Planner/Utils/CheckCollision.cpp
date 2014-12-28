@@ -51,10 +51,12 @@ int CheckCollisionSet(const UserStructs::PlaneStateSim &plane, UserStructs::obst
    set.GetSet(20,plane.t);
 
    int result = set.InSet3(plane.x,plane.y,plane.z) ? 1 : 0;
+
    if (result == 1){
-       std::cout << "t_diff:" << plane.t-obs.t << '\n';
+       //std::cout << "t_diff:" << plane.t-obs.t << '\n';
        set.OutputSet("real_set.txt");
    }
+
    return result;
 }
 

@@ -2,8 +2,8 @@ close all;
 clear all;
 clc;
 
-f_traj = fopen('/home/yucong/catkin_ws/devel/lib/uascode/set20.txt','r');
-%f_traj = fopen('/home/yucong/catkin_ws/src/uascode/real_set.txt','r');
+%f_traj = fopen('/home/yucong/catkin_ws/devel/lib/uascode/set20.txt','r');
+f_traj = fopen('/home/yucong/catkin_ws/src/uascode/real_set.txt','r');
 %f_traj = fopen('/home/yucong/catkin_ws/devel/lib/uascode/real_set.txt','r');
 
 if f_traj == -1

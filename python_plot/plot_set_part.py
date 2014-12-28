@@ -79,7 +79,7 @@ yfun = np.vectorize(y)
 
 r=300.
 t=30.
-v=67.
+v=120.
 omiga= 3./180*np.pi
 rho = v/omiga
 up_the = np.pi/16
@@ -100,7 +100,7 @@ yr= y(np.pi,t)
 plt.plot(x_set,y_set)
 plt.plot([xl,xr],[yl,yr])
 
-
+'''
 n1= 20
 #up_the = np.pi/2
 theta1= np.linspace(-np.pi,np.pi,num=n1)
@@ -108,5 +108,24 @@ x_dis = xfun(theta1,t)
 y_dis = yfun(theta1,t)
 for i in range(0,theta1.size-1):
     plt.plot([ x_dis[i],x_dis[i+1] ],[y_dis[i],y_dis[i+1] ])
+'''
+v = 130.
+rho = v/omiga
+
+n_theta= 1001;
+d_theta= 2*np.pi/(n_theta-1)
+theta= np.arange(-np.pi, np.pi, d_theta)
+#theta= np.linspace(-up_, up_the, num=n_theta)
+
+x_set = xfun(theta,t)
+y_set = yfun(theta,t)
+
+xl= x(-np.pi,t)
+yl= y(-np.pi,t)
+xr= x(np.pi,t)
+yr= y(np.pi,t)
+
+plt.plot(x_set,y_set)
+plt.plot([xl,xr],[yl,yr])
 
 plt.show()

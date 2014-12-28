@@ -15,7 +15,7 @@ namespace {
 namespace UasCode{
   
   ReachabilitySet::ReachabilitySet(const UserStructs::obstacle3D& _obs) {
-    spd = _obs.speed;
+    spd = _obs.speed + 10;
     omiga = ( UasCode::CONSTANT_G * tan(25./180*M_PI) / spd ) < 3*M_PI/180. ? UasCode::CONSTANT_G * tan(25./180*M_PI) / spd : 3*M_PI/180. ;
     rho = spd / omiga;
     hd = _obs.head_xy;
@@ -34,9 +34,9 @@ namespace UasCode{
      assert(t>=t0);
      //first get the points
      set_points.clear();
-     double d_the = 2*up_the/num;
+     double d_the = 2*M_PI/num;
      for(int i=0;i!= num+1;++i){
-         double the= -up_the + d_the * i;
+         double the= -M_PI + d_the * i;
          set_points.push_back( UserStructs::point2D(x(the,t-t0),y(the,t-t0)) );
      }
 
