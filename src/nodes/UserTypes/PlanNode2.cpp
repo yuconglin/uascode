@@ -626,7 +626,10 @@ namespace UasCode{
              << obs3d.t <<" "
              << obs3d.x1 <<" "
              << obs3d.x2 <<" "
-             << obs3d.x3);
+             << obs3d.x3 <<" "
+             << obs3d.speed <<" "
+             << obs3d.head_xy*180./M_PI <<" "
+             << obs3d.v_vert);
 
       /*
       std::cout<< "obstacle: "<< std::setprecision(4) << std::fixed

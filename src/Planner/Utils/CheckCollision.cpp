@@ -29,9 +29,15 @@ int CheckCollision(const UserStructs::PlaneStateSim& plane, UserStructs::obstacl
 
 int CheckCollision2(const UserStructs::PlaneStateSim &plane, UserStructs::obstacle3D &obs, double thres_ratio)
 {
-   UserStructs::obs3D obs3d= obs.Estimate(plane.t);
-
    int result;
+   /*
+   obs.r *= thres_ratio;
+   UasCode::ReachabilitySet set(obs);
+   set.GetSet(20,plane.t);
+   result = set.InSet3(plane.x,plane.y,plane.z) ? 1 : 0;
+   */
+
+   UserStructs::obs3D obs3d= obs.Estimate(plane.t);
    if( fabs(obs3d.z-plane.z)> obs3d.hr ||
        sqrt(pow(obs3d.x-plane.x,2)+pow(obs3d.y-plane.y,2)) > thres_ratio*obs3d.r
      )

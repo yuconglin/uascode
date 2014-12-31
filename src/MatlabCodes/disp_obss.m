@@ -28,8 +28,8 @@ clc;
 % ];
 
 obs_files = [
-%'obstacle_10734770.txt'
-'obstacle_10934723.txt'
+'obstacle_10734770.txt'
+%'obstacle_10934723.txt'
 %'obstacle_10942331.txt'
 ];
 
@@ -72,6 +72,10 @@ for i=1:length(cells)
 %    f_png = fullfile('../../pngs/',strcat(int2str(address),'.png') );
 %    saveas(h, f_png, 'png');
    
+   figure;
+   plot( data_t(:,1), obss_vec(:,1), 'y+' );
+   title('x');
+
    figure;
    plot( data_t(:,1), data_t(:,2), '-b+' );
    title('speed');
