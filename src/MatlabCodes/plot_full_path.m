@@ -55,6 +55,7 @@ axis auto;
 grid on;
 
 f_traj = fopen('/home/yucong/catkin_ws/devel/lib/uascode/real_set.txt','r');
+%f_traj = fopen('/home/yucong/catkin_ws/src/uascode/real_set.txt','r');
 
 if f_traj == -1
     error('File set.txt could not be opened, check name or path.')
