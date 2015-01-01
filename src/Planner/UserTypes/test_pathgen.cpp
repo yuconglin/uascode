@@ -30,16 +30,16 @@ int main(int argc, char** argv)
   path_gen.SetInRos(false);
   //init state
 
-  //414886 3.69845e+06 613.33 29.81 269.35 269.35 7.14543
+  //414722 3.69845e+06 613.31 30.35 272.58 272.58 4.58893
 
-  double xs = 414886;
+  double xs = 414722;
   double ys = 3.69845e+06;
-  double hgt= 613.33;
-  double spd= 29.81;
+  double hgt= 613.31;
+  double spd= 30.35;
   //double t= Utils::GetTimeUTC();
   double t= 0;
-  double yaw= (90.-269.35)/180*M_PI;
-  double pitch= 7.14543/180*M_PI;
+  double yaw= (90.-272.58)/180*M_PI;
+  double pitch= 4.58893/180*M_PI;
 
   UserStructs::PlaneStateSim st(t,xs,ys,0,0,hgt,spd,yaw,pitch,0,0,0);
   st.GetGCS();
@@ -92,13 +92,12 @@ int main(int argc, char** argv)
   path_gen.SetSampleParas();
 
   //set obstacles
-  //obstacle: 414789.2812 3698098.2500 538.1300 115.7500 139.2187 17.5565
-  //414886 3.69845e+06 613.33 29.81 269.35 269.35 7.14543
-  double xo= 414789.2812,yo= 3698098.2500,zo= 538.1300;
+  //414866.5938 3698033.0000 522.8900 114.7211 144.8438 18.2067
+  double xo= 414866.5938,yo= 3698033.0000,zo= 522.8900;
 
-  double head_xy= 139.2187/180.*M_PI;
-  double spd1= 115.75;
-  double vv= 17.5565;
+  double head_xy= 144.8438/180.*M_PI;
+  double spd1= 114.7211;
+  double vv= 18.2067;
   double t1= t;
   double r= 300;
   double hr= 50;

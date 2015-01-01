@@ -80,6 +80,8 @@ class PlanNode2{
 
    //to see if the sent waypoint was received
    bool if_receive;
+   //to see if already fail
+   bool if_fail;
 
    //wp ros msg to send
    uascode::PosSetPointFlag set_pt;

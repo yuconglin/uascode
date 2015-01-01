@@ -56,6 +56,7 @@ namespace UasCode{
 
     thres_ratio=1.4;
     if_receive= false;
+    if_fail = false;
     //I use seq_current== -1 to indicate the moment mission starts
     seq_current= -1;
     seq_inter= 0;
@@ -239,6 +240,9 @@ namespace UasCode{
                                     +pow(st_current.y-obss[i].x2,2) );
               double dis_h= fabs(obss[i].x3-st_current.z);
               oss << " " << dis <<" "<< dis_h;
+
+              if(dis < obss[i].r || dis_h < obss[i].hr )
+                  if_fail = true;
           }
           UASLOG(s_logger,LL_DEBUG,oss.str() );
       }
@@ -383,7 +387,8 @@ namespace UasCode{
               UASLOG(s_logger,LL_DEBUG,"allow_dis:" << allow_dis);
 
               //if(dis_c2d < allow_dis && colli_return.seq_colli == seq_current+1)
-              if(dis_c2d < allow_dis && dis_c2d > st_current.speed*1.0) //using 0.5 to delay reaction and maitain height differenct
+              //if(dis_c2d < allow_dis && dis_c2d > st_current.speed*1.0) //using 0.5 to delay reaction and maitain height differenct
+              if(dis_c2d < allow_dis)
               {
                  if(!if_inter_gen){
                      UASLOG(s_logger,LL_DEBUG,"local avoidance");
@@ -413,6 +418,9 @@ namespace UasCode{
                      if(situ== NORMAL || situ== PATH_GEN){
                          situ= PATH_READY;
                      }
+
+                     if(dis_c2d < st_current.speed*1.0 || if_fail)
+                        situ = NORMAL;
                  }
               }
               else
@@ -447,7 +455,7 @@ namespace UasCode{
               UASLOG(s_logger,LL_DEBUG,"planning");
               path_gen.SetInitState(st_current.SmallChange(t_limit));
               //get the start and goal for the sample
-              int idx_end,idx_start=seq_current;//end and start of must go-through waypoint between current position and the goal
+              int idx_end=0,idx_start=seq_current;//end and start of must go-through waypoint between current position and the goal
               this->seq_inter= colli_return.seq_colli;
 
               //set path goal
@@ -456,7 +464,8 @@ namespace UasCode{
                   if(!FlagWayPoints[i].flag){
                       path_gen.SetGoalWp(FlagWayPoints[i].pt);
                       double dis_goal= std::sqrt(pow(st_current.x-FlagWayPoints[i].pt.x,2)+pow(st_current.y-FlagWayPoints[i].pt.y,2));
-                      std::cout<<"dis_goal:"<< dis_goal<<"\n";
+                      //std::cout<<"dis_goal:"<< dis_goal<<"\n";
+                      UASLOG(s_logger,LL_DEBUG,"flat i="<<" "<< i);
                       idx_end= i-1;
                       break;
                   }
@@ -511,9 +520,11 @@ namespace UasCode{
 
               //get must go-through in-between waypoints
               std::vector<UserStructs::MissionSimPt> wpoints;
-              for(int i= idx_start;i<= idx_end;++i)
+              for(int i= idx_start;i< idx_end;++i)
               {
-                 wpoints.push_back(FlagWayPoints[i].pt);
+                  UASLOG(s_logger,LL_DEBUG,"idx_start:"<< idx_start
+                         << " "<<"idx_end:"<< idx_end);
+                  wpoints.push_back(FlagWayPoints[i].pt);
               }
               path_gen.SetBetweenWps(wpoints);
 
