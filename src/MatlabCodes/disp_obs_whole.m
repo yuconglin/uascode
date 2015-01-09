@@ -41,28 +41,42 @@ for i=1:length(cells)
    end
    
    figure;
-   h=plot3(obss_vec(:,1),obss_vec(:,2),obss_vec(:,3),'r+');
-   view(3);
+   axis equal
+   xc = 3.934e5;
+   yc = 3.701e6;
+   
+   xs = 3.927e5;
+   ys = 3.702e6;
+   
+   %h=plot3(obss_vec(:,1),obss_vec(:,2),obss_vec(:,3),'r+');
+   plot(obss_vec(:,1),obss_vec(:,2),'r+');
+   viscircles([xc,yc],2000,'EdgeColor','b','LineStyle','-.');
+   viscircles([xs,ys],15,'LineWidth',14,'EdgeColor','k');
+   
+   xlabel('x(m)')
+   ylabel('y(m)')
+   
+   %view(2);
 
-   figure;
-   plot( data_t(:,1), obss_vec(:,1), 'y+' );
-   title('x');
-   
-   figure;
-   plot( data_t(:,1), obss_vec(:,3), 'b+' );
-   title('z');
-   
-   figure;
-   plot(data_t(:,1),data_t(:,2) );
-   title('speed');
-   
-   figure;
-   plot(data_t(:,1),data_t(:,3) );
-   title('heading');
-   
-   figure;
-   plot(data_t(:,1),data_t(:,4) );
-   title('vert');
+%    figure;
+%    plot( data_t(:,1), obss_vec(:,1), 'y+' );
+%    title('x');
+%    
+%    figure;
+%    plot( data_t(:,1), obss_vec(:,3), 'b+' );
+%    title('z');
+%    
+%    figure;
+%    plot(data_t(:,1),data_t(:,2) );
+%    title('speed');
+%    
+%    figure;
+%    plot(data_t(:,1),data_t(:,3) );
+%    title('heading');
+%    
+%    figure;
+%    plot(data_t(:,1),data_t(:,4) );
+%    title('vert');
 % %    
 %    lm = length(data_t);
 %    hd_pre = data_t(1:lm-1,3);
