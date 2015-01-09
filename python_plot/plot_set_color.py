@@ -74,55 +74,6 @@ def y(the,t):
        else:
           return y2(the,t)
 
-def x1_dot(the,t):
-    global omiga,v,rho,r
-    return (v*t+rho*the+r)*np.cos(the)
-
-def x2_dot(the,t):
-    global omiga,v,rho,r
-    return (v*t-rho*the+r)*np.cos(the)
-
-def x3_dot(the,t):
-    global r
-    return r*np.cos(the)
-
-def x4_dot(the,t):
-    global r
-    return r*np.cos(the)
-
-def x_dot(the,t):
-    assert (-np.pi <= the <= np.pi), 'Theta only between -pi and pi'
-    if up_the <= np.pi:
-       if -up_the <= the <=0:
-	  return x1_dot(the,t)
-       elif 0<= the <= up_the:
-	  return x2_dot(the,t)
-       elif -np.pi <= the <= -up_the:
-	  return x3_dot(the,t)
-       #elif the >= up_the and the <= np.pi:
-       else:
-	  return x4_dot(the,t)
-    else:
-       if -np.pi <= the <= 0:
-	  return x1_dot(the,t)
-       #elif the <= np.pi and the >= 0: 
-       else:
-	  return x2_dot(the,t)
-
-def PolyArea(X,Y):
-    numPoints = X.size
-    print "numPoints:%d" % numPoints
-    area = 0.;         #Accumulates area in the loop
-    j = numPoints-1;  # The last vertex is the 'previous' one to the first
-
-    for i in range(0,numPoints):
-        #print "%f" % (X[j]+X[i]) * (Y[j]-Y[i])
-        area = area + (X[j]+X[i]) * (Y[j]-Y[i]) 
-        j = i  #j is previous vertex to i
-    
-    return area/2
-
-
 xfun = np.vectorize(x)
 yfun = np.vectorize(y)
 
@@ -133,65 +84,49 @@ omiga= 3./180*np.pi
 rho = v/omiga
 up_the = np.pi/16
 
-n_theta= 1001;
-d_theta= 2*np.pi/(n_theta-1)
-#theta= np.arange(-np.pi, np.pi, d_theta)
-theta= np.linspace(-np.pi, np.pi, num=n_theta)
+colors = ['b', 'y', 'r', 'k', 'c']
 
-area1=0.
-for i in range(0,theta.size-1):
-    area1+= x_dot(theta[i],t)*y(theta[i],t)*d_theta
-    
-sq_area= ( x(np.pi,t) - x(-np.pi,t) ) * y(np.pi,t)
-area1-= sq_area
-print("integrated area:%f" % area1)
+n_theta = 1001
 
-x_set = xfun(theta,t)
-y_set = yfun(theta,t)
+theta_l1 = np.linspace(-up_the,0,num=n_theta)
+theta_r1 = np.linspace(0,up_the,num=n_theta)
+theta_l2 = np.linspace(-np.pi,-up_the,num=n_theta)
+theta_r2 = np.linspace(up_the,np.pi,num=n_theta)
 
+theta2 = np.concatenate([theta_l2,theta_r2])
+
+x_l1 = xfun(theta_l1,t)
+y_l1 = yfun(theta_l1,t)
+
+x_r1 = xfun(theta_r1,t)
+y_r1 = yfun(theta_r1,t)
+
+x_l2 = xfun(theta_l2,t)
+y_l2 = yfun(theta_l2,t)
+
+x_r2 = xfun(theta_r2,t)
+y_r2 = yfun(theta_r2,t)
+'''
+xs2 = xfun(theta2,t)
+ys2 = yfun(theta2,t)
+'''
 xl= x(-np.pi,t)
 yl= y(-np.pi,t)
 xr= x(np.pi,t)
 yr= y(np.pi,t)
 
-plt.plot(x_set,y_set,color='b')
-plt.plot([xl,xr],[yl,yr],color='b')
-'''
-v = 130.
-rho = v/omiga
-
-n_theta= 1001;
-d_theta= 2*np.pi/(n_theta-1)
-#theta= np.arange(-np.pi, np.pi, d_theta)
-theta= np.linspace(-np.pi, np.pi, num=n_theta)
-
-x_set = xfun(theta,t)
-y_set = yfun(theta,t)
-
-xl= x(-np.pi,t)
-yl= y(-np.pi,t)
-xr= x(np.pi,t)
-yr= y(np.pi,t)
-
-plt.plot(x_set,y_set)
-plt.plot([xl,xr],[yl,yr])
-'''
-n1= 10
-#up_the = np.pi/2
-theta1= np.linspace(-np.pi,np.pi,num=n1)
-x_dis = xfun(theta1,t)
-y_dis = yfun(theta1,t)
-
-for i in range(0,theta1.size-1):
-    plt.plot([ x_dis[i],x_dis[i+1] ],[y_dis[i],y_dis[i+1] ],color='k')
-
-print "discrete area:%f" % PolyArea(x_dis,y_dis)
-print "ratio:%f" % (PolyArea(x_dis,y_dis)/area1)
+plt.plot(x_l1,y_l1,color=colors[0],label='$S_1$')
+plt.plot(x_r1,y_r1,color=colors[1],label='$S_2$')
+plt.plot(x_l2,y_l2,color=colors[2],label='$S_3$')
+plt.plot(x_r2,y_r2,color=colors[3],label='$S_4$')
+plt.plot([xl,xr],[yl,yr],color=colors[4],label='$S_5$')
 
 plt.xlabel('x (m)')
 plt.ylabel('y (m)')
 
+plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3,
+           ncol=5, mode="expand", borderaxespad=0.)
+#plt.axis('equal')
 plt.ylim(3000, 4000)
 #plt.gca().set_aspect('equal', adjustable='box')
-
 plt.show()
