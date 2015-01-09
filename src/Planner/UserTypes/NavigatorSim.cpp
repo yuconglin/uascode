@@ -324,7 +324,9 @@ int NavigatorSim::PropWpCheck(UserStructs::PlaneStateSim& st_start,
           //check for obstacles
           for(int i=0;i!= obstacles.size();++i){
 
-              if(Utils::CheckCollisionSet(st_next,obstacles[i])==1){
+              //if(Utils::CheckCollisionSet(st_next,obstacles[i])==1)
+if(Utils::CheckCollision(st_next,obstacles[i])==1)
+              {
                   result = -1;
                   break;
               }

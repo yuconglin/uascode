@@ -26,7 +26,7 @@ namespace UasCode{
     vert = _obs.v_vert;
     r = _obs.r;
     hr = _obs.hr;
-    this->up_the = M_PI / 8.;
+    this->up_the = M_PI / 16.;
   }
 
   void ReachabilitySet::GetSet(int num, double t)
