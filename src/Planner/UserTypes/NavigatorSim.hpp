@@ -11,6 +11,7 @@
 #include "UserStructs/PredictColliReturn.h"
 #include "Planner/UserStructs/MissionSimFlagPt.h"
 
+#include "Planner/UserTypes/ObsHelper.hpp"
 #include "nodes/UserStructs/GoalSetPt.h"
 
 namespace UasCode{
@@ -28,6 +29,8 @@ class NavigatorSim{
    inline void SetSpeedTrim(double _speed_trim){ speed_trim= _speed_trim;}
    inline void SetCheckStep(double _step){check_step= _step;}
    inline void SetInserInterv(int _N){N_inter= _N;}
+
+   inline void SetObsHelpers( const std::vector<ObsHelper>* pointer){this->helpers = pointer;}
 
    void ClearRec();
    //propagate a single step
@@ -111,13 +114,15 @@ class NavigatorSim{
    StateUpdateSim updater;
    //for logging
    std::vector<UserStructs::PlaneStateSim> states_rec;
-   //std::vector<UserStructs::StateNode> states_rec;
+
    //for goal reachable checking in planning
-   //std::vector<UserStructs::PlaneStateSim> states_part_rec;
    std::vector<UserStructs::StateNode> states_part_rec;
    //fstream for logging
    std::fstream fs_act;
    std::fstream fs_state;
+
+   //vectors for ObsHelper
+   std::vector< ObsHelper >* helpers;
 };
 
 };

@@ -2,6 +2,7 @@
 #include "common/UserStructs/constants.h"
 #include "Planner/Utils/PointInPoly.h"
 #include "common/Utils/YcLogger.h"
+#include "Planner/UserStructs/SetPointsVh.h"
 
 #include <cmath>
 #include <cassert>
@@ -36,7 +37,7 @@ namespace UasCode{
      set_points.clear();
      double d_the = 2*M_PI/num;
      for(int i=0;i!= num+1;++i){
-         double the= -M_PI + d_the * i;
+         double the = -M_PI + d_the * i;
          set_points.push_back( UserStructs::point2D(x(the,t-t0),y(the,t-t0)) );
      }
 
@@ -51,6 +52,10 @@ namespace UasCode{
      //get vertical constraints
      h_low = z0 + (vert-10) * (t-t0) - hr;
      h_high = z0 + (vert+10) * (t-t0) + hr;
+  }
+
+  UserStructs::SetPointsVh AccessSet(){
+     return UserStructs::SetPointsVh(set_points, h_low, h_high);
   }
 
   bool ReachabilitySet::InSet(double x, double y)

@@ -37,7 +37,7 @@ scatter(rs(:,1),rs(:,2),'b');
 hold on;
 scatter(ls(:,1),ls(:,2),'r+');
 rectangle('Position',[0,0,vv,hh]);
-legend('reachability set','linear','safety region')
+legend('reachable set','linear','safety region')
 
 xlabel('horizontal(m)');
 ylabel('vertical(m)');

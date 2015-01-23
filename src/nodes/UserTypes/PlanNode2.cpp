@@ -74,7 +74,7 @@ namespace UasCode{
     double _max_pitch= 25./180*M_PI;
     double _min_pitch= -20./180*M_PI;
 
-    double dt= 1.;
+    dt= 1.;
     double _speed_trim= _max_speed;
     //set
     path_gen.NavUpdaterParams(_Tmax,mpitch_rate,myaw_rate,_Muav,_max_speed,_min_speed,_max_pitch,_min_pitch);
@@ -88,7 +88,13 @@ namespace UasCode{
     //set sampler parameters
     path_gen.SetSampler(new UserTypes::SamplerPole() );
 
+    //initialize helpers
+    this->helpers = NULL;
   }//constructor ends
+
+  void PlanNode2::~PlanNode2(){
+    delete helpers;
+  }
 
   void PlanNode2::SetLogFileName(const char *filename)
   {
@@ -429,6 +435,14 @@ namespace UasCode{
                   if(situ== NORMAL){
                      situ= PATH_GEN;
                      if_inter_gen= false;
+                     //update helpers
+                     delete helpers;
+                     helpers = new std::vector< ObsHelper >();
+                     for(int i = 0; i!= obss.size(); ++i){
+                        helpers -> push_back( ObsHelper(obss[i],dt) );
+                     }
+                     //set helpers
+                     path_gen.NavSetHelpers(helpers);
                  }
               }
 

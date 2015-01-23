@@ -130,6 +130,7 @@ add_library(planner
 	src/Planner/UserTypes/NavigatorSim.cpp
 	src/Planner/UserTypes/PathGenerator.cpp
         src/Planner/UserTypes/ReachabilitySet.cpp
+        src/Planner/UserTypes/ObsHelper.cpp
 	src/Planner/UserTypes/Sampler/Sampler.cpp
 	src/Planner/UserTypes/Sampler/SamplerPole.cpp
 	src/Planner/UserTypes/Sampler/SamplerRect.cpp

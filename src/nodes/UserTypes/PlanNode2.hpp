@@ -1,6 +1,7 @@
 #pragma once
 //user_types
 #include "Planner/UserTypes/PathGenerator.hpp"
+#include "Planner/UserTypes/ObsHelper.hpp"
 //user structs
 #include "Planner/UserStructs/PlaneStateSim.h"
 #include "Planner/UserStructs/obstacle3D.h"
@@ -33,8 +34,9 @@ class PlanNode2{
  public:
    //constructor not defined yet
    PlanNode2();
+   //destructor
+   ~PlanNode2();
 
-   //inline void SetTimeLimit(const double _t_limit){t_limit= _t_limit;}
    void SetTimeLimit(const double _t_limit);
    inline void SetWpR(const double _r){this->wp_r= _r;}
    inline void SetHomeAlt(const double _alt){home_alt= _alt; }
@@ -55,6 +57,9 @@ class PlanNode2{
 
    //path generator
    PathGenerator path_gen;
+
+   //obstacle helper
+   std::vector< ObsHelper >* helpers;
 
    //plane state current
    UserStructs::PlaneStateSim st_current;
@@ -102,6 +107,8 @@ class PlanNode2{
    //time limit for planning
    double t_limit;
 
+   //time step
+   double dt;
    //radius for wp
    double wp_r;
    //alt for home waypoint

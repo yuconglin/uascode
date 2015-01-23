@@ -167,6 +167,12 @@ namespace UasCode{
     navigator.SetSpeedTrim(_trim);
   }
 
+  //set obstacle helpers
+  void PathGenerator::NavSetHelpers(const std::vector<ObsHelper> *_helpers)
+  {
+    navigator.SetObsHelpers( _helpers );
+  }
+
   //set sampler parameters based on st_start and goal_wp
   void PathGenerator::SetSampleParas()
   {

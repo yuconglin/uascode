@@ -2,6 +2,7 @@
 
 #include "Planner/UserStructs/point2D.h"
 #include "Planner/UserStructs/obstacle3D.h"
+#include "Planner/UserStructs/SetPointsVh.h"
 #include <vector>
 
 namespace UasCode{
@@ -18,6 +19,8 @@ public:
 
     //public functions
     void GetSet( int num, double t );
+    UserStructs::SetPointsVh AccessSet();
+
     bool InSet( double x, double y );
     bool InSet3( double x, double y, double z);
     void OutputSet( const char* filename );

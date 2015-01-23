@@ -3,8 +3,8 @@ clear all;
 clc;
 
 obs_files = [
-'tt_obstacle_10734770.txt';
-%'tt_obstacle_10934723.txt';
+%'tt_obstacle_10734770.txt';
+'tt_obstacle_10934723.txt';
 %'tt_obstacle_10942331.txt';
 ];
 
@@ -78,14 +78,14 @@ for i=1:length(cells)
 %    plot(data_t(:,1),data_t(:,4) );
 %    title('vert');
 % %    
-%    lm = length(data_t);
-%    hd_pre = data_t(1:lm-1,3);
-%    hd = data_t(2:lm,3);
+   lm = length(data_t);
+   hd_pre = data_t(1:lm-1,3);
+   hd = data_t(2:lm,3);
 %    
-%    figure;
-%    plot(data_t(2:lm,1), hd-hd_pre, 'k+');
-%    hold on;
-%    plot(data_t(:,1), data_t(:,3) );
-%    title('hd');
+   figure;
+   plot(data_t(2:lm,1), hd-hd_pre, 'k+');
+   hold on;
+   plot(data_t(:,1), data_t(:,3) );
+   title('hd');
    
 end
