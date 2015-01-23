@@ -30,7 +30,7 @@ class NavigatorSim{
    inline void SetCheckStep(double _step){check_step= _step;}
    inline void SetInserInterv(int _N){N_inter= _N;}
 
-   inline void SetObsHelpers( const std::vector<ObsHelper>* pointer){this->helpers = pointer;}
+   inline void SetObsHelpers( std::vector<ObsHelper>* pointer){this->helpers = pointer;}
 
    void ClearRec();
    //propagate a single step

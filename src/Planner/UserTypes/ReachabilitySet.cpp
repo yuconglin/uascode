@@ -54,7 +54,7 @@ namespace UasCode{
      h_high = z0 + (vert+10) * (t-t0) + hr;
   }
 
-  UserStructs::SetPointsVh AccessSet(){
+  UserStructs::SetPointsVh ReachabilitySet::AccessSet(){
      return UserStructs::SetPointsVh(set_points, h_low, h_high);
   }
 

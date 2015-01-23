@@ -11,6 +11,11 @@ class ReachabilitySet{
 
 public:
     //constructor
+    //set default constructor to default
+    ReachabilitySet():spd(0.),omiga(0.),r(0.){
+        //no operations
+    }
+
     ReachabilitySet(double _spd, double _omiga, double _r, double _hd):spd(_spd),omiga(_omiga),r(_r), hd(_hd) {
        rho = spd / omiga;
     }
@@ -24,11 +29,10 @@ public:
     bool InSet( double x, double y );
     bool InSet3( double x, double y, double z);
     void OutputSet( const char* filename );
+    //get t0
+    inline double Get_t0(){return this->t0;}
+
 private:
-    //set default constructor to default
-    ReachabilitySet():spd(0.),omiga(0.),r(0.){
-        //no operations
-    }
     //member variables
     double spd;
     double omiga;
@@ -59,7 +63,8 @@ private:
     double y4(double the, double t);
     double x(double the, double t);
     double y(double the, double t);
-    
+
+
 };
 
 }

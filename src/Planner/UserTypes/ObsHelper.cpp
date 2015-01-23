@@ -16,7 +16,7 @@ namespace UasCode {
   void ObsHelper::CreateSetPoints()
   {
      sets.clear();
-     for( double t = reach_set.t0; t!= 40; t+= dt)
+     for( double t = reach_set.Get_t0(); t!= 40; t+= dt)
      {
         reach_set.GetSet(25,t);
         sets.push_back( reach_set.AccessSet() );
@@ -25,7 +25,7 @@ namespace UasCode {
 
   UserStructs::SetPointsVh ObsHelper::GetSetPointsVh(double t)
   {
-     int idx =  (t-t0)/dt;
+     int idx =  ( t-reach_set.Get_t0() )/dt;
 
      if(idx < sets.size() ){
         return sets[idx];

@@ -48,7 +48,7 @@ class PathGenerator{
    void NavL1SetRollLim(double _lim);
    void NavSetDt(double _dt);
    void NavSetSpeedTrim(double _trim);
-   void NavSetHelpers(const std::vector<ObsHelper>* _helpers);
+   void NavSetHelpers(std::vector<ObsHelper>* _helpers);
 
    //about sampling
    void SetSampleParas();

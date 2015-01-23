@@ -92,7 +92,7 @@ namespace UasCode{
     this->helpers = NULL;
   }//constructor ends
 
-  void PlanNode2::~PlanNode2(){
+  PlanNode2::~PlanNode2(){
     delete helpers;
   }
 

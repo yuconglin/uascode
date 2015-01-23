@@ -334,7 +334,7 @@ int NavigatorSim::PropWpCheck(UserStructs::PlaneStateSim& st_start,
 
           }*/
           for(int i=0; i!= helpers->size(); ++i){
-             if( helpers->at[i].InSet(st_next)){
+             if( helpers->at(i).InSet(st_next)){
                  result = -1;
                  break;
              }

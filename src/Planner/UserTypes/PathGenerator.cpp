@@ -168,7 +168,7 @@ namespace UasCode{
   }
 
   //set obstacle helpers
-  void PathGenerator::NavSetHelpers(const std::vector<ObsHelper> *_helpers)
+  void PathGenerator::NavSetHelpers(std::vector<ObsHelper> *_helpers)
   {
     navigator.SetObsHelpers( _helpers );
   }
