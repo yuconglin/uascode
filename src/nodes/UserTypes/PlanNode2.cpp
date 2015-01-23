@@ -435,14 +435,6 @@ namespace UasCode{
                   if(situ== NORMAL){
                      situ= PATH_GEN;
                      if_inter_gen= false;
-                     //update helpers
-                     delete helpers;
-                     helpers = new std::vector< ObsHelper >();
-                     for(int i = 0; i!= obss.size(); ++i){
-                        helpers -> push_back( ObsHelper(obss[i],dt) );
-                     }
-                     //set helpers
-                     path_gen.NavSetHelpers(helpers);
                  }
               }
 
@@ -530,7 +522,16 @@ namespace UasCode{
               path_gen.SetSampleParas();
 
               //path_gen.SetObs(obss);
-              path_gen.SetObsThres(obss,thres_ratio);
+              //path_gen.SetObsThres(obss,thres_ratio);
+
+              //update helpers
+              delete helpers;
+              helpers = new std::vector< ObsHelper >();
+              for(int i = 0; i!= obss.size(); ++i){
+                  helpers -> push_back( ObsHelper(obss[i],dt) );
+              }
+              //set helpers
+              path_gen.NavSetHelpers(helpers);
 
               //get must go-through in-between waypoints
               std::vector<UserStructs::MissionSimPt> wpoints;
