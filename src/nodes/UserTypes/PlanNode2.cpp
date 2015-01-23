@@ -528,6 +528,7 @@ namespace UasCode{
               delete helpers;
               helpers = new std::vector< ObsHelper >();
               for(int i = 0; i!= obss.size(); ++i){
+                  obss[i].r *= thres_ratio;
                   helpers -> push_back( ObsHelper(obss[i],dt) );
               }
               //set helpers
