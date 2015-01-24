@@ -196,7 +196,7 @@ namespace UserTypes{
 
        //UASLOG(s_logger,LL_DEBUG,"sample theta0:"<< theta0*180./M_PI);
        //double alpha= 3./4*1./2*M_PI;
-       double alpha= 0.5*M_PI;
+       double alpha= 0.75*M_PI;
        boost::uniform_real<> the_uniform(theta0 - alpha, theta0 + alpha);
        boost::variate_generator<boost::mt19937&,boost::uniform_real<> > the_nor(generator, the_uniform);
        double theta= the_nor();
