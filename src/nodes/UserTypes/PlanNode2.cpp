@@ -421,6 +421,9 @@ namespace UasCode{
                      set_pt.lat = colli_pt.lat;
                      set_pt.lon = colli_pt.lon;
                      set_pt.alt = obss[colli_return.obs_id].x3 + obss[colli_return.obs_id].v_vert*colli_return.time_colli + 1.5*obss[colli_return.obs_id].hr- home_alt;
+                     if(set_pt.alt < 0){
+                         set_pt.alt = 0;
+                     }
 
                      if(FlagWayPoints[set_pt.seq].flag){
                          if_inter_exist= true;
@@ -476,8 +479,8 @@ namespace UasCode{
               UASLOG(s_logger,LL_DEBUG,"planning");
               path_gen.SetInitState(st_current.SmallChange(t_limit));
               //get the start and goal for the sample
-              int idx_end=0,idx_start=seq_current;//end and start of must go-through waypoint between current position and the goal
-              this->seq_inter= colli_return.seq_colli;
+              int idx_end=0,idx_start = seq_current;//end and start of must go-through waypoint between current position and the goal
+              this->seq_inter = colli_return.seq_colli;
 
               //set path goal
               for(int i= colli_return.seq_colli;i!= FlagWayPoints.size();++i)
@@ -579,6 +582,9 @@ namespace UasCode{
                   set_pt.lon= inter_wp.lon;
                   //for mavproxy, home_alt must be subtracted
                   set_pt.alt= inter_wp.alt- home_alt;
+                  if(set_pt.alt < 0){
+                      set_pt.alt = 0;
+                  }
 
                   double x_wp,y_wp;
                   Utils::ToUTM(set_pt.lon,set_pt.lat,x_wp,y_wp);
@@ -618,7 +624,9 @@ namespace UasCode{
               if(!if_receive){
                   //this will be sent to pixhawk by MavlinkReceiver node
                   UASLOG(s_logger,LL_DEBUG,"path ready for sending");
-                  UASLOG(s_logger,LL_DEBUG,"if_inter_exist? "<< (int)set_pt.inter_exist);
+                  UASLOG(s_logger,LL_DEBUG,"if_inter_exist? "
+                         << (int)set_pt.inter_exist <<","
+                         << "insert seq:" << (int)set_pt.seq );
                   pub_interwp_flag.publish(set_pt);
               }
               else{

@@ -48,8 +48,13 @@ void MavlinkSendNode::working()
         if(send_pos_method==0)
           sender.SendPosSP(lat_s,lon_s,alt_s);
 
-        if(send_pos_method==1)
+        if(send_pos_method==1){
+          UASLOG(s_logger,LL_DEBUG,"alt_s to send:"
+                 << "lat_s:"<< lat_s << ","
+                 << "lon_s:"<< lon_s << ","
+                 << "alt_s:"<< alt_s);
           sender.SendPosSPflag(lat_s,lon_s,alt_s,seq_s,inter_exist);
+        }
      }
 
      if(if_colli!= -1)

@@ -48,16 +48,16 @@ for i=1:length(cells)
    xs = 3.927e5;
    ys = 3.702e6;
    
-  % plot3(obss_vec(:,1),obss_vec(:,2),obss_vec(:,3),'r+');
-    plot(obss_vec(:,1),obss_vec(:,2),'r+');
+   plot3(obss_vec(:,1),obss_vec(:,2),obss_vec(:,3),'r+');
+  %  plot(obss_vec(:,1),obss_vec(:,2),'r+');
 %    viscircles([xc,yc],2000,'EdgeColor','b','LineStyle','-.');
 %    viscircles([xs,ys],15,'LineWidth',14,'EdgeColor','k');
    
-   x1 = 393047.51;
-   y1 = 3701127.6451;
-   z1 = 2783.84;
-   hold on;
-   plot(x1,y1,'k*');
+%    x1 = 393047.51;
+%    y1 = 3701127.6451;
+%    z1 = 2783.84;
+%    hold on;
+%    plot(x1,y1,'k*');
 %    
 %    xlabel('x(m)')
 %    ylabel('y(m)')
