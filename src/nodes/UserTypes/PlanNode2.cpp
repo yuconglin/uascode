@@ -263,6 +263,21 @@ namespace UasCode{
               double dis_h= fabs(obss[i].x3-st_current.z);
               double dis_total= std::sqrt(dis*dis+dis_h*dis_h);
               oss << (int)obss[i].address <<" " << dis <<" "<< dis_h<<" "<< dis_total <<'\n';
+
+              if( !(dis > 300 || dis_h > 50) ){
+                  UASLOG(s_logger,LL_DEBUG,"obstacle close: "
+                         << std::setprecision(4) << std::fixed
+                         << obss[i].address<< " "
+                         << obss[i].t <<" "
+                         << obss[i].x1 <<" "
+                         << obss[i].x2 <<" "
+                         << obss[i].x3 <<" "
+                         << obss[i].speed <<" "
+                         << obss[i].head_xy*180./M_PI <<" "
+                         << obss[i].v_vert);
+
+              }
+
           }
           obdis_log << oss.str();
       }
@@ -343,8 +358,8 @@ namespace UasCode{
           //check collision in 30 seconds
           GetCurrentSt();
           GetObssDis();
+          SetHelpers();
 
-          //int if_colli= PredictColliNode(st_current,seq_current,30,thres_ratio);
           int if_colli= PredictColliNode2(st_current,seq_current,30,thres_ratio,colli_return);
 
           UASLOG(s_logger,LL_DEBUG,"PredictColliNode: "<< if_colli);
@@ -525,14 +540,7 @@ namespace UasCode{
               //path_gen.SetObsThres(obss,thres_ratio);
 
               //update helpers
-              delete helpers;
-              helpers = new std::vector< ObsHelper >();
-              for(int i = 0; i!= obss.size(); ++i){
-                  obss[i].r *= thres_ratio;
-                  helpers -> push_back( ObsHelper(obss[i],dt) );
-              }
-              //set helpers
-              path_gen.NavSetHelpers(helpers);
+              //SetHelpers();
 
               //get must go-through in-between waypoints
               std::vector<UserStructs::MissionSimPt> wpoints;
@@ -769,6 +777,18 @@ namespace UasCode{
         }//
 
     }
+  }
+
+  void PlanNode2::SetHelpers()
+  {
+      delete helpers;
+      helpers = new std::vector< ObsHelper >();
+      for(int i = 0; i!= obss.size(); ++i){
+          obss[i].r *= thres_ratio;
+          helpers -> push_back(ObsHelper(obss[i],dt) );
+      }
+      //set helpers
+      path_gen.NavSetHelpers(helpers);
   }
 
 }//namespace ends

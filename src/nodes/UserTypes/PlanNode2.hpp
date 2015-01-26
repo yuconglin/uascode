@@ -150,6 +150,7 @@ class PlanNode2{
    //other functions
    void GetCurrentSt();
    void GetObssDis();
+   void SetHelpers();
 
    int PredictColliNode(UserStructs::PlaneStateSim &st_current,int seq_current,double t_limit,double thres_ratio);
    int PredictColliNode2(UserStructs::PlaneStateSim &st_current,int seq_current,double t_limit,double thres_ratio,UserStructs::PredictColliReturn& colli_return);
