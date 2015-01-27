@@ -337,6 +337,11 @@ int NavigatorSim::PropWpCheck(UserStructs::PlaneStateSim& st_start,
           for(int i=0; i!= helpers->size(); ++i){
              if( helpers->at(i).InSet(st_next)){
                  result = -1;
+
+                 if(length/check_step < 2){
+                    UASLOG(s_logger,LL_DEBUG,"start dead");
+                 }
+
                  break;
              }
           }
