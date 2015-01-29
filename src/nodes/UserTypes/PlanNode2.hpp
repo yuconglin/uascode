@@ -54,6 +54,7 @@ class PlanNode2{
 
  private:
    enum possible_cases{NORMAL,PATH_READY,PATH_GEN,PATH_CHECK,PATH_RECHECK,WAIT_STATE,ARRIVED};
+   possible_cases situ;
 
    //path generator
    PathGenerator path_gen;
@@ -154,6 +155,9 @@ class PlanNode2{
 
    int PredictColliNode(UserStructs::PlaneStateSim &st_current,int seq_current,double t_limit,double thres_ratio);
    int PredictColliNode2(UserStructs::PlaneStateSim &st_current,int seq_current,double t_limit,double thres_ratio,UserStructs::PredictColliReturn& colli_return);
+   void PrintSitu();
+
+
 };
 
 }//namespace ends

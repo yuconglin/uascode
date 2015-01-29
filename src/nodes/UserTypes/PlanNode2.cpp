@@ -323,7 +323,7 @@ namespace UasCode{
 
   void PlanNode2::working()
   {
-      possible_cases situ= NORMAL;
+      situ= NORMAL;
       int seq_current_pre= 0;
       ros::Rate r(10);
 
@@ -331,6 +331,7 @@ namespace UasCode{
       {
           //callback once
           ros::spinOnce();
+          PrintSitu();
 
           //to see if starts
           if(seq_current_pre < 1){
@@ -797,6 +798,33 @@ namespace UasCode{
       }
       //set helpers
       path_gen.NavSetHelpers(helpers);
+  }
+
+  void PlanNode2::PrintSitu()
+  {
+      //enum possible_cases{NORMAL,PATH_READY,PATH_GEN,PATH_CHECK,PATH_RECHECK,WAIT_STATE,ARRIVED};
+
+      switch(situ){
+      case NORMAL:{
+        UASLOG(s_logger,LL_DEBUG, "situ:NORMAL" << '\n');
+        break;
+      }
+      case PATH_READY:{
+        UASLOG(s_logger,LL_DEBUG, "situ: PATH_READY" << '\n');
+        break;
+      }
+      case PATH_GEN:{
+        UASLOG(s_logger,LL_DEBUG, "situ: PATH_GEN" << '\n');
+        break;
+      }
+      case PATH_CHECK:{
+        UASLOG(s_logger,LL_DEBUG, "situ: PATH_CHECK" << '\n');
+        break;
+      }
+      default:
+        break;
+      }
+
   }
 
 }//namespace ends
