@@ -88,6 +88,8 @@ class PlanNode2{
    bool if_receive;
    //to see if already fail
    bool if_fail;
+   //to see if obstacles are updated
+   bool if_obss_update;
 
    //wp ros msg to send
    uascode::PosSetPointFlag set_pt;
