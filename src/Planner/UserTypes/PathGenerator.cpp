@@ -326,8 +326,7 @@ namespace UasCode{
                                           spacelimit,
                                           length,
                                           0);
-
-      if(result1!= -1)
+      if(result1 != -1)
       {//the first section is collision free
           //UASLOG(s_logger,LL_DEBUG,"first section collision free");
           ++sample_count;
@@ -355,7 +354,10 @@ namespace UasCode{
                                                   spacelimit,
                                                   length,
                                                   1);
-              if(result2!=-1){
+              if(result2 == -1){
+                 UASLOG(s_logger,LL_DEBUG,"second section collided");
+              }
+              else {
                   float r_wp= std::max(100., max_speed*2*dt);
                   UserStructs::MissionSimPt new_wp
                           = UserStructs::MissionSimPt(0,0,st_init.z,st_init.yaw,r_wp,st_init.x,st_init.y,200,100,50);
@@ -377,7 +379,7 @@ namespace UasCode{
           //UASLOG(s_logger,LL_DEBUG,"wp_lengths size:"<< wp_lengths.size() );
       }//if result1!= -1 ends
       else{
-          //UASLOG(s_logger,LL_DEBUG,"first section collided");
+          UASLOG(s_logger,LL_DEBUG,"first section collided");
       }
     
       //timer

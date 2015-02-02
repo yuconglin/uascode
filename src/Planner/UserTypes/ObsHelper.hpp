@@ -18,10 +18,12 @@ public:
     inline void SetDt(const double _dt){ this->dt = _dt;}
 
     bool InSet(const UserStructs::PlaneStateSim& state);
+    bool InSet3D(double t, double x, double y, double z);
 
 private:
     uint32_t address;
 
+    static bool if_print;
     UasCode::ReachabilitySet reach_set;
 
     /* ObsData */

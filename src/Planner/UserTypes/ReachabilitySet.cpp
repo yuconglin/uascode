@@ -92,7 +92,7 @@ namespace UasCode{
      std::ofstream file( filename );
      for(int i=0; i!= set_points.size(); ++i){
         file << set_points[i].x << " " << set_points[i].y << '\n';
-     }//
+     }
   }
 
   //private functions

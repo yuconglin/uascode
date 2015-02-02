@@ -2,7 +2,7 @@ close all;
 clear all;
 clc;
 
-time= 50;
+time= 150;
 MATX0= zeros(4,3);
 MATDIS= zeros(3,4);
 

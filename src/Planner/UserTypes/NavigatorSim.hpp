@@ -102,6 +102,7 @@ class NavigatorSim{
        int result;
        int obs_id;
    };
+   static bool if_fail_print;
 
    double dt;
    double speed_trim;

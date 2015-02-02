@@ -4,6 +4,8 @@
 #include "Planner/UserStructs/point2D.h"
 #include "Planner/Utils/PointInPoly.h"
 #include <stdexcept>
+#include <fstream>
+#include <iomanip>
 
 namespace UserStructs {
 
@@ -24,6 +26,16 @@ struct SetPointsVh{
 
       return Utils::PointInPoly(points_2d,x,y) && z < h_high && z > h_low;
     }
+
+    void PrintSet(const char* filename)
+    {
+        std::ofstream file( filename );
+        for(int i=0; i!= points_2d.size(); ++i){
+            file << std::setprecision(4) << std::fixed
+                    <<  points_2d[i].x << " " << points_2d[i].y << '\n';
+        }
+    }
+
 };
 
 }

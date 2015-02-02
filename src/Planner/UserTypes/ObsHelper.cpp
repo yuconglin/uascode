@@ -8,9 +8,23 @@ namespace UasCode {
      reach_set = UasCode::ReachabilitySet(obs3d);
   }
 
+  bool ObsHelper::if_print = true;
+
   bool ObsHelper::InSet(const UserStructs::PlaneStateSim &state)
   {
-     return GetSetPointsVh(state.t).InSetPt(state.x,state.y,state.z);
+     bool if_in = GetSetPointsVh(state.t).InSetPt(state.x,state.y,state.z);
+
+     if(if_in && if_print){
+       GetSetPointsVh(state.t).PrintSet("reach_set.txt");
+       if_print = false;
+     }
+
+     return if_in;
+  }
+
+  bool ObsHelper::InSet3D(double t, double x, double y, double z)
+  {
+     return GetSetPointsVh(t).InSetPt(x,y,z);
   }
 
   void ObsHelper::CreateSetPoints()

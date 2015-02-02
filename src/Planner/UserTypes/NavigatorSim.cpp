@@ -24,6 +24,8 @@ NavigatorSim::NavigatorSim(const char* act_name,const char* state_name){
   N_inter= 5;
 }
 
+bool NavigatorSim::if_fail_print = true;
+
 void NavigatorSim::UpdaterSetParams(double _Tmax,double _prate,double _yrate,double _M,double _max_spd,double _min_spd,double _max_pitch,double _min_pitch){
   updater.SetParams( _Tmax, _prate, _yrate, _M,_max_spd,_min_spd,_max_pitch,_min_pitch);
   tecs.set_mpitch_rate( _prate);
@@ -350,13 +352,25 @@ int NavigatorSim::PropWpCheck(UserStructs::PlaneStateSim& st_start,
 
           for(int i=0; i!= helpers->size(); ++i){
              if( helpers->at(i).InSet(st_next)){
-                 UASLOG(s_logger,LL_DEBUG,"fail diff:"
-                        << st_next.t - st_now.t);
+                 if(if_fail_print){
+                     UASLOG(s_logger,LL_DEBUG,"fail diff:"
+                            << st_next.t - st_now.t);
+                     UASLOG(s_logger,LL_DEBUG,"st_inset: "
+                            << std::setprecision(4) << std::fixed
+                            << st_next.t << " "
+                            << st_next.x << " "
+                            << st_next.y << " "
+                            << st_next.z );
+                     if_fail_print = false;
+                 }
                  result = -1;
                  /*
                  if(length/check_step < 2){
                     UASLOG(s_logger,LL_DEBUG,"start dead");
                  }*/
+                 if( helpers->at(i).InSet3D(st_next.t, pt_target.x, pt_target.y, pt_target.alt )){
+                     UASLOG(s_logger,LL_DEBUG,"goal in set");
+                 }
 
                  break;
              }
