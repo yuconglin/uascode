@@ -294,6 +294,17 @@ int NavigatorSim::PropWpCheck(UserStructs::PlaneStateSim& st_start,
 
     int Nec= 0;
 
+    for(int i=0; i!= helpers->size(); ++i){
+       if( helpers->at(i).InSet(st_now)){
+           //result = -1;
+           UASLOG(s_logger,LL_DEBUG,"initial dead");
+           length = 0;
+           st_end = st_now;
+           return -1;
+           break;
+       }
+    }
+
     //loop
     while(1){  
       PropagateStep(st_now,st_next,pt_A,pt_target);
@@ -333,14 +344,19 @@ int NavigatorSim::PropWpCheck(UserStructs::PlaneStateSim& st_start,
               }
 
           }*/
+          if(st_next.t == 0){
+              UASLOG(s_logger,LL_DEBUG,"st_next 2 t=0");
+          }
 
           for(int i=0; i!= helpers->size(); ++i){
              if( helpers->at(i).InSet(st_next)){
+                 UASLOG(s_logger,LL_DEBUG,"fail diff:"
+                        << st_next.t - st_now.t);
                  result = -1;
-
+                 /*
                  if(length/check_step < 2){
                     UASLOG(s_logger,LL_DEBUG,"start dead");
-                 }
+                 }*/
 
                  break;
              }

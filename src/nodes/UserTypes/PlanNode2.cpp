@@ -426,7 +426,15 @@ namespace UasCode{
                      }
                      else{
                          UASLOG(s_logger,LL_DEBUG,"local distance ok");
-                         set_pt.seq = colli_return.seq_colli-1;
+                         //set_pt.seq = colli_return.seq_colli-1;
+
+                         for(int i= colli_return.seq_colli-1;i!= 0;--i)
+                         {
+                             if(!FlagWayPoints[i].flag){
+                                 set_pt.seq = i+1;
+                                 break;
+                             }
+                         }
 
                          if(colli_return.seq_colli==1)
                              set_pt.seq = 1;
@@ -493,7 +501,7 @@ namespace UasCode{
               path_gen.SetInitState(st_current.SmallChange(t_limit));
               //get the start and goal for the sample
               int idx_end=0,idx_start = seq_current;//end and start of must go-through waypoint between current position and the goal
-              this->seq_inter = colli_return.seq_colli;
+              //this->seq_inter = colli_return.seq_colli;
 
               //set path goal
               for(int i= colli_return.seq_colli;i!= FlagWayPoints.size();++i)
@@ -512,6 +520,7 @@ namespace UasCode{
               {
                   if(!FlagWayPoints[i].flag){
                       path_gen.SetStartWp(FlagWayPoints[i].pt);
+                      seq_inter = i+1;
                       break;
                   }
               }
@@ -611,6 +620,7 @@ namespace UasCode{
                   if(FlagWayPoints[seq_inter].flag){
                      if_inter_exist= true;
                      FlagWayPoints.erase(FlagWayPoints.begin()+seq_inter);
+                     UASLOG(s_logger,LL_DEBUG,"inter wp exsit");
                   }
                   else
                      if_inter_exist= false;
@@ -776,6 +786,8 @@ namespace UasCode{
         st_current.pitch= plane_att.pitch;
 
         UASLOG(s_logger,LL_DEBUG,"st_current: "
+               << std::setprecision(4) << std::fixed
+               << st_current.t << " "
                << st_current.x << " "
                << st_current.y << " "
                << st_current.z << " "

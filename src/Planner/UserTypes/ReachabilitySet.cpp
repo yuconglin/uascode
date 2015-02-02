@@ -33,7 +33,13 @@ namespace UasCode{
 
   void ReachabilitySet::GetSet(int num, double t)
   {
-     assert(t>=t0);
+     if( t < t0 ){
+       UASLOG(s_logger,LL_DEBUG,
+              std::setprecision(4) << std::fixed
+              << "t:" << t << ' '
+              << "t0:" << t0);
+     }
+     assert(t>t0);
      //first get the points
      set_points.clear();
      double d_the = 2*M_PI/num;
