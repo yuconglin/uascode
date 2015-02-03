@@ -355,8 +355,8 @@ int NavigatorSim::PropWpCheck(UserStructs::PlaneStateSim& st_start,
                       result = -1;
 
                       if( helpers->at(i).InSet3D(st_next.t, pt_target.x, pt_target.y, pt_target.alt )){
-                          UASLOG(s_logger,LL_DEBUG,"goal in set,"
-                                 << "pt_target:" << std::setprecision(4) << std::fixed << pt_target.x << ' ' << pt_target.y << ' ' << pt_target.alt);
+                          //UASLOG(s_logger,LL_DEBUG,"goal in set,"
+                          //       << "pt_target:" << std::setprecision(4) << std::fixed << pt_target.x << ' ' << pt_target.y << ' ' << pt_target.alt);
                           //UASLOG(s_logger,LL_DEBUG,"switch to no set");
                           result = -2;
                       }

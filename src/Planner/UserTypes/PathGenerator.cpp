@@ -354,7 +354,7 @@ namespace UasCode{
                                                   length,
                                                   1);
               if(result2 < 0){
-                 //UASLOG(s_logger,LL_DEBUG,"second section collided");
+                 UASLOG(s_logger,LL_DEBUG,"second section collided");
                  if(result2 == -2 && navigator.GetIfUseSet()){
                      UASLOG(s_logger,LL_DEBUG,"switch to no set");
                      navigator.SetIfUseSet(false);
@@ -382,7 +382,7 @@ namespace UasCode{
 
       }//if result1!= -1 ends
       else{
-          //UASLOG(s_logger,LL_DEBUG,"first section collided");
+          UASLOG(s_logger,LL_DEBUG,"first section collided");
       }
     
       //timer
