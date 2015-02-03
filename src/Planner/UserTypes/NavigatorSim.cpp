@@ -293,13 +293,11 @@ int NavigatorSim::PropWpCheck(UserStructs::PlaneStateSim& st_start,
     UserStructs::PlaneStateSim st_next;
     length=0.;//length travelled
 
-    int result=-2;//-1:collision, 0: arrived by closeness, 1: arrived by length, 2: location past by
-
+    int result=-2;//-1:collision, 0: arrived by closeness, 1: arrived by length, 2: location past by, -2: goal in reachable set
     int Nec= 0;
 
     for(int i=0; i!= helpers->size(); ++i){
        if( helpers->at(i).InSet(st_now)){
-           //result = -1;
            UASLOG(s_logger,LL_DEBUG,"initial dead");
            length = 0;
            st_end = st_now;
@@ -309,7 +307,8 @@ int NavigatorSim::PropWpCheck(UserStructs::PlaneStateSim& st_start,
     }
 
     //loop
-    while(1){  
+    while(1)
+    {
       PropagateStep(st_now,st_next,pt_A,pt_target);
 
       if(Utils::location_passed_point(st_next,pt_A,pt_target)){
@@ -358,8 +357,8 @@ int NavigatorSim::PropWpCheck(UserStructs::PlaneStateSim& st_start,
                       if( helpers->at(i).InSet3D(st_next.t, pt_target.x, pt_target.y, pt_target.alt )){
                           UASLOG(s_logger,LL_DEBUG,"goal in set,"
                                  << "pt_target:" << std::setprecision(4) << std::fixed << pt_target.x << ' ' << pt_target.y << ' ' << pt_target.alt);
-                          //if_use_set = false;
                           //UASLOG(s_logger,LL_DEBUG,"switch to no set");
+                          result = -2;
                       }
 
                       break;

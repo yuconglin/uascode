@@ -96,6 +96,7 @@ class NavigatorSim{
    void CopyStatePart(std::vector<UserStructs::StateNode>& copy_rec); 
    void EnableAirspd();
    inline void SetIfUseSet(bool _use){this->if_use_set = _use;}
+   inline bool GetIfUseSet() { return if_use_set; }
 
   private:
 

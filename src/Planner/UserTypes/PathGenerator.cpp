@@ -326,7 +326,7 @@ namespace UasCode{
                                           spacelimit,
                                           length,
                                           0);
-      if(result1 != -1)
+      if(result1 > 0)
       {//the first section is collision free
           //UASLOG(s_logger,LL_DEBUG,"first section collision free");
           ++sample_count;
@@ -335,7 +335,7 @@ namespace UasCode{
           navigator.CopyStatePart(temp_part_rec);
 
           temp_part_rec.push_back(UserStructs::StateNode(st_end,length));
-          //check some states in temp_rec, their reachability to the
+          // some states in temp_rec, their reachability to the
 
           //goal wp
           for(int i=0;i!=temp_part_rec.size();++i)
@@ -353,8 +353,12 @@ namespace UasCode{
                                                   spacelimit,
                                                   length,
                                                   1);
-              if(result2 == -1){
+              if(result2 < 0){
                  //UASLOG(s_logger,LL_DEBUG,"second section collided");
+                 if(result2 == -2 && navigator.GetIfUseSet()){
+                     UASLOG(s_logger,LL_DEBUG,"switch to no set");
+                     navigator.SetIfUseSet(false);
+                 }
               }
               else {
                   float r_wp= std::max(100., max_speed*2*dt);
