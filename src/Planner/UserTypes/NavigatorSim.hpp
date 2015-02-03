@@ -95,6 +95,7 @@ class NavigatorSim{
    void CopyStatesRec(std::vector<UserStructs::PlaneStateSim>& copy_rec);
    void CopyStatePart(std::vector<UserStructs::StateNode>& copy_rec); 
    void EnableAirspd();
+   inline void SetIfUseSet(bool _use){this->if_use_set = _use;}
 
   private:
 
@@ -103,6 +104,7 @@ class NavigatorSim{
        int obs_id;
    };
    static bool if_fail_print;
+   bool if_use_set;
 
    double dt;
    double speed_trim;

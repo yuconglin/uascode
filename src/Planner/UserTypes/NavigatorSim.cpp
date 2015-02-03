@@ -22,6 +22,7 @@ NavigatorSim::NavigatorSim(const char* act_name,const char* state_name){
   speed_trim= 30;
   check_step= 457.2;//in meters = 1500 ft, the medius score separation
   N_inter= 5;
+  if_use_set = true;
 }
 
 bool NavigatorSim::if_fail_print = true;
@@ -335,45 +336,46 @@ int NavigatorSim::PropWpCheck(UserStructs::PlaneStateSim& st_start,
       //if( (int)(length/check_step) > Nec )
       {
           //check for obstacles
-          /*
-          for(int i=0;i!= obstacles.size();++i){
-              if(Utils::CheckCollisionSet(st_next,obstacles[i])==1)
-              //we can use this with ObsHelper
-              //if(Utils::CheckCollision(st_next,obstacles[i])==1)
+          if(if_use_set)
+          {
+              for(int i=0; i!= helpers->size(); ++i)
               {
-                  result = -1;
-                  break;
+                  if( helpers->at(i).InSet(st_next))
+                  {
+                      if(if_fail_print){
+                          UASLOG(s_logger,LL_DEBUG,"fail diff:"
+                                 << st_next.t - st_now.t);
+                          UASLOG(s_logger,LL_DEBUG,"st_inset: "
+                                 << std::setprecision(4) << std::fixed
+                                 << st_next.t << " "
+                                 << st_next.x << " "
+                                 << st_next.y << " "
+                                 << st_next.z );
+                          if_fail_print = false;
+                      }
+                      result = -1;
+
+                      if( helpers->at(i).InSet3D(st_next.t, pt_target.x, pt_target.y, pt_target.alt )){
+                          UASLOG(s_logger,LL_DEBUG,"goal in set,"
+                                 << "pt_target:" << std::setprecision(4) << std::fixed << pt_target.x << ' ' << pt_target.y << ' ' << pt_target.alt);
+                          //if_use_set = false;
+                          //UASLOG(s_logger,LL_DEBUG,"switch to no set");
+                      }
+
+                      break;
+                  }
               }
-
-          }*/
-          if(st_next.t == 0){
-              UASLOG(s_logger,LL_DEBUG,"st_next 2 t=0");
           }
-
-          for(int i=0; i!= helpers->size(); ++i){
-             if( helpers->at(i).InSet(st_next)){
-                 if(if_fail_print){
-                     UASLOG(s_logger,LL_DEBUG,"fail diff:"
-                            << st_next.t - st_now.t);
-                     UASLOG(s_logger,LL_DEBUG,"st_inset: "
-                            << std::setprecision(4) << std::fixed
-                            << st_next.t << " "
-                            << st_next.x << " "
-                            << st_next.y << " "
-                            << st_next.z );
-                     if_fail_print = false;
-                 }
-                 result = -1;
-                 /*
-                 if(length/check_step < 2){
-                    UASLOG(s_logger,LL_DEBUG,"start dead");
-                 }*/
-                 if( helpers->at(i).InSet3D(st_next.t, pt_target.x, pt_target.y, pt_target.alt )){
-                     UASLOG(s_logger,LL_DEBUG,"goal in set");
-                 }
-
-                 break;
-             }
+          else
+          {
+              for(int i=0; i!= obstacles.size(); ++i)
+              {
+                  if(Utils::CheckCollision(st_next,obstacles[i])==1)
+                  {
+                      result = -1;
+                      break;
+                  }
+              }
           }
 
           //check for spacelimit
@@ -471,22 +473,26 @@ int NavigatorSim::PropWpCheckTime(UserStructs::PlaneStateSim& st_start,
             );
 
       //if( (int)(length/check_step) > Nec )
-      {
-          /*
-          for(int i=0;i!= obstacles.size();++i){
-              if(Utils::CheckCollision2(st_next,obstacles[i],thres_ratio)==1){
-                  result = -1;
-                  obs_idx= i;
-                  break;
+      {   
+          if(if_use_set){
+              //UASLOG(s_logger,LL_DEBUG,"check using set");
+              for(int i=0; i!= helpers->size(); ++i){
+                  if( helpers->at(i).InSet(st_next)){
+                      result = -1;
+                      obs_idx = i;
+                      break;
+                  }
               }
-          }*/
-
-          for(int i=0; i!= helpers->size(); ++i){
-             if( helpers->at(i).InSet(st_next)){
-                 result = -1;
-                 obs_idx = i;
-                 break;
-             }
+          }
+          else{
+              //UASLOG(s_logger,LL_DEBUG,"check using no set");
+              for(int i=0;i!= obstacles.size();++i){
+                  if(Utils::CheckCollision(st_next,obstacles[i])==1){
+                      result = -1;
+                      obs_idx= i;
+                      break;
+                  }
+              }
           }
 
           //check for spacelimit

@@ -413,18 +413,18 @@ namespace UasCode{
                      << "rho:"<< rho << ' '
                      << "obs_r:"<< obs_r);
 
-              //if(dis_c2d < allow_dis && colli_return.seq_colli == seq_current+1)
-              //if(dis_c2d < allow_dis && dis_c2d > st_current.speed*1.0) //using 0.5 to delay reaction and maitain height differenct
               if(dis_c2d < allow_dis)
               {
                  if(!if_inter_gen){
                      UASLOG(s_logger,LL_DEBUG,"local avoidance");                  
+                     /*
                      if(dis_c2d < st_current.speed*1.0 || if_fail){
                          UASLOG(s_logger,LL_DEBUG,"local too close");
                          situ = NORMAL;
                          if_inter_gen = false;
-                     }
-                     else{
+                     }*/
+                     //else
+                     {
                          UASLOG(s_logger,LL_DEBUG,"local distance ok");
                          //set_pt.seq = colli_return.seq_colli-1;
 
@@ -562,7 +562,7 @@ namespace UasCode{
               path_gen.SetSampleParas();
 
               //path_gen.SetObs(obss);
-              //path_gen.SetObsThres(obss,thres_ratio);
+              path_gen.SetObsThres(obss,thres_ratio);
 
               //update helpers
               //SetHelpers();
@@ -819,9 +819,11 @@ namespace UasCode{
       helpers = new std::vector< ObsHelper >();
       for(int i = 0; i!= obss.size(); ++i){
           if( if_obss_update ){
-            obss[i].r *= thres_ratio;
+            //obss[i].r *= thres_ratio;
+            UserStructs::obstacle3D obs = obss[i];
+            obs.r *= thres_ratio;
+            helpers -> push_back(ObsHelper(obs,dt) );
           }
-          helpers -> push_back(ObsHelper(obss[i],dt) );
       }
       //set helpers
       path_gen.NavSetHelpers(helpers);

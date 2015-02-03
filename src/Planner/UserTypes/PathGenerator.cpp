@@ -240,6 +240,7 @@ namespace UasCode{
     float r_wp= std::max(100., max_speed*2*dt);
     //the last 3 number doesn't matter because we use r for arrival justification
     //we have to adjust the wp arrival part the the firmware
+    //UASLOG(s_logger,LL_DEBUG,"sample pt:" << std::setprecision(4) << std::fixed << x_a << ' ' << y_a << ' ' << z_a);
     sample_wp= UserStructs::MissionSimPt(0,0,z_a,yaw_wp,r_wp,x_a,y_a,200,100,50);
     sample_wp.CheckConvert();
   }
@@ -299,6 +300,7 @@ namespace UasCode{
     arma::vec::fixed<2> pt_A;
     pt_A << start_wp.lat << start_wp.lon;
     this->SetYawRootSample(M_PI/2-st_ps.yaw);
+    navigator.SetIfUseSet(true);
 
     while(1)
     {
@@ -314,8 +316,6 @@ namespace UasCode{
       
       ++sample_raw;
     //check:
-    //first check from start to each waypoints.
-
     //then check from start to sample_wp;
       length = 0; 
       int result1= navigator.PropWpCheck2(st_ps,
@@ -336,12 +336,11 @@ namespace UasCode{
 
           temp_part_rec.push_back(UserStructs::StateNode(st_end,length));
           //check some states in temp_rec, their reachability to the
-          //UASLOG(s_logger,LL_DEBUG,"temp_part_rec size: "<< temp_part_rec.size() );
+
           //goal wp
           for(int i=0;i!=temp_part_rec.size();++i)
           {
               UserStructs::PlaneStateSim st_init= temp_part_rec[i].state;
-              //pt_A<< st_init.lat << st_init.lon;
               pt_A<< sample_wp.lat << sample_wp.lon;
               double length1= temp_part_rec[i].length;
 
@@ -355,7 +354,7 @@ namespace UasCode{
                                                   length,
                                                   1);
               if(result2 == -1){
-                 UASLOG(s_logger,LL_DEBUG,"second section collided");
+                 //UASLOG(s_logger,LL_DEBUG,"second section collided");
               }
               else {
                   float r_wp= std::max(100., max_speed*2*dt);
@@ -376,10 +375,10 @@ namespace UasCode{
               }//
 
           }//for int i ends
-          //UASLOG(s_logger,LL_DEBUG,"wp_lengths size:"<< wp_lengths.size() );
+
       }//if result1!= -1 ends
       else{
-          UASLOG(s_logger,LL_DEBUG,"first section collided");
+          //UASLOG(s_logger,LL_DEBUG,"first section collided");
       }
     
       //timer
@@ -389,7 +388,7 @@ namespace UasCode{
         if(sec_count>= t_limit)
         {
             if_limit_reach= true;
-        }//
+        }
       }
 
       if(if_limit_reach){
