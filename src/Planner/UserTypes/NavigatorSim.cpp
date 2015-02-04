@@ -341,7 +341,7 @@ int NavigatorSim::PropWpCheck(UserStructs::PlaneStateSim& st_start,
               {
                   if( helpers->at(i).InSet(st_next))
                   {
-                      if(if_fail_print){
+                      //if(if_fail_print){
                           UASLOG(s_logger,LL_DEBUG,"fail diff:"
                                  << st_next.t - st_now.t);
                           UASLOG(s_logger,LL_DEBUG,"st_inset: "
@@ -351,7 +351,7 @@ int NavigatorSim::PropWpCheck(UserStructs::PlaneStateSim& st_start,
                                  << st_next.y << " "
                                  << st_next.z );
                           if_fail_print = false;
-                      }
+                      //}
                       result = -1;
 
                       if( helpers->at(i).InSet3D(st_next.t, pt_target.x, pt_target.y, pt_target.alt )){

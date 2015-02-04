@@ -76,7 +76,8 @@ for i=1:length(cells)
 %    title('z');
 %    
    figure;
-   plot(data_t(:,1),data_t(:,2) );
+   %plot(data_t(:,1),data_t(:,2) );
+   plot( data_t(:,2) );
    title('speed');
 %    
 %    figure;

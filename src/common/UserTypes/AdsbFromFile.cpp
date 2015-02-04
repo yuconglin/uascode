@@ -358,7 +358,8 @@ uascode::ObsMsg AdsbFromFile::ObsToRosMsg(const UserStructs::obstacle3D& obs)
            << obs_msg.t <<" "
            << obs_msg.x1 <<" "
            << obs_msg.x2 <<" "
-           << obs_msg.x3);
+           << obs_msg.x3 <<" "
+           << obs_msg.speed);
     obs_msg.r= obs.r;
     obs_msg.hr= obs.hr;
     return obs_msg;
