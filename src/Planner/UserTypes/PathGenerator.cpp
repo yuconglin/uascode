@@ -300,7 +300,7 @@ namespace UasCode{
     arma::vec::fixed<2> pt_A;
     pt_A << start_wp.lat << start_wp.lon;
     this->SetYawRootSample(M_PI/2-st_ps.yaw);
-    navigator.SetIfUseSet(true);
+    navigator.SetIfUseSet(false);
 
     while(1)
     {

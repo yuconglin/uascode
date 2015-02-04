@@ -22,7 +22,7 @@ NavigatorSim::NavigatorSim(const char* act_name,const char* state_name){
   speed_trim= 30;
   check_step= 457.2;//in meters = 1500 ft, the medius score separation
   N_inter= 5;
-  if_use_set = true;
+  if_use_set = false;
 }
 
 bool NavigatorSim::if_fail_print = true;
