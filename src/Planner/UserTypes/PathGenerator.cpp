@@ -300,7 +300,7 @@ namespace UasCode{
     arma::vec::fixed<2> pt_A;
     pt_A << start_wp.lat << start_wp.lon;
     this->SetYawRootSample(M_PI/2-st_ps.yaw);
-    navigator.SetIfUseSet(false);
+    navigator.SetIfUseSet(true);
 
     while(1)
     {
@@ -354,11 +354,7 @@ namespace UasCode{
                                                   length,
                                                   1);
               if(result2 < 0){
-                 UASLOG(s_logger,LL_DEBUG,"second section collided");
-                 if(result2 == -2 && navigator.GetIfUseSet()){
-                     UASLOG(s_logger,LL_DEBUG,"switch to no set");
-                     navigator.SetIfUseSet(false);
-                 }
+                 //UASLOG(s_logger,LL_DEBUG,"second section collided");
               }
               else {
                   float r_wp= std::max(100., max_speed*2*dt);
@@ -382,7 +378,7 @@ namespace UasCode{
 
       }//if result1!= -1 ends
       else{
-          UASLOG(s_logger,LL_DEBUG,"first section collided");
+          //UASLOG(s_logger,LL_DEBUG,"first section collided");
       }
     
       //timer

@@ -82,6 +82,7 @@ class PlanNode2{
    //flag to indicate if an inter wp was generated
    bool if_inter_gen;
    bool if_inter_exist;
+   bool if_gen_success;
    int seq_inter;
 
    //to see if the sent waypoint was received

@@ -77,7 +77,7 @@ namespace UserTypes{
        double z_goal= goal_wp.alt;
 
        //check start and goal position
-       UASLOG(s_logger,LL_DEBUG,"sample root: "
+       UASLOG(s_logger,LL_DEBUG,"sample start: "
               <<x_start<<" "
               <<y_start<<" "
               <<z_start);
@@ -196,7 +196,7 @@ namespace UserTypes{
 
        //UASLOG(s_logger,LL_DEBUG,"sample theta0:"<< theta0*180./M_PI);
        //double alpha= 3./4*1./2*M_PI;
-       double alpha= 3./4*M_PI;
+       double alpha= 1.0*M_PI;
        boost::uniform_real<> the_uniform(theta0 - alpha, theta0 + alpha);
        boost::variate_generator<boost::mt19937&,boost::uniform_real<> > the_nor(generator, the_uniform);
        double theta= the_nor();
@@ -211,7 +211,7 @@ namespace UserTypes{
                   << " theta: "<< theta*180./M_PI
                   << " ga: "<< ga*180./M_PI
                   ); */
-           //UASLOG(s_logger,LL_DEBUG,"theta:"<< theta*180./M_PI);
+
            x_a= x0+ r*cos(theta)*cos(ga);
            y_a= y0+ r*sin(theta)*cos(ga);
            //z_a= z0+ r*sin(ga);

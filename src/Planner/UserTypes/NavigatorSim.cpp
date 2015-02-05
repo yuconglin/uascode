@@ -22,7 +22,7 @@ NavigatorSim::NavigatorSim(const char* act_name,const char* state_name){
   speed_trim= 30;
   check_step= 457.2;//in meters = 1500 ft, the medius score separation
   N_inter= 5;
-  if_use_set = false;
+  if_use_set = true;
 }
 
 bool NavigatorSim::if_fail_print = true;
@@ -298,7 +298,7 @@ int NavigatorSim::PropWpCheck(UserStructs::PlaneStateSim& st_start,
 
     for(int i=0; i!= helpers->size(); ++i){
        if( helpers->at(i).InSet(st_now)){
-           UASLOG(s_logger,LL_DEBUG,"initial dead");
+           //UASLOG(s_logger,LL_DEBUG,"initial dead");
            length = 0;
            st_end = st_now;
            return -1;
@@ -341,7 +341,7 @@ int NavigatorSim::PropWpCheck(UserStructs::PlaneStateSim& st_start,
               {
                   if( helpers->at(i).InSet(st_next))
                   {
-                      //if(if_fail_print){
+                      if(if_fail_print){
                           UASLOG(s_logger,LL_DEBUG,"fail diff:"
                                  << st_next.t - st_start.t);
                           UASLOG(s_logger,LL_DEBUG,"st_inset: "
@@ -351,26 +351,20 @@ int NavigatorSim::PropWpCheck(UserStructs::PlaneStateSim& st_start,
                                  << st_next.y << " "
                                  << st_next.z );
                           if_fail_print = false;
-                      //}
-                      result = -1;
-
-                      if( helpers->at(i).InSet3D(st_next.t, pt_target.x, pt_target.y, pt_target.alt )){
-                          //UASLOG(s_logger,LL_DEBUG,"goal in set,"
-                          //       << "pt_target:" << std::setprecision(4) << std::fixed << pt_target.x << ' ' << pt_target.y << ' ' << pt_target.alt);
-                          //UASLOG(s_logger,LL_DEBUG,"switch to no set");
-                          result = -2;
                       }
-
+                      result = -1;
                       break;
                   }
               }
           }
           else
           {
+              UASLOG(s_logger,LL_DEBUG,"not using set");
               for(int i=0; i!= obstacles.size(); ++i)
               {
                   if(Utils::CheckCollision(st_next,obstacles[i])==1)
                   {
+                      //UASLOG(s_logger, LL_DEBUG, "obstacle r:" << obstacles[i].r );
                       result = -1;
                       break;
                   }
@@ -473,7 +467,8 @@ int NavigatorSim::PropWpCheckTime(UserStructs::PlaneStateSim& st_start,
 
       //if( (int)(length/check_step) > Nec )
       {   
-          if(if_use_set){
+          if(if_use_set)
+          {
               //UASLOG(s_logger,LL_DEBUG,"check using set");
               for(int i=0; i!= helpers->size(); ++i){
                   if( helpers->at(i).InSet(st_next)){
@@ -483,7 +478,8 @@ int NavigatorSim::PropWpCheckTime(UserStructs::PlaneStateSim& st_start,
                   }
               }
           }
-          else{
+          else
+          {
               //UASLOG(s_logger,LL_DEBUG,"check using no set");
               for(int i=0;i!= obstacles.size();++i){
                   if(Utils::CheckCollision(st_next,obstacles[i])==1){

@@ -62,6 +62,7 @@ namespace UasCode{
     seq_inter= 0;
     if_inter_gen= false;
     if_inter_exist= false;
+    if_gen_success= false;
     if_obss_update= false;
 
     //parameters for the navigator
@@ -378,6 +379,7 @@ namespace UasCode{
                      << "obstacle idx:"<< colli_return.obs_id);
 
               //get dis to imediate previous waypoint
+              /*
               double w_x,w_y,w_z;
               if(colli_return.seq_colli>1)
               {
@@ -389,7 +391,10 @@ namespace UasCode{
                   w_x = st_current.x;
                   w_y = st_current.y;
                   w_z = st_current.z;
-              }
+              }*/
+              double w_x = st_current.x;
+              double w_y = st_current.y;
+              double w_z = st_current.z;
 
               double dis_c2d = std::sqrt(pow(w_x-colli_return.x_colli,2)+pow(w_y-colli_return.y_colli,2));
               double dis_cz = std::abs(w_z-colli_return.z_colli);
@@ -415,7 +420,7 @@ namespace UasCode{
 
               if(dis_c2d < allow_dis)
               {
-                 if(!if_inter_gen){
+                 if(!if_inter_gen && !if_gen_success){
                      UASLOG(s_logger,LL_DEBUG,"local avoidance");                  
                      /*
                      if(dis_c2d < st_current.speed*1.0 || if_fail){
@@ -499,10 +504,9 @@ namespace UasCode{
               //set start state and goal waypoint
               UASLOG(s_logger,LL_DEBUG,"planning");
               path_gen.SetInitState(st_current.SmallChange(t_limit));
+              if_gen_success = false;
               //get the start and goal for the sample
               int idx_end=0,idx_start = seq_current;//end and start of must go-through waypoint between current position and the goal
-              //this->seq_inter = colli_return.seq_colli;
-
               //set path goal
               for(int i= colli_return.seq_colli;i!= FlagWayPoints.size();++i)
               {
@@ -510,7 +514,7 @@ namespace UasCode{
                       path_gen.SetGoalWp(FlagWayPoints[i].pt);
                       double dis_goal= std::sqrt(pow(st_current.x-FlagWayPoints[i].pt.x,2)+pow(st_current.y-FlagWayPoints[i].pt.y,2));
                       //std::cout<<"dis_goal:"<< dis_goal<<"\n";
-                      UASLOG(s_logger,LL_DEBUG,"flat i="<<" "<< i);
+                      UASLOG(s_logger,LL_DEBUG,"flag i="<<" "<< i);
                       idx_end= i-1;
                       break;
                   }
@@ -524,6 +528,7 @@ namespace UasCode{
                       break;
                   }
               }
+
               //set begin waypoint for navigation
               path_gen.SetBeginWp(FlagWayPoints[seq_current-1].pt);
 
@@ -634,6 +639,7 @@ namespace UasCode{
                   FlagWayPoints.insert(FlagWayPoints.begin()+seq_inter,UserStructs::MissionSimFlagPt(inter_wp,true) );
                   situ= PATH_READY;
                   if_inter_gen= true;
+                  if_gen_success = true;
               }
               else{
                   UASLOG(s_logger,LL_DEBUG,"No waypoint, retry");
