@@ -378,6 +378,7 @@ namespace UasCode{
                      << "obstacle idx:"<< colli_return.obs_id);
 
               //get dis to imediate previous waypoint
+              /*
               double w_x,w_y,w_z;
               if(colli_return.seq_colli>1)
               {
@@ -389,7 +390,10 @@ namespace UasCode{
                   w_x = st_current.x;
                   w_y = st_current.y;
                   w_z = st_current.z;
-              }
+              }*/
+              double w_x = st_current.x;
+              double w_y = st_current.y;
+              double w_z = st_current.z;
 
               double dis_c2d = std::sqrt(pow(w_x-colli_return.x_colli,2)+pow(w_y-colli_return.y_colli,2));
               double dis_cz = std::abs(w_z-colli_return.z_colli);
@@ -426,7 +430,6 @@ namespace UasCode{
                      }
                      else{
                          UASLOG(s_logger,LL_DEBUG,"local distance ok");
-                         //set_pt.seq = colli_return.seq_colli-1;
 
                          for(int i= colli_return.seq_colli-1;i!= 0;--i)
                          {
@@ -464,8 +467,6 @@ namespace UasCode{
                              situ= PATH_READY;
                          }
                      }
-
-
                  }
               }
               else

@@ -335,13 +335,10 @@ namespace UasCode{
           navigator.CopyStatePart(temp_part_rec);
 
           temp_part_rec.push_back(UserStructs::StateNode(st_end,length));
-          //check some states in temp_rec, their reachability to the
-          //UASLOG(s_logger,LL_DEBUG,"temp_part_rec size: "<< temp_part_rec.size() );
           //goal wp
           for(int i=0;i!=temp_part_rec.size();++i)
           {
               UserStructs::PlaneStateSim st_init= temp_part_rec[i].state;
-              //pt_A<< st_init.lat << st_init.lon;
               pt_A<< sample_wp.lat << sample_wp.lon;
               double length1= temp_part_rec[i].length;
 
@@ -355,7 +352,7 @@ namespace UasCode{
                                                   length,
                                                   1);
               if(result2 == -1){
-                 UASLOG(s_logger,LL_DEBUG,"second section collided");
+                 //UASLOG(s_logger,LL_DEBUG,"second section collided");
               }
               else {
                   float r_wp= std::max(100., max_speed*2*dt);
@@ -376,10 +373,9 @@ namespace UasCode{
               }//
 
           }//for int i ends
-          //UASLOG(s_logger,LL_DEBUG,"wp_lengths size:"<< wp_lengths.size() );
       }//if result1!= -1 ends
       else{
-          UASLOG(s_logger,LL_DEBUG,"first section collided");
+          //UASLOG(s_logger,LL_DEBUG,"first section collided");
       }
     
       //timer

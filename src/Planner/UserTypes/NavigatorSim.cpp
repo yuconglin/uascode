@@ -364,14 +364,6 @@ int NavigatorSim::PropWpCheck(UserStructs::PlaneStateSim& st_start,
                      if_fail_print = false;
                  }
                  result = -1;
-                 /*
-                 if(length/check_step < 2){
-                    UASLOG(s_logger,LL_DEBUG,"start dead");
-                 }*/
-                 if( helpers->at(i).InSet3D(st_next.t, pt_target.x, pt_target.y, pt_target.alt )){
-                     UASLOG(s_logger,LL_DEBUG,"goal in set");
-                 }
-
                  break;
              }
           }
