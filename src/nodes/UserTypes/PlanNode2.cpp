@@ -423,11 +423,12 @@ namespace UasCode{
               {
                  if(!if_inter_gen && !if_gen_success){
                      UASLOG(s_logger,LL_DEBUG,"local avoidance");                  
-
+                      /*
                      if(dis_c2d < st_current.speed*1.0 || if_fail){
                          UASLOG(s_logger,LL_DEBUG,"local too close");
                          situ = NORMAL;
                          if_inter_gen = false;
+                         */
                      }
                      else{
                          UASLOG(s_logger,LL_DEBUG,"local distance ok");

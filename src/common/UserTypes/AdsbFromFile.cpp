@@ -255,7 +255,8 @@ void AdsbFromFile::LoadSendRandom(const std::vector<std::string> &file_names,con
 
 void AdsbFromFile::LoadSendRandomNum(const std::vector<std::string> &file_names, int num, const char *type)
 {
-    const int arr[] = {60,80,100,120,140,170,190,210,230,250};
+    //const int arr[] = {60,80,100,120,140,170,190,210,230,250};
+    const int arr[] = {40,50,60,70,80,90,100,110,120,130,140,150,160,170,190,210,230,250,270,280,300};
     std::vector<int> vec (arr, arr + sizeof(arr) / sizeof(arr[0]) );
 
     const int arr1[]={60,80,100,120};
@@ -316,7 +317,7 @@ void AdsbFromFile::LoadSendRandomNum(const std::vector<std::string> &file_names,
     }
 
     if(if1){
-      int nf1= this->RandSelectVec(vec1);
+      int nf1= this->RandSelectVec(vec);
       off1 = this->int2string(nf1);
     }
 
