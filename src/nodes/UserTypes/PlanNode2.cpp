@@ -61,6 +61,7 @@ namespace UasCode{
     seq_current= -1;
     seq_inter= 0;
     if_inter_gen= false;
+    if_gen_success = false;
     if_inter_exist= false;
     if_obss_update= false;
 
@@ -399,7 +400,8 @@ namespace UasCode{
               double dis_cz = std::abs(w_z-colli_return.z_colli);
               UASLOG(s_logger,LL_DEBUG,"colli dis:"<< dis_c2d <<" "<< dis_cz);
 
-              if(situ== NORMAL || situ== PATH_GEN){
+              if(situ== NORMAL || situ== PATH_GEN )
+              {
                   double c_lat, c_lon;
                   Utils::FromUTM(colli_return.x_colli,colli_return.y_colli,c_lon,c_lat);
                   colli_pt.lat = c_lat;
@@ -417,12 +419,11 @@ namespace UasCode{
                      << "rho:"<< rho << ' '
                      << "obs_r:"<< obs_r);
 
-              //if(dis_c2d < allow_dis && colli_return.seq_colli == seq_current+1)
-              //if(dis_c2d < allow_dis && dis_c2d > st_current.speed*1.0) //using 0.5 to delay reaction and maitain height differenct
               if(dis_c2d < allow_dis)
               {
-                 if(!if_inter_gen){
+                 if(!if_inter_gen && !if_gen_success){
                      UASLOG(s_logger,LL_DEBUG,"local avoidance");                  
+
                      if(dis_c2d < st_current.speed*1.0 || if_fail){
                          UASLOG(s_logger,LL_DEBUG,"local too close");
                          situ = NORMAL;
@@ -435,6 +436,7 @@ namespace UasCode{
                          {
                              if(!FlagWayPoints[i].flag){
                                  set_pt.seq = i+1;
+                                 UASLOG(s_logger,LL_DEBUG,"set_pt.seq:" << set_pt.seq);
                                  break;
                              }
                          }
@@ -463,7 +465,9 @@ namespace UasCode{
                          FlagWayPoints.insert(FlagWayPoints.begin()+set_pt.seq,UserStructs::MissionSimFlagPt(local_wp,true) );
                          if_inter_gen = true;
 
-                         if(situ== NORMAL || situ== PATH_GEN){
+                         if(situ == NORMAL
+                           || situ == PATH_GEN)
+                         {
                              situ= PATH_READY;
                          }
                      }
@@ -499,17 +503,17 @@ namespace UasCode{
           {
               //set start state and goal waypoint
               UASLOG(s_logger,LL_DEBUG,"planning");
+              if_gen_success = false;
               path_gen.SetInitState(st_current.SmallChange(t_limit));
               //get the start and goal for the sample
               int idx_end=0,idx_start = seq_current;//end and start of must go-through waypoint between current position and the goal
-              //this->seq_inter = colli_return.seq_colli;
 
               //set path goal
               for(int i= colli_return.seq_colli;i!= FlagWayPoints.size();++i)
               {
                   if(!FlagWayPoints[i].flag){
                       path_gen.SetGoalWp(FlagWayPoints[i].pt);
-                      double dis_goal= std::sqrt(pow(st_current.x-FlagWayPoints[i].pt.x,2)+pow(st_current.y-FlagWayPoints[i].pt.y,2));
+                      //double dis_goal= std::sqrt(pow(st_current.x-FlagWayPoints[i].pt.x,2)+pow(st_current.y-FlagWayPoints[i].pt.y,2));
                       //std::cout<<"dis_goal:"<< dis_goal<<"\n";
                       UASLOG(s_logger,LL_DEBUG,"flat i="<<" "<< i);
                       idx_end= i-1;
@@ -635,6 +639,7 @@ namespace UasCode{
                   FlagWayPoints.insert(FlagWayPoints.begin()+seq_inter,UserStructs::MissionSimFlagPt(inter_wp,true) );
                   situ= PATH_READY;
                   if_inter_gen= true;
+                  if_gen_success = true;
               }
               else{
                   UASLOG(s_logger,LL_DEBUG,"No waypoint, retry");

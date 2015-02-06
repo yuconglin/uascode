@@ -81,6 +81,7 @@ class PlanNode2{
 
    //flag to indicate if an inter wp was generated
    bool if_inter_gen;
+   bool if_gen_success;
    bool if_inter_exist;
    int seq_inter;
 

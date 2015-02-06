@@ -354,7 +354,7 @@ int NavigatorSim::PropWpCheck(UserStructs::PlaneStateSim& st_start,
              if( helpers->at(i).InSet(st_next)){
                  if(if_fail_print){
                      UASLOG(s_logger,LL_DEBUG,"fail diff:"
-                            << st_next.t - st_now.t);
+                            << st_next.t - st_start.t);
                      UASLOG(s_logger,LL_DEBUG,"st_inset: "
                             << std::setprecision(4) << std::fixed
                             << st_next.t << " "
