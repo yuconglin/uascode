@@ -419,59 +419,48 @@ namespace UasCode{
                      << "rho:"<< rho << ' '
                      << "obs_r:"<< obs_r);
 
+              if(set_pt.seq == seq_current-1 && if_gen_success){
+                  if_gen_success = false;
+              }
+
               if(dis_c2d < allow_dis)
               {
-                 if(!if_inter_gen && !if_gen_success){
-                     UASLOG(s_logger,LL_DEBUG,"local avoidance");                  
-                      /*
-                     if(dis_c2d < st_current.speed*1.0 || if_fail){
-                         UASLOG(s_logger,LL_DEBUG,"local too close");
-                         situ = NORMAL;
-                         if_inter_gen = false;
-                         */
-                     }
-                     else{
-                         UASLOG(s_logger,LL_DEBUG,"local distance ok");
-
-                         for(int i= colli_return.seq_colli-1;i!= 0;--i)
-                         {
-                             if(!FlagWayPoints[i].flag){
-                                 set_pt.seq = i+1;
-                                 UASLOG(s_logger,LL_DEBUG,"set_pt.seq:" << set_pt.seq);
-                                 break;
-                             }
-                         }
-
-                         if(colli_return.seq_colli==1)
-                             set_pt.seq = 1;
-
-                         set_pt.lat = colli_pt.lat;
-                         set_pt.lon = colli_pt.lon;
-                         set_pt.alt = obss[colli_return.obs_id].x3 + obss[colli_return.obs_id].v_vert*colli_return.time_colli + 1.5*obss[colli_return.obs_id].hr- home_alt;
-                         if(set_pt.alt < 0){
-                             set_pt.alt = 0;
-                         }
-
-                         if(FlagWayPoints[set_pt.seq].flag){
-                             if_inter_exist= true;
-                             FlagWayPoints.erase(FlagWayPoints.begin()+set_pt.seq);
-                         }
-                         else
-                             if_inter_exist= false;
-
-                         set_pt.inter_exist= if_inter_exist ? 1:0;
-
-                         UserStructs::MissionSimPt local_wp = UserStructs::MissionSimPt(set_pt.lat,set_pt.lon,set_pt.alt+home_alt,0,100,0,0,200,100,50);
-                         local_wp.GetUTM();
-                         FlagWayPoints.insert(FlagWayPoints.begin()+set_pt.seq,UserStructs::MissionSimFlagPt(local_wp,true) );
-                         if_inter_gen = true;
-
-                         if(situ == NORMAL
-                           || situ == PATH_GEN)
-                         {
-                             situ= PATH_READY;
+                  if(!if_inter_gen && !if_gen_success ){
+                     UASLOG(s_logger,LL_DEBUG,"local avoidance");                                    
+                     for(int i= colli_return.seq_colli-1;i!= 0;--i)
+                     {
+                         if(!FlagWayPoints[i].flag){
+                             set_pt.seq = i+1;
+                             UASLOG(s_logger,LL_DEBUG,"set_pt.seq:" << set_pt.seq);
+                             break;
                          }
                      }
+
+                     if(colli_return.seq_colli==1)
+                         set_pt.seq = 1;
+
+                     set_pt.lat = colli_pt.lat;
+                     set_pt.lon = colli_pt.lon;
+                     set_pt.alt = obss[colli_return.obs_id].x3 + obss[colli_return.obs_id].v_vert*colli_return.time_colli + 1.5*obss[colli_return.obs_id].hr- home_alt;
+                     if(set_pt.alt < 0){
+                         set_pt.alt = 0;
+                     }
+
+                     if(FlagWayPoints[set_pt.seq].flag){
+                         if_inter_exist= true;
+                         FlagWayPoints.erase(FlagWayPoints.begin()+set_pt.seq);
+                     }
+                     else
+                         if_inter_exist= false;
+
+                     set_pt.inter_exist= if_inter_exist ? 1:0;
+
+                     UserStructs::MissionSimPt local_wp = UserStructs::MissionSimPt(set_pt.lat,set_pt.lon,set_pt.alt+home_alt,0,100,0,0,200,100,50);
+                     local_wp.GetUTM();
+                     FlagWayPoints.insert(FlagWayPoints.begin()+set_pt.seq,UserStructs::MissionSimFlagPt(local_wp,true) );
+                     if_inter_gen = true;
+
+                     situ= PATH_READY;
                  }
               }
               else
@@ -660,7 +649,10 @@ namespace UasCode{
                   pub_interwp_flag.publish(set_pt);
               }
               else{
-                  UASLOG(s_logger,LL_DEBUG,"path sent");
+                  UASLOG(s_logger,LL_DEBUG,"path sent:"
+                         << set_pt.lat << ' '
+                         << set_pt.lon << ' '
+                         << set_pt.alt);
                   situ= NORMAL;
                   if_inter_gen= false;
               }

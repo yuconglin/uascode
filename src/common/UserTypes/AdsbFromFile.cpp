@@ -317,7 +317,7 @@ void AdsbFromFile::LoadSendRandomNum(const std::vector<std::string> &file_names,
     }
 
     if(if1){
-      int nf1= this->RandSelectVec(vec);
+      int nf1= this->RandSelectVec(vec1);
       off1 = this->int2string(nf1);
     }
 

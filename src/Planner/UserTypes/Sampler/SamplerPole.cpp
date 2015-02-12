@@ -214,8 +214,8 @@ namespace UserTypes{
            //UASLOG(s_logger,LL_DEBUG,"theta:"<< theta*180./M_PI);
            x_a= x0+ r*cos(theta)*cos(ga);
            y_a= y0+ r*sin(theta)*cos(ga);
-           //z_a= z0+ r*sin(ga);
-           z_a= goal_wp.alt;
+           z_a= z0;
+           //z_a= goal_wp.alt;
        }
        else if(sample_method==1)
        {
