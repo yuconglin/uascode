@@ -27,6 +27,11 @@ namespace UasCode {
      return GetSetPointsVh(t).InSetPt(x,y,z);
   }
 
+  bool ObsHelper::NoSet(const UserStructs::PlaneStateSim &state)
+  {
+     return reach_set.NoSetColli( state );
+  }
+
   void ObsHelper::CreateSetPoints()
   {
      sets.clear();

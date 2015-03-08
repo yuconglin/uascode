@@ -824,6 +824,7 @@ namespace UasCode{
       }
       //set helpers
       path_gen.NavSetHelpers(helpers);
+      path_gen.NavSetIfSet( false );
   }
 
   void PlanNode2::PrintSitu()

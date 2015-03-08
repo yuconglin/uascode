@@ -9,6 +9,7 @@
 #include <vector>
 #include <fstream>
 #include <iomanip>
+#include <stdexcept>
 
 namespace {
     Utils::LoggerPtr s_logger(Utils::getLogger("uascode.ReachabilitySets.YcLogger"));
@@ -85,6 +86,24 @@ namespace UasCode{
       //       << InSet(x,y) );
 
       return InSet(x,y) && z < h_high && z > h_low;
+  }
+
+  bool ReachabilitySet::NoSetColli(const UserStructs::PlaneStateSim &plane)
+  {
+      double t = plane.t;
+      if( t < t0 ){
+          throw std::runtime_error("ReableSet Negative Time");
+      }
+      double obs_x = x0 + spd * cos(hd)*(t-t0);
+      double obs_y = y0 + spd * sin(hd)*(t-t0);
+      double obs_z = z0 + vert * (t-t0);
+
+      if( fabs(obs_z-plane.z) > hr ||
+          sqrt(pow(obs_x-plane.x,2)+pow(obs_y-plane.y,2)) > r
+        )
+        return true;
+
+      return false;
   }
 
   void ReachabilitySet::OutputSet(const char *filename)

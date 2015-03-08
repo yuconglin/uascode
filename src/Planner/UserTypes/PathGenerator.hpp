@@ -49,6 +49,7 @@ class PathGenerator{
    void NavSetDt(double _dt);
    void NavSetSpeedTrim(double _trim);
    void NavSetHelpers(std::vector<ObsHelper>* _helpers);
+   void NavSetIfSet( bool _set );
 
    //about sampling
    void SetSampleParas();

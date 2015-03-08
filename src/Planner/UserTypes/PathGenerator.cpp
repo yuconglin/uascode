@@ -173,6 +173,12 @@ namespace UasCode{
     navigator.SetObsHelpers( _helpers );
   }
 
+  //set if use the reachable set
+  void PathGenerator::NavSetIfSet(bool _set)
+  {
+    navigator.SetIfSet( _set );
+  }
+
   //set sampler parameters based on st_start and goal_wp
   void PathGenerator::SetSampleParas()
   {

@@ -19,6 +19,7 @@ public:
 
     bool InSet(const UserStructs::PlaneStateSim& state);
     bool InSet3D(double t, double x, double y, double z);
+    bool NoSet(const UserStructs::PlaneStateSim& state);
 
 private:
     uint32_t address;

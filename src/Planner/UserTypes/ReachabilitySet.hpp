@@ -3,6 +3,7 @@
 #include "Planner/UserStructs/point2D.h"
 #include "Planner/UserStructs/obstacle3D.h"
 #include "Planner/UserStructs/SetPointsVh.h"
+#include "Planner/UserStructs/PlaneStateSim.h"
 #include <vector>
 
 namespace UasCode{
@@ -28,6 +29,7 @@ public:
 
     bool InSet( double x, double y );
     bool InSet3( double x, double y, double z);
+    bool NoSetColli( const UserStructs::PlaneStateSim &plane );
     void OutputSet( const char* filename );
     //get t0
     inline double Get_t0(){return this->t0;}

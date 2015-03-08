@@ -19,6 +19,7 @@ NavigatorSim::NavigatorSim(const char* act_name,const char* state_name){
   fs_act.open(act_name,std::ofstream::out | std::ofstream::in | std::ofstream::trunc);
   fs_state.clear();
   fs_state.open(state_name,std::ofstream::out | std::ofstream::in | std::ofstream::trunc);
+  if_set = false;
   speed_trim= 30;
   check_step= 457.2;//in meters = 1500 ft, the medius score separation
   N_inter= 5;
@@ -297,7 +298,8 @@ int NavigatorSim::PropWpCheck(UserStructs::PlaneStateSim& st_start,
     int Nec= 0;
 
     for(int i=0; i!= helpers->size(); ++i){
-       if( helpers->at(i).InSet(st_now)){
+       if( if_set && helpers->at(i).InSet(st_now)
+         ||!if_set && helpers->at(i).NoSet(st_now)){
            //result = -1;
            UASLOG(s_logger,LL_DEBUG,"initial dead");
            length = 0;
@@ -351,8 +353,9 @@ int NavigatorSim::PropWpCheck(UserStructs::PlaneStateSim& st_start,
           }
 
           for(int i=0; i!= helpers->size(); ++i){
-             if( helpers->at(i).InSet(st_next)){
-                 if(if_fail_print){
+             if( if_set && helpers->at(i).InSet(st_now)
+              ||!if_set && helpers->at(i).NoSet(st_now)){
+                   if(if_fail_print){
                      UASLOG(s_logger,LL_DEBUG,"fail diff:"
                             << st_next.t - st_start.t);
                      UASLOG(s_logger,LL_DEBUG,"st_inset: "
@@ -474,7 +477,8 @@ int NavigatorSim::PropWpCheckTime(UserStructs::PlaneStateSim& st_start,
           }*/
 
           for(int i=0; i!= helpers->size(); ++i){
-             if( helpers->at(i).InSet(st_next)){
+             if( if_set && helpers->at(i).InSet(st_now)
+              ||!if_set && helpers->at(i).NoSet(st_now)){
                  result = -1;
                  obs_idx = i;
                  break;
