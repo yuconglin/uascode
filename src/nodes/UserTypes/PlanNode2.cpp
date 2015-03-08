@@ -796,16 +796,21 @@ namespace UasCode{
                << st_current.pitch*180./M_PI);
 
         if(traj_log.is_open() ){
+            UASLOG(s_logger,LL_DEBUG,"traj_log open");
             traj_log << std::setprecision(6) << std::fixed
+                     << seq_current << " "
                      << st_current.t<< " "
-                     << st_current.lat<< " "
-                     << st_current.lon<< " "
-                     << st_current.x<< " "
-                     << st_current.y<< " "
-                     << st_current.z<< " "
+                     //<< st_current.lat<< " "
+                     //<< st_current.lon<< " "
+                     //<< st_current.x<< " "
+                     //<< st_current.y<< " "
+                     //<< st_current.z<< " "
                      << st_current.speed<< " "
                      << st_current.yaw<< " "
-                     << st_current.pitch
+                     << st_current.pitch << " "
+                     << accel_xyz.ax << " "
+                     << accel_xyz.ay << " "
+                     << accel_xyz.az
                      << "\n";
         }//
 
@@ -824,7 +829,7 @@ namespace UasCode{
       }
       //set helpers
       path_gen.NavSetHelpers(helpers);
-      path_gen.NavSetIfSet( false );
+      path_gen.NavSetIfSet( true );
   }
 
   void PlanNode2::PrintSitu()
