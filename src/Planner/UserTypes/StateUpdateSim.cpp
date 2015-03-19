@@ -75,13 +75,10 @@ namespace UasCode{
       speed1= Utils::math::constrain(speed1,min_speed,max_speed);
 
       double avg_speed= 0.5*(st_pre.speed+speed1);
-      //std::cout<<"avg_speed: "<< avg_speed<< std::endl;
       double z1= st_pre.z+ avg_speed*sin(avg_pitch)*dt;
       //angular acceleration by lateral accel
       double K_yaw= 1.0;
-      //double lateral= CONSTANT_G*tan(nav_roll);
       //pay attention to direction
-      //double omega= Utils::math::sgn(lateral)/avg_speed;
       double omega= L*sin(nav_roll)/( Muav*avg_speed*cos(avg_pitch) );
       //now let's include dem_yaw
       double u_yaw= Utils::_wrap_pi(M_PI/2.-st_pre.yaw); 

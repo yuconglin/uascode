@@ -7,7 +7,7 @@ namespace Utils{
  {
    const clock_t begin_time = clock();
    //first make sure that length is ok for status byte
-   int bytes_len= 84, msg_id=60;
+   int bytes_len= 84;
    if(len!=bytes_len) return 1;
    //first detect 0X7E (dec 126) the flag
    int idx,id0;
@@ -111,4 +111,4 @@ namespace Utils{
    return 0;
  }//StatusDecode ends
 
-};//namespace ends
+}//namespace ends

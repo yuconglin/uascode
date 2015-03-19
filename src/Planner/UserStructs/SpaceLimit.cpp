@@ -50,7 +50,6 @@ void SpaceLimit::LoadGeoFence(const char* filename)
         iss >> lat >> lon;
         Utils::ToUTM(lon,lat,x,y);
         vertex.push_back(UserStructs::point2D(x,y) );
-        //std::cout<<x<<" "<<y<< std::endl;
     } //while ends
 
     UASLOG(s_logger,LL_DEBUG,"load geofence done");

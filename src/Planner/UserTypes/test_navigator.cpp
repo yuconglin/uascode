@@ -15,7 +15,6 @@ int main(int argc,char** argv)
   //parameters
   //double _Tmax= 12.49*CONSTANT_G;
   double _Tmax= 6.79*CONSTANT_G;
-  //double _Muav= 29.2; //kg
   double _Muav= 0.453592*13;
   double myaw_rate= 20./180*M_PI;
   double mpitch_rate= 10./180*M_PI;
@@ -25,7 +24,6 @@ int main(int argc,char** argv)
   double _min_pitch= -20./180*M_PI;
 
   double dt= 1.0;
-  //double _speed_trim= 0.5*(_max_speed+_min_speed);
   double _speed_trim= _max_speed;
   //the start id of waypoint
   int des_id= atoi(argv[1]);
@@ -133,7 +131,4 @@ int main(int argc,char** argv)
   //navigator.PropagateStep(st,st_end,pt_A,Pt);
   //go to the waypoint: between two normal waypoints
   int result= navigator.PropagateWp(st,st_end,pt_A,Pt);
-  //go to the first waypoint
-  //int result= navigator.PropagateWpInit(st,st_end,Pt);
-  std::cout<< "result: "<< result<< std::endl;
 }

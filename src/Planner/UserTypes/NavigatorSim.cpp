@@ -467,15 +467,6 @@ int NavigatorSim::PropWpCheckTime(UserStructs::PlaneStateSim& st_start,
 
       //if( (int)(length/check_step) > Nec )
       {
-          /*
-          for(int i=0;i!= obstacles.size();++i){
-              if(Utils::CheckCollision2(st_next,obstacles[i],thres_ratio)==1){
-                  result = -1;
-                  obs_idx= i;
-                  break;
-              }
-          }*/
-
           for(int i=0; i!= helpers->size(); ++i){
              if( if_set && helpers->at(i).InSet(st_now)
               ||!if_set && helpers->at(i).NoSet(st_now)){

@@ -23,7 +23,6 @@ namespace UserTypes{
       double Dy= y_goal-y_root;
       double Dz= z_goal-z_root;
       double r0= sqrt(Dx*Dx+Dy*Dy);
-      //ga0= atan2(Dz,r0);
       ga0= 0.;
 
       x0= x_root;
@@ -54,8 +53,6 @@ namespace UserTypes{
       //transform
       x_a= x0+ xc*cos(theta)- yc*sin(theta);
       y_a= y0+ xc*sin(theta)+ yc*cos(theta);
-      //x_a= x0+xc;
-      //y_a= y0+yc;
       double x_r= st.x; 
       double y_r= st.y;
       double z_r= st.z;

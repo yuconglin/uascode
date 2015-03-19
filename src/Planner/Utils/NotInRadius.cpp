@@ -15,7 +15,7 @@ namespace Utils{
      arma::vec::fixed<2> X;
      X << x1 << x2;
      arma::mat::fixed<2,2> P;
-     //double the = host.theta;
+
      P << cos(the_h) << sin(the_h) << arma::endr
        << -sin(the_h) << cos(the_h) << arma::endr;
      //rotated to 0 angle
@@ -24,7 +24,7 @@ namespace Utils{
      x2 = X(1);
      double r1 = sqrt( x1*x1 + pow(x2-rho,2) );
      double r2 = sqrt( x2*x2 + pow(x2+rho,2) );
-     //std::cout<<"r1: "<<r1<<" r2: "<<r2<<std::endl;
+
      if( r1>rho && r2>rho ) return true;
      
      UASLOG(s_logger,LL_DEBUG,"r1:"<< r1<<" "

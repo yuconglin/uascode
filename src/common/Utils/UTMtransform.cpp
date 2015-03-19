@@ -14,8 +14,6 @@ void ToUTM( double lon, double lat, double& x, double& y )
      bool northp;
      double gamma, k;
      UTMUPS::Forward(lat, lon, zone, northp, x, y, gamma, k);
-     //x = x / 1000.;
-     //y = y / 1000.;
 }
 
 void FromUTM( double x, double y, double& lon, double& lat)
@@ -24,8 +22,6 @@ void FromUTM( double x, double y, double& lon, double& lat)
      int zone;
      bool northp;
      UTMUPS::DecodeZone(zonestr, zone, northp);
-     //x = x * 1000;
-     //y = y * 1000;
      UTMUPS::Reverse(zone, northp, x, y, lat, lon);
 }
 

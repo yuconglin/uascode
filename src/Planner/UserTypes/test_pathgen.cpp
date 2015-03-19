@@ -144,18 +144,6 @@ int main(int argc, char** argv)
 	  << st_inter.az<<" "
 	  << std::endl;
 
-    /* 
-    fs_two<< inter_wp.lat<<" "
-          << inter_wp.lon<<" "
-	  << inter_wp.alt<<" "
-	  << inter_wp.yaw<<" "
-	  << inter_wp.r<<" "
-	  << inter_wp.x<<" "
-	  << inter_wp.y<<" "
-	  << inter_wp.h_rec<<" "
-	  << inter_wp.v_rec<<" "
-	  << inter_wp.alt_rec
-	  << std::endl;*/
     fs_two<< pt.lat<<" "
           << pt.lon<<" "
           << pt.alt<<" "

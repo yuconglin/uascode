@@ -82,9 +82,6 @@ namespace UasCode{
 
   bool ReachabilitySet::InSet3(double x, double y, double z)
   {
-      //UASLOG(s_logger,LL_DEBUG,"in 2d ?"
-      //       << InSet(x,y) );
-
       return InSet(x,y) && z < h_high && z > h_low;
   }
 
@@ -132,27 +129,22 @@ namespace UasCode{
   }
 
   double ReachabilitySet::x3(double the, double t){
-    //return -rho*(1-cos(omiga*t))+r*sin(the);
     return -rho*(1-cos(up_the)) - (spd*t-rho*up_the)*sin(up_the) + r*sin(the);
   }
 
   double ReachabilitySet::y3(double the, double t){
-    //return rho*sin(omiga*t)+r*cos(the);
     return rho*sin(up_the) + (spd*t-rho*up_the)*cos(up_the) + r*cos(the);
   }
 
   double ReachabilitySet::x4(double the, double t){
-    //return rho*(1-cos(omiga*t))+r*sin(the);
     return rho*(1-cos(up_the)) + (spd*t-rho*up_the)*sin(up_the) + r*sin(the);
   }
 
   double ReachabilitySet::y4(double the, double t){
-    //return rho*sin(omiga*t)+r*cos(the);
     return rho*sin(up_the) + (spd*t-rho*up_the)*cos(up_the) + r*cos(the);
   }
 
   double ReachabilitySet::x(double the, double t){
-    //y-axis or north is zero degree direction
     assert( -M_PI <= the && the <= M_PI);
     double xs;
     if(up_the <= M_PI){
@@ -181,7 +173,6 @@ namespace UasCode{
   }
 
   double ReachabilitySet::y(double the, double t){
-    //y-axis or north is zero degree direction
     assert( -M_PI <= the && the <= M_PI);
     double ys;
     if(up_the <= M_PI){

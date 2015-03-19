@@ -45,7 +45,6 @@ namespace UasCode{
   float L1ControlSim::nav_roll()
   {
 	float ret = atanf(_lateral_accel * 1.0f / CONSTANT_G);
-	//ret = Utils::math::constrain(ret, -_roll_lim_rad, _roll_lim_rad);
 	ret = Utils::math::constrain(ret, -M_PI/2, M_PI/2);
 	return ret;
   }
@@ -140,7 +139,6 @@ namespace UasCode{
 	   * switched to manual mode (or otherwise misses the waypoint)
 	   * and behind the waypoint continues to follow the AB line.
 	   */
-          //std::cout<<"case1"<< std::endl;
 	  /* calculate eta to fly to waypoint B */
 	  
 	  /* velocity across / orthogonal to line */
@@ -152,7 +150,6 @@ namespace UasCode{
 	  _nav_bearing = atan2f(-vector_B_to_P_unit(1) , -vector_B_to_P_unit(0) );
 
   } else {
-          //std::cout<<"case2"<< std::endl;
 	  /* calculate eta to fly along the line between A and B */
 
 	  /* velocity across / orthogonal to line */

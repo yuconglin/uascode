@@ -45,7 +45,6 @@ namespace UasCode{
 	    _SKEdot(0.0f),
 	    _airspeed_enabled(false),
 	    _throttle_slewrate(100.0f)
-	    //if_start(false)
   {
        //assign parameter name table
        name_map["FW_T_TIME_CONST"]= &_timeConst;
@@ -68,9 +67,6 @@ namespace UasCode{
        name_map["FW_THR_MIN"]= &throttle_min;
        name_map["FW_THR_MAX"]= &throttle_max;
        name_map["FW_THR_CRUISE"]= &throttle_cruise;
-       //name_map["FW_P_LIM_MIN"]= &pitch_limit_min;
-       //name_map["FW_P_LIM_MAX"]= &pitch_limit_max;
-      // name_map["FW_AIRSPD_TRIM"]= &airspeed_trim;
        t_inc= 0.;
        _update_50hz_last_sec= 0.;
        _update_speed_last_sec= 0.;
@@ -83,12 +79,7 @@ namespace UasCode{
     //calculate time in secs since last update
     //std::cout<<"t_inc: "<< t_inc<< std::endl;
     double now= Utils::GetTimeNow();
-    //now+= t_inc;
-    //std::cout<<"now: "<< now << std::endl;
     double DT= std::max((now- _update_50hz_last_sec),0.)+ t_inc;
-    
-    //std::cout<<"DT: "<< DT<< std::endl;
-
     if(DT>1.0f){
       _integ3_state= baro_altitude;
       _integ2_state= 0.0f;
@@ -179,8 +170,6 @@ namespace UasCode{
     _integ5_state = _integ5_state + integ5_input * DT;
     // limit the airspeed to a minimum of 3 m/s
     _integ5_state = std::max(_integ5_state, 3.0f);
-    //std::cout<<"update_speed"<< std::endl;
-    //std::cout<<"_integ5_state: "<<_integ5_state<< std::endl;
   }
  
   void TECsSim::_update_speed_demand(void)
@@ -208,18 +197,9 @@ namespace UasCode{
         _TAS_dem_adj = _TAS_dem;
         _TAS_rate_dem = (_TAS_dem - _TAS_dem_last) / _DT;
     } 
-    /*
-    _TAS_dem= Utils::math::constrain(_TAS_dem,_TASmin,_TASmax);
-    _TAS_dem_adj = _TAS_dem;
-
-    _TAS_rate_dem = (_TAS_dem_adj-_integ5_state)*_speedrate_p; 
-    */
     //xxx: using a p loop for now
     // Constrain speed demand again to protect against bad values on initialisation.
     _TAS_dem_adj = Utils::math::constrain(_TAS_dem_adj, _TASmin, _TASmax);
-    //std::cout<<"_TAS_dem_adj: "<< _TAS_dem_adj << std::endl;
-    //std::cout<<"velRateMax: "<< velRateMax
-    //    <<" velRateMin: "<< velRateMin << std::endl;
     _TAS_dem_last = _TAS_dem;
   }
 
@@ -234,29 +214,6 @@ namespace UasCode{
     } else if (_hgt_rate_dem < -_maxSinkRate) {
 	    _hgt_rate_dem = -_maxSinkRate;
     } 
-    //std::cout << "_hgt_dem_adj: "<< _hgt_dem_adj 
-    //	    <<" state: " << state << std::endl;
-    /*
-    _hgt_dem = demand;
-    _hgt_dem = 0.5f * (_hgt_dem + _hgt_dem_in_old);
-    _hgt_dem_in_old = _hgt_dem;
-
-// Limit height rate of change
-    if ((_hgt_dem - _hgt_dem_prev) > (_maxClimbRate * _DT))
-{
-    _hgt_dem = _hgt_dem_prev + _maxClimbRate * _DT;
-}
-else if ((_hgt_dem - _hgt_dem_prev) < (-_maxSinkRate * _DT))
-{
-    _hgt_dem = _hgt_dem_prev - _maxSinkRate * _DT;
-}
-_hgt_dem_prev = _hgt_dem;
-
-    // Apply first order lag to height demand
-    _hgt_dem_adj = 0.05f * _hgt_dem + 0.95f * _hgt_dem_adj_last;
-    _hgt_rate_dem = (_hgt_dem_adj - _hgt_dem_adj_last) / _DT;
-    _hgt_dem_adj_last = _hgt_dem_adj;
-   */
   }
 
   void TECsSim::_detect_underspeed(void)
@@ -275,23 +232,20 @@ _hgt_dem_prev = _hgt_dem;
 
   void TECsSim::_update_energies(void)
   {
-   // std::cout<<"_update_energies"<< std::endl;
+
     // Calculate specific energy demands
     _SPE_dem = _hgt_dem_adj * CONSTANT_G;
     _SKE_dem = 0.5f * _TAS_dem_adj * _TAS_dem_adj;
-    //std::cout<<"_SPE_dem: "<< _SPE_dem << std::endl;
-    //std::cout<<"_SKE_dem: "<< _SKE_dem << std::endl;
+
     // Calculate specific energy rate demands
     _SPEdot_dem = _hgt_rate_dem * CONSTANT_G;
     _SKEdot_dem = _integ5_state * _TAS_rate_dem;
-    //std::cout<<"_SPEdot_dem: "<< _SPEdot_dem << std::endl;
-    //std::cout<<"_SKEdot_dem: "<< _SKEdot_dem << std::endl;
+
     // Calculate specific energy
     //std::cout<<"_integ3_state: "<< _integ3_state<< std::endl;
     _SPE_est = _integ3_state * CONSTANT_G;
     _SKE_est = 0.5f * _integ5_state * _integ5_state;
-    //std::cout<<"_SPE_est: "<< _SPE_est << std::endl;
-    //std::cout<<"_SKE_est: "<< _SKE_est << std::endl;
+
     // Calculate specific energy rate
     _SPEdot = _integ2_state * CONSTANT_G;
     _SKEdot = _integ5_state * _vel_dot;
@@ -303,7 +257,7 @@ _hgt_dem_prev = _hgt_dem;
     // Calculate total energy values
     _STE_error = _SPE_dem - _SPE_est + _SKE_dem - _SKE_est;
     float STEdot_dem = Utils::math::constrain((_SPEdot_dem + _SKEdot_dem), _STEdot_min, _STEdot_max);
-    //std::cout<<"STEdot_dem: "<<STEdot_dem<<" _STEdot_min: "<<_STEdot_min<<" _STEdot_max: "<< _STEdot_max<< std::endl;
+
     float STEdot_error = STEdot_dem - _SPEdot - _SKEdot;
 
     // Apply 0.5 second first order filter to STEdot_error
@@ -325,16 +279,7 @@ _hgt_dem_prev = _hgt_dem;
       // drag increase during turns.
       //float cosPhi = sqrtf((rotMat(0, 1) * rotMat(0, 1)) + (rotMat(1, 1) * rotMat(1, 1)));
       STEdot_dem = STEdot_dem + _rollComp * (1.0f / Utils::math::constrain(fabs( cos(yaw) ) , 0.1f, 1.0f) - 1.0f);
-      /*
-      if (STEdot_dem >= 0) {
-	      ff_throttle = nomThr + STEdot_dem / _STEdot_max * (1.0f - nomThr);
-
-      } else {
-	      ff_throttle = nomThr - STEdot_dem / _STEdot_min * nomThr;
-      }*/
       ff_throttle = nomThr + STEdot_dem / (_STEdot_max - _STEdot_min) * (_THRmaxf - _THRminf);
-
-      //std::cout<< "ff_throttle: "<< ff_throttle<< std::endl;
       // Calculate PD + FF throttle
       _throttle_dem = (_STE_error + STEdot_error * _thrDamp) * K_STE2Thr + ff_throttle;
 
@@ -383,7 +328,6 @@ _hgt_dem_prev = _hgt_dem;
   void TECsSim::_update_pitch(void)
   {
     float SKE_weighting = Utils::math::constrain(_spdWeight, 0.0f, 2.0f);
-    //std::cout<<"SKE_weighting: "<< SKE_weighting << std::endl;
     if ((_underspeed || _climbOutDem) && airspeed_sensor_enabled()) {
 	    SKE_weighting = 2.0f;
 
@@ -397,50 +341,37 @@ _hgt_dem_prev = _hgt_dem;
     float SEBdot_dem   = _SPEdot_dem * SPE_weighting - _SKEdot_dem * SKE_weighting;
     float SEB_error    = SEB_dem - (_SPE_est * SPE_weighting - _SKE_est * SKE_weighting);
     float SEBdot_error = SEBdot_dem - (_SPEdot * SPE_weighting - _SKEdot * SKE_weighting);
-    
-    //std::cout<<"_SPE_est: "<< _SPE_est <<" _SKE_est: "<< _SKE_est << std::endl;
-
-    //std::cout<<" SEB_dem: "<< SEB_dem
-    //         <<" SEBdot_dem: "<< SEBdot_dem
-    //	     <<" SEB_error: "<< SEB_error
-    // 	     <<" SEBdot_error: "<< SEBdot_error << std::endl;
-    // Calculate integrator state, constraining input if pitch limits are exceeded
     float integ7_input = SEB_error * _integGain;
-    //std::cout<<"integ7_input: "<< integ7_input << std::endl;
+
     if (_pitch_dem_unc > _PITCHmaxf) {
 	    integ7_input = std::min(integ7_input, _PITCHmaxf - _pitch_dem_unc);
 
     } else if (_pitch_dem_unc < _PITCHminf) {
 	    integ7_input = std::max(integ7_input, _PITCHminf - _pitch_dem_unc);
     }
-    
-    //std::cout<<"pre _integ7_state:"<< _integ7_state<< std::endl;
 
-    //std::cout<<"integ7_input: "<< integ7_input<< std::endl;
-    //std::cout<<"_DT: "<< _DT<< std::endl;
     _integ7_state = _integ7_state + integ7_input * _DT;
     
     float gainInv = (_integ5_state * _timeConst * CONSTANT_G);
-    //std::cout<<"gainInv: "<< gainInv << std::endl;
+
     float temp = SEB_error + SEBdot_error * _ptchDamp + SEBdot_dem * _timeConst;
     if (_climbOutDem)
     {
 	    temp += _PITCHminf * gainInv;
     }
-    //std::cout<<"pre _integ7_state:"<< _integ7_state<< std::endl;
+
     _integ7_state = Utils::math::constrain(_integ7_state, (gainInv * (_PITCHminf - 0.0783f)) - temp, (gainInv * (_PITCHmaxf + 0.0783f)) - temp);
 
     // Calculate pitch demand from specific energy balance signals
-    //UASLOG(s_logger,LL_DEBUG," temp: "<< temp<<" _integ7_state: "<< _integ7_state);
+
     _pitch_dem_unc = (temp + _integ7_state) / gainInv;
-    //UASLOG(s_logger,LL_DEBUG,"_pitch_dem_nuc: "<< _pitch_dem_unc*180/M_PI);
+
     // Constrain pitch demand
-    //UASLOG(s_logger,LL_DEBUG,"_PITCHminf: "<< _PITCHminf<<" _PITCHmaxf: "<< _PITCHmaxf);
+
     _pitch_dem = Utils::math::constrain(_pitch_dem_unc, _PITCHminf, _PITCHmaxf);
         // Rate limit the pitch demand to comply with specified vertical
     // acceleration limit
-    //float ptchRateIncr = _DT * std::min(_vertAccLim / _integ5_state, mpitch_rate);
-    //_vertAccLim= 1.0;
+
     float ptchRateIncr = _DT *_vertAccLim / _integ5_state;
 
     if ((_pitch_dem - _last_pitch_dem) > ptchRateIncr) {
@@ -503,11 +434,9 @@ void TECsSim::update_pitch_throttle(float pitch, float yaw,float baro_altitude, 
  {
    // calculate time in sec since last update
    double now= Utils::GetTimeNow();
-   //std::cout<<"t_inc: "<< t_inc<< std::endl;
-   //std::cout<<"now: "<< now<<" "
-   //    <<"last_sec: "<< _update_pitch_throttle_last_sec<< std::endl;
+
    _DT= std::max((now-_update_pitch_throttle_last_sec),0.)+ t_inc;
-   //std::cout<<"_DT: "<< _DT<< std::endl;
+
    _update_pitch_throttle_last_sec = now;
 
    // Update the speed estimate using a 2nd order complementary filter
@@ -566,7 +495,6 @@ void TECsSim::update_pitch_throttle(float pitch, float yaw,float baro_altitude, 
             if(it!=name_map.end())
             {
                 *(it->second)= value;
-                //std::cout<< it->first<<" "<< *(it->second)<<std::endl;
             }
 
         }//while ends

@@ -51,16 +51,13 @@ void *get_in_addr(struct sockaddr *sa)
      unsigned char buf[BUFFER]; /* receive buffer */
      char s[INET6_ADDRSTRLEN];
      int recvlen = recvfrom(fd, buf, BUFFER, 0, (struct sockaddr *)&remaddr, &addrlen);
-     //printf("listener: got packet from %s\n",inet_ntop(remaddr.sin_family,get_in_addr((struct sockaddr *)&remaddr),s, sizeof s));
 
      //mavlink decode
      mavlink_status_t status;
      uint8_t msgReceived = false;
      if(recvlen>0){
-      //printf("recvlen:%d\n",recvlen);
       for(int i=0;i!=recvlen;++i){
         msgReceived = mavlink_parse_char(MAVLINK_COMM_1,buf[i],&message,&status);
-	//if(msgReceived) handle_message(&message);
       }
      }//if recvlen > 0 ends
      return msgReceived;

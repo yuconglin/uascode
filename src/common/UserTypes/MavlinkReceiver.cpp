@@ -101,8 +101,6 @@ namespace UasCode{
   	mavlink_status_t lastStatus;
 	lastStatus.packet_rx_drop_count = 0;
         // Blocking wait for new data
-	//while (1)
-	//ros::Rate r(10);
         while(ros::ok() )
 	{
 	    //std::cout<<"ros while"<< std::endl;  
@@ -121,13 +119,9 @@ namespace UasCode{
 	    // If a message could be decoded, handle it
 	    if(msgReceived)
 	    {
-		    handle_message(&message);
-		    //switch (message.msgid)
-		    //{
-		    //}
+            handle_message(&message);
 	    }
 	    ros::spinOnce();
-	    //r.sleep();
 	}
 	return 0;
    
@@ -146,8 +140,6 @@ namespace UasCode{
 	break;
       
       case MAVLINK_MSG_ID_GLOBAL_POSITION_INT:
-	//waiting for experiments
-	//we may also need a message to judge the hil
 	handle_message_global_pos(msg);
 	break;
 
@@ -242,4 +234,4 @@ namespace UasCode{
     pub_goal.publish(pos_msg);
   }
 
-};//namespace ends
+}//namespace ends

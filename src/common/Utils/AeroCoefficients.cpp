@@ -2,10 +2,6 @@
 #include <cmath>
 namespace Utils{
   double CL_Lift(double x){
-                                 //  -0.2000	-0.7500
-                                 //   0.0000	0.2500
-                                 //   0.2300	1.4000
-                                 //   0.6000	0.7100
       double cl;
       if(x <= 0){
           cl = 5*(x+0.2)-0.75;
@@ -20,11 +16,6 @@ namespace Utils{
   }
 
   double CD0_Drag0Lift(double x){
-      //-1.5700	1.5000
-      //-0.2600	0.0560
-      // 0.0000	0.0280
-      // 0.2600	0.0560
-      // 1.5700	1.5000
       double abs_x = std::abs(x);
       double cd0 = 0;
       if(abs_x >= 0 && abs_x <= 0.26){

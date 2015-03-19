@@ -1,7 +1,6 @@
 #pragma once
 //for ros
 #include "ros/ros.h"
-//#include "uascode/PosSetPoint.h"
 #include "yc_common/mavlink.h"
 
 namespace UasCode{

@@ -31,16 +31,12 @@ namespace Utils{
      uint8_t B2= buf[idx];
      msg.UTC_OK= B2 & 0x01;
      uint32_t timestamp= (B2>>7) & 0x01;
-     //std::cout<<"stamp1: "<< timestamp<< std::endl;
      //byte 3 and 4
      idx= id0+3;
      //LS byte first
      timestamp = (timestamp<<8) + buf[idx+1];
-     //std::cout<<"stamp2: "<< timestamp<<" buf2: "<< (int)buf[idx+1]<< std::endl;
      timestamp = (timestamp<<8) + buf[idx];
-     //std::cout<<"stamp3: "<< timestamp<<" buf1: "<< (int)buf[idx]<< std::endl;
      msg.TimeStamp= timestamp;
-     //std::cout<<"TimeStamp: "<< msg.TimeStamp<< std::endl;
      return 0;
    }//HeartDecode ends
 };

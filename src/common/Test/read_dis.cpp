@@ -57,7 +57,6 @@ int main(int argc,char** argv)
 
 }
 
-//TwoDis MinDis(const std::vector<TwoDis>& vec_dis)
 void MinDis(const std::vector<TwoDis>& vec_dis, std::vector<TwoDis>& vec_result)
 {
    TwoDis min_dis(DBL_MAX,DBL_MAX,0);
@@ -77,7 +76,6 @@ void MinDis(const std::vector<TwoDis>& vec_dis, std::vector<TwoDis>& vec_result)
           vec_result[1]= vec_dis[i];
       }
    }
-   //return min_dis;
 }
 
 void MinDis2(const std::vector<TwoDis> &vec_dis, TwoDis &vec_result)

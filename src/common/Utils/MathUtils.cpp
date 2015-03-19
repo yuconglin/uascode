@@ -5,9 +5,6 @@ namespace Utils{
     float constrain(float val, float min, float max)
     {
 	return (val < min) ? min : ((val > max) ? max : val);
-	//if(val< min) return min;
-	//else if(val>max) return max;
-	//else return val;
     }
 
     int sgn(double num)

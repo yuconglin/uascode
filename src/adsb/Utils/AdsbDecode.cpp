@@ -30,7 +30,6 @@ namespace Utils{
    uint8_t PX= buf[idx];
    msg.p= (PX>>4) & 0x0F;
    msg.x= PX & 0x0F;
-   //if(msg.x== 3) return 1090; 
    idx= id0+ 1;
    uint8_t ST= buf[idx];
    msg.alert= (ST>>4)&0x0F;
@@ -39,11 +38,11 @@ namespace Utils{
    idx= id0+2;
    uint32_t addr =0;
    addr= buf[idx];
-   //std::cout<<"addr1: "<< addr<< std::endl;
+
    addr= (addr << 8) + buf[idx+1];
-   //std::cout<<"addr2: "<< addr<< std::endl;
+
    addr= (addr << 8) + buf[idx+2];
-   //std::cout<<"addr3: "<< addr<< std::endl;
+
    msg.address= addr;
    //bytes ll ll ll for latitude
    idx= id0+5;
@@ -52,7 +51,7 @@ namespace Utils{
    latl= (latl<<8)+buf[idx+1];
    latl= (latl<<8)+buf[idx+2];
    //if negative
-   //if( (buf[idx]>>7)&0x01==1 ) latl= ~latl+1;  
+
    msg.latitude= 180./pow(2,23)* latl;
    //bytes nn nn nn for longitude
    idx= id0+8;
@@ -60,8 +59,6 @@ namespace Utils{
    lonl= buf[idx];
    lonl= (lonl<<8)+buf[idx+1];
    lonl= (lonl<<8)+buf[idx+2];
-   //if negative
-   //if( (buf[idx]>>7)&0x01==1 ) lonl= ~lonl+1; 
    msg.longitude= 180./pow(2,23)* lonl -360.0;
    //next two byte contains ddd and m
    idx= id0+11;
@@ -72,9 +69,9 @@ namespace Utils{
    ddd= DD;
    uint16_t d= (DM>>4) & 0X0F;
    uint16_t d1= ddd<<4;
-   //std::cout<<"dd: "<<ddd<<" d:"<<d<<" d1: "<<d1<< std::endl;
+
    ddd= (ddd<<4) + ((DM>>4) & 0x0F);
-   //std::cout<<"after add: ddd: "<< ddd << std::endl;
+
    msg.altitude = ddd*25-1000;
    //next byte contain i a
    idx= id0+13;

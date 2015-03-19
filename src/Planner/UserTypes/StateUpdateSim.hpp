@@ -25,17 +25,13 @@ class StateUpdateSim{
    inline double GetMaxYawRate(){return this->myaw_rate;}
    inline double GetMaxPitch(){return max_pitch;}
    inline double GetMaxSpeed(){return max_speed;}
-   //inline void SetVertAccLim(double _acc){_vertAccLim= _acc;}
-   //void GetAccLim(double _hgt){ mpitch_rate= 
 
   private:
    double Tmax;
    double mpitch_rate;
    double myaw_rate;
    double Muav;//UAV's mass 
-   //parameters readable
-   //double _vertAccLim;
-   //parameters limit
+
    double max_speed;
    double min_speed;
    double max_pitch;

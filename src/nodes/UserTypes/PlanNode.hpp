@@ -32,7 +32,6 @@ class PlanNode{
    //constructor not defined yet
    PlanNode();
 
-   //inline void SetTimeLimit(const double _t_limit){t_limit= _t_limit;}
    void SetTimeLimit(const double _t_limit);
    inline void SetWpR(const double _r){this->wp_r= _r;}
    inline void SetHomeAlt(const double _alt){home_alt= _alt; }

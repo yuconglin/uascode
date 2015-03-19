@@ -40,10 +40,8 @@ int main(int argc,char** argv)
 
   if(if_send){
     monitor.SetMavlinkSend(true);
-    //monitor.UartInit(uart_name,baudrate);
     monitor.PortSetUp();
   }
-  //if(!monitor.PortInit() ) return -1;
   monitor.BytesDecode();
   return 0;
 }

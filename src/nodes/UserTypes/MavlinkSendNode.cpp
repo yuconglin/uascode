@@ -33,18 +33,10 @@ void MavlinkSendNode::working()
 {
   while(ros::ok())
   {
-     //this->if_to_send = false;
-     //SetDefault();
      ros::spinOnce();
 
      if(!if_receive)
      {
-        /*
-        UASLOG(s_logger,LL_DEBUG,"received wp: "
-               << lat_s << " "
-               << lon_s << " "
-               << alt_s);
-        */
         if(send_pos_method==0)
           sender.SendPosSP(lat_s,lon_s,alt_s);
 
@@ -60,7 +52,6 @@ void MavlinkSendNode::working()
      if(if_colli!= -1)
         sender.SendIfColli(if_colli);
 
-     //sender.SendMultiObs(obss);
      sender.SendMultiObs3(obss);
 
      if(wp_num!=0)

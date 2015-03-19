@@ -42,7 +42,6 @@ int main(int argc, char** argv)
                >> obs.speed
                >> obs.v_vert
                >> obs.t >> obs.r >> obs.hr;
-        //obs.head_xy= obs.head_xy*M_PI/180.;
         //see if extropolate is needed
         if(line_count> 0 && obs.t - obs_pre.t > 1.0){
             int cnt = (int)(obs.t-obs_pre.t);
@@ -103,14 +102,12 @@ int main(int argc, char** argv)
             if(if_repeat){
                 cnt1= count+1;
                 if_repeat= false;
-                //std::cout<<"cnt:"<< cnt<<","<<"cnt1:"<< cnt1<< "\n";
                 IntroPolate(obs_vec,cnt,cnt1);
             }
         }
         ++count;
     }
 
-    //size()-1 for the zero line at the bottom
     for(int i=0;i!=obs_vec.size();++i){
         UserStructs::obstacle3D obs= obs_vec[i];
         fw_obs << obs.address << " "
@@ -135,8 +132,6 @@ void IntroPolate(std::vector<UserStructs::obstacle3D>& obs_vec,int cnt0,int cnt1
     UserStructs::obstacle3D obs0= obs_vec[cnt0];
     UserStructs::obstacle3D obs1= obs_vec[cnt1];
     int num= cnt1-cnt0;
-    //double spd = std::sqrt(pow(obs1.x1-obs0.x1,2)+pow(obs1.x2-obs0.x2,2))/num;
-    //double vv= (obs1.x3-obs0.x3)/num;
 
     for(int i=1;i!= num;++i){
        UserStructs::obstacle3D obs_sub;
@@ -146,9 +141,6 @@ void IntroPolate(std::vector<UserStructs::obstacle3D>& obs_vec,int cnt0,int cnt1
        obs_sub.x3= obs0.x3*(1.-lambda)+ obs1.x3*lambda;
        obs_sub.head_xy= obs0.head_xy*(1.-lambda)+ obs1.head_xy*lambda;
        obs_sub.speed= obs0.speed*(1.-lambda)+ obs1.speed*lambda;
-       //std::cout<<"obs0.speed:"<< obs0.speed <<" "<< obs1.speed<<"\n";
-       //std::cout<<"1-lambda:"<< 1.-lambda<<" "<< "lambda:"<< lambda<<"\n";
-       //std::cout<<"obs_sub.speed:"<< obs_sub.speed<<"\n";
        obs_sub.v_vert= obs0.v_vert*(1.-lambda)+ obs1.v_vert*lambda;
        obs_sub.r= obs0.r;
        obs_sub.hr= obs0.hr;

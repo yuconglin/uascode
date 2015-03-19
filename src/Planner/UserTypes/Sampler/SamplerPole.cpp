@@ -43,29 +43,21 @@ namespace UserTypes{
       if(sample_method ==0)
       { //here r0 is different
         r0= sqrt(Dx*Dx+Dy*Dy+Dz*Dz);
-        //gamma0= asin(Dz/r0);
       }
       else if(sample_method ==1)
       {
         r0= sqrt(Dx*Dx+Dy*Dy);
-        //std::cout<<"r0= "<<r0<< std::endl;
-        //gamma0= atan2(Dz,r0);
       }
       else {;}
-      //std::cout<<"Dx= "<< Dx <<" Dy= "<< Dy<<" r0= "<< r0<<std::endl;
+
       x0 = x_root;
       y0 = y_root;
       z0 = z_root;
       this->r0 = r0;
-      /*
-      UASLOG(s_logger,LL_DEBUG,"x0: "<< x0
-             << " y0: "<< y0
-             << " z0: "<< z0);
-    */
+
       sigma_r= 0.5*r0;
       std::cout << "sigma_r:" << sigma_r << '\n';
       this->theta0 = theta0;
-      //sigma_theta= 0.125*M_PI;
       ga0 = gamma0;
       sigma_ga= _sig_ga;
    }
@@ -132,8 +124,7 @@ namespace UserTypes{
       boost::mt19937 generator;
       static unsigned int seed = 0;
       generator.seed(static_cast<unsigned int>(std::time(0))+(++seed));
-      
-      //std::cout<<"sigma_r= "<< sigma_r <<std::endl;  
+       
       boost::normal_distribution<> r_distribution(r0,sigma_r);
       boost::variate_generator<boost::mt19937&,boost::normal_distribution<> > r_nor(generator, r_distribution);  
       double r= r_nor();
@@ -195,7 +186,6 @@ namespace UserTypes{
        double r= r_nor();
 
        //UASLOG(s_logger,LL_DEBUG,"sample theta0:"<< theta0*180./M_PI);
-       //double alpha= 3./4*1./2*M_PI;
        double alpha= M_PI;
        boost::uniform_real<> the_uniform(theta0 - alpha, theta0 + alpha);
        boost::variate_generator<boost::mt19937&,boost::uniform_real<> > the_nor(generator, the_uniform);
@@ -205,17 +195,9 @@ namespace UserTypes{
            boost::normal_distribution<> ga_distribution(ga0, sigma_ga);
            boost::variate_generator<boost::mt19937&,boost::normal_distribution<> > ga_nor(generator, ga_distribution);
            double ga= ga_nor();
-           /*
-           UASLOG(s_logger,LL_DEBUG,
-                  "r: "<< r
-                  << " theta: "<< theta*180./M_PI
-                  << " ga: "<< ga*180./M_PI
-                  ); */
-           //UASLOG(s_logger,LL_DEBUG,"theta:"<< theta*180./M_PI);
            x_a= x0+ r*cos(theta)*cos(ga);
            y_a= y0+ r*sin(theta)*cos(ga);
            z_a= z0;
-           //z_a= goal_wp.alt;
        }
        else if(sample_method==1)
        {

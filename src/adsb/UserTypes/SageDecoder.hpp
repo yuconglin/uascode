@@ -1,9 +1,6 @@
 #pragma once
 //header file for Sagetech ads-b receiver decoding
-//#include "UserStructs/AdsbMsg.h"
-//#include "UserStructs/HeartMsg.h"
 #include "UserStructs/DecodeMsg.h"
-//#include <vector>
 
 namespace UasCode{
 
@@ -16,14 +13,6 @@ class SageDecoder{
     inline UserStructs::StatusMsg GetStatus() {return this->sage_status;}
     inline UserStructs::OwnerMsg GetOwnership() {return ownership;}
   private:
-    //heartbeat is needed for time stamp
-    //empty temperarily
-
-    //device status
-    //empty temperarily
-
-    //GPS NMEA
-    //empty temperarily
 
     //msgs
     UserStructs::AdsbMsg sage_adsb;

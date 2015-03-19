@@ -24,7 +24,6 @@ void MavlinkRecNode::TcpSetUp()
 
 void MavlinkRecNode::working()
 {
-   //ros::Rate r(10);
    while(ros::ok() )
    {
      ros::spinOnce();
@@ -57,23 +56,6 @@ void MavlinkRecNode::working()
          accel_xyz.az= (double)raw_imu_t.zacc/1000*CONSTANT_G;
          pub_accel.publish(accel_xyz);
        }
-       //IF GLOBAL POSITION RECEIVED
-       /*
-       if(msg.msgid == MAVLINK_MSG_ID_GLOBAL_POSITION_INT)
-       {
-         mavlink_global_position_int_t pos_t;
-         mavlink_msg_global_position_int_decode(&msg,&pos_t);
-         global_pos.lat= pos_t.lat/1E7;
-         global_pos.lon= pos_t.lon/1E7;
-         global_pos.alt= pos_t.alt/1E3;
-         double vx,vy,vz;
-         vx= pos_t.vx/100;
-         vy= pos_t.vy/100;
-         vz= pos_t.vz/100;
-         global_pos.speed= std::sqrt(vx*vx+vy*vy+vz*vz);
-         global_pos.cog= pos_t.hdg/100;
-         pub_posi.publish(global_pos);
-       }*/
 
        //IF GPS2_RAW RECEIVED
        if(msg.msgid == MAVLINK_MSG_ID_GPS2_RAW)
@@ -111,7 +93,6 @@ void MavlinkRecNode::working()
 
      if_mavlink.if_good= if_MavLink;
      pub_if_mavlink.publish(if_mavlink);
-     //r.sleep();
 
    }
 }

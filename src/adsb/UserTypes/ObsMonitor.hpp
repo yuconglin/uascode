@@ -1,6 +1,6 @@
 #pragma once
 #include "SageDecoder.hpp"
-//#include "MsgSender.hpp"
+
 #include "common/UserTypes/MavlinkSender.hpp"
 #include "Planner/UserStructs/obstacle3D.h"
 //for socket
@@ -20,7 +20,6 @@ namespace UasCode{
 class ObsMonitor{
  public:
    ObsMonitor();
-   //bool UartInit(const char *_uartname,const int _baudrate);
    int PortSetUp();
    int BytesDecode();
    inline void SetMavlinkSend(bool _send){mavlink_send=_send;}
@@ -34,8 +33,5 @@ class ObsMonitor{
    //for adsb record
    //for convert to mavlink msg
    std::vector<UserStructs::obstacle3D> obss;
-   //ros related
-   //ros::NodeHandle nh;
-   //ros::Publisher pub_obss;
 };// ObsMonitor ends
 }//namespace ends

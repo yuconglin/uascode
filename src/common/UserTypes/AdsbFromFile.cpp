@@ -113,7 +113,7 @@ void AdsbFromFile::ReadADSB(const std::vector<std::string> &file_names)
                 obs_single.x3 += offsets[i].z_off;
                 obs_single.head_xy += offsets[i].hd_off;
                 obs_single.r = 300;
-                //obs_single.hr = 70.;
+
                 obs_single.head_xy= obs_single.head_xy * UasCode::DEG2RAD;
                 vec_obs.push_back(obs_single);
             }
@@ -335,11 +335,7 @@ void AdsbFromFile::LoadSendRandomNum(const std::vector<std::string> &file_names,
 void AdsbFromFile::WpCurrCb(const uascode::WpCurrent::ConstPtr &msg)
 {
    seq_current= msg->wp_current;
-   /*
-   std::cout<<"current waypoint #: "
-            << seq_current
-            << std::endl;
-   */
+
 }
 
 uascode::ObsMsg AdsbFromFile::ObsToRosMsg(const UserStructs::obstacle3D& obs)
@@ -378,11 +374,8 @@ int AdsbFromFile::RandSelect(int start, int end)
 
 int AdsbFromFile::RandSelectVec(const std::vector<int> &ints)
 {
-    /* initialize random seed: */
-    //srand (time(NULL));
     /* to generate a random number */
     int len = ints.size();
-    //int num = rand() % (len+1);
     int num = rand() % len;
     int idx;
 

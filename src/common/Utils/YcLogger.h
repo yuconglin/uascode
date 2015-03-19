@@ -10,7 +10,6 @@ struct LogConfigurator
 };
 
 typedef log4cxx::LoggerPtr LoggerPtr;
-//typedef log4cxx::NDC NDC;
 
 inline LoggerPtr getLogger(const char* loggerName)
 {

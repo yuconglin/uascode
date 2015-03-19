@@ -32,7 +32,6 @@ namespace UasCode{
     sub_IfRec= nh.subscribe("interwp_receive",100,&PlanNode::ifRecCb,this);
     sub_accel= nh.subscribe("accel_raw_imu",100,&PlanNode::AccelCb,this);
     sub_wp_current= nh.subscribe("waypoint_current",100,&PlanNode::WpCurrCb,this);
-    //sub_if_mavlink= nh.subscribe("if_mavlink",100,&PlanNode::IfMavlinkCb,this);
 
     //parameters for controllers
     path_gen.SetTimeLimit(1.0);
@@ -298,17 +297,7 @@ namespace UasCode{
       {
           //set start state and goal waypoint
           UASLOG(s_logger,LL_DEBUG,"planning");
-          if(1)
-              path_gen.SetInitState(st_current.SmallChange(t_limit));
-          if(0){/*
-              if(!if_inter_gen)
-                  path_gen.SetGoalWp(waypoints[seq_current]);
-              else{
-                  UASLOG(s_logger,LL_DEBUG,"total: "<< waypoints.size()
-                         << " seq_inter: " << seq_inter);
-                  path_gen.SetGoalWp(waypoints[seq_inter+1]);
-              }*/
-          }
+          path_gen.SetInitState(st_current.SmallChange(t_limit));
           path_gen.SetGoalWp(waypoints[seq_current]);
           path_gen.SetSampleParas();
           path_gen.SetObs(obss);
@@ -411,11 +400,6 @@ namespace UasCode{
       UASLOG(s_logger,LL_DEBUG,"obstacle: "
              << std::setprecision(4) << std::fixed
              << obs3d.t <<" "<< obs3d.x1);
-
-      /*
-      std::cout<< "obstacle: "<< std::setprecision(4) << std::fixed
-               << obs3d.t << "\n";
-      */
       obss.push_back(obs3d);
     }//for ends
 
@@ -428,15 +412,6 @@ namespace UasCode{
       global_posi.alt= msg->alt;
       global_posi.cog= msg->cog;
       global_posi.speed= msg->speed;
-      /*
-      std::cout<< "global_posi:"
-               << global_posi.lat<< " "
-               << global_posi.lon<< " "
-               << global_posi.alt<< " "
-               << global_posi.cog<< " "
-               << global_posi.speed
-               << std::endl;
-      */
   }
   
   void PlanNode::attCb(const uascode::PlaneAttitude::ConstPtr& msg)
@@ -444,13 +419,6 @@ namespace UasCode{
      plane_att.roll= msg->roll; 
      plane_att.pitch= msg->pitch;
      plane_att.yaw= msg->yaw;
-     /*
-     std::cout<< "plane_att:"
-              << plane_att.roll<< " "
-              << plane_att.pitch<< " "
-              << plane_att.yaw
-              << std::endl;
-     */
   }
 
   void PlanNode::ifRecCb(const uascode::IfRecMsg::ConstPtr &msg)
@@ -465,22 +433,11 @@ namespace UasCode{
      accel_xyz.ax= msg->ax;
      accel_xyz.ay= msg->ay;
      accel_xyz.az= msg->az;
-     /*
-     std::cout<<"accel from raw imu: "
-              << accel_xyz.ax <<" "
-              << accel_xyz.ay <<" "
-              << accel_xyz.az << std::endl;
-     */
   }
 
   void PlanNode::WpCurrCb(const uascode::WpCurrent::ConstPtr &msg)
   {
      seq_current= msg->wp_current;
-     /*
-     std::cout<<"current waypoint #: "
-              << seq_current
-              << std::endl;
-     */
   }
 
   void PlanNode::GetCurrentSt()

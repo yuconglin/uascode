@@ -157,8 +157,6 @@ namespace UasCode{
          if(addrs_map.find(obs_single.address)== addrs_map.end())
              addrs_map[obs_single.address] = addrs_map.size();
 
-         //UASLOG(s_logger,LL_DEBUG, "obs_single.head_xy: "<< obs_single.head_xy);
-
          for(int i=0;i!= obss.size();++i)
          {
              if(obs_single.address== obss[i].address)
@@ -213,7 +211,6 @@ namespace UasCode{
           for(int i=0;i!= up_limit;++i){
               //here obs_num is used to select num of obstacles to use
               //otherwise we can just use obss.size()
-              //obss[i].t= Utils::GetTimeUTC();
               obss[i].t= Utils::GetTimeNow();
 
               //log to file

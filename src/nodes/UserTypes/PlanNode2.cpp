@@ -34,7 +34,6 @@ namespace UasCode{
     sub_IfRec= nh.subscribe("interwp_receive",100,&PlanNode2::ifRecCb,this);
     sub_accel= nh.subscribe("accel_raw_imu",100,&PlanNode2::AccelCb,this);
     sub_wp_current= nh.subscribe("waypoint_current",100,&PlanNode2::WpCurrCb,this);
-    //sub_if_mavlink= nh.subscribe("if_mavlink",100,&PlanNode::IfMavlinkCb,this);
 
     //parameters for controllers
     path_gen.SetTimeLimit(1.0);
@@ -257,7 +256,6 @@ namespace UasCode{
       if(!obss.empty() )
       {
           std::ostringstream oss;
-          //oss<< "obss dis:";
           for(int i=0;i!= obss.size();++i)
           {
               double dis= std::sqrt(pow(st_current.x-obss[i].x1,2)
@@ -476,7 +474,6 @@ namespace UasCode{
           pub_colli_pt.publish(colli_pt);
 
           IfColliMsg.if_collision = if_colli;
-          //UASLOG(s_logger,LL_DEBUG,"IfColliMsg:"<< (int)IfColliMsg.if_collision);
           pub_if_colli.publish(IfColliMsg);
 
           WpNumMsg.wp_num= FlagWayPoints.size();
@@ -503,8 +500,6 @@ namespace UasCode{
               {
                   if(!FlagWayPoints[i].flag){
                       path_gen.SetGoalWp(FlagWayPoints[i].pt);
-                      //double dis_goal= std::sqrt(pow(st_current.x-FlagWayPoints[i].pt.x,2)+pow(st_current.y-FlagWayPoints[i].pt.y,2));
-                      //std::cout<<"dis_goal:"<< dis_goal<<"\n";
                       UASLOG(s_logger,LL_DEBUG,"flat i="<<" "<< i);
                       idx_end= i-1;
                       break;
@@ -556,12 +551,6 @@ namespace UasCode{
 
               path_gen.SetSampleParas();
 
-              //path_gen.SetObs(obss);
-              //path_gen.SetObsThres(obss,thres_ratio);
-
-              //update helpers
-              //SetHelpers();
-
               //get must go-through in-between waypoints
               std::vector<UserStructs::MissionSimPt> wpoints;
               for(int i= idx_start;i< idx_end;++i)
@@ -577,10 +566,6 @@ namespace UasCode{
                   situ= PATH_CHECK;
               else{
                   UASLOG(s_logger,LL_DEBUG,"no path, try again");
-                  /*
-                  if(thres_ratio > 1.)
-                      thres_ratio-= 0.1;
-                      */
               }
               break;
           }
@@ -695,11 +680,6 @@ namespace UasCode{
              << obs3d.speed <<" "
              << obs3d.head_xy*180./M_PI <<" "
              << obs3d.v_vert);
-
-      /*
-      std::cout<< "obstacle: "<< std::setprecision(4) << std::fixed
-               << obs3d.t << "\n";
-      */
       obss.push_back(obs3d);
     }//for ends
 
@@ -713,15 +693,6 @@ namespace UasCode{
       global_posi.alt= msg->alt;
       global_posi.cog= msg->cog;
       global_posi.speed= msg->speed;
-      /*
-      std::cout<< "global_posi:"
-               << global_posi.lat<< " "
-               << global_posi.lon<< " "
-               << global_posi.alt<< " "
-               << global_posi.cog<< " "
-               << global_posi.speed
-               << std::endl;
-      */
   }
   
   void PlanNode2::attCb(const uascode::PlaneAttitude::ConstPtr& msg)
@@ -729,20 +700,11 @@ namespace UasCode{
      plane_att.roll= msg->roll; 
      plane_att.pitch= msg->pitch;
      plane_att.yaw= msg->yaw;
-     /*
-     std::cout<< "plane_att:"
-              << plane_att.roll<< " "
-              << plane_att.pitch<< " "
-              << plane_att.yaw
-              << std::endl;
-     */
   }
 
   void PlanNode2::ifRecCb(const uascode::IfRecMsg::ConstPtr &msg)
   {
      if_receive= msg->receive;
-
-     //std::cout<< "if receive= "<< if_receive << std::endl;
   }
 
   void PlanNode2::AccelCb(const uascode::AccelXYZ::ConstPtr &msg)
@@ -750,22 +712,11 @@ namespace UasCode{
      accel_xyz.ax= msg->ax;
      accel_xyz.ay= msg->ay;
      accel_xyz.az= msg->az;
-     /*
-     std::cout<<"accel from raw imu: "
-              << accel_xyz.ax <<" "
-              << accel_xyz.ay <<" "
-              << accel_xyz.az << std::endl;
-     */
   }
 
   void PlanNode2::WpCurrCb(const uascode::WpCurrent::ConstPtr &msg)
   {
      seq_current= msg->wp_current;
-     /*
-     std::cout<<"current waypoint #: "
-              << seq_current
-              << std::endl;
-     */
   }
 
   void PlanNode2::GetCurrentSt()
@@ -834,8 +785,6 @@ namespace UasCode{
 
   void PlanNode2::PrintSitu()
   {
-      //enum possible_cases{NORMAL,PATH_READY,PATH_GEN,PATH_CHECK,PATH_RECHECK,WAIT_STATE,ARRIVED};
-
       switch(situ){
       case NORMAL:{
         UASLOG(s_logger,LL_DEBUG, "situ:NORMAL" << '\n');

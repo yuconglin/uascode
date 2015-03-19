@@ -1,7 +1,5 @@
 #pragma once
-//#include "ros/ros.h"
 #include "yc_common/mavlink.h"
-//#include "ardupilotmega/mavlink.h"
 //for socket
 #include <netdb.h>
 #include <sys/socket.h>
@@ -14,8 +12,6 @@ namespace UasCode{
 class MavlinkTCP{
  public:
   //******constructor	
-  //MavlinkTCP();
-  //~MavlinkTCP();
   int SetUp();
   //********for receiving msg
   bool ReceiveMsg();

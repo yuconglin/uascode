@@ -97,11 +97,6 @@ namespace UasCode{
         unsigned len= mavlink_msg_to_send_buffer((uint8_t*)buf, &message);
         /* write packet via serial link */ 
         int ret= write(fd, buf, len);
-        //printf("adsb sent to pixhawk:\nlat:%f\tlon:%f\taltitude:%d\n",
-	//	      adsb_msg.latitude,adsb_msg.longitude,adsb_msg.altitude
-	//	    );
- 
-       //printf("ret=%d,len=%d\n",ret,len);
        /* wait until all data has been written */
        tcdrain(fd);
        return ret;
