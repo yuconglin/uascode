@@ -64,25 +64,20 @@ class PlanNode2{
 
    //plane state current
    UserStructs::PlaneStateSim st_current;
-   //plane goal
-   UserStructs::MissionSimPt goal_wp;
    //plane position
    UserStructs::GlobalPosi global_posi;
    //plane attitude
    UserStructs::PlaneAtt plane_att;
-   //goal set point
-   UserStructs::GoalSetPt goal_posi;
    //ACCEL
    UserStructs::AccelXYZ accel_xyz;
    //if mavlink communication exsits
    bool if_mavlink;
-   //Current Waypoint
-   int seq_current;
 
    //flag to indicate if an inter wp was generated
    bool if_inter_gen;
    bool if_gen_success;
    bool if_inter_exist;
+   int seq_current;
    int seq_inter;
 
    //to see if the sent waypoint was received

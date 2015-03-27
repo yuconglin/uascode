@@ -161,6 +161,7 @@ add_library(nodes
 	src/nodes/UserTypes/PlanNode2.cpp
 	src/nodes/UserTypes/MavlinkRecNode.cpp
 	src/nodes/UserTypes/MavlinkSendNode.cpp
+        src/nodes/UserTypes/MavrosListen.cpp
 )
 add_dependencies(nodes
         common_utils
