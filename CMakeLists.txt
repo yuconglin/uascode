@@ -223,6 +223,16 @@ target_link_libraries(test_PlanNode2
 	${GeographicLib_LIBRARIES}
 	)
 
+#test MavrosListen
+add_executable(test_MavrosListen src/nodes/UserTypes/test_mavroslisten.cpp)
+add_dependencies(test_MavrosListen nodes)
+target_link_libraries(test_MavrosListen
+        nodes
+        ${catkin_LIBRARIES}
+        ${ARMADILLO_LIBRARIES}
+        ${GeographicLib_LIBRARIES}
+        )
+
 #test MavlinkTCP_node
 add_executable(test_MavRecNode src/nodes/UserTypes/test_MavRecNode.cpp)
 add_dependencies(test_MavRecNode nodes)

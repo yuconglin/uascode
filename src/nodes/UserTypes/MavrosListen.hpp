@@ -21,6 +21,7 @@
 #include "uascode/WpNumber.h"
 //#include "uascode/ColliPoint.h"
 #include "mavros/Mavlink.h"
+#include "mavros/WaypointList.h"
 #include "sensor_msgs/NavSatFix.h"
 #include "geometry_msgs/TwistStamped.h"
 #include "sensor_msgs/Imu.h"
@@ -63,6 +64,7 @@ private:
     ros::Subscriber sub_hdg;
     ros::Subscriber sub_att;
     ros::Subscriber sub_mc;//mission current
+    ros::Subscriber sub_wps;//waypoints
     //service
     ros::ServiceClient client_wp;
 
@@ -72,7 +74,7 @@ private:
     void hdgCb(const std_msgs::Float64::ConstPtr& msg);
     void attCb(const sensor_msgs::Imu::ConstPtr& msg);
     void mission_currentCb(const std_msgs::UInt16::ConstPtr& msg);
-
+    void wpsCb(const mavros::WaypointList::ConstPtr& msg);
 
 };
 

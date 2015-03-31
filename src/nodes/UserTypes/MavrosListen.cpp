@@ -3,6 +3,7 @@
 //mavros msg
 #include "mavros/Mavlink.h"
 #include "mavros/Waypoint.h"
+#include "mavros/WaypointList.h"
 //mavros service
 #include "mavros/WaypointPush.h"
 
@@ -15,11 +16,12 @@ namespace {
 namespace UasCode{
   MavrosListen::MavrosListen()
   {
-      sub_posi= nh.subscribe("/mavros/fix2",10,&MavrosListen::posiCb,this);
+          sub_posi= nh.subscribe("/mavros/fix2",10,&MavrosListen::posiCb,this);
           sub_vel= nh.subscribe("/mavros/gps2_vel",10,&MavrosListen::velCb,this);
           sub_hdg= nh.subscribe("/mavros/gps2_hdg",10,&MavrosListen::hdgCb,this);
           sub_att= nh.subscribe("/mavros/imu/data",10,&MavrosListen::attCb,this);
           sub_mc= nh.subscribe("/mavros/mission_current",10,&MavrosListen::mission_currentCb,this);
+          sub_wps= nh.subscribe("/mavros/mission/waypoints",10,&MavrosListen::wpsCb,this);
 
   //service
   client_wp= nh.serviceClient<mavros::WaypointPush>("/mavros/mission/push");
@@ -86,5 +88,16 @@ namespace UasCode{
                << seq_current);
     }
 
-}
+    void MavrosListen::wpsCb(const mavros::WaypointList::ConstPtr &msg )
+    {
+        std::vector< mavros::Waypoint > waypoints;
+        for( int i = 0; i != waypoints.size(); ++i ){
+            UASLOG(s_logger,LL_DEBUG,"waypoints:" << " " << i << " "
+                   << "is_current:" << waypoints[i].is_current << " "
+                   << waypoints[i].x_lat << " "
+                   << waypoints[i].y_long << " "
+                   << waypoints[i].z_alt);
+        }
+    }
 
+}
