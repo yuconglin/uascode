@@ -29,6 +29,8 @@
 #include "std_msgs/Float64.h"
 #include "geometry_msgs/Quaternion.h"
 #include "std_msgs/UInt16.h"
+#include "geometry_msgs/PoseStamped.h"
+#include "geometry_msgs/PoseWithCovarianceStamped.h"
 
 #include "ros/ros.h"
 
@@ -48,34 +50,38 @@ private:
     //plane position
     UserStructs::GlobalPosi global_posi;
     //quaternion
-    geometry_msgs::Quaternion plane_quat;
+    //geometry_msgs::Quaternion plane_quat;
     //plane attitude
     UserStructs::PlaneAtt plane_att;
     //ACCEL
     UserStructs::AccelXYZ accel_xyz;
     //Current Waypoint
     int seq_current;
+    //if pulled and sent
+    bool IfPullSent;
 
     //ros related
     ros::NodeHandle nh;
     //subscribers
     ros::Subscriber sub_posi;
+    ros::Subscriber sub_posi_local;
     ros::Subscriber sub_vel;
-    ros::Subscriber sub_hdg;
+    ros::Subscriber sub_local;
     ros::Subscriber sub_att;
-    ros::Subscriber sub_mc;//mission current
-    ros::Subscriber sub_wps;//waypoints
+    ros::Subscriber sub_wps;
     //service
-    ros::ServiceClient client_wp;
+    ros::ServiceClient client_wp_pull;
+    ros::ServiceClient client_wp_push;
 
     //callback functions
     void posiCb(const sensor_msgs::NavSatFix::ConstPtr& msg);
-    void velCb(const std_msgs::Float64::ConstPtr& msg);
-    void hdgCb(const std_msgs::Float64::ConstPtr& msg);
+    void posiLocalCb(const geometry_msgs::PoseWithCovarianceStamped::ConstPtr& msg);
+    void velCb(const geometry_msgs::Vector3Stamped::ConstPtr& msg);
+    void localCb(const geometry_msgs::PoseStamped::ConstPtr& msg);
     void attCb(const sensor_msgs::Imu::ConstPtr& msg);
-    void mission_currentCb(const std_msgs::UInt16::ConstPtr& msg);
-    void wpsCb(const mavros::WaypointList::ConstPtr& msg);
+    void wpsCb(const mavros::WaypointList::ConstPtr &msg);
 
+    void PullandSendWps();
 };
 
 }
