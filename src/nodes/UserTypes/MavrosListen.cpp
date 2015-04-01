@@ -17,7 +17,7 @@ namespace {
 }
 
 namespace UasCode{
-  MavrosListen::MavrosListen():IfPullSent(false)
+  MavrosListen::MavrosListen():IfPullSent(false),PullSuccess(false)
   {
           sub_posi= nh.subscribe("/mavros/global_position/global",10,&MavrosListen::posiCb,this);
           sub_posi_local= nh.subscribe("/mavros/global_position/local",10,&MavrosListen::posiLocalCb,this);
@@ -26,9 +26,9 @@ namespace UasCode{
           sub_att= nh.subscribe("/mavros/imu/data",10,&MavrosListen::attCb,this);
           sub_wps= nh.subscribe("/mavros/mission/waypoints",10,&MavrosListen::wpsCb,this);
 
-  //service
-  client_wp_push = nh.serviceClient<mavros::WaypointPush>("/mavros/mission/push");
-  client_wp_pull = nh.serviceClient<mavros::WaypointPull>("/mavros/mission/pull");
+          //service
+          client_wp_push = nh.serviceClient<mavros::WaypointPush>("/mavros/mission/push");
+          client_wp_pull = nh.serviceClient<mavros::WaypointPull>("/mavros/mission/pull");
   }
 
   MavrosListen::~MavrosListen(){
@@ -42,8 +42,17 @@ namespace UasCode{
       {
          //callback once
          ros::spinOnce();
+         PullandSendWps();
          r.sleep();
       }
+  }
+
+  bool MavrosListen::WaypointsPull()
+  {
+      PullSuccess = false;
+      mavros::WaypointPull wp_pull_srv;
+      client_wp_pull.call( wp_pull_srv );
+      PullSuccess = wp_pull_srv.response.success;
   }
 
   void MavrosListen::PullandSendWps()
@@ -51,10 +60,46 @@ namespace UasCode{
       if( IfPullSent){
           return;
       }
+      if( waypoints.empty() || !PullSuccess ){
+          //call the waypoints pull service
+          WaypointsPull();
+      }
+      else
+      {
+          //insert and push
+          std::vector< mavros::Waypoint > wps = waypoints;
+          for( int i = 0; i != wps.size(); ++i )
+          {
+              if( wps[i].is_current && i+2 < wps.size() )
+              {
+                  //wps[i].is_current = true;
+                  //insert here
+                  mavros::Waypoint mav_wp;
+                  mav_wp.frame= 0;
+                  mav_wp.command= 16;
+                  mav_wp.is_current= false;
+                  mav_wp.autocontinue= true;
+                  mav_wp.param1= 0;
+                  mav_wp.param2= 25;
+                  mav_wp.param3= -0.0;
+                  mav_wp.param4= 0;
+                  mav_wp.x_lat= 0.5 * (wps[i].x_lat + wps[i+2].x_lat);
+                  mav_wp.y_long= 0.5 * (wps[i].y_long + wps[i+2].y_long);
+                  mav_wp.z_alt= 0.5 * (wps[i].z_alt + wps[i+2].z_alt);
+                  wps.insert( wps.begin()+i+1, mav_wp );
+              }
+          }
+          mavros::WaypointPush wp_push_srv;
+          wp_push_srv.request.waypoints = wps;
+          client_wp_push.call(wp_push_srv);
+          if(wp_push_srv.response.success)
+          {
+              UASLOG(s_logger,LL_DEBUG,"new waypoints sent");
+              IfPullSent = true;
+          }
+      }
 
 
-
-      IfPullSent = true;
   }
 
   void MavrosListen::posiCb(const sensor_msgs::NavSatFix::ConstPtr& msg)
@@ -154,11 +199,13 @@ namespace UasCode{
 
     void MavrosListen::wpsCb(const mavros::WaypointList::ConstPtr &msg )
     {
-        std::vector< mavros::Waypoint > waypoints;
+        waypoints = msg->waypoints;
         for( int i = 0; i != waypoints.size(); ++i )
         {
            UASLOG(s_logger,LL_DEBUG,"waypoints:" << " " << i << " "
-                  << "is_current:" << waypoints[i].is_current << " "
+                  << "is_current:" << (int)waypoints[i].is_current << " "
+                  << "command:" << (int)waypoints[i].command << " "
+                  << "autocontinue:" << (int)waypoints[i].autocontinue << " "
                   << waypoints[i].x_lat << " "
                   << waypoints[i].y_long << " "
                   << waypoints[i].z_alt);

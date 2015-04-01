@@ -59,6 +59,9 @@ private:
     int seq_current;
     //if pulled and sent
     bool IfPullSent;
+    bool PullSuccess;
+    //pulled waypoints
+    std::vector< mavros::Waypoint > waypoints;
 
     //ros related
     ros::NodeHandle nh;
@@ -82,6 +85,7 @@ private:
     void wpsCb(const mavros::WaypointList::ConstPtr &msg);
 
     void PullandSendWps();
+    bool WaypointsPull();
 };
 
 }
