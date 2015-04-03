@@ -1,5 +1,7 @@
 #pragma once
-
+//user_types
+#include "Planner/UserTypes/PathGenerator.hpp"
+#include "Planner/UserTypes/ObsHelper.hpp"
 //user structs
 #include "Planner/UserStructs/PlaneStateSim.h"
 //#include "Planner/UserStructs/obstacle3D.h"
@@ -12,7 +14,7 @@
 //ros msg header
 #include "uascode/GlobalPos.h" //next to create the ros msgs
 #include "uascode/PlaneAttitude.h"
-//#include "uascode/MultiObsMsg.h"
+#include "uascode/MultiObsMsg.h"
 //#include "uascode/IfRecMsg.h"
 #include "uascode/AccelXYZ.h"
 #include "uascode/WpCurrent.h"
@@ -42,9 +44,27 @@ public:
     MavrosListen();
     ~MavrosListen();
 
+    void SetTimeLimit(const double _t_limit);
+    inline void SetWpR(const double _r){this->wp_r= _r;}
+    inline void SetHomeAlt(const double _alt){home_alt= _alt;}
+
+    //load trajectory log file
+    void SetLogFileName(const char* filename);
+    //load obs distance log
+    void SetObsDisFile(const char* filename);
+
     void working();
 
 private:
+    enum possible_cases{NORMAL,PATH_READY,PATH_GEN,PATH_CHECK,PATH_RECHECK,WAIT_STATE,ARRIVED};
+    possible_cases situ;
+
+    //path generator
+    PathGenerator path_gen;
+
+    //obstacle helper
+    std::vector< ObsHelper >* helpers;
+
     //plane state current
     UserStructs::PlaneStateSim st_current;
     //plane position
@@ -55,17 +75,54 @@ private:
     UserStructs::PlaneAtt plane_att;
     //ACCEL
     UserStructs::AccelXYZ accel_xyz;
-    //Current Waypoint
+
+    //flag to indicate if an inter wp was generated
+    bool if_inter_gen;
+    bool if_gen_success;
+    bool if_inter_exist;
     int seq_current;
+    int seq_inter;
+
+    //to see if the sent waypoint was received
+    bool if_receive;
+    //to see if already fail
+    bool if_fail;
+    //to see if obstacles are updated
+    bool if_obss_update;
+
     //if pulled and sent
     bool IfPullSent;
     bool PullSuccess;
     //pulled waypoints
     std::vector< mavros::Waypoint > waypoints;
 
+    //obstacles
+    std::vector<UserStructs::obstacle3D> obss;
+    //geofence/spacelimit
+    UserStructs::SpaceLimit spLimit;
+
+    //time limit for planning
+    double t_limit;
+
+    //time step
+    double dt;
+    //radius for wp
+    double wp_r;
+    //alt for home waypoint
+    double home_alt;
+    //threshold ratio for obstacle avoidance
+    double thres_ratio;
+    //collision prediction return result
+    UserStructs::PredictColliReturn colli_return;
+
+    //log for trajectory
+    std::ofstream traj_log;
+    std::ofstream obdis_log;
+
     //ros related
     ros::NodeHandle nh;
     //subscribers
+    ros::Subscriber sub_obss;
     ros::Subscriber sub_posi;
     ros::Subscriber sub_posi_local;
     ros::Subscriber sub_vel;
@@ -77,6 +134,7 @@ private:
     ros::ServiceClient client_wp_push;
 
     //callback functions
+    void obssCb(const uascode::MultiObsMsg::ConstPtr& msg);
     void posiCb(const sensor_msgs::NavSatFix::ConstPtr& msg);
     void posiLocalCb(const geometry_msgs::PoseWithCovarianceStamped::ConstPtr& msg);
     void velCb(const geometry_msgs::Vector3Stamped::ConstPtr& msg);
@@ -86,6 +144,15 @@ private:
 
     void PullandSendWps();
     bool WaypointsPull();
+
+    //other functions
+    void GetCurrentSt();
+    void GetObssDis();
+    void SetHelpers();
+
+    int PredictColliNode2(UserStructs::PlaneStateSim &st_current,int seq_current,double t_limit,double thres_ratio,UserStructs::PredictColliReturn& colli_return);
+
+    void PrintSitu();
 };
 
 }

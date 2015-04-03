@@ -9,5 +9,6 @@ gnome-terminal \
 				exec bash\"" \
 	--tab --title "MavrosListen" --command "bash -c \"
 				env sleep 3s;
-				rosrun uascode test_MavrosListen
+				#rosrun uascode test_MavrosListen wp_r home_alt
+				rosrun uascode test_MavrosListen 25 690.15
 				exec bash\"" \

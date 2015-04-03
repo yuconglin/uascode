@@ -11,6 +11,7 @@
 
 #include "common/Utils/YcLogger.h"
 #include "common/Utils/GeoUtils.h"
+#include "common/UserStructs/constants.h"
 
 namespace {
     Utils::LoggerPtr s_logger(Utils::getLogger("uascode.MavrosListen.YcLogger"));
@@ -33,6 +34,38 @@ namespace UasCode{
 
   MavrosListen::~MavrosListen(){
       //not any content yet
+  }
+
+  void MavrosListen::SetLogFileName(const char *filename)
+  {
+      try
+      {
+          traj_log.exceptions ( std::ofstream::failbit | std::ofstream::badbit );
+          traj_log.open(filename,std::ofstream::out
+                        | std::ofstream::in
+                        | std::ofstream::trunc);
+      }
+      catch (std::ofstream::failure& e) {
+          std::cerr << "Exception opening/reading file"
+                    << e.what()
+                    << std::endl;
+      }
+  }
+
+  void MavrosListen::SetObsDisFile(const char *filename)
+  {
+      try
+      {
+          obdis_log.exceptions(std::ofstream::failbit | std::ofstream::badbit);
+          obdis_log.open(filename,std::ofstream::out
+                         | std::ofstream::in
+                         | std::ofstream::trunc);
+      }
+      catch(std::ofstream::failure& e) {
+          std::cerr << "Exception opening/reading file"
+                    << e.what()
+                    << std::endl;
+      }
   }
 
   void MavrosListen::working()
@@ -139,9 +172,9 @@ namespace UasCode{
         m.getRPY(roll, pitch, yaw);
 
         UASLOG(s_logger,LL_DEBUG,"global local RPY:"
-               << " " << roll
-               << " " << pitch
-               << " " << yaw);
+               << " " << roll * RAD2DEG
+               << " " << pitch * RAD2DEG
+               << " " << yaw * RAD2DEG);
     }
 
     void MavrosListen::velCb(const geometry_msgs::Vector3Stamped::ConstPtr& msg)
@@ -175,9 +208,9 @@ namespace UasCode{
         m.getRPY(roll, pitch, yaw);
 
         UASLOG(s_logger,LL_DEBUG,"local RPY:"
-               << " " << roll
-               << " " << pitch
-               << " " << yaw);
+               << " " << roll * RAD2DEG
+               << " " << pitch * RAD2DEG
+               << " " << yaw * RAD2DEG);
     }
 
     void MavrosListen::attCb(const sensor_msgs::Imu::ConstPtr &msg)
@@ -192,9 +225,9 @@ namespace UasCode{
         m.getRPY(roll, pitch, yaw);
 
         UASLOG(s_logger,LL_DEBUG,"imu RPY:"
-               << " " << roll
-               << " " << pitch
-               << " " << yaw);
+               << " " << roll * RAD2DEG
+               << " " << pitch * RAD2DEG
+               << " " << yaw * RAD2DEG);
     }//attCb ends
 
     void MavrosListen::wpsCb(const mavros::WaypointList::ConstPtr &msg )
