@@ -12,6 +12,8 @@ int main(int argc, char** argv)
     ros::init(argc,argv,"mavros_listen");
     MavrosListen mav_listen;
 
+    Utils::LogConfigurator myconfigurator("log4cxx_MavrosListen.properties","log for MavrosListen");
+
     if( argc > 1 ){
       mav_listen.SetWpR(atof(argv[1]));
     }
@@ -26,7 +28,8 @@ int main(int argc, char** argv)
       mav_listen.SetHomeAlt(690.15);
     }
 
-    Utils::LogConfigurator myconfigurator("log4cxx_MavrosListen.properties","log for MavrosListen");
+    std::string traj_file = Utils::FindPath()+"recordsHIL/traj_log.txt";
+    mav_listen.SetLogFileName(traj_file.c_str());
 
     mav_listen.working();
 }

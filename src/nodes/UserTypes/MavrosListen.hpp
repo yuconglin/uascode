@@ -129,6 +129,7 @@ private:
     ros::Subscriber sub_local;
     ros::Subscriber sub_att;
     ros::Subscriber sub_wps;
+    ros::Subscriber sub_wp_current;
     //service
     ros::ServiceClient client_wp_pull;
     ros::ServiceClient client_wp_push;
@@ -141,6 +142,7 @@ private:
     void localCb(const geometry_msgs::PoseStamped::ConstPtr& msg);
     void attCb(const sensor_msgs::Imu::ConstPtr& msg);
     void wpsCb(const mavros::WaypointList::ConstPtr &msg);
+    void mission_currentCb(const std_msgs::UInt16::ConstPtr &msg);
 
     void PullandSendWps();
     bool WaypointsPull();

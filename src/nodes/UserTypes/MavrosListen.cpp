@@ -12,6 +12,11 @@
 #include "common/Utils/YcLogger.h"
 #include "common/Utils/GeoUtils.h"
 #include "common/UserStructs/constants.h"
+#include "Planner/UserTypes/Sampler/SamplerPole.hpp"
+#include "common/Utils/GetTimeUTC.h"
+#include "common/Utils/GetTimeNow.h"
+#include "common/Utils/UTMtransform.h"
+#include "common/Utils/FindPath.h"
 
 namespace {
     Utils::LoggerPtr s_logger(Utils::getLogger("uascode.MavrosListen.YcLogger"));
@@ -26,6 +31,7 @@ namespace UasCode{
           sub_local= nh.subscribe("/mavros/local_position/local",10,&MavrosListen::localCb,this);
           sub_att= nh.subscribe("/mavros/imu/data",10,&MavrosListen::attCb,this);
           sub_wps= nh.subscribe("/mavros/mission/waypoints",10,&MavrosListen::wpsCb,this);
+          sub_wp_current= nh.subscribe("/mavros/mission_current",10,&MavrosListen::mission_currentCb,this);
 
           //service
           client_wp_push = nh.serviceClient<mavros::WaypointPush>("/mavros/mission/push");
@@ -75,8 +81,53 @@ namespace UasCode{
       {
          //callback once
          ros::spinOnce();
-         PullandSendWps();
+         GetCurrentSt();
+         //PullandSendWps();
          r.sleep();
+      }
+  }
+
+  void MavrosListen::GetCurrentSt()
+  {
+      if( seq_current > 0 )
+      {
+          st_current.t = Utils::GetTimeNow();
+          st_current.lat= global_posi.lat;
+          st_current.lon= global_posi.lon;
+          //get x,y
+          st_current.GetUTM();
+          st_current.z= global_posi.alt;
+          st_current.speed = global_posi.speed;
+          st_current.yaw = global_posi.cog;
+          st_current.pitch = plane_att.pitch;
+
+          UASLOG(s_logger,LL_DEBUG,"st_current: "
+                 << std::setprecision(4) << std::fixed
+                 << st_current.t << " "
+                 << st_current.x << " "
+                 << st_current.y << " "
+                 << st_current.z << " "
+                 << st_current.speed << " "
+                 << st_current.yaw * RAD2DEG <<" "
+                 << st_current.pitch * RAD2DEG);
+
+          if( traj_log.is_open() )
+          {
+              //UASLOG(s_logger,LL_DEBUG,"traj_log open");
+              traj_log << std::setprecision(6) << std::fixed
+                       << seq_current << " "
+                       << st_current.t<< " "
+                       << st_current.lat<< " "
+                       << st_current.lon<< " "
+                       << st_current.x<< " "
+                       << st_current.y<< " "
+                       << st_current.z<< " "
+                       << st_current.speed<< " "
+                       << st_current.yaw<< " "
+                       << st_current.pitch << " "
+                       << "\n";
+          }
+
       }
   }
 
@@ -137,19 +188,19 @@ namespace UasCode{
 
   void MavrosListen::posiCb(const sensor_msgs::NavSatFix::ConstPtr& msg)
     {
-       double lat= msg->latitude;
-       double lon= msg->longitude;
-       double alt= msg->altitude;
+       global_posi.lat= msg->latitude;
+       global_posi.lon= msg->longitude;
+       global_posi.alt= msg->altitude;
 
        UASLOG(s_logger,LL_DEBUG,"global GCS:"
                  << msg->latitude <<" "
                  << msg->longitude<<" "
                  << msg->altitude);
-
+       /*
        double x, y;
        Utils::ToUTM(lon,lat,x,y);
        UASLOG(s_logger,LL_DEBUG,"global UTM:"
-              << x << " " << y);
+              << x << " " << y);*/
 
     }//posiCb ends
 
@@ -158,10 +209,10 @@ namespace UasCode{
         double x = msg->pose.pose.position.x;
         double y = msg->pose.pose.position.y;
         double z = msg->pose.pose.position.z;
-
+        /*
         UASLOG(s_logger,LL_DEBUG,"global local posi:"
                << " " << x << " " << y << " " << z);
-
+        */
         double qx = msg->pose.pose.orientation.x;
         double qy = msg->pose.pose.orientation.y;
         double qz = msg->pose.pose.orientation.z;
@@ -175,6 +226,8 @@ namespace UasCode{
                << " " << roll * RAD2DEG
                << " " << pitch * RAD2DEG
                << " " << yaw * RAD2DEG);
+
+        global_posi.cog= -yaw;
     }
 
     void MavrosListen::velCb(const geometry_msgs::Vector3Stamped::ConstPtr& msg)
@@ -182,13 +235,17 @@ namespace UasCode{
         double vx = msg->vector.x;
         double vy = msg->vector.y;
         double vz = msg->vector.z;
+
         UASLOG(s_logger,LL_DEBUG,"vecCb:"
                << " " << vx << " " << vy << " " << vz
               );
+
+        global_posi.speed = std::sqrt( vx*vx + vy*vy + vz*vz );
     }//velCb ends
 
     void MavrosListen::localCb(const geometry_msgs::PoseStamped::ConstPtr &msg)
     {
+        /*
         double local_x = msg->pose.position.x;
         double local_y = msg->pose.position.y;
         double local_z = msg->pose.position.z;
@@ -211,6 +268,7 @@ namespace UasCode{
                << " " << roll * RAD2DEG
                << " " << pitch * RAD2DEG
                << " " << yaw * RAD2DEG);
+               */
     }
 
     void MavrosListen::attCb(const sensor_msgs::Imu::ConstPtr &msg)
@@ -228,6 +286,10 @@ namespace UasCode{
                << " " << roll * RAD2DEG
                << " " << pitch * RAD2DEG
                << " " << yaw * RAD2DEG);
+
+        plane_att.roll = roll;
+        plane_att.pitch = pitch;
+        plane_att.yaw = -yaw;
     }//attCb ends
 
     void MavrosListen::wpsCb(const mavros::WaypointList::ConstPtr &msg )
@@ -243,6 +305,12 @@ namespace UasCode{
                   << waypoints[i].y_long << " "
                   << waypoints[i].z_alt);
         }
-     }//wpsCb
+    }//wpsCb
+
+    void MavrosListen::mission_currentCb(const std_msgs::UInt16::ConstPtr &msg)
+    {
+        seq_current = (int)msg->data;
+        //UASLOG(s_logger,LL_DEBUG,"mission_current:" << seq_current);
+    }
 
 }
