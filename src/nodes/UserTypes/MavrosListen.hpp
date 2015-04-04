@@ -22,8 +22,11 @@
 //#include "uascode/IfCollision.h"
 #include "uascode/WpNumber.h"
 //#include "uascode/ColliPoint.h"
+
 #include "mavros/Mavlink.h"
 #include "mavros/WaypointList.h"
+#include "mavros/State.h"
+
 #include "sensor_msgs/NavSatFix.h"
 #include "geometry_msgs/TwistStamped.h"
 #include "sensor_msgs/Imu.h"
@@ -82,6 +85,8 @@ private:
     bool if_inter_exist;
     int seq_current;
     int seq_inter;
+    std::string UavState;
+    bool if_posi_update;
 
     //to see if the sent waypoint was received
     bool if_receive;
@@ -130,6 +135,7 @@ private:
     ros::Subscriber sub_att;
     ros::Subscriber sub_wps;
     ros::Subscriber sub_wp_current;
+    ros::Subscriber sub_state;
     //service
     ros::ServiceClient client_wp_pull;
     ros::ServiceClient client_wp_push;
@@ -143,6 +149,7 @@ private:
     void attCb(const sensor_msgs::Imu::ConstPtr& msg);
     void wpsCb(const mavros::WaypointList::ConstPtr &msg);
     void mission_currentCb(const std_msgs::UInt16::ConstPtr &msg);
+    void stateCb(const mavros::State::ConstPtr &msg);
 
     void PullandSendWps();
     bool WaypointsPull();

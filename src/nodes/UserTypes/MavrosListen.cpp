@@ -32,6 +32,7 @@ namespace UasCode{
           sub_att= nh.subscribe("/mavros/imu/data",10,&MavrosListen::attCb,this);
           sub_wps= nh.subscribe("/mavros/mission/waypoints",10,&MavrosListen::wpsCb,this);
           sub_wp_current= nh.subscribe("/mavros/mission_current",10,&MavrosListen::mission_currentCb,this);
+          sub_state= nh.subscribe("/mavros/state",10,&MavrosListen::stateCb,this);
 
           //service
           client_wp_push = nh.serviceClient<mavros::WaypointPush>("/mavros/mission/push");
@@ -79,8 +80,10 @@ namespace UasCode{
       ros::Rate r(10);
       while(ros::ok())
       {
+         if_posi_update = false;
          //callback once
          ros::spinOnce();
+
          GetCurrentSt();
          //PullandSendWps();
          r.sleep();
@@ -89,7 +92,7 @@ namespace UasCode{
 
   void MavrosListen::GetCurrentSt()
   {
-      if( seq_current > 0 )
+      if( seq_current > 0 && if_posi_update && UavState == "AUTO.MISSION" )
       {
           st_current.t = Utils::GetTimeNow();
           st_current.lat= global_posi.lat;
@@ -191,7 +194,7 @@ namespace UasCode{
        global_posi.lat= msg->latitude;
        global_posi.lon= msg->longitude;
        global_posi.alt= msg->altitude;
-
+       if_posi_update = true;
        UASLOG(s_logger,LL_DEBUG,"global GCS:"
                  << msg->latitude <<" "
                  << msg->longitude<<" "
@@ -311,6 +314,11 @@ namespace UasCode{
     {
         seq_current = (int)msg->data;
         //UASLOG(s_logger,LL_DEBUG,"mission_current:" << seq_current);
+    }
+
+    void MavrosListen::stateCb(const mavros::State::ConstPtr &msg)
+    {
+        UavState = msg->mode;
     }
 
 }
