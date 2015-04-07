@@ -5,6 +5,8 @@
 //ros messages
 #include "yucong_rosmsg/MultiObsMsg2.h"
 #include "yucong_rosmsg/ObsMsg2.h"
+#include "std_msgs/UInt16.h"
+#include "mavros/State.h"
 
 #include <fstream>
 #include <map>
@@ -50,6 +52,7 @@ class ScaleObsFromFile{
     //variables
     std::vector<std::vector<UserStructs::obstacle3D> > all_obss;
     int seq_current;
+    std::string UavState;
     bool if_send_obstacle;
     bool if_mission;
 
@@ -58,7 +61,7 @@ class ScaleObsFromFile{
     void stateCb(const mavros::State::ConstPtr &msg);
 
     //other functions
-    yucong_msg::ObsMsg2 ObsToMsg2( const UserStructs::obstacle3D& obs );
+    yucong_rosmsg::ObsMsg2 ObsToMsg2( const UserStructs::obstacle3D& obs );
     int RandSelectVec( const std::vector<int>& vecs );
     std::string int2string( int _num );
     void LoadOffsetsSingle(const char *filename,int idx);

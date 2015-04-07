@@ -143,7 +143,7 @@ namespace UasCode{
 
     void ScaleObsFromFile::SendObss2(bool f1, bool f2, bool f3)
     {
-        yucong_msg::MultiObsMsg2 obss_msg;
+        yucong_rosmsg::MultiObsMsg2 obss_msg;
         ros::Rate r(10);
         int count = 0;
 
@@ -159,7 +159,7 @@ namespace UasCode{
         {
             ros::spinOnce();
             if( if_mission ){
-                if_start = ( seq_current > 0 );
+                if_start = ( seq_current > 0 && UavState == "AUTO.MISSION");
             }
 
             if( if_start && count != all_obss.size() )
@@ -171,9 +171,9 @@ namespace UasCode{
 
                 for( int j = 0; j != obss.size(); ++j )
                 {
-                   if( obss[j].address == vec_addr[0] && f1
-                     || obss[j].address == vec_addr[1] && f2
-                     || obss[j].address == vec_addr[2] && f3
+                   if( obss[j].address == vec_addrs[0] && f1
+                     || obss[j].address == vec_addrs[1] && f2
+                     || obss[j].address == vec_addrs[2] && f3
                      )
                    {
                        obss[j].t = Utils::GetTimeNow();
@@ -188,18 +188,51 @@ namespace UasCode{
 
                 ++ count;
                 sleep(1);
-
             }
 
-        }
+        }//while ros ends
 
     }
 
-    yucong_msg::ObsMsg2 ScaleObsFromFile::ObsToMsg2( const UserStructs::obstacle3D& obs )
+    void ScaleObsFromFile::LoadSendConfig(const char *cfg_file, const char *obs_file)
     {
-        uascode::ObsMsg2 obs_msg;
+       std::string file= Utils::FindPath()+"/recordsHIL/"+std::string(cfg_file);
+       std::ifstream config_file(file.c_str());
+
+       int count = 0;
+       std::string off0,off1,off2;
+       std::string type;
+       bool if0, if1, if2;
+
+       if(config_file.is_open()){
+           std::string line;
+           while(getline(config_file,line))
+           {
+               std::istringstream iss(line);
+               if(count==0){
+                  iss >> off0 >> off1 >> off2 >> type;
+               }
+
+               if(count==1){
+                  iss >> if0 >> if1 >> if2;
+               }
+               ++count;
+           }//while ends
+       }//if ends
+
+       this->LoadOffsets2(off0.c_str(),off1.c_str(),off2.c_str(),type.c_str());
+       this->ReadObss(obs_file);
+       this->SendObss2(if0,if1,if2);
+    }
+
+    yucong_rosmsg::ObsMsg2 ScaleObsFromFile::ObsToMsg2( const UserStructs::obstacle3D& obs )
+    {
+        yucong_rosmsg::ObsMsg2 obs_msg;
         obs_msg.address = obs.address;
-        Utils::FromUTM( obs.x1, obs.x2, obs_msg.lon, obs_msg.lat );
+        double lon, lat;
+        Utils::FromUTM( obs.x1, obs.x2, lon, lat );
+        obs_msg.lon = lon;
+        obs_msg.lat = lat;
         obs_msg.x3 = obs.x3;
         obs_msg.head_xy = obs.head_xy;
         obs_msg.speed = obs.speed;
@@ -219,6 +252,15 @@ namespace UasCode{
         return obs_msg;
     }
 
+    void ScaleObsFromFile::mission_currentCb(const std_msgs::UInt16::ConstPtr &msg)
+    {
+        seq_current = (int)msg->data;
+    }
+
+    void ScaleObsFromFile::stateCb(const mavros::State::ConstPtr &msg)
+    {
+        UavState = msg->mode;
+    }
 }
 
 

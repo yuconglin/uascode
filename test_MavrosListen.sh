@@ -12,3 +12,7 @@ gnome-terminal \
 				#rosrun uascode test_MavrosListen wp_r home_alt
 				rosrun uascode test_MavrosListen 25 690.15
 				exec bash\"" \
+        --tab --title "ScaleObsFromFile" --command "bash -c \"
+				env sleep 3s;
+				rosrun uascode test_scaleobsfile /recordsHIL/simuObsScaled.txt LoadSendConfigSimu.txt
+				exec bash\"" \

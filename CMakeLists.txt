@@ -91,7 +91,8 @@ add_library(common_utils
 	  src/common/UserTypes/MavlinkTCP.cpp
 	  src/common/UserTypes/MavlinkSender.cpp
           src/common/UserTypes/ObsFromFile.cpp
-          src/common/UserTypes/AdsbFromFile.cpp      
+          src/common/UserTypes/AdsbFromFile.cpp
+          src/common/UserTypes/ScaleObsFromFile.cpp
 	  )
 add_dependencies(common_utils
           uascode_generate_messages_cpp
@@ -195,6 +196,15 @@ target_link_libraries(test_obsfile
 	common_utils 
         ${catkin_LIBRARIES}
 	${GeographicLib_LIBRARIES}
+)
+
+#test scaled obs from file
+add_executable(test_obsscale src/common/UserTypes/test_scaleobsfile.cpp)
+add_dependencies(test_obsscale common_utils)
+target_link_libraries(test_obsscale
+        common_utils
+        ${catkin_LIBRARIES}
+        ${GeographicLib_LIBRARIES}
 )
 
 #test adsb from file
@@ -307,3 +317,5 @@ target_link_libraries(obss_whole
                       ${ARMADILLO_LIBRARIES}
                       ${GeographicLib_LIBRARIES}
 )
+
+#to scale obstacles
