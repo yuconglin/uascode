@@ -322,7 +322,7 @@ target_link_libraries(obss_whole
 add_executable(scale_obs src/common/Test/ScaleObs.cpp)
 add_dependencies(scale_obs common_utils)
 target_link_libraries(scale_obs
-                      commont_utils
+                      common_utils
                       ${ARMADILLO_LIBRARIES}
                       ${GeographicLib_LIBRARIES}
 )
