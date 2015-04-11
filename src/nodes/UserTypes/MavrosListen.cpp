@@ -18,12 +18,15 @@
 #include "common/Utils/UTMtransform.h"
 #include "common/Utils/FindPath.h"
 
+//ros messages
+#include "yucong_rosmsg/MultiObsMsg2.h"
+
 namespace {
     Utils::LoggerPtr s_logger(Utils::getLogger("uascode.MavrosListen.YcLogger"));
 }
 
 namespace UasCode{
-  MavrosListen::MavrosListen():IfPullSent(false),PullSuccess(false)
+  MavrosListen::MavrosListen():IfPullSent(false),PullSuccess(false),if_obss_update(false)
   {
           sub_posi= nh.subscribe("/mavros/global_position/global",10,&MavrosListen::posiCb,this);
           sub_posi_local= nh.subscribe("/mavros/global_position/local",10,&MavrosListen::posiLocalCb,this);
@@ -33,10 +36,49 @@ namespace UasCode{
           sub_wps= nh.subscribe("/mavros/mission/waypoints",10,&MavrosListen::wpsCb,this);
           sub_wp_current= nh.subscribe("/mavros/mission_current",10,&MavrosListen::mission_currentCb,this);
           sub_state= nh.subscribe("/mavros/state",10,&MavrosListen::stateCb,this);
+          sub_obss= nh.subscribe("/mavros/multi_obstacles",10,&MavrosListen::obssCb,this);
 
           //service
           client_wp_push = nh.serviceClient<mavros::WaypointPush>("/mavros/mission/push");
           client_wp_pull = nh.serviceClient<mavros::WaypointPull>("/mavros/mission/pull");
+
+          wp_r = 25;
+          thres_ratio = 1.0;
+
+          seq_current= -1;
+          seq_inter= 0;
+          if_inter_gen= false;
+          if_gen_success = false;
+          if_inter_exist= false;
+          if_obss_update= false;
+
+          //parameters for the navigator
+          double _Tmax= 6.79*CONSTANT_G;
+          //double _Muav= 29.2; //kg
+          double _Muav= 0.453592*13;
+          double myaw_rate= 20./180*M_PI;
+          double mpitch_rate= 10./180*M_PI;
+          double _max_speed= 15; //m/s
+          double _min_speed= 10; //m/s
+          double _max_pitch= 25./180*M_PI;
+          double _min_pitch= -20./180*M_PI;
+
+          dt= 1.;
+          double _speed_trim= _max_speed;
+          //set
+          path_gen.NavUpdaterParams(_Tmax,mpitch_rate,myaw_rate,_Muav,_max_speed,_min_speed,_max_pitch,_min_pitch);
+
+          std::string param_file = Utils::FindPath()+"parameters/parameters_sitl.txt";
+          path_gen.NavTecsReadParams(param_file.c_str());
+          path_gen.NavL1SetRollLim(40./180*M_PI);
+          path_gen.NavSetDt(dt);
+          path_gen.NavSetSpeedTrim(_speed_trim);
+
+          //set sampler parameters
+          path_gen.SetSampler(new UserTypes::SamplerPole() );
+
+          //initialize helpers
+          this->helpers = NULL;
   }
 
   MavrosListen::~MavrosListen(){
@@ -77,14 +119,26 @@ namespace UasCode{
 
   void MavrosListen::working()
   {
+      situ = NORMAL;
       ros::Rate r(10);
+
       while(ros::ok())
       {
          if_posi_update = false;
+         if_obss_update = false;
          //callback once
          ros::spinOnce();
+         PrintSitu();
 
+         //check collision in 30 seconds
          GetCurrentSt();
+         GetObssDis();
+         SetHelpers();
+
+         int if_colli = PredictColliNode2(st_current,seq_current,30,thres_ratio,colli_return);
+         UASLOG(s_logger,LL_DEBUG,"PredictColliNode: "<< if_colli);
+
+
          //PullandSendWps();
          r.sleep();
       }
@@ -187,6 +241,79 @@ namespace UasCode{
       }
 
 
+  }
+
+  void MavrosListen::PrintSitu()
+  {
+      switch(situ){
+      case NORMAL:{
+          UASLOG(s_logger,LL_DEBUG, "situ:NORMAL" << '\n');
+          break;
+      }
+      case PATH_READY:{
+          UASLOG(s_logger,LL_DEBUG, "situ: PATH_READY" << '\n');
+          break;
+      }
+      case PATH_GEN:{
+          UASLOG(s_logger,LL_DEBUG, "situ: PATH_GEN" << '\n');
+          break;
+      }
+      case PATH_CHECK:{
+          UASLOG(s_logger,LL_DEBUG, "situ: PATH_CHECK" << '\n');
+          break;
+      }
+      default:
+          break;
+      }
+  }
+
+  void MavrosListen::GetObssDis()
+  {
+      /*
+      if(!obss.empty() )
+      {
+          std::ostringstream oss;
+          oss<< "obss dis:";
+          for(int i=0;i!= obss.size();++i)
+          {
+              double dis= std::sqrt(pow(st_current.x-obss[i].x1,2)
+                                    +pow(st_current.y-obss[i].x2,2) );
+              double dis_h= fabs(obss[i].x3-st_current.z);
+              oss << " " << dis <<" "<< dis_h;
+
+              if(dis < obss[i].r || dis_h < obss[i].hr )
+                  if_fail = true;
+          }
+          UASLOG(s_logger,LL_DEBUG,oss.str() );
+      }*/
+      if(!obss.empty() )
+      {
+          std::ostringstream oss;
+          for(int i=0;i!= obss.size();++i)
+          {
+              double dis= std::sqrt(pow(st_current.x-obss[i].x1,2)
+                                    +pow(st_current.y-obss[i].x2,2) );
+              double dis_h= fabs(obss[i].x3-st_current.z);
+              double dis_total= std::sqrt(dis*dis+dis_h*dis_h);
+              oss << (int)obss[i].address <<" " << dis <<" "<< dis_h<<" "<< dis_total <<'\n';
+          }
+          obdis_log << oss.str();
+      }
+  }
+
+  void MavrosListen::SetHelpers()
+  {
+      delete helpers;
+      helpers = new std::vector< ObsHelper >();
+      for(int i = 0; i!= obss.size(); ++i){
+          if( if_obss_update ){
+            obss[i].r *= thres_ratio;
+          }
+          helpers -> push_back(ObsHelper(obss[i],dt) );
+      }
+      //set helpers
+      path_gen.NavSetHelpers(helpers);
+      path_gen.NavSetIfSet( false );
   }
 
   void MavrosListen::posiCb(const sensor_msgs::NavSatFix::ConstPtr& msg)
@@ -319,6 +446,43 @@ namespace UasCode{
     void MavrosListen::stateCb(const mavros::State::ConstPtr &msg)
     {
         UavState = msg->mode;
+    }
+
+    void MavrosListen::obssCb(const yucong_rosmsg::MultiObsMsg2::ConstPtr &msg)
+    {
+        obss.clear();
+        for( int i = 0; i != msg->MultiObs.size(); ++i )
+        {
+            double lat = msg->MultiObs[i].lat;
+            double lon = msg->MultiObs[i].lon;
+            double x1, x2;
+            Utils::ToUTM(lon,lat,x1,x2);
+
+            UserStructs::obstacle3D obs3d(
+                        msg->MultiObs[i].address,
+                        x1,
+                        x2,
+                        msg->MultiObs[i].head_xy,
+                        msg->MultiObs[i].speed,
+                        msg->MultiObs[i].x3,
+                        msg->MultiObs[i].v_vert,
+                        msg->MultiObs[i].t,
+                        msg->MultiObs[i].r,0,
+                        msg->MultiObs[i].hr,0);
+
+            UASLOG(s_logger,LL_DEBUG,"obstacle: "
+                   << std::setprecision(4) << std::fixed << msg->MultiObs[i].address<< " "
+                   << obs3d.t <<" "
+                   << obs3d.x1 <<" "
+                   << obs3d.x2 <<" "
+                   << obs3d.x3 <<" "
+                   << obs3d.speed <<" "
+                   << obs3d.head_xy*180./M_PI <<" "
+                   << obs3d.v_vert);
+
+            obss.push_back(obs3d);
+        }//for ends
+        if_obss_update = true;
     }
 
 }

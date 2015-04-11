@@ -136,6 +136,7 @@ private:
     ros::Subscriber sub_wps;
     ros::Subscriber sub_wp_current;
     ros::Subscriber sub_state;
+    ros::Subscriber sub_obss;
     //service
     ros::ServiceClient client_wp_pull;
     ros::ServiceClient client_wp_push;
@@ -158,6 +159,7 @@ private:
     void GetCurrentSt();
     void GetObssDis();
     void SetHelpers();
+    void PrintSitu();
 
     int PredictColliNode2(UserStructs::PlaneStateSim &st_current,int seq_current,double t_limit,double thres_ratio,UserStructs::PredictColliReturn& colli_return);
 
