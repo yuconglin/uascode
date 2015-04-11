@@ -7,6 +7,7 @@ namespace mavplugin {
   class MultiAdsb3Plugin:public MavRosPlugin{
   public:
       MultiAdsb3Plugin():
+          adsb3_nh("~"),
           uas(nullptr)
       {}
 
@@ -22,7 +23,9 @@ namespace mavplugin {
       }
 
       const message_map get_rx_handlers() {
-          return {/*Rx disabled */ };
+          return {/*Rx disabled */
+                  MESSAGE_HANDLER(MAVLINK_MSG_ID_MULTI_ADSB3, &MultiAdsb3Plugin::handle_multi_adsb3)
+          };
       }
 
   private:
@@ -60,14 +63,21 @@ namespace mavplugin {
 
           mavlink_message_t msg;
           mavlink_msg_multi_adsb3_encode_chan(UAS_PACK_CHAN(uas), &msg, &adsb_obss);
-          UAS_FCU(uas)->send_message(&msg);
+          //UAS_FCU(uas)->send_message(&msg);
+          UAS_GCS(uas)->send_message(&msg);
       }
 
-      void adsb3_cb(const yucong_rosmsg::MultiObsMsg2::ConstPtr &msg) {
-          std::cout <<"adsb3_cb" << "/n";
+      void adsb3_cb(const yucong_rosmsg::MultiObsMsg2::ConstPtr &msg)
+      {
+          //std::cout << "adsb3_cb" << '\n';
           yucong_rosmsg::MultiObsMsg2 obss_msg2;
           obss_msg2.MultiObs= msg->MultiObs;
           send_obss3(obss_msg2);
+      }
+
+      void handle_multi_adsb3(const mavlink_message_t *msg, uint8_t sysid, uint8_t compid)
+      {
+          //std::cout << "multi_adsb3 received" << '\n';
       }
   };
 }//namespace ends
