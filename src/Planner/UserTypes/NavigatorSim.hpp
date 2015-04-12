@@ -14,6 +14,8 @@
 #include "Planner/UserTypes/ObsHelper.hpp"
 #include "nodes/UserStructs/GoalSetPt.h"
 
+#include "mavros/Waypoint.h"
+
 namespace UasCode{
 
 class NavigatorSim{
@@ -89,6 +91,15 @@ class NavigatorSim{
                       UserStructs::SpaceLimit spacelimit,
                       int seq_current, double t_limit,
                       double thres_ratio, UserStructs::PredictColliReturn& colli_return);
+
+   bool PredictColli3(UserStructs::PlaneStateSim &st_current,
+                      std::vector< mavros::Waypoint > waypoints,
+                      std::vector< UserStructs::obstacle3D >& obstacles,
+                      UserStructs::SpaceLimit spacelimit,
+                      int seq_current,
+                      double t_limit,
+                      double thres_ratio,
+                      UserStructs::PredictColliReturn& colli_return);
 
    double GetMaxPitch(){return updater.GetMaxPitch();}
 

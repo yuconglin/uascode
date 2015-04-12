@@ -5,7 +5,6 @@
 //user structs
 #include "Planner/UserStructs/PlaneStateSim.h"
 //#include "Planner/UserStructs/obstacle3D.h"
-//#include "Planner/UserStructs/MissionSimFlagPt.h"
 #include "nodes/UserStructs/GlobalPosi.h"
 #include "nodes/UserStructs/PlaneAtt.h"
 #include "nodes/UserStructs/GoalSetPt.h"
@@ -15,13 +14,9 @@
 #include "uascode/GlobalPos.h" //next to create the ros msgs
 #include "uascode/PlaneAttitude.h"
 #include "uascode/MultiObsMsg.h"
-//#include "uascode/IfRecMsg.h"
 #include "uascode/AccelXYZ.h"
 #include "uascode/WpCurrent.h"
-//#include "uascode/IfMavlinkGood.h"
-//#include "uascode/IfCollision.h"
 #include "uascode/WpNumber.h"
-//#include "uascode/ColliPoint.h"
 
 #include "mavros/Mavlink.h"
 #include "mavros/WaypointList.h"
@@ -50,6 +45,7 @@ public:
     void SetTimeLimit(const double _t_limit);
     inline void SetWpR(const double _r){this->wp_r= _r;}
     inline void SetHomeAlt(const double _alt){home_alt= _alt;}
+    inline void SetTimeLimit(const double _t_limit){this->t_limit = _t_limit;}
 
     //load trajectory log file
     void SetLogFileName(const char* filename);
@@ -100,7 +96,12 @@ private:
     bool PullSuccess;
     //pulled waypoints
     std::vector< mavros::Waypoint > waypoints;
-
+    //waypoints flags
+    std::vector< bool > flags;
+    //intermediate waypoint
+    mavros::Waypoint wp_inter;
+    //predicted collision point
+    uascode::ColliPoint colli_pt;
     //obstacles
     std::vector<UserStructs::obstacle3D> obss;
     //geofence/spacelimit
@@ -161,8 +162,9 @@ private:
     void SetHelpers();
     void PrintSitu();
 
-    int PredictColliNode2(UserStructs::PlaneStateSim &st_current,int seq_current,double t_limit,double thres_ratio,UserStructs::PredictColliReturn& colli_return);
-
+    int PredictColliNode3(UserStructs::PlaneStateSim &st_current,int seq_current,double t_limit,double thres_ratio,UserStructs::PredictColliReturn& colli_return);
+    void MavrosWpToMissionPt(const Mavros::waypoint &wp, UserStructs::MissionSimPt& pt);
+    void SendWaypoints();
     void PrintSitu();
 };
 

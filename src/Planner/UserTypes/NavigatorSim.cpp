@@ -614,6 +614,60 @@ bool NavigatorSim::PredictColli2(UserStructs::PlaneStateSim &st_current,
     return false;
 }
 
+bool NavigatorSim::PredictColli3(UserStructs::PlaneStateSim &st_current, std::vector<mavros::Waypoint> waypoints, std::vector<UserStructs::obstacle3D> &obstacles, UserStructs::SpaceLimit spacelimit, int seq_current, double t_limit, double thres_ratio, UserStructs::PredictColliReturn &colli_return)
+{
+    //true:collision, false:no collision
+    UserStructs::PlaneStateSim st_start= st_current, st_next;
+    arma::vec::fixed<2> pt_start;
+    UserStructs::MissionSimPt pt_target;
+    double length=0;
+    double t_left;
+    int result;
+    int obs_idx = -1;
+
+    for( int i = seq_current; i != waypoints.size(); ++i )
+    {
+        if( i == 0 ){
+            pt_start << st_current.lat << st_current.lon;
+        }
+        else{
+            pt_start << waypoints[i-1].x_lat << waypoints[i-1].y_long;
+        }
+
+        pt_target.lat = waypoints[i].x_lat;
+        pt_target.lon = waypoints[i].y_long;
+        pt_target.alt = waypoints[i].z_alt;
+        pt_target.yaw = 0.0;
+        pt_target.r = 25;
+        pt_target.h_rec = 200;
+        pt_target.v_rec = 150;
+        pt_target.alt_rec = 10;
+        pt_target.GetUTM();
+
+        result = PropWpCheckTime( st_start, st_next, pt_start, pt_target, obstacles, spacelimit, length, t_limit, t_left, 1, thres_ratio, obs_idx);
+
+        if(result == -1){
+            colli_return.seq_colli= i;
+            colli_return.time_colli = st_next.t-st_current.t;
+            colli_return.x_colli= st_next.x;
+            colli_return.y_colli= st_next.y;
+            colli_return.z_colli= st_next.z;
+            colli_return.obs_id = obs_idx;
+            return true;
+        }
+
+        if(result == 2) {
+            return false;
+        }
+
+        t_limit= t_left;
+        st_start= st_next;
+
+    }// for int i ends
+
+    return false;
+}
+
 void NavigatorSim::CopyStatesRec(std::vector<UserStructs::PlaneStateSim>& copy_rec)
 {
     copy_rec= states_rec;

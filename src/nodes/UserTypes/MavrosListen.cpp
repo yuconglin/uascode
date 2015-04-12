@@ -42,8 +42,18 @@ namespace UasCode{
           client_wp_push = nh.serviceClient<mavros::WaypointPush>("/mavros/mission/push");
           client_wp_pull = nh.serviceClient<mavros::WaypointPull>("/mavros/mission/pull");
 
+          wp_inter.frame= 0;
+          wp_inter.command= 16;
+          wp_inter.is_current= false;
+          wp_inter.autocontinue= true;
+          wp_inter.param1= 0;
+          wp_inter.param2= 25;
+          wp_inter.param3= -0.0;
+          wp_inter.param4= 0;
+
           wp_r = 25;
           thres_ratio = 1.0;
+          t_limit = 1.;
 
           seq_current= -1;
           seq_inter= 0;
@@ -135,14 +145,256 @@ namespace UasCode{
          GetObssDis();
          SetHelpers();
 
-         int if_colli = PredictColliNode2(st_current,seq_current,30,thres_ratio,colli_return);
-         UASLOG(s_logger,LL_DEBUG,"PredictColliNode: "<< if_colli);
+         if( waypoints.empty() ){
+             WaypointsPull();
+         }
 
+         int if_colli = PredictColliNode3(st_current,seq_current,30,thres_ratio,colli_return);
+         UASLOG(s_logger,LL_DEBUG,"PredictColliNode: "<< if_colli);
+         UASLOG(s_logger,LL_DEBUG,"waypoints number: " << waypoints.size() );
+
+         if(if_colli==1)
+         {
+
+             UASLOG(s_logger,LL_DEBUG,"predict: "<< "seq:"<< colli_return.seq_colli<< " "
+                    << "time:"<< colli_return.time_colli<<" "
+                    << std::setprecision(7)<< std::fixed
+                    << "x_colli:"<< colli_return.x_colli << " "
+                    << "y_colli:"<< colli_return.y_colli << " "
+                    << "z_colli:"<< colli_return.z_colli << " "
+                    << "obstacle idx:"<< colli_return.obs_id);
+
+             double w_x = st_current.x;
+             double w_y = st_current.y;
+             double w_z = st_current.z;
+
+             double dis_c2d = std::sqrt(pow(w_x-colli_return.x_colli,2)+pow(w_y-colli_return.y_colli,2));
+             double dis_cz = std::abs(w_z-colli_return.z_colli);
+             UASLOG(s_logger,LL_DEBUG,"colli dis:"<< dis_c2d <<" "<< dis_cz);
+
+             if(situ== NORMAL || situ== PATH_GEN )
+             {
+                 double c_lat, c_lon;
+                 Utils::FromUTM(colli_return.x_colli,colli_return.y_colli,c_lon,c_lat);
+                 colli_pt.lat = c_lat;
+                 colli_pt.lon = c_lon;
+                 UASLOG(s_logger,LL_DEBUG,"colli_point:"<< std::setprecision(6)<< std::fixed << colli_pt.lat <<" "<< colli_pt.lon);
+                 colli_pt.alt = colli_return.z_colli;
+             }
+
+             //see if the colli point is too close to the sample root
+             double rho= this->path_gen.GetTurnRadius();
+             double obs_r= obss[0].r;
+             double allow_dis = std::sqrt(pow(rho+obs_r,2)-pow(rho,2));
+             UASLOG(s_logger,LL_DEBUG,
+                    "allow_dis:" << allow_dis << ' '
+                    << "rho:"<< rho << ' '
+                    << "obs_r:"<< obs_r);
+
+             if(seq_inter == seq_current-1 && if_gen_success){
+                 if_gen_success = false;
+             }
+
+             if(dis_c2d < allow_dis)
+             {
+                 if( !if_inter_gen && !if_gen_success ){
+                    UASLOG(s_logger,LL_DEBUG,"local avoidance");
+                    for(int i = colli_return.seq_colli-1; i != 0; --i)
+                    {
+                        if(!flags[i]){
+                            seq_inter = i + 1;
+                            UASLOG(s_logger,LL_DEBUG,"seq_inter:" << seq_inter );
+                            break;
+                        }
+                    }
+
+                    if(colli_return.seq_colli == 0){
+                        seq_inter = 0;
+                    }
+
+                    wp_inter.x_lat = colli_pt.lat;
+                    wp_inter.y_long = colli_pt.lon;
+                    wp_inter.z_alt = obss[colli_return.obs_id].x3 + obss[colli_return.obs_id].v_vert*colli_return.time_colli + 1.5*obss[colli_return.obs_id].hr;
+
+                    if( flags[seq_inter] )
+                        if_inter_exist= true;
+                        waypoints.erase( waypoints.begin() + seq_inter );
+                        flags.erase( flags.begin() + seq_inter );
+                    }
+                    else{
+                        if_inter_exist= false;
+                    }
+
+                    waypoints.insert( waypoints.begin() + seq_inter, wp_inter );
+                    flags.insert( flags.begin() + seq_inter, true );
+                    if_inter_gen = true;
+
+                    situ= PATH_READY;
+                }
+             }
+             else
+             {
+                 UASLOG(s_logger,LL_DEBUG,"global avoidance");
+                 if(situ== NORMAL)
+                 {
+                    situ= PATH_GEN;
+                    if_inter_gen= false;
+                }
+             }
+
+         }//if_colli == 1 ends
+
+         switch(situ){
+
+         case PATH_GEN:
+         {
+             UASLOG(s_logger,LL_DEBUG,"planning");
+             if_gen_success = false;
+             path_gen.SetInitState(st_current.SmallChange(t_limit));
+             //get the start and goal for the sample
+             int idx_end = 0;
+             int idx_start = seq_current;//end and start of must go-through waypoint between current position and the goal
+
+             //set path goal
+             for(int i = colli_return.seq_colli; i != waypoints.size(); ++i )
+             {
+                 if( !flags[i] )
+                 {
+                     UserStructs::MissionSimPt pt;
+                     MavrosWpToMissionPt( waypoints[i], pt );
+                     path_gen.SetGoalWp( pt );
+                     UASLOG(s_logger,LL_DEBUG,"flag i="<<" "<< i);
+                     idx_end= i-1;
+                     break;
+                 }
+             }//for ends
+
+             //set path start
+             for(int i = colli_return.seq_colli - 1; i != 0; --i)
+             {
+                 if( !flags[i] )
+                 {
+                     UserStructs::MissionSimPt pt;
+                     MavrosWpToMissionPt( waypoints[i], pt );
+                     path_gen.SetStartWp( pt );
+                     seq_inter = i + 1;
+                     break;
+                 }
+             }
+
+             //set begin waypoint for navigation
+             UserStructs::MissionSimPt pt;
+             MavrosWpToMissionPt( waypoints[seq_current-1], pt );
+             path_gen.SetBeginWp( pt );
+
+             if(colli_return.seq_colli == seq_current+1)
+             {
+                if( flags[seq_current] ){
+                    path_gen.SetSampleStart(st_current.x, st_current.y, st_current.z);
+                }
+                else
+                {
+                    double x, y;
+                    Utils::ToUTM(waypoints[seq_current].lon, waypoints[seq_current].lat, x, y);
+                    path_gen.SetSampleStart(x,y,waypoints[seq_current].z_alt);
+                }
+             }
+
+             if(colli_return.seq_colli > seq_current + 1)
+             {
+                int c_id;
+                if( flags[colli_return.seq_colli-1] )
+                {
+                    c_id = colli_return.seq_colli - 2;
+                }
+                else
+                {
+                    c_id = colli_return.seq_colli - 1;
+                }
+                double x, y;
+                Utils::ToUTM(waypoints[c_id].lon, waypoints[c_id].lat, x, y);
+                path_gen.SetSampleStart(x,y,waypoints[c_id].z_alt);
+             }
+
+             path_gen.SetSampleParas();
+
+             //get must go-through in-between waypoints
+             std::vector< UserStructs::MissionSimPt > wpoints;
+             UASLOG(s_logger,LL_DEBUG,"idx_start:"<< idx_start
+                    << " "<<"idx_end:"<< idx_end);
+             for(int i = idx_start; i < idx_end; ++i)
+             {
+                 UserStructs::MissionSimPt pt;
+                 MavrosWpToMissionPt( waypoints[i], pt );
+                 wpoints.push_back( pt );
+             }
+             path_gen.SetBetweenWps( wpoints );
+
+             //to generate feasible paths
+             if ( path_gen.AddPaths() > 0 )
+                 situ= PATH_CHECK;
+             else{
+                 UASLOG(s_logger,LL_DEBUG,"no path, try again");
+             }
+
+         }
+             break;
+         case PATH_CHECK:
+         {
+             UserStructs::MissionSimPt inter_wp;
+             UASLOG(s_logger,LL_DEBUG,"path check");
+             if( path_gen.PathCheckRepeat(st_current) )
+             {
+                 UASLOG(s_logger,LL_DEBUG,"check ok, yes waypoint");
+                 inter_wp = path_gen.GetInterWp();
+
+                 if_inter_exist = false;
+                 wp_inter.x_lat = inter_wp.lat;
+                 wp_inter.y_long = inter_wp.lon;
+                 wp_inter.z_alt = inter_wp.alt;
+
+                 UASLOG(s_logger,LL_DEBUG,"wp generated:"
+                        << inter_wp.lat << " "
+                        << inter_wp.lon << " "
+                        << inter_wp.alt);
+
+                 if( flags[seq_inter] ){
+                    if_inter_exist = true;
+                    waypoints.erase( waypoints.begin() + seq_inter );
+                    flags.erase( flags.begin() + seq_inter );
+                    UASLOG(s_logger,LL_DEBUG,"inter wp exist");
+                 }
+                 else{
+                    if_inter_exist = false;
+                 }
+                 UASLOG(s_logger,LL_DEBUG,"seq_inter:" << seq_inter);
+                 waypoints.insert( waypoints.begin() + seq_inter, wp_inter);
+                 flags.insert( flags.begin() + seq_inter, true );
+                 if_inter_gen = true;
+                 if_gen_success = true;
+                 situ = PATH_READY;
+             }
+             else {
+                 UASLOG(s_logger,LL_DEBUG,"No waypoint, retry");
+                 situ= PATH_GEN;
+             }
+         }
+             break;
+         case PATH_READY:
+         {
+             SendWaypoints();
+         }
+             break;
+
+         default:
+             break;
+         }//switch(situ) ends
 
          //PullandSendWps();
          r.sleep();
-      }
-  }
+      }//while ends
+
+  }//working
 
   void MavrosListen::GetCurrentSt()
   {
@@ -194,6 +446,7 @@ namespace UasCode{
       mavros::WaypointPull wp_pull_srv;
       client_wp_pull.call( wp_pull_srv );
       PullSuccess = wp_pull_srv.response.success;
+      return PullSuccess;
   }
 
   void MavrosListen::PullandSendWps()
@@ -316,6 +569,32 @@ namespace UasCode{
       path_gen.NavSetIfSet( false );
   }
 
+  void MavrosListen::MavrosWpToMissionPt(const Mavros::waypoint &wp, UserStructs::MissionSimPt& pt)
+  {
+      pt.lat = wp.x_lat;
+      pt.lon = wp.y_long;
+      pt.alt = wp.z_alt;
+      pt.yaw = 0.0;
+      pt.r = 25;
+      pt.h_rec = 200;
+      pt.v_rec = 150;
+      pt.alt_rec = 10;
+      pt.GetUTM();
+  }
+
+  void MavrosListen::SendWaypoints()
+  {
+      mavros::WaypointPush wp_push_srv;
+      wp_push_srv.request.waypoints = waypoints;
+      client_wp_push.call(wp_push_srv);
+      if(wp_push_srv.response.success)
+      {
+          UASLOG(s_logger,LL_DEBUG,"new waypoints sent");
+          situ = NORMAL;
+          if_inter_gen = false;
+      }
+  }
+
   void MavrosListen::posiCb(const sensor_msgs::NavSatFix::ConstPtr& msg)
     {
        global_posi.lat= msg->latitude;
@@ -425,6 +704,7 @@ namespace UasCode{
     void MavrosListen::wpsCb(const mavros::WaypointList::ConstPtr &msg )
     {
         waypoints = msg->waypoints;
+        flags.clear();
         for( int i = 0; i != waypoints.size(); ++i )
         {
            UASLOG(s_logger,LL_DEBUG,"waypoints:" << " " << i << " "
@@ -434,6 +714,7 @@ namespace UasCode{
                   << waypoints[i].x_lat << " "
                   << waypoints[i].y_long << " "
                   << waypoints[i].z_alt);
+           flags.push_back( false );
         }
     }//wpsCb
 
