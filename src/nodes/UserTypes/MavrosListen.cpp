@@ -134,7 +134,6 @@ namespace UasCode{
 
       while(ros::ok())
       {
-         if_posi_update = false;
          if_obss_update = false;
          //callback once
          ros::spinOnce();
@@ -156,7 +155,7 @@ namespace UasCode{
          if(if_colli==1)
          {
 
-             UASLOG(s_logger,LL_DEBUG,"predict: "<< "seq:"<< colli_return.seq_colli<< " "
+             UASLOG(s_logger,LL_DEBUG,"predict: "<< "seq:"<< colli_return.seq_colli << " "
                     << "time:"<< colli_return.time_colli<<" "
                     << std::setprecision(7)<< std::fixed
                     << "x_colli:"<< colli_return.x_colli << " "
@@ -286,6 +285,11 @@ namespace UasCode{
              UserStructs::MissionSimPt pt;
              MavrosWpToMissionPt( waypoints[seq_current-1], pt );
              path_gen.SetBeginWp( pt );
+
+             if(colli_return.seq_colli == seq_current)
+             {
+                path_gen.SetSampleStart(st_current.x, st_current.y, st_current.z);
+             }
 
              if(colli_return.seq_colli == seq_current+1)
              {
@@ -593,6 +597,31 @@ namespace UasCode{
           situ = NORMAL;
           if_inter_gen = false;
       }
+  }
+
+  int MavrosListen::PredictColliNode3(UserStructs::PlaneStateSim &st_current,int seq_current,double t_limit,double thres_ratio,UserStructs::PredictColliReturn& colli_return)
+  {
+      if( seq_current < 0 ){
+         return -1;
+      }
+
+      NavigatorSim* navigator_pt= path_gen.NavigatorPt();
+
+      UASLOG(s_logger,LL_DEBUG,"predict colli starts");
+      UASLOG(s_logger,LL_DEBUG,"WayPoints size: " << waypoints.size() );
+      std::ostringstream oss;
+      for(int i=0;i!= waypoints.size();++i)
+          oss << i<<":"
+              << std::setprecision(7)<< std::fixed
+              << waypoints[i].x_lat <<" "
+              << waypoints[i].x_long <<" "
+              << waypoints[i].z_alt << '\n';
+
+      UASLOG(s_logger,LL_DEBUG,oss.str());
+
+      bool tt= navigator_pt->PredictColli3(st_current,waypoints,obss,spLimit,seq_current,t_limit,thres_ratio,colli_return);
+
+      return (tt ? 1:0);
   }
 
   void MavrosListen::posiCb(const sensor_msgs::NavSatFix::ConstPtr& msg)
