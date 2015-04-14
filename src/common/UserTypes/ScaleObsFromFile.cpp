@@ -153,7 +153,7 @@ namespace UasCode{
             vec_addrs.push_back(it->first);
         }
 
-        bool if_start = true;
+        bool if_start = false;
 
         while( ros::ok() )
         {

@@ -31,5 +31,7 @@ int main(int argc, char** argv)
     std::string traj_file = Utils::FindPath()+"recordsHIL/traj_log.txt";
     mav_listen.SetLogFileName(traj_file.c_str());
 
+    std::string obdis_file = Utils::FindPath() + "recordsHIL/obdis_log.txt";
+    mav_listen.SetObsDisFile( obdis_file.c_str() );
     mav_listen.working();
 }

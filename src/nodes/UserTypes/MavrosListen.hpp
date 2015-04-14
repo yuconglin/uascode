@@ -17,9 +17,11 @@
 #include "uascode/AccelXYZ.h"
 #include "uascode/WpCurrent.h"
 #include "uascode/WpNumber.h"
+#include "uascode/ColliPoint.h"
 
 #include "mavros/Mavlink.h"
 #include "mavros/WaypointList.h"
+#include "mavros/Waypoint.h"
 #include "mavros/State.h"
 
 #include "sensor_msgs/NavSatFix.h"
@@ -33,6 +35,7 @@
 #include "geometry_msgs/PoseWithCovarianceStamped.h"
 
 #include "ros/ros.h"
+#include "yucong_rosmsg/MultiObsMsg2.h"
 
 namespace UasCode{
 
@@ -45,7 +48,6 @@ public:
     void SetTimeLimit(const double _t_limit);
     inline void SetWpR(const double _r){this->wp_r= _r;}
     inline void SetHomeAlt(const double _alt){home_alt= _alt;}
-    inline void SetTimeLimit(const double _t_limit){this->t_limit = _t_limit;}
 
     //load trajectory log file
     void SetLogFileName(const char* filename);
@@ -100,12 +102,11 @@ private:
     std::vector< bool > flags;
     //intermediate waypoint
     mavros::Waypoint wp_inter;
-    //predicted collision point
-    uascode::ColliPoint colli_pt;
     //obstacles
     std::vector<UserStructs::obstacle3D> obss;
     //geofence/spacelimit
     UserStructs::SpaceLimit spLimit;
+    uascode::ColliPoint colli_pt;
 
     //time limit for planning
     double t_limit;
@@ -137,13 +138,12 @@ private:
     ros::Subscriber sub_wps;
     ros::Subscriber sub_wp_current;
     ros::Subscriber sub_state;
-    ros::Subscriber sub_obss;
     //service
     ros::ServiceClient client_wp_pull;
     ros::ServiceClient client_wp_push;
 
     //callback functions
-    void obssCb(const uascode::MultiObsMsg::ConstPtr& msg);
+    void obssCb(const yucong_rosmsg::MultiObsMsg2::ConstPtr& msg);
     void posiCb(const sensor_msgs::NavSatFix::ConstPtr& msg);
     void posiLocalCb(const geometry_msgs::PoseWithCovarianceStamped::ConstPtr& msg);
     void velCb(const geometry_msgs::Vector3Stamped::ConstPtr& msg);
@@ -163,9 +163,8 @@ private:
     void PrintSitu();
 
     int PredictColliNode3(UserStructs::PlaneStateSim &st_current,int seq_current,double t_limit,double thres_ratio,UserStructs::PredictColliReturn& colli_return);
-    void MavrosWpToMissionPt(const Mavros::waypoint &wp, UserStructs::MissionSimPt& pt);
+    void MavrosWpToMissionPt(const mavros::Waypoint &wp, UserStructs::MissionSimPt& pt);
     void SendWaypoints();
-    void PrintSitu();
 };
 
 }

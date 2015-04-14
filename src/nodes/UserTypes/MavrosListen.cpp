@@ -144,7 +144,8 @@ namespace UasCode{
          GetObssDis();
          SetHelpers();
 
-         if( waypoints.empty() ){
+         if( waypoints.empty() )
+         {
              WaypointsPull();
          }
 
@@ -190,13 +191,15 @@ namespace UasCode{
                     << "rho:"<< rho << ' '
                     << "obs_r:"<< obs_r);
 
-             if(seq_inter == seq_current-1 && if_gen_success){
+             if(seq_inter == seq_current-1 && if_gen_success)
+             {
                  if_gen_success = false;
              }
 
              if(dis_c2d < allow_dis)
              {
-                 if( !if_inter_gen && !if_gen_success ){
+                 if( !if_inter_gen && !if_gen_success )
+                 {
                     UASLOG(s_logger,LL_DEBUG,"local avoidance");
                     for(int i = colli_return.seq_colli-1; i != 0; --i)
                     {
@@ -216,6 +219,7 @@ namespace UasCode{
                     wp_inter.z_alt = obss[colli_return.obs_id].x3 + obss[colli_return.obs_id].v_vert*colli_return.time_colli + 1.5*obss[colli_return.obs_id].hr;
 
                     if( flags[seq_inter] )
+                    {
                         if_inter_exist= true;
                         waypoints.erase( waypoints.begin() + seq_inter );
                         flags.erase( flags.begin() + seq_inter );
@@ -238,13 +242,13 @@ namespace UasCode{
                  {
                     situ= PATH_GEN;
                     if_inter_gen= false;
-                }
+                 }
              }
 
          }//if_colli == 1 ends
 
-         switch(situ){
-
+         switch(situ)
+         {
          case PATH_GEN:
          {
              UASLOG(s_logger,LL_DEBUG,"planning");
@@ -299,7 +303,7 @@ namespace UasCode{
                 else
                 {
                     double x, y;
-                    Utils::ToUTM(waypoints[seq_current].lon, waypoints[seq_current].lat, x, y);
+                    Utils::ToUTM(waypoints[seq_current].y_long, waypoints[seq_current].x_lat, x, y);
                     path_gen.SetSampleStart(x,y,waypoints[seq_current].z_alt);
                 }
              }
@@ -316,7 +320,7 @@ namespace UasCode{
                     c_id = colli_return.seq_colli - 1;
                 }
                 double x, y;
-                Utils::ToUTM(waypoints[c_id].lon, waypoints[c_id].lat, x, y);
+                Utils::ToUTM(waypoints[c_id].y_long, waypoints[c_id].x_lat, x, y);
                 path_gen.SetSampleStart(x,y,waypoints[c_id].z_alt);
              }
 
@@ -341,8 +345,8 @@ namespace UasCode{
                  UASLOG(s_logger,LL_DEBUG,"no path, try again");
              }
 
-         }
              break;
+         }
          case PATH_CHECK:
          {
              UserStructs::MissionSimPt inter_wp;
@@ -382,16 +386,17 @@ namespace UasCode{
                  UASLOG(s_logger,LL_DEBUG,"No waypoint, retry");
                  situ= PATH_GEN;
              }
-         }
+
              break;
+         }           
          case PATH_READY:
          {
              SendWaypoints();
-         }
-             break;
-
+             break;}
          default:
+         {
              break;
+         }
          }//switch(situ) ends
 
          //PullandSendWps();
@@ -497,7 +502,6 @@ namespace UasCode{
           }
       }
 
-
   }
 
   void MavrosListen::PrintSitu()
@@ -573,7 +577,7 @@ namespace UasCode{
       path_gen.NavSetIfSet( false );
   }
 
-  void MavrosListen::MavrosWpToMissionPt(const Mavros::waypoint &wp, UserStructs::MissionSimPt& pt)
+  void MavrosListen::MavrosWpToMissionPt(const mavros::Waypoint &wp, UserStructs::MissionSimPt& pt)
   {
       pt.lat = wp.x_lat;
       pt.lon = wp.y_long;
@@ -614,7 +618,7 @@ namespace UasCode{
           oss << i<<":"
               << std::setprecision(7)<< std::fixed
               << waypoints[i].x_lat <<" "
-              << waypoints[i].x_long <<" "
+              << waypoints[i].y_long <<" "
               << waypoints[i].z_alt << '\n';
 
       UASLOG(s_logger,LL_DEBUG,oss.str());
@@ -623,6 +627,12 @@ namespace UasCode{
 
       return (tt ? 1:0);
   }
+
+  void MavrosListen::SetTimeLimit(const double _t_limit)
+  {
+      this->t_limit = _t_limit;
+      path_gen.SetTimeLimit(t_limit);
+  }//SetTimeLimit ends
 
   void MavrosListen::posiCb(const sensor_msgs::NavSatFix::ConstPtr& msg)
     {

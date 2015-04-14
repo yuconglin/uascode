@@ -15,6 +15,6 @@ int main( int argc, char** argv )
     std::string data_file = Utils::FindPath() + argv[1];
 
     ScaleObsFromFile sof;
-    sof.SetIfMission(false);
+    sof.SetIfMission( true );
     sof.LoadSendConfig( argv[2], data_file.c_str() );
 }
