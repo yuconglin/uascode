@@ -87,19 +87,21 @@ add_library(common_utils
           src/common/Utils/FindPath.cpp
           src/common/Utils/YcLogger.cpp
           src/common/Utils/AeroCoefficients.cpp
-          src/common/UserTypes/MavlinkReceiver.cpp
-	  src/common/UserTypes/MavlinkTCP.cpp
+          #src/common/UserTypes/MavlinkReceiver.cpp
 	  src/common/UserTypes/MavlinkSender.cpp
+          src/common/UserTypes/MavlinkTCP.cpp
           src/common/UserTypes/ObsFromFile.cpp
           src/common/UserTypes/AdsbFromFile.cpp
           src/common/UserTypes/ScaleObsFromFile.cpp
 	  )
+
 add_dependencies(common_utils
           uascode_generate_messages_cpp
-	  otherlibs
+          otherlibs
 )
+
 target_link_libraries(common_utils
-	  otherlibs
+          otherlibs
           ${catkin_LIBRARIES}
           ${Boost_LIBRARIES}
 	  ${ARMADILLO_LIBRARIES}
@@ -110,7 +112,6 @@ target_link_libraries(common_utils
 add_library(adsb
 	  src/adsb/UserTypes/ObsMonitor.cpp
 	  src/adsb/UserTypes/SageDecoder.cpp
-	  src/adsb/UserTypes/MsgSender.cpp
 	  src/adsb/Utils/AdsbDecode.cpp
 	  src/adsb/Utils/HeartDecode.cpp
 	  src/adsb/Utils/StatusDecode.cpp
@@ -280,8 +281,8 @@ add_executable(propagate_test src/Planner/UserTypes/test_navigator.cpp)
 add_dependencies(propagate_test planner common_utils otherlibs)
 target_link_libraries(propagate_test
               planner
-              common_utils
               otherlibs
+              common_utils
               ${ARMADILLO_LIBRARIES}
               ${GeographicLib_LIBRARIES}
 )
@@ -291,8 +292,8 @@ add_executable(reachset_test src/Planner/UserTypes/test_ReachSet.cpp)
 add_dependencies(reachset_test planner common_utils otherlibs)
 target_link_libraries(reachset_test
               planner
-              common_utils
               otherlibs
+              common_utils
               ${ARMADILLO_LIBRARIES}
               ${GeographicLib_LIBRARIES}
 )
@@ -303,8 +304,8 @@ add_executable(pathgen_test src/Planner/UserTypes/test_pathgen.cpp)
 add_dependencies(pathgen_test planner common_utils otherlibs)
 target_link_libraries(pathgen_test
               planner
-              common_utils
               otherlibs
+              common_utils
               ${ARMADILLO_LIBRARIES}
               ${GeographicLib_LIBRARIES}
 )

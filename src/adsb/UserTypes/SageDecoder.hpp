@@ -12,8 +12,8 @@ class SageDecoder{
     inline UserStructs::HeartMsg GetHeart() {return this->heartbeat;}
     inline UserStructs::StatusMsg GetStatus() {return this->sage_status;}
     inline UserStructs::OwnerMsg GetOwnership() {return ownership;}
-  private:
 
+  private:
     //msgs
     UserStructs::AdsbMsg sage_adsb;
     UserStructs::HeartMsg heartbeat; 

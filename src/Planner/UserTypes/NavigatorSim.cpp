@@ -628,9 +628,11 @@ bool NavigatorSim::PredictColli3(UserStructs::PlaneStateSim &st_current, std::ve
     for( int i = seq_current; i != waypoints.size(); ++i )
     {
         if( i == 0 ){
+            UASLOG(s_logger,LL_DEBUG,"i0: " << st_current.lat << " " << st_current.lon);
             pt_start << st_current.lat << st_current.lon;
         }
         else{
+            UASLOG(s_logger,LL_DEBUG,"i_other: " << waypoints[i-1].x_lat << " " << waypoints[i-1].y_long);
             pt_start << waypoints[i-1].x_lat << waypoints[i-1].y_long;
         }
 
